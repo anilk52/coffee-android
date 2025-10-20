@@ -8,6 +8,8 @@
     <!-- app/src/main/AndroidManifest.xml, <application> içinde -->
 <activity android:name=".ui.RecipesActivity" />
 <activity android:name=".ui.RecipeDetailActivity" />
+<!-- AndroidManifest.xml, application etiketinin içine -->
+<activity android:name=".RecipesActivity" android:exported="false"/>
 
     <activity
         android:name=".SplashActivity"
