@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Splash ekranı (ilk açılan ekran) -->
+        <!-- Splash (Launcher) -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -25,17 +25,15 @@
             android:name=".MainActivity"
             android:exported="true" />
 
-        <!-- Tarif listesi ekranı -->
+        <!-- Tarif listesi -->
         <activity
             android:name=".ui.RecipeActivity"
             android:exported="true" />
 
-        <!-- Tarif detayı ekranı (ekleyeceksen aktif et) -->
-        <!--
+        <!-- Tarif detayı -->
         <activity
             android:name=".ui.RecipeDetailActivity"
             android:exported="true" />
-        -->
-    </application>
 
+    </application>
 </manifest>
