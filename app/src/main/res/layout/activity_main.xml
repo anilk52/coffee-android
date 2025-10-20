@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp"
+    android:padding="16dp"
     android:background="#FFFFFF">
 
     <TextView
@@ -14,26 +14,26 @@
         android:text="Merhaba! UI yüklendi"
         android:textSize="24sp"
         android:textColor="#000000"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp" />
 
     <Button
-        android:id="@+id/btn_espresso"
+        android:id="@+id/btnEspresso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Espresso"/>
+        android:text="ESPRESSO BAZLILAR"
+        android:layout_marginTop="8dp"/>
 
     <Button
-        android:id="@+id/btn_latte"
+        android:id="@+id/btnFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latte"
-        android:layout_marginTop="12dp"/>
+        android:text="FİLTRE KAHVELER"
+        android:layout_marginTop="8dp"/>
 
     <Button
-        android:id="@+id/btn_cappuccino"
+        android:id="@+id/btnAlcohol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cappuccino"
-        android:layout_marginTop="12dp"/>
-
+        android:text="ALKOLLÜ KAHVELER"
+        android:layout_marginTop="8dp"/>
 </LinearLayout>
