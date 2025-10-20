@@ -3,17 +3,26 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private static final long SPLASH_DELAY_MS = 5000L; // 5 sn
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // 5 sn sonra veya dokununca Main'e geç
-        findViewById(R.id.splash_root).setOnClickListener(v -> goNext());
-        new Handler().postDelayed(this::goNext, 5000);
+        // 5 sn sonra ana ekrana geç
+        new Handler(Looper.getMainLooper()).postDelayed(this::goNext, SPLASH_DELAY_MS);
+
+        // Ekrana dokununca hemen geç
+        LinearLayout root = findViewById(R.id.splashRoot);
+        if (root != null) root.setOnClickListener(v -> goNext());
     }
 
     private void goNext() {
