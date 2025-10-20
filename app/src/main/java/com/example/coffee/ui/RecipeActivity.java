@@ -33,54 +33,33 @@ public class RecipeActivity extends AppCompatActivity {
         String category = getIntent().getStringExtra(EXTRA_CATEGORY);
         if (category == null) category = "ESPRESSO";
 
-        // Basit demo veri (gerçek tarif veritabanı gelene kadar)
+        // Basit demo verisi
         List<String> items = new ArrayList<>();
         switch (category) {
             case "FILTER":
-                items = Arrays.asList(
-                        "V60",
-                        "Chemex",
-                        "French Press",
-                        "Aeropress",
-                        "Kalita Wave"
-                );
+                items = Arrays.asList("V60", "Chemex", "French Press", "Aeropress", "Kalita Wave");
                 setTitle("Filtre Kahveler");
                 break;
             case "ALCOHOL":
-                items = Arrays.asList(
-                        "Irish Coffee",
-                        "Espresso Martini",
-                        "Carajillo",
-                        "Caffè Corretto",
-                        "Kahlúa Latte"
-                );
+                items = Arrays.asList("Irish Coffee", "Espresso Martini", "Carajillo", "Caffè Corretto", "Kahlua Latte");
                 setTitle("Alkollü Kahveler");
                 break;
             case "ESPRESSO":
             default:
-                items = Arrays.asList(
-                        "Espresso",
-                        "Americano",
-                        "Cappuccino",
-                        "Latte",
-                        "Flat White"
-                );
+                items = Arrays.asList("Espresso", "Americano", "Cappuccino", "Latte", "Flat White");
                 setTitle("Espresso Bazlılar");
                 break;
         }
 
         ListView lv = findViewById(R.id.listView);
         lv.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+
         lv.setOnItemClickListener((parent, view, position, id) -> {
             String name = items.get(position);
             Toast.makeText(this, "Seçildi: " + name, Toast.LENGTH_SHORT).show();
-            // Sonraki aşama: RecipeDetailActivity.start(this, category, name);
-        });
-    }
-}        lv.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, titles));
 
-        lv.setOnItemClickListener((parent, view, position, id) ->
-                RecipeDetailActivity.start(this, current.get(position)));
+            // Detay sayfasına geçiş (aktif etmek için RecipeDetailActivity'yi tamamlamamız gerekiyor)
+            // RecipeDetailActivity.start(this, category, name);
+        });
     }
 }
