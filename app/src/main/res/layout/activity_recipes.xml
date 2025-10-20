@@ -3,14 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="#FFFFFF">
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#DDDDDD"
-        android:dividerHeight="1dp"
-        android:listSelector="?android:attr/listChoiceBackgroundIndicator" />
+        android:dividerHeight="1dp" />
 </LinearLayout>
