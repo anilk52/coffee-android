@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
   <application
-      android:label="Coffee Demo"
-      android:icon="@mipmap/ic_launcher"
+    android:label="Coffee Demo"
+    android:icon="@mipmap/ic_launcher"
+    android:theme="@style/Theme.Coffee">
       android:theme="@android:style/Theme.Material.Light">
     <activity
         android:name=".MainActivity"
