@@ -3,29 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:padding="16dp"
     android:background="#FFFFFF">
 
+    <!-- Tarif başlığı -->
     <TextView
         android:id="@+id/recipeTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tarif Başlığı"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#000000"
+        android:gravity="center"
         android:paddingBottom="16dp" />
 
+    <!-- Tarif açıklaması -->
     <TextView
         android:id="@+id/recipeDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tarif detayları burada görünecek..."
+        android:text="Tarif detay açıklaması burada görünecek."
         android:textSize="18sp"
-        android:textColor="#333333" />
-</LinearLayout>            android:textSize="15sp"
-            android:textColor="#555555"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</ScrollView>
+        android:textColor="#333333"
+        android:lineSpacingExtra="4dp" />
+
+</LinearLayout>
