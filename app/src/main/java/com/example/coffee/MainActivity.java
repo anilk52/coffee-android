@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
+import com.example.coffee.R;
+
+
 
 public class MainActivity extends AppCompatActivity {
     @Override
