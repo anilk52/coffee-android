@@ -21,9 +21,8 @@
         android:id="@+id/recipeDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tarif detay açıklaması burada görünecek."
+        android:text="Tarif açıklaması burada."
         android:textSize="18sp"
         android:textColor="#333333"
         android:lineSpacingExtra="4dp" />
-
 </LinearLayout>
