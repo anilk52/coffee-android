@@ -1,27 +1,41 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.coffee">
 
     <application
-    android:label="Coffee Demo"
-    android:icon="@mipmap/ic_launcher"
-    android:theme="@style/Theme.Coffee">
+        android:allowBackup="true"
+        android:label="Coffee Demo"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Coffee">
 
-    <!-- app/src/main/AndroidManifest.xml, <application> içinde -->
-<activity android:name=".ui.RecipesActivity" />
-<activity android:name=".ui.RecipeDetailActivity" />
-<!-- AndroidManifest.xml, application etiketinin içine -->
-<activity android:name=".RecipesActivity" android:exported="false"/>
+        <!-- Splash ekranı (ilk açılan ekran) -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    <activity
-        android:name=".SplashActivity"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
-    </activity>
+        <!-- Ana ekran -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
 
-    <activity
-        android:name=".MainActivity"
-        android:exported="true" />
-</application>
+        <!-- Tarif listesi ekranı -->
+        <activity
+            android:name=".ui.RecipeActivity"
+            android:exported="true" />
+
+        <!-- Tarif detayı ekranı (ekleyeceksen aktif et) -->
+        <!--
+        <activity
+            android:name=".ui.RecipeDetailActivity"
+            android:exported="true" />
+        -->
+    </application>
+
 </manifest>
