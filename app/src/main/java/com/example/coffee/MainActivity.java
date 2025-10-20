@@ -1,10 +1,8 @@
 package com.example.coffee;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,36 +15,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Başlık metni
         TextView tv = findViewById(R.id.helloText);
         if (tv != null) {
             tv.setText("Merhaba! UI yüklendi");
-            tv.setTextColor(Color.BLACK);
             tv.setTextSize(24);
         }
 
-        // Mevcut layouttaki buton ID'leri (değiştirmeden kullanalım)
-        Button btnEspresso   = findViewById(R.id.btn_espresso);
-        Button btnLatte      = findViewById(R.id.btn_latte);
-        Button btnCappuccino = findViewById(R.id.btn_cappuccino);
+        Button btnEspresso = findViewById(R.id.btnEspresso);
+        Button btnFilter   = findViewById(R.id.btnFilter);
+        Button btnAlcohol  = findViewById(R.id.btnAlcohol);
 
-        if (btnEspresso != null) {
-            btnEspresso.setOnClickListener(v -> {
-                Toast.makeText(this, "Espresso bazlılar", Toast.LENGTH_SHORT).show();
-                RecipeActivity.start(this, "ESPRESSO");
-            });
-        }
-        if (btnLatte != null) {
-            btnLatte.setOnClickListener(v -> {
-                Toast.makeText(this, "Filtre kahveler", Toast.LENGTH_SHORT).show();
-                RecipeActivity.start(this, "FILTER");
-            });
-        }
-        if (btnCappuccino != null) {
-            btnCappuccino.setOnClickListener(v -> {
-                Toast.makeText(this, "Alkollü kahveler", Toast.LENGTH_SHORT).show();
-                RecipeActivity.start(this, "ALCOHOL");
-            });
-        }
+        if (btnEspresso != null) btnEspresso.setOnClickListener(v ->
+                RecipeActivity.start(this, "ESPRESSO"));
+
+        if (btnFilter != null) btnFilter.setOnClickListener(v ->
+                RecipeActivity.start(this, "FILTER"));
+
+        if (btnAlcohol != null) btnAlcohol.setOnClickListener(v ->
+                RecipeActivity.start(this, "ALCOHOL"));
     }
 }
