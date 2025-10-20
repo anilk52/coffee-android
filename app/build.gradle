@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    // id 'org.jetbrains.kotlin.android' // Kotlin kullanmıyorsan kapalı kalsın
 }
 
 android {
@@ -11,8 +10,6 @@ android {
         applicationId "com.example.coffee"
         minSdk 21
         targetSdk 34
-
-        // Versiyonları her release’te artıracağız
         versionCode 2
         versionName "1.1.0"
 
