@@ -5,6 +5,10 @@
     android:icon="@mipmap/ic_launcher"
     android:theme="@style/Theme.Coffee">
 
+    <!-- app/src/main/AndroidManifest.xml, <application> içinde -->
+<activity android:name=".ui.RecipesActivity" />
+<activity android:name=".ui.RecipeDetailActivity" />
+
     <activity
         android:name=".SplashActivity"
         android:exported="true">
