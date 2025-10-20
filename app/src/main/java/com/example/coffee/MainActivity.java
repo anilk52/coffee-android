@@ -13,6 +13,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // onCreate() sonunda veya uygun yerde:
+findViewById(R.id.btnEspresso).setOnClickListener(v ->
+        RecipesActivity.start(this, "ESPRESSO"));
+
+findViewById(R.id.btnFilter).setOnClickListener(v ->
+        RecipesActivity.start(this, "FILTER"));
+
+findViewById(R.id.btnAlcohol).setOnClickListener(v ->
+        RecipesActivity.start(this, "ALCOHOL"));
 
         // Başlık yazısı
         TextView tv = findViewById(R.id.helloText);
