@@ -6,7 +6,6 @@
     android:padding="16dp"
     android:background="#FFFFFF">
 
-    <!-- Tarif başlığı -->
     <TextView
         android:id="@+id/recipeTitle"
         android:layout_width="match_parent"
@@ -18,7 +17,6 @@
         android:gravity="center"
         android:paddingBottom="16dp" />
 
-    <!-- Tarif açıklaması -->
     <TextView
         android:id="@+id/recipeDescription"
         android:layout_width="match_parent"
