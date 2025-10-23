@@ -1,41 +1,67 @@
+// app/src/main/java/com/example/coffee/ui/RecipeDetailActivity.java
 package com.example.coffee.ui;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.coffee.R;
+import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends Activity {
 
-    private static final String EXTRA_TITLE = "extra_title";
-    private static final String EXTRA_DESCRIPTION = "extra_description";
-
-    public static void start(Context context, Recipe recipe) {
-        Intent intent = new Intent(context, RecipeDetailActivity.class);
-        intent.putExtra(EXTRA_TITLE, recipe.getTitle());
-        intent.putExtra(EXTRA_DESCRIPTION, recipe.getDescription());
-        context.startActivity(intent);
-    }
+    private View ingredientsGroup, stepsGroup, tipsGroup;
+    private TextView ingredientsView, stepsView, tipsView, titleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        TextView titleView = findViewById(R.id.recipeTitle);
-        TextView descView  = findViewById(R.id.recipeDescription);
+        titleView = findViewById(R.id.titleView);
 
-        String title = getIntent().getStringExtra(EXTRA_TITLE);
-        String desc  = getIntent().getStringExtra(EXTRA_DESCRIPTION);
+        ingredientsGroup = findViewById(R.id.ingredientsGroup);
+        stepsGroup = findViewById(R.id.stepsGroup);
+        tipsGroup = findViewById(R.id.tipsGroup);
 
-        if (title != null) titleView.setText(title);
-        if (desc  != null) descView.setText(desc);
+        ingredientsView = findViewById(R.id.ingredientsView);
+        stepsView = findViewById(R.id.stepsView);
+        tipsView = findViewById(R.id.tipsView);
 
-        setTitle(title != null ? title : "Tarif Detayı");
+        String title = getIntent().getStringExtra("title");
+        Recipe recipe = RecipesData.findByTitle(title);
+
+        if (recipe == null) {
+            titleView.setText(getString(R.string.not_found));
+            ingredientsGroup.setVisibility(View.GONE);
+            stepsGroup.setVisibility(View.GONE);
+            tipsGroup.setVisibility(View.GONE);
+            return;
+        }
+
+        titleView.setText(recipe.getTitle());
+
+        if (recipe.hasIngredients()) {
+            ingredientsView.setText(recipe.getIngredients());
+            ingredientsGroup.setVisibility(View.VISIBLE);
+        } else {
+            ingredientsGroup.setVisibility(View.GONE);
+        }
+
+        if (recipe.hasSteps()) {
+            stepsView.setText(recipe.getSteps());
+            stepsGroup.setVisibility(View.VISIBLE);
+        } else {
+            stepsGroup.setVisibility(View.GONE);
+        }
+
+        if (recipe.hasTips()) {
+            tipsView.setText(recipe.getTips());
+            tipsGroup.setVisibility(View.VISIBLE);
+        } else {
+            tipsGroup.setVisibility(View.GONE);
+        }
     }
 }
