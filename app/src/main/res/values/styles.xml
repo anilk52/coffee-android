@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Uygulama teması -->
+    <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#6F4E37</item> <!-- kahve rengi -->
+        <item name="colorPrimaryVariant">#8B5A2B</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowBackground">#FAF3E0</item> <!-- açık bej arka plan -->
+        <item name="android:fontFamily">@android:font/sans-serif</item>
+        <item name="android:textColor">#3E2723</item>
+        <item name="android:buttonStyle">@style/Widget.Material3.Button</item>
+    </style>
+
 </resources>
