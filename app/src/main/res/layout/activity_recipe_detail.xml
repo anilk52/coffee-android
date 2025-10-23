@@ -1,84 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Başlık -->
         <TextView
-            android:id="@+id/titleView"
+            android:id="@+id/recipeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:text="Kahve Başlığı"
             android:textSize="22sp"
-            android:paddingBottom="12dp" />
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Ingredients -->
-        <LinearLayout
-            android:id="@+id/ingredientsGroup"
-            android:orientation="vertical"
+        <!-- Açıklama -->
+        <TextView
+            android:id="@+id/recipeDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ingredients"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/ingredientsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp" />
-        </LinearLayout>
-
-        <!-- Steps -->
-        <LinearLayout
-            android:id="@+id/stepsGroup"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="12dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/steps"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/stepsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp" />
-        </LinearLayout>
-
-        <!-- Tips -->
-        <LinearLayout
-            android:id="@+id/tipsGroup"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="12dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tips"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tipsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp" />
-        </LinearLayout>
+            android:text="Burada tarifin detaylı açıklaması yazacak..."
+            android:textSize="18sp"
+            android:textColor="@android:color/darker_gray"
+            android:lineSpacingExtra="6dp" />
 
     </LinearLayout>
 </ScrollView>
