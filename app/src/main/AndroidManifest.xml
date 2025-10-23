@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.coffee">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
+        android:label="Coffee Demo"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Splash ekranı (uygulama açılış ekranı) -->
+        <!-- Splash: ilk açılan ekran -->
         <activity
-            android:name=".ui.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Coffee">
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,13 +20,19 @@
         </activity>
 
         <!-- Ana ekran -->
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
 
         <!-- Tarif listesi -->
-        <activity android:name=".ui.RecipeActivity" />
+        <activity
+            android:name=".ui.RecipeActivity"
+            android:exported="true" />
 
-        <!-- Tarif detay ekranı -->
-        <activity android:name=".ui.RecipeDetailActivity" />
+        <!-- Tarif detayı (kullanıyorsan açık kalsın) -->
+        <activity
+            android:name=".ui.RecipeDetailActivity"
+            android:exported="true" />
 
     </application>
 </manifest>
