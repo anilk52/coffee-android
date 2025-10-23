@@ -23,12 +23,16 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install SDK components
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+        run: |
+          sdkmanager --update
+          sdkmanager "platform-tools" "tools"
+          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+          # Eski platformları da ekle (aapt2 font referansları için güvenli)
+          sdkmanager "platforms;android-33" "platforms;android-30" "platforms;android-28"
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      # (İsteğe bağlı ama tavsiye edilir; temiz başlar)
       - name: Clean Gradle
         run: ./gradlew clean
 
