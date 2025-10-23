@@ -1,3 +1,4 @@
+// app/src/main/java/com/example/coffee/MainActivity.java
 package com.example.coffee;
 
 import android.os.Bundle;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.helloText);
         if (tv != null) {
-            tv.setText("Merhaba! UI yüklendi");
+            tv.setText("Merhaba! Uygulendi");
             tv.setTextSize(24);
         }
 
@@ -26,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
         Button btnAlcohol  = findViewById(R.id.btnAlcohol);
 
         if (btnEspresso != null) btnEspresso.setOnClickListener(v ->
-                RecipeActivity.start(this, "ESPRESSO"));
-
+                RecipeActivity.start(this, "Espresso")
+        );
         if (btnFilter != null) btnFilter.setOnClickListener(v ->
-                RecipeActivity.start(this, "FILTER"));
-
+                RecipeActivity.start(this, "Brew")     // "FILTER" yerine veri setindeki kategori
+        );
         if (btnAlcohol != null) btnAlcohol.setOnClickListener(v ->
-                RecipeActivity.start(this, "ALCOHOL"));
+                RecipeActivity.start(this, "Milk")     // "ALCOHOL" yerine veri setindeki kategori
+        );
     }
 }
