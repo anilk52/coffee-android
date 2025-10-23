@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Kahve kupası ikonu -->
+    <path
+        android:fillColor="#6F4E37"
+        android:pathData="M54,12a10,10 0 0 0 -10,10v4h20v-4a10,10 0 0 0 -10,-10zM28,30v24a26,26 0 0 0 52,0V30zM38,38h32v16a16,16 0 0 1 -32,0zM40,80h28v6a4,4 0 0 1 -4,4H44a4,4 0 0 1 -4,-4z"/>
+</vector>
