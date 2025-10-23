@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Uygulama teması -->
-    <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Fontu kaynak yerine string olarak veriyoruz -->
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="fontFamily">sans-serif</item>
+    <!-- Uygulama Teması -->
+    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
-    <!-- Orta kalınlıkta yazılar için opsiyonel stil -->
-    <style name="Text.Medium">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
+    <!-- Bazı layout'larda referans verilen, eksik olduğu için hataya sebep olan stil -->
+    <style name="Text">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
