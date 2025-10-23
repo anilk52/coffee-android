@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="#FFFFFF">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/helloText"
@@ -26,14 +25,13 @@
         android:id="@+id/btnFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FILTRE KAHVELER"
+        android:text="FİLTRE KAHVELER"
         android:layout_marginTop="12dp" />
 
     <Button
-        android:id="@+id/btnAlcohol"
+        android:id="@+id/btnBrew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ALKOLLÜ KAHVELER"
+        android:text="BREW / AMERİCANO"
         android:layout_marginTop="12dp" />
-
 </LinearLayout>
