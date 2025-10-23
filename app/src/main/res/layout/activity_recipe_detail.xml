@@ -1,28 +1,84 @@
+<!-- app/src/main/res/layout/activity_recipe_detail.xml -->
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/recipeTitle"
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tarif Başlığı"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:gravity="center"
-        android:paddingBottom="16dp" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/recipeDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tarif açıklaması burada."
-        android:textSize="18sp"
-        android:textColor="#333333"
-        android:lineSpacingExtra="4dp" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:paddingBottom="12dp" />
+
+        <!-- Ingredients -->
+        <LinearLayout
+            android:id="@+id/ingredientsGroup"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredients"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ingredientsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+        <!-- Steps -->
+        <LinearLayout
+            android:id="@+id/stepsGroup"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/steps"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/stepsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+        <!-- Tips -->
+        <LinearLayout
+            android:id="@+id/tipsGroup"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tips"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tipsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
