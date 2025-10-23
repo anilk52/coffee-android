@@ -3,19 +3,18 @@
 
     <!-- Uygulama teması -->
     <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Font aileleri string olarak verilir -->
         <item name="android:fontFamily">sans-serif</item>
         <item name="fontFamily">sans-serif</item>
     </style>
 
-    <!-- Layoutlarda kullanılan: style="@style/Text" -->
-    <style name="Text" parent="TextAppearance.AppCompat.Body">
+    <!-- Layoutlarda kullanılan genel metin stili -->
+    <style name="Text" parent="TextAppearance.AppCompat.Body1">
         <item name="android:fontFamily">sans-serif</item>
         <item name="fontFamily">sans-serif</item>
     </style>
 
-    <!-- İsteğe bağlı: biraz daha vurgulu metinler için -->
-    <style name="Text.Medium" parent="TextAppearance.AppCompat.Body">
+    <!-- Biraz daha vurgulu/gövdeden farklı metinler için -->
+    <style name="Text.Medium" parent="TextAppearance.AppCompat.Body2">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="fontFamily">sans-serif-medium</item>
     </style>
