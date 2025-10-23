@@ -1,3 +1,4 @@
+// app/src/main/java/com/example/coffee/model/Recipe.java
 package com.example.coffee.model;
 
 public class Recipe {
