@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
 
     <TextView
         android:id="@+id/helloText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Merhaba!"
-        android:textSize="24sp"
-        android:textColor="#000000"
-        android:paddingBottom="24dp" />
+        android:text="Merhaba! UI yüklendi"
+        android:textSize="22sp"
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/btnEspresso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ESPRESSO BAZLILAR" />
+        android:text="ESPRESSO" />
 
     <Button
         android:id="@+id/btnFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FİLTRE KAHVELER"
+        android:text="FİLTRE"
         android:layout_marginTop="12dp" />
 
     <Button
-        android:id="@+id/btnBrew"
+        android:id="@+id/btnAlcohol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BREW / AMERİCANO"
+        android:text="ALKOLLÜ"
         android:layout_marginTop="12dp" />
+
 </LinearLayout>
