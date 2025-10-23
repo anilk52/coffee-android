@@ -1,7 +1,7 @@
 // app/src/main/java/com/example/coffee/ui/RecipeActivity.java
 package com.example.coffee.ui;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +10,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 
 import java.util.List;
 
-public class RecipeActivity extends Activity {
+public class RecipeActivity extends AppCompatActivity {
+
+    private static final String EXTRA_CATEGORY = "category";
+
+    public static void start(Context ctx, String category) {
+        Intent i = new Intent(ctx, RecipeActivity.class);
+        i.putExtra(EXTRA_CATEGORY, category);
+        ctx.startActivity(i);
+    }
 
     private ListView listView;
     private TextView emptyView;
@@ -28,8 +38,10 @@ public class RecipeActivity extends Activity {
         listView = findViewById(R.id.recipesList);
         emptyView = findViewById(R.id.emptyView);
 
-        // Basit: tüm başlıkları tek listede gösteriyoruz
-        List<String> titles = RecipesData.allTitles();
+        String category = getIntent().getStringExtra(EXTRA_CATEGORY);
+        List<String> titles = (category == null || category.isEmpty())
+                ? RecipesData.allTitles()
+                : RecipesData.titlesForCategory(category);
 
         if (titles.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
