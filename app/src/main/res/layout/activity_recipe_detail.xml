@@ -1,4 +1,3 @@
-<!-- app/src/main/res/layout/activity_recipe_detail.xml -->
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -65,7 +64,8 @@
             android:id="@+id/tipsGroup"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp">
 
             <TextView
                 android:layout_width="match_parent"
