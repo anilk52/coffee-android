@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Uygulama adı -->
-    <string name="app_name">Coffee Recipes</string>
+    <string name="app_name">Coffee Demo</string>
 
-    <!-- Genel başlıklar -->
-    <string name="ingredients">Malzemeler</string>
-    <string name="steps">Hazırlanışı</string>
-    <string name="tips">İpucu</string>
-    <string name="no_recipes">Henüz tarif bulunamadı</string>
+    <!-- Genel -->
+    <string name="not_found">Bulunamadı</string>
 
-    <!-- Buton metinleri -->
-    <string name="espresso_based">Espresso Bazlılar</string>
-    <string name="filter_coffee">Filtre Kahveler</string>
-    <string name="brew_methods">Demleme Yöntemleri</string>
+    <!-- Ana ekran -->
+    <string name="main_title">Merhaba! UI yüklendi</string>
+    <string name="btn_espresso">ESPRESSO</string>
+    <string name="btn_filter">FİLTRE</string>
+    <string name="btn_alcohol">ALKOLLÜ</string>
 
-    <!-- Splash ve ana ekran -->
-    <string name="welcome_message">Kahve Dünyasına Hoş Geldin ☕</string>
-    <string name="start_button">Başla</string>
+    <!-- Kategoriler -->
+    <string name="cat_espresso">Espresso Bazlılar</string>
+    <string name="cat_filter">Filtre Kahveler</string>
+    <string name="cat_alcohol">Alkollü Kahveler</string>
 
-    <!-- Detay ekranı -->
-    <string name="recipe_details">Tarif Detayları</string>
+    <!-- Tarif/Detay ekranı -->
+    <string name="recipe_detail_title">Tarif Detayı</string>
+    <string name="recipe_title_label">Başlık</string>
+    <string name="recipe_desc_label">Açıklama</string>
 </resources>
