@@ -5,11 +5,10 @@
         android:allowBackup="true"
         android:label="Coffee Demo"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Splash: ilk açılan ekran -->
+        <!-- Splash ekranı -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -29,10 +28,11 @@
             android:name=".ui.RecipeActivity"
             android:exported="true" />
 
-        <!-- Tarif detayı (kullanıyorsan açık kalsın) -->
+        <!-- (İstersen) Tarif detayı -->
+        <!--
         <activity
             android:name=".ui.RecipeDetailActivity"
             android:exported="true" />
-
+        -->
     </application>
 </manifest>
