@@ -10,18 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Launcher -->
+        <!-- 🚀 Uygulama giriş noktası -->
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" android:exported="false"/>
-        <activity android:name=".ui.RecipeActivity" android:exported="false"/>
-        <activity android:name=".ui.RecipeDetailActivity" android:exported="false"/>
+        <!-- ☕ Ana ekran -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- 📜 Tarif listesi (ui klasörü) -->
+        <activity
+            android:name=".ui.RecipeActivity"
+            android:exported="false" />
+
+        <!-- 📖 Tarif detay ekranı (ui klasörü) -->
+        <activity
+            android:name=".ui.RecipeDetailActivity"
+            android:exported="false" />
+
     </application>
 </manifest>
