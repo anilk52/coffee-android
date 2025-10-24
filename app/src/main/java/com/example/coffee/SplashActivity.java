@@ -7,8 +7,6 @@ import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coffee.R;
-
 public class SplashActivity extends AppCompatActivity {
     private static final long SPLASH_DELAY_MS = 700;
 
