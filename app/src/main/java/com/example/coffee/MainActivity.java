@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coffee.R;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,9 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView hello = findViewById(R.id.helloText);
-        if (hello != null) {
-            hello.setText(getString(R.string.hello));
-        }
+        if (hello != null) hello.setText(getString(R.string.hello));
 
         Button b1 = findViewById(R.id.btnEspresso);
         Button b2 = findViewById(R.id.btnFilter);
