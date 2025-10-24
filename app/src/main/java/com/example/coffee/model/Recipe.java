@@ -3,7 +3,7 @@ package com.example.coffee.model;
 public class Recipe {
     private final String title;
     private final String ingredients; // newline-joined
-    private final String steps;       // newline-joined
+    private final String steps;       // newline-joined (description yerine)
     private final String tips;        // optional
 
     public Recipe(String title, String ingredients, String steps, String tips) {
@@ -13,9 +13,14 @@ public class Recipe {
         this.tips = nz(tips);
     }
 
-    /** Eski kodu kırmamak için: description artık yok; steps'e yönlendiriyoruz. */
-    @Deprecated public String getDescription() { return steps; }
-    @Deprecated public boolean hasDescription() { return hasSteps(); }
+    /** Eski koda uyumluluk: description'u steps'e mapler. */
+    @Deprecated
+    public Recipe(String title, String description) {
+        this.title = nz(title);
+        this.ingredients = "";
+        this.steps = nz(description);
+        this.tips = "";
+    }
 
     public String getTitle() { return title; }
     public String getIngredients() { return ingredients; }
