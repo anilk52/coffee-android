@@ -1,13 +1,13 @@
-// app/src/main/java/com/example/coffee/MainActivity.java
 package com.example.coffee;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coffee.ui.RecipeActivity;
+import com.example.coffee.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,24 +16,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tv = findViewById(R.id.helloText);
-        if (tv != null) {
-            tv.setText("Merhaba! Uygulendi");
-            tv.setTextSize(24);
+        TextView hello = findViewById(R.id.helloText);
+        if (hello != null) {
+            hello.setText(getString(R.string.hello));
         }
 
-        Button btnEspresso = findViewById(R.id.btnEspresso);
-        Button btnFilter   = findViewById(R.id.btnFilter);
-        Button btnAlcohol  = findViewById(R.id.btnAlcohol);
+        Button b1 = findViewById(R.id.btnEspresso);
+        Button b2 = findViewById(R.id.btnFilter);
+        Button b3 = findViewById(R.id.btnAlcohol);
 
-        if (btnEspresso != null) btnEspresso.setOnClickListener(v ->
-                RecipeActivity.start(this, "Espresso")
-        );
-        if (btnFilter != null) btnFilter.setOnClickListener(v ->
-                RecipeActivity.start(this, "Brew")     // "FILTER" yerine veri setindeki kategori
-        );
-        if (btnAlcohol != null) btnAlcohol.setOnClickListener(v ->
-                RecipeActivity.start(this, "Milk")     // "ALCOHOL" yerine veri setindeki kategori
-        );
+        if (b1 != null) b1.setOnClickListener(v -> openList("ESPRESSO"));
+        if (b2 != null) b2.setOnClickListener(v -> openList("FILTER"));
+        if (b3 != null) b3.setOnClickListener(v -> openList("ALCOHOL"));
+    }
+
+    private void openList(String category) {
+        Intent i = new Intent(this, RecipeActivity.class);
+        i.putExtra("category", category);
+        startActivity(i);
     }
 }
