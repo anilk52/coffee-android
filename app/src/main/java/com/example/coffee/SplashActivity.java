@@ -1,4 +1,4 @@
-package com.example.coffee.ui;
+package com.example.coffee;
 
 import android.content.Intent;
 import android.os.Bundle;
