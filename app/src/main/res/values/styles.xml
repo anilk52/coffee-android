@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Basit ve stabil: AppCompat, özel font/appearance yok -->
-    <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <!-- Uygulamanın ana teması -->
+    <style name="Theme.Coffee" parent="Theme.Material3.Light.NoActionBar">
+        <!-- İstersen özelleştirme: -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryContainer">@color/purple_700</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Splash teması (Manifest'te SplashActivity'ye atanıyor) -->
+    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
+        <!-- Arkaplan rengi (colors.xml'de var): -->
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <!-- Splash ikon (mevcut adaptive ikonunu kullanalım) -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <!-- Splash sonrası açılacak tema -->
+        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
+    </style>
+
 </resources>
