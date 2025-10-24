@@ -1,6 +1,7 @@
 package com.example.coffee.data;
 
 import com.example.coffee.model.Recipe;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -10,39 +11,29 @@ import java.util.Map;
 import java.util.Set;
 
 public final class RecipesData {
-
     private static final Map<String, List<Recipe>> DATA = new LinkedHashMap<>();
 
     static {
-        put("Espresso", new Recipe(
+        // Basit örnekler - boş kalmaz, açılış garantisi
+        put("ESPRESSO", new Recipe(
                 "Espresso",
-                "18 g ince öğütülmüş kahve\n1:2 oran",
-                "18 g dozlayın\n25–30 sn’de 36 g shot alın\n92–94°C su; taze öğütüm kritik.",
-                "Krema rengi fındıksı olmalı, taze kahve kullanın."
+                "- 18 g öğütülmüş kahve\n- 25–30 sn çekim\n- 36 g shot",
+                "Portafiltreyi temizle ve kurut. 18 g kahve, düzgün tamp, 30 sn’de 36 g çıkış hedefle.",
+                "Su sıcaklığı 92–94°C arası iyi sonuç verir."
         ));
-        put("Espresso", new Recipe(
-                "Cappuccino",
-                "1 shot espresso\n120 ml süt",
-                "Espresso hazırlayın\nSütü 60–65°C’ye kadar köpürtün\n1:3 oranında birleştirin",
-                "Süt dokusu ipeksi olmalı, büyük kabarcık bırakmayın."
+
+        put("FILTER", new Recipe(
+                "V60",
+                "- 15 g kahve\n- 250 ml su (92–94°C)",
+                "Kağıdı ıslat, 30 g bloom 30 sn, sonra dairesel dökerek 2:30 toplam sürede bitir.",
+                "Orta-ince öğütüm genelde tat profilini dengeler."
         ));
-        put("Milk", new Recipe(
-                "Latte",
-                "1 shot espresso\n200 ml süt",
-                "Espresso + buharla ısıtılmış süt\nİnce mikrofoam ile üstünü kaplayın",
-                "Sütü 60°C’nin üzerine çıkarmayın."
-        ));
-        put("Türk Kahvesi", new Recipe(
-                "Türk Kahvesi",
-                "7 g çok ince öğütülmüş kahve\n70–80 ml su",
-                "Cezvede karıştırın\nKısık ateşte kabarmaya bırakın",
-                "Taşmadan hemen önce alın, köpüğü paylaştırın."
-        ));
-        put("Brew", new Recipe(
-                "Americano",
-                "1 shot espresso\n120–150 ml sıcak su",
-                "Bardağa suyu dökün\nÜzerine espresso ekleyin",
-                "Suyu önce koyun; espresso homojen karışsın."
+
+        put("ALCOHOL", new Recipe(
+                "Irish Coffee",
+                "- 120 ml sıcak filtre\n- 40 ml Irish whiskey\n- 1–2 çay kaşığı şeker",
+                "Bardağı ısıt, kahve ve şeker karıştır, whiskey ekle. Üstüne hafif çırpılmış krema.",
+                "Kremayı dökerken kaşığa çarptır ki üstte kalsın."
         ));
     }
 
@@ -55,25 +46,12 @@ public final class RecipesData {
         list.add(recipe);
     }
 
-    private RecipesData() {}
-
-    public static List<String> categories() {
-        return new ArrayList<>(DATA.keySet());
-    }
-
     public static List<String> titlesForCategory(String category) {
-        if (category == null) return Collections.emptyList();
-        List<Recipe> list = null;
-        for (String key : DATA.keySet()) {
-            if (key.equalsIgnoreCase(category)) {
-                list = DATA.get(key);
-                break;
-            }
-        }
-        if (list == null) return Collections.emptyList();
-        List<String> titles = new ArrayList<>(list.size());
-        for (Recipe r : list) titles.add(r.getTitle());
-        return titles;
+        List<Recipe> list = DATA.get(category);
+        if (list == null || list.isEmpty()) return Collections.emptyList();
+        List<String> out = new ArrayList<>(list.size());
+        for (Recipe r : list) out.add(r.getTitle());
+        return out;
     }
 
     public static List<String> allTitles() {
@@ -94,20 +72,10 @@ public final class RecipesData {
         return null;
     }
 
-    public static List<Recipe> findAllByTitle(String title) {
-        if (title == null) return Collections.emptyList();
-        List<Recipe> result = new ArrayList<>();
-        for (List<Recipe> list : DATA.values()) {
-            for (Recipe r : list) {
-                if (title.equalsIgnoreCase(r.getTitle())) result.add(r);
-            }
-        }
-        return result;
-    }
-
+    // İhtiyaç olursa tüm tarifleri set olarak döner
     public static Set<Recipe> all() {
-        Set<Recipe> out = new LinkedHashSet<>();
-        for (List<Recipe> list : DATA.values()) out.addAll(list);
-        return out;
+        Set<Recipe> set = new LinkedHashSet<>();
+        for (List<Recipe> list : DATA.values()) set.addAll(list);
+        return set;
     }
 }
