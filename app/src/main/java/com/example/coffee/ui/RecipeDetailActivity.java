@@ -1,53 +1,58 @@
 package com.example.coffee.ui;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
+import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 public class RecipeDetailActivity extends AppCompatActivity {
-
-    private static final String EXTRA_TITLE = "extra_title";
-    private static final String EXTRA_DESCRIPTION = "extra_description";
-
-    /** Başka ekranlardan rahat çağırmak için */
-    public static void start(Context context, Recipe recipe) {
-        Intent i = new Intent(context, RecipeDetailActivity.class);
-        // Recipe null gelirse güvenli fallback kullanacağız
-        if (recipe != null) {
-            i.putExtra(EXTRA_TITLE, recipe.getTitle());
-            i.putExtra(EXTRA_DESCRIPTION, recipe.getDescription());
-        }
-        context.startActivity(i);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        TextView titleView = findViewById(R.id.recipeTitle);
-        TextView descView  = findViewById(R.id.recipeDescription);
+        LinearLayout ingGroup = findViewById(R.id.ingredientsGroup);
+        LinearLayout stepsGroup = findViewById(R.id.stepsGroup);
+        LinearLayout tipsGroup = findViewById(R.id.tipsGroup);
 
-        // Intent’ten verileri al
-        String title = getIntent().getStringExtra(EXTRA_TITLE);
-        String desc  = getIntent().getStringExtra(EXTRA_DESCRIPTION);
+        TextView title = findViewById(R.id.titleView);
+        TextView ing = findViewById(R.id.ingredientsView);
+        TextView steps = findViewById(R.id.stepsView);
+        TextView tips = findViewById(R.id.tipsView);
 
-        // Null ise strings.xml'deki not_found'u göster
-        if (title == null || title.trim().isEmpty()) {
-            title = getString(R.string.not_found);
+        String t = getIntent() != null ? getIntent().getStringExtra("title") : null;
+        Recipe r = (t == null) ? null : RecipesData.findByTitle(t);
+
+        if (r == null) {
+            if (title != null) title.setText(getString(R.string.not_found));
+            if (ingGroup != null) ingGroup.setVisibility(View.GONE);
+            if (stepsGroup != null) stepsGroup.setVisibility(View.GONE);
+            if (tipsGroup != null) tipsGroup.setVisibility(View.GONE);
+            return;
         }
-        if (desc == null || desc.trim().isEmpty()) {
-            desc = getString(R.string.not_found);
-        }
 
-        titleView.setText(title);
-        descView.setText(desc);
-        setTitle(title);
+        if (title != null) title.setText(r.getTitle());
+
+        if (r.hasIngredients()) {
+            if (ing != null) ing.setText(r.getIngredients());
+            if (ingGroup != null) ingGroup.setVisibility(View.VISIBLE);
+        } else if (ingGroup != null) ingGroup.setVisibility(View.GONE);
+
+        if (r.hasSteps()) {
+            if (steps != null) steps.setText(r.getSteps());
+            if (stepsGroup != null) stepsGroup.setVisibility(View.VISIBLE);
+        } else if (stepsGroup != null) stepsGroup.setVisibility(View.GONE);
+
+        if (r.hasTips()) {
+            if (tips != null) tips.setText(r.getTips());
+            if (tipsGroup != null) tipsGroup.setVisibility(View.VISIBLE);
+        } else if (tipsGroup != null) tipsGroup.setVisibility(View.GONE);
     }
 }
