@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Uygulama teması -->
     <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <!-- Layoutların kullandığı basit metin stili -->
-    <style name="Text" parent="TextAppearance.AppCompat" />
+    <!-- Bazı kütüphaneler/şablonlar Body adını bekliyor; Body1'e köprü kuralım -->
+    <style name="TextAppearance.AppCompat.Body" parent="TextAppearance.AppCompat.Body1"/>
+    <!-- Eski layout’larda kullanılabilecek basit bir metin stili (opsiyonel) -->
+    <style name="Text" parent="TextAppearance.AppCompat.Body1"/>
 </resources>
