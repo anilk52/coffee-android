@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Uygulamanın ana teması -->
-    <style name="Theme.Coffee" parent="Theme.Material3.Light.NoActionBar">
-        <!-- İstersen özelleştirme: -->
+    <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryContainer">@color/purple_700</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
     </style>
 
-    <!-- Splash teması (Manifest'te SplashActivity'ye atanıyor) -->
+    <!-- Açılış ekranı teması (AndroidX SplashScreen ile) -->
     <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <!-- Arkaplan rengi (colors.xml'de var): -->
+        <!-- Arka plan rengi -->
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <!-- Splash ikon (mevcut adaptive ikonunu kullanalım) -->
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-        <!-- Splash sonrası açılacak tema -->
+
+        <!-- Animasyonlu ikon (mipmap-anydpi-v26/ic_coffee_launcher.xml) -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_coffee_launcher</item>
+
+        <!-- Splash sonrası geçilecek tema -->
         <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
     </style>
-
 </resources>
