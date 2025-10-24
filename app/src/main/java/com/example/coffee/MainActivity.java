@@ -1,7 +1,9 @@
+// app/src/main/java/com/example/coffee/MainActivity.java
 package com.example.coffee;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,20 +17,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView hello = findViewById(R.id.helloText);
-        if (hello != null) hello.setText(getString(R.string.hello));
 
-        Button b1 = findViewById(R.id.btnEspresso);
-        Button b2 = findViewById(R.id.btnFilter);
-        Button b3 = findViewById(R.id.btnAlcohol);
+        Button btnEspresso = findViewById(R.id.btnEspresso);
+        Button btnFilter   = findViewById(R.id.btnFilter);
+        Button btnAlcohol  = findViewById(R.id.btnAlcohol);
 
-        if (b1 != null) b1.setOnClickListener(v -> openList("ESPRESSO"));
-        if (b2 != null) b2.setOnClickListener(v -> openList("FILTER"));
-        if (b3 != null) b3.setOnClickListener(v -> openList("ALCOHOL"));
-    }
+        View.OnClickListener openList = v -> {
+            String category = "ESPRESSO";
+            int id = v.getId();
+            if (id == R.id.btnFilter) {
+                category = "FILTER";
+            } else if (id == R.id.btnAlcohol) {
+                category = "ALCOHOL";
+            }
 
-    private void openList(String category) {
-        Intent i = new Intent(this, RecipeActivity.class);
-        i.putExtra("category", category);
-        startActivity(i);
+            Intent i = new Intent(
+                    MainActivity.this,
+                    com.example.coffee.ui.RecipeActivity.class // <— tam paket adı
+            );
+            i.putExtra("category", category);
+            startActivity(i);
+        };
+
+        btnEspresso.setOnClickListener(openList);
+        btnFilter.setOnClickListener(openList);
+        btnAlcohol.setOnClickListener(openList);
     }
 }
