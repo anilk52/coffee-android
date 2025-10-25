@@ -7,95 +7,103 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowCompat;
 
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
 
-import java.util.List;
-
-/**
- * Tarif detay ekranı (CollapsingToolbar + görsel + içerik).
- * MainActivity -> Intent extra:
- *   "recipe_name" (String)  : Zorunlu değil ama önerilir.
- *   "recipe_desc" (String)  : Opsiyonel; yoksa RecipesData'dan bulunur.
- */
 public class RecipeDetailActivity extends AppCompatActivity {
 
     private MaterialToolbar toolbar;
     private CollapsingToolbarLayout collapsing;
     private ImageView imgHeader;
+
+    // İçerik metni (zaten vardı)
     private TextView txtContent;
+
+    // 4. adımda layout'a eklenecek; şimdilik opsiyonel
+    private TextView txtCupSize;
+    private TextView txtTips;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_recipe_detail);
 
-        // View’ları bağla
+        // View bind
         toolbar = findViewById(R.id.toolbar);
         collapsing = findViewById(R.id.collapsing);
         imgHeader = findViewById(R.id.imgHeader);
         txtContent = findViewById(R.id.txtContent);
 
+        // 4. adımda layout'a eklenecek alanlar; null olabilir
+        txtCupSize = findViewById(R.id.txtCupSize);
+        txtTips = findViewById(R.id.txtTips);
+
+        // Toolbar geri okunu ayarla
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        // Intent’ten gelenler
-        String nameExtra = getIntent().getStringExtra("recipe_name");
-        String descExtra = getIntent().getStringExtra("recipe_desc");
+        // Intent verileri
+        String nameFromList = getIntent().getStringExtra("title");        // RecipeActivity'den geliyor
+        String nameExtra     = getIntent().getStringExtra("recipe_name");  // alternatif
+        String descExtra     = getIntent().getStringExtra("recipe_desc");
 
-        Recipe recipe = null;
+        String nameKey = !TextUtils.isEmpty(nameFromList) ? nameFromList : nameExtra;
 
-        // Eğer sadece isim geldiyse data kaynağından bulmaya çalış
-        if (!TextUtils.isEmpty(nameExtra)) {
-            recipe = findRecipeByName(nameExtra);
-        }
+        // Veriyi bul
+        Recipe recipe = !TextUtils.isEmpty(nameKey) ? RecipesData.findByName(nameKey) : null;
 
         // Başlık
         String title = (recipe != null && !TextUtils.isEmpty(recipe.getName()))
                 ? recipe.getName()
-                : (TextUtils.isEmpty(nameExtra) ? getString(R.string.app_name) : nameExtra);
+                : (!TextUtils.isEmpty(nameKey) ? nameKey : getString(R.string.app_name));
         collapsing.setTitle(title);
 
-        // İçerik (açıklama)
+        // Açıklama (fallback sırası: extra -> recipe.description -> app_name)
         String content =
-                (descExtra != null && !descExtra.trim().isEmpty()) ? descExtra :
-                (recipe != null && recipe.getDescription() != null && !recipe.getDescription().trim().isEmpty())
+                !TextUtils.isEmpty(descExtra) ? descExtra :
+                (recipe != null && !TextUtils.isEmpty(recipe.getDescription()))
                         ? recipe.getDescription()
-                        : getString(R.string.app_name) + " — Afiyet olsun!";
+                        : getString(R.string.app_name);
 
-        txtContent.setText(content);
+        // Cup size & tips (varsa)
+        String cup = (recipe != null && !TextUtils.isEmpty(recipe.getCupSize()))
+                ? recipe.getCupSize() : null;
+        String tips = (recipe != null && !TextUtils.isEmpty(recipe.getTips()))
+                ? recipe.getTips() : null;
 
-        // Üst görsel (varsa); yoksa uygulama ikonu ile devam et
+        // Görsel
         if (recipe != null && recipe.getImageResId() != 0) {
             imgHeader.setImageResource(recipe.getImageResId());
         } else {
-            // Projede hazır olan foreground’u kullanıyoruz; istersen başka bir drawable koy
             imgHeader.setImageResource(R.drawable.ic_launcher_foreground);
         }
-    }
 
-    // Basit isimle arama — RecipesData.getAll() mevcut olmalı
-    private @Nullable Recipe findRecipeByName(String name) {
-        try {
-            List<Recipe> all = RecipesData.getAll(); // Metod ismi farklıysa burada güncelle
-            if (all != null) {
-                for (Recipe r : all) {
-                    if (r != null && r.getName() != null
-                            && r.getName().equalsIgnoreCase(name)) {
-                        return r;
-                    }
-                }
+        // İçerikleri ekrana bas
+        txtContent.setText(content);
+
+        // Eğer 4. adım yapılmış ve bu TextView'lar layout'ta varsa doğrudan yaz
+        if (txtCupSize != null) {
+            txtCupSize.setText(!TextUtils.isEmpty(cup) ? cup : "—");
+        }
+        if (txtTips != null) {
+            txtTips.setText(!TextUtils.isEmpty(tips) ? tips : "—");
+        }
+
+        // Layout'ta özel alanlar henüz yoksa, içerik metnine ekle (geçici-fallback)
+        if (txtCupSize == null || txtTips == null) {
+            StringBuilder sb = new StringBuilder(content);
+            if (!TextUtils.isEmpty(cup)) {
+                sb.append("\n\n").append("Bardak Boyutu: ").append(cup);
             }
-        } catch (Throwable ignore) { /* veri kaynağı farklı olabilir, güvende kal */ }
-        return null;
+            if (!TextUtils.isEmpty(tips)) {
+                sb.append("\n").append("Barista İpucu: ").append(tips);
+            }
+            txtContent.setText(sb.toString());
+        }
     }
 }
