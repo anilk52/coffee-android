@@ -1,17 +1,16 @@
-plugins {
-    id 'com.android.application'
-}
-
 android {
-    namespace 'com.example.coffee'
+    namespace "com.example.coffee"
     compileSdk 34
 
     defaultConfig {
         applicationId "com.example.coffee"
         minSdk 21
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+
+        // Eski cihazlarda vektör desteği
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -25,7 +24,5 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
-
-    // 🔴 SplashScreen attr ve Theme.SplashScreen için şart
-    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
