@@ -1,19 +1,15 @@
-package com.bdino.coffee;
+package com.example.coffee;
 
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bdino.coffee.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
+import com.example.coffee.databinding.ActivityMainBinding;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CoffeeAdapter.OnCoffeeClickListener {
-
     private ActivityMainBinding binding;
     private CoffeeAdapter adapter;
 
@@ -23,15 +19,9 @@ public class MainActivity extends AppCompatActivity implements CoffeeAdapter.OnC
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        List<String> coffees = new ArrayList<>(Arrays.asList(
-                "Türk Kahvesi",
-                "Americano",
-                "Latte",
-                "Cappuccino",
-                "Mocha",
-                "Flat White",
-                "Macchiato"
-        ));
+        List<String> coffees = Arrays.asList(
+                "Türk Kahvesi","Americano","Latte","Cappuccino","Mocha","Flat White","Macchiato"
+        );
 
         adapter = new CoffeeAdapter(coffees, this);
         RecyclerView rv = binding.recyclerView;
