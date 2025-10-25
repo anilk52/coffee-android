@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.splashscreen.SplashScreen;
@@ -16,16 +15,14 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Android 12+ native splash (tema ile eşleşir)
+        // Android 12+ native splash
         SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Fade-in animasyonu uygula
+        // Sadece "☕ Selam Barista!" yazısını fade-in yap
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        ImageView imgLogo = findViewById(R.id.imgLogo);
         TextView txtHello = findViewById(R.id.txtHello);
-        if (imgLogo != null) imgLogo.startAnimation(fadeIn);
         if (txtHello != null) txtHello.startAnimation(fadeIn);
 
         // 1.5 sn sonra ana ekrana geç
