@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.bdino.coffee'
+    namespace 'com.example.coffee'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.bdino.coffee"
+        applicationId "com.example.coffee"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -17,9 +17,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
-            minifyEnabled false
-        }
+        debug { minifyEnabled false }
     }
 
     compileOptions {
@@ -27,9 +25,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildFeatures {
-        viewBinding true
-    }
+    buildFeatures { viewBinding true }
 }
 
 dependencies {
