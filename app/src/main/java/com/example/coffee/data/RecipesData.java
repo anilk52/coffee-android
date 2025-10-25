@@ -7,111 +7,85 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * 5 kategori x 5 kahve = 25 öğe (demo veri)
- * Kategoriler: Espresso, Filtre, Special, Alkollü, Ice
- */
 public class RecipesData {
 
-    private static List<Recipe> CACHE;
+    // Kategori etiketleri (MainActivity’de gönderdiğimiz başlıklarla uyumlu)
+    public static final String CAT_ESPRESSO = "ESPRESSO";
+    public static final String CAT_FILTRE   = "FİLTRE";
+    public static final String CAT_SPECIAL  = "SPECIAL";
+    public static final String CAT_ALKOLLU  = "ALKOLLÜ";
+    public static final String CAT_ICE      = "ICE";
 
+    /** Tüm tarifler (5'er adet) */
     public static List<Recipe> getAll() {
-        if (CACHE != null) return CACHE;
-
         List<Recipe> list = new ArrayList<>();
 
-        // ========== ESPRESSO ==========
-        list.add(new Recipe("Espresso","Yoğun, kısa ve karakterli shot.","Espresso",
-                R.drawable.ic_launcher_foreground,"XS — 30 ml (Demitasse)","25 sn, 18 g, 9 bar… tek yudumda karakter!"));
-        list.add(new Recipe("Ristretto","Daha kısa ve daha yoğun espresso.","Espresso",
-                R.drawable.ic_launcher_foreground,"XS — 20 ml (Demitasse)","Kısa iç, uzun yaşa — aroma zirvede!"));
-        list.add(new Recipe("Lungo","Uzun çekim, daha yumuşak içim.","Espresso",
-                R.drawable.ic_launcher_foreground,"S — 120 ml (Short)","Öğütüm çok ince olmasın; acılık kaçsın."));
-        list.add(new Recipe("Doppio","Çift shot espresso, bol enerji.","Espresso",
-                R.drawable.ic_launcher_foreground,"S — 120 ml (Short)","İki shot, tek ruh — gün senin!"));
-        list.add(new Recipe("Macchiato","Espresso üstüne az süt köpüğü dokunuşu.","Espresso",
-                R.drawable.ic_launcher_foreground,"S — 100 ml (Short)","Az süt, çok ruh: lezzet çizgiyi aşmasın."));
+        // ESPRESSO (5)
+        list.add(new Recipe("Espresso",  "Tek shot, yoğun lezzet. Boyut: S — 30 ml",  CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Ristretto", "Kısa ve daha yoğun. Boyut: S — 20 ml",     CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Lungo",     "Daha uzun akış, daha hafif. Boyut: S — 60 ml", CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Doppio",    "Çift shot. Boyut: S — 60 ml",               CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Macchiato", "Espresso üstüne az süt köpüğü. Boyut: S — 100 ml", CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
 
-        // ========== FİLTRE ==========
-        list.add(new Recipe("Filter Coffee","Klasik makine demlemesi, net gövde.","Filtre",
-                R.drawable.ic_launcher_foreground,"M — 250 ml (Regular)","Orta öğütüm, temiz filtre: tat şeffaf olsun."));
-        list.add(new Recipe("V60 Pour Over","Elle döküş, dengeli ve temiz fincan.","Filtre",
-                R.drawable.ic_launcher_foreground,"M — 250 ml (Regular)","Dairesel dök, nazik ol: akış önemli."));
-        list.add(new Recipe("Chemex","Hafif gövde, kristal berraklık.","Filtre",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","Kalın filtre = pürüzsüz tat; sabır en iyi dostun."));
-        list.add(new Recipe("French Press","Yoğun gövdeli, uzun demleme.","Filtre",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","4 dk bekle; bastıktan sonra hemen servis."));
-        list.add(new Recipe("AeroPress","Hızlı ve pratik basınçlı demleme.","Filtre",
-                R.drawable.ic_launcher_foreground,"M — 220 ml (Regular)","Ters yöntem meraklısına; öğütümü orta seç."));
+        // FİLTRE (5)
+        list.add(new Recipe("Americano",      "Espresso + sıcak su. Boyut: M — 240 ml",  CAT_FILTRE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Pour Over",      "V60 demleme. Boyut: M — 250 ml",          CAT_FILTRE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("French Press",   "Klasik tam gövde. Boyut: M — 300 ml",     CAT_FILTRE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Chemex",         "Temiz ve berrak. Boyut: L — 300 ml",      CAT_FILTRE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("AeroPress",      "Yoğun ama pürüzsüz. Boyut: S — 200 ml",   CAT_FILTRE, R.drawable.ic_launcher_foreground));
 
-        // ========== SPECIAL ==========
-        list.add(new Recipe("Flat White","İnce köpük, dengeli espresso-süt uyumu.","Special",
-                R.drawable.ic_launcher_foreground,"S — 150 ml (Short)","Köpüğü fazla şişirme; dengeyle parılda."));
-        list.add(new Recipe("Cortado","Espresso ile eşit sıcak süt — dengeli.","Special",
-                R.drawable.ic_launcher_foreground,"S — 120 ml (Short)","Asitliği sütle sakinleştir; net tat kalsın."));
-        list.add(new Recipe("Affogato","Espresso + vanilya dondurma: sıcak-soğuk mutluluk.","Special",
-                R.drawable.ic_launcher_foreground,"S — 120 ml (Short)","Dondurmayı eritirken bak: mutluluk akıyor."));
-        list.add(new Recipe("Spanish Latte","Tatlı yoğunlaştırılmış sütlü latte.","Special",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","Tatlı seviyorsan gönülden koy; dengeyi bozma."));
-        list.add(new Recipe("Caramel Latte","Espresso, süt ve karamelin yumuşak buluşması.","Special",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","Karameli önce bardakta çöz; tat eşit yayılsın."));
+        // SPECIAL (5)
+        list.add(new Recipe("Latte",          "Espresso + bol süt. Boyut: L — 300 ml",   CAT_SPECIAL, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Cappuccino",     "Süt köpüğü baskın. Boyut: M — 240 ml",    CAT_SPECIAL, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Flat White",     "Mikroköpük ile dengeli. Boyut: M — 220 ml", CAT_SPECIAL, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Mocha",          "Çikolata + süt + espresso. Boyut: L — 300 ml", CAT_SPECIAL, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Cortado",        "Espresso: süt = 1:1. Boyut: S — 120 ml",  CAT_SPECIAL, R.drawable.ic_launcher_foreground));
 
-        // ========== ALKOLLÜ ==========
-        list.add(new Recipe("Irish Coffee","Espresso, viski ve krema — efsane üçlü.","Alkollü",
-                R.drawable.ic_launcher_foreground,"M — 250 ml (Regular)","Viski önce, krema en son: katmanlar konuşsun."));
-        list.add(new Recipe("Baileys Latte","Sütlü latteye Baileys dokunuşu.","Alkollü",
-                R.drawable.ic_launcher_foreground,"M — 250 ml (Regular)","Baileys’i ısıtma; aromasını koru."));
-        list.add(new Recipe("Kahlua Mocha","Espresso + çikolata + Kahlua: tatlı-sert denge.","Alkollü",
-                R.drawable.ic_launcher_foreground,"M — 250 ml (Regular)","Likörü az az ekle; kahve başrolde kalsın."));
-        list.add(new Recipe("Espresso Martini","Kokteyl bardağında şık kahve kokteyli.","Alkollü",
-                R.drawable.ic_launcher_foreground,"S — 150 ml (Short)","Shake iyi yap; üstte ince köpük şart."));
-        list.add(new Recipe("Amaretto Coffee","Badem likörlü sıcak kahve.","Alkollü",
-                R.drawable.ic_launcher_foreground,"M — 200 ml (Regular)","Badem aroması baskınsa kahveyi bir tık güçlendir."));
+        // ALKOLLÜ (5)
+        list.add(new Recipe("Irish Coffee",   "Viski + kahve + krema. Boyut: L — 250 ml", CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Espresso Martini","Votka + kahve likörü + espresso. Boyut: S — 120 ml", CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Carajillo",      "Brandy + espresso. Boyut: S — 120 ml",    CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Kahlúa Latte",   "Kahve likörü + süt. Boyut: M — 240 ml",   CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Baileys Coffee", "Baileys + kahve. Boyut: M — 240 ml",      CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
 
-        // ========== ICE ==========
-        list.add(new Recipe("Iced Americano","Espresso, soğuk su ve buz — ferahlatıcı.","Ice",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","Önce su, sonra buz: sulanmayı kontrol et."));
-        list.add(new Recipe("Iced Latte","Espresso ve soğuk süt — yaz klasiği.","Ice",
-                R.drawable.ic_launcher_foreground,"XL — 400 ml (Grande)","Buzu bol koy; yazı uzat."));
-        list.add(new Recipe("Cold Brew","Uzun süre soğuk demleme — ipeksi içim.","Ice",
-                R.drawable.ic_launcher_foreground,"L — 300 ml (Tall)","12 saat beklet; sabır fincana değer."));
-        list.add(new Recipe("Frappe","Buzlu, kremsi ve enerjik karışım.","Ice",
-                R.drawable.ic_launcher_foreground,"XL — 450 ml (Grande)","Buzu ezmeden karıştır; köpük doğal gelsin."));
-        list.add(new Recipe("Mocha Frappe","Çikolata soslu buzlu kahve keyfi.","Ice",
-                R.drawable.ic_launcher_foreground,"XL — 450 ml (Grande)","Çikolatayı önce çözdür; tat eşit dağılmalı."));
+        // ICE (5)
+        list.add(new Recipe("Iced Americano", "Espresso + soğuk su + buz. Boyut: L — 300 ml", CAT_ICE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Iced Latte",     "Espresso + süt + buz. Boyut: L — 300 ml", CAT_ICE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Cold Brew",      "12–18 saat demleme. Boyut: L — 300 ml",   CAT_ICE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Affogato",       "Espresso + dondurma. Boyut: S — 150 ml",  CAT_ICE, R.drawable.ic_launcher_foreground));
+        list.add(new Recipe("Frappe",         "Blender köpüklü. Boyut: L — 350 ml",      CAT_ICE, R.drawable.ic_launcher_foreground));
 
-        CACHE = Collections.unmodifiableList(list);
-        return CACHE;
+        return list;
     }
 
-    // ---- Yardımcılar ----
+    /** İsme göre tarif bul */
     public static Recipe findByName(String name) {
         if (name == null || name.trim().isEmpty()) return null;
         for (Recipe r : getAll()) {
-            if (r.getName() != null && r.getName().equalsIgnoreCase(name.trim())) return r;
+            if (r.getName().equalsIgnoreCase(name.trim())) {
+                return r;
+            }
         }
         return null;
     }
 
-    public static List<Recipe> byCategory(String category) {
-        if (category == null || category.trim().isEmpty()) return Collections.emptyList();
-        String c = category.trim();
-        List<Recipe> out = new ArrayList<>();
-        for (Recipe r : getAll()) {
-            if (c.equalsIgnoreCase(r.getCategory())) out.add(r);
-        }
+    /** Tüm başlıklar (kategori bağımsız) */
+    public static List<String> allTitles() {
+        List<String> out = new ArrayList<>();
+        for (Recipe r : getAll()) out.add(r.getName());
         return out;
     }
 
-    public static List<String> allTitles() {
-        List<String> titles = new ArrayList<>();
-        for (Recipe r : getAll()) if (r.getName() != null) titles.add(r.getName());
-        return titles;
-    }
-
+    /** Kategoriye göre başlıklar */
     public static List<String> titlesForCategory(String category) {
-        List<String> titles = new ArrayList<>();
-        for (Recipe r : byCategory(category)) if (r.getName() != null) titles.add(r.getName());
-        return titles;
-    }
+        if (category == null || category.trim().isEmpty()) return Collections.emptyList();
+        String key = category.trim().toUpperCase();
+        List<String> out = new ArrayList<>();
+        for (Recipe r : getAll()) {
+            if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(key)) {
+                out.add(r.getName());
+            }
+        }
+        return out;
+        }
 }
