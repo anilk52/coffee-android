@@ -2,23 +2,25 @@
 <resources>
 
     <!-- Uygulama adı -->
-    <string name="app_name">Coffee</string>
+    <string name="app_name">Bdino Coffee</string>
     <!-- app_name'in alias'ı (RecipeDetailActivity yedek başlık için) -->
     <string name="app_name_">@string/app_name</string>
 
     <!-- Menü - arama -->
     <string name="search">Ara</string>
 
-    <!-- Senin mevcut metinlerin -->
+    <!-- Kategoriler -->
     <string name="hello">Merhaba!</string>
     <string name="espresso">ESPRESSO BAZLILAR</string>
     <string name="filter">FİLTRE KAHVELER</string>
     <string name="alcohol">ALKOLLÜ KAHVELER</string>
 
+    <!-- Tarif detay metinleri -->
     <string name="ingredients">Ingredients</string>
     <string name="steps">Preparation</string>
     <string name="tips">Barista Tips</string>
 
+    <!-- Hata ve boş liste mesajları -->
     <string name="no_recipes">No recipes available.</string>
     <string name="not_found">Recipe not found.</string>
 
