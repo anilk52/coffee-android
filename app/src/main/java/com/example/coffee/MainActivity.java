@@ -1,67 +1,46 @@
-package com.example.coffee;
+package com.bdino.coffee;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.WindowCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coffee.data.RecipesData;
-import com.example.coffee.model.Recipe;
-import com.example.coffee.ui.RecipeAdapter;
-import com.example.coffee.ui.RecipeDetailActivity;
-import com.google.android.material.appbar.MaterialToolbar;
+import com.bdino.coffee.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CoffeeAdapter.OnCoffeeClickListener {
 
-    private RecipeAdapter adapter;
+    private ActivityMainBinding binding;
+    private CoffeeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        List<String> coffees = new ArrayList<>(Arrays.asList(
+                "Türk Kahvesi",
+                "Americano",
+                "Latte",
+                "Cappuccino",
+                "Mocha",
+                "Flat White",
+                "Macchiato"
+        ));
 
-        RecyclerView rv = findViewById(R.id.rvRecipes);
-        adapter = new RecipeAdapter(recipe -> {
-            Intent i = new Intent(this, RecipeDetailActivity.class);
-            // id / name vs. ne taşıyorsan:
-            i.putExtra("recipe_name", recipe.getName());
-            startActivity(i);
-        });
+        adapter = new CoffeeAdapter(coffees, this);
+        RecyclerView rv = binding.recyclerView;
+        rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
-
-        // DEMO veri bağla (RecipesData içindeki uygun metodu kullan)
-        List<Recipe> list = RecipesData.getAll(); // <-- eğer metot adı farklıysa (örn. getRecipes()) olarak değiştir
-        adapter.submit(list);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView sv = (SearchView) item.getActionView();
-        sv.setQueryHint(getString(R.string.search));
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String q) {
-                adapter.filter(q);
-                return true;
-            }
-            @Override public boolean onQueryTextChange(String q) {
-                adapter.filter(q);
-                return true;
-            }
-        });
-        return true;
+    public void onCoffeeClick(String name) {
+        Toast.makeText(this, name + " seçildi", Toast.LENGTH_SHORT).show();
     }
 }
