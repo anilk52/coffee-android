@@ -1,41 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.coffee">
+    package="com.bdino.coffee">
 
     <application
         android:allowBackup="true"
-        android:label="Bdino Coffee"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:label="Bdino Coffee"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Coffee">
-
-        <!-- LAUNCHER (ilk açılan ekran) -->
-        <activity
-            <activity
-    android:name=".SplashActivity" 
-    android:exported="true"
-    android:theme="@style/Theme.Coffee.Splash">
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-</activity>
-
-        <!-- Ana ekran -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Kahve listesi -->
-        <activity
-            android:name=".ui.RecipeActivity"
-            android:exported="false" />
-
-        <!-- Kahve detayı -->
-        <activity
-            android:name=".ui.RecipeDetailActivity"
-            android:exported="false" />
+        android:theme="@style/Theme.BdinoCoffee">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
-
 </manifest>
