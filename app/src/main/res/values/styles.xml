@@ -1,10 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Uygulama ana teması -->
-    <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorSecondary">@color/teal_200</item>
+    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#795548</item>
+        <item name="colorPrimaryVariant">#5D4037</item>
+        <item name="colorSecondary">#FFA000</item>
+    </style>
+
+    <!-- Eski cihazlarda çalışan splash tanımı (API < 31) -->
+    <style name="Theme.Coffee.Splash" parent="Theme.Coffee">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>
