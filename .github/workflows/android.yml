@@ -1,35 +1,26 @@
 name: Android CI
+
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
+      - uses: actions/checkout@v4
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install SDK components
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
-
-      - name: Clean Gradle
-        run: ./gradlew clean
-
-      - name: Build debug APK
-        run: ./gradlew --no-daemon assembleDebug
-
-      - name: Upload APK artifact
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
