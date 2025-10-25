@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Uygulama teması: sade, sağlam bir temel -->
+    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- İstersen renkleri değiştir -->
+        <item name="colorPrimary">#795548</item>
+        <item name="colorPrimaryVariant">#5D4037</item>
+        <item name="colorSecondary">#FFA000</item>
 
-    <!-- Uygulamanın temel teması -->
-    <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
+        <!-- Eski cihazlarda sorun çıkarmasın -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <!-- Splash ekran teması (AndroidX SplashScreen) -->
-    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <!-- Arka plan -->
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-
-        <!-- 🔹 Kullanılan ikon: mipmap-anydpi/ic_launcher.xml -->
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-
-        <!-- Splash sonrası geçilecek tema -->
-        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
+    <!-- Eski API’lerde çalışan Splash teması -->
+    <style name="Theme.Coffee.Splash" parent="Theme.Coffee">
+        <item name="android:windowBackground">@color/ic_launcher_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
-
 </resources>
