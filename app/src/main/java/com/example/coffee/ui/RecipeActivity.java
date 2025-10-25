@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
@@ -17,34 +18,43 @@ import java.util.List;
 public class RecipeActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
         ListView listView = findViewById(R.id.recipesList);
-        TextView empty = findViewById(R.id.emptyView);
+        TextView emptyView = findViewById(R.id.emptyView);
 
+        // MainActivity’den gelen kategori (Espresso / Filtre / Special / Alkollü / Ice)
         String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
-        List<String> titles = (category == null)
+
+        // Kategoriye göre başlıkları al
+        List<String> titles = (category == null || category.trim().isEmpty())
                 ? RecipesData.allTitles()
                 : RecipesData.titlesForCategory(category);
 
+        // Boş durum kontrolü
         if (titles == null || titles.isEmpty()) {
-            if (empty != null) empty.setVisibility(View.VISIBLE);
+            if (emptyView != null) {
+                emptyView.setText(R.string.no_recipes);
+                emptyView.setVisibility(View.VISIBLE);
+            }
             if (listView != null) listView.setVisibility(View.GONE);
             return;
         }
 
-        if (empty != null) empty.setVisibility(View.GONE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, titles);
-        listView.setAdapter(adapter);
+        if (emptyView != null) emptyView.setVisibility(View.GONE);
+        if (listView != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_list_item_1, titles);
+            listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((p, v, pos, id) -> {
-            String title = adapter.getItem(pos);
-            Intent i = new Intent(this, RecipeDetailActivity.class);
-            i.putExtra("title", title);
-            startActivity(i);
-        });
+            listView.setOnItemClickListener((parent, view, position, id) -> {
+                String title = adapter.getItem(position);
+                Intent i = new Intent(this, RecipeDetailActivity.class);
+                i.putExtra("title", title);
+                startActivity(i);
+            });
+        }
     }
 }
