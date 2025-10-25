@@ -1,17 +1,17 @@
 <resources>
 
-    <!-- Ana tema -->
-    <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">#6F4E37</item>
-        <item name="colorPrimaryContainer">#B38867</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">#A1887F</item>
-        <item name="android:statusBarColor">@color/ic_launcher_background</item>
+    <!-- Ana Tema -->
+    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/bdino_brown</item>
+        <item name="colorPrimaryVariant">@color/bdino_light_brown</item>
+        <item name="colorSecondary">@color/bdino_light_brown</item>
+        <item name="android:statusBarColor">@color/bdino_dark</item>
+        <item name="android:windowBackground">@color/bdino_beige</item>
     </style>
 
-    <!-- Splash teması -->
+    <!-- Splash Teması -->
     <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenBackground">@color/bdino_brown</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
     </style>
