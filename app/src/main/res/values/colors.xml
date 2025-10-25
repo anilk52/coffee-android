@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_500">#6750A4</color>
-    <color name="purple_700">#4F378B</color>
-    <color name="teal_200">#03DAC5</color>
-    <color name="black">#000000</color>
+
+    <!-- ☕ Bdino Coffee Renk Paleti -->
+    <color name="bdino_brown">#6F4E37</color>         <!-- Ana kahve tonu -->
+    <color name="bdino_light_brown">#B38867</color>  <!-- İkincil kahve tonu -->
+    <color name="bdino_beige">#FFF8F0</color>        <!-- Arka plan ve metin alanı -->
+    <color name="bdino_cream">#F5E6D3</color>        <!-- Kart zeminleri -->
+    <color name="bdino_dark">#2C1E12</color>         <!-- Yazı kontrastı için -->
     <color name="white">#FFFFFF</color>
-    <color name="ic_launcher_background">#6F4E37</color> <!-- kahve tonu -->
+    <color name="black">#000000</color>
+
 </resources>
