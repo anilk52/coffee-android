@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.coffee">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BdinoCoffee">
+        android:theme="@style/Theme.Coffee">
 
-        <!-- Tarif ekranları -->
-        <activity android:name=".ui.RecipeDetailActivity" />
-        <activity android:name=".ui.RecipeActivity" />
-
-        <!-- İstersen Splash'ı sonradan açarsın; şu an exported=false -->
-        <activity android:name=".SplashActivity" android:exported="false" />
-
-        <!-- Launcher -->
+        <!-- SplashActivity artık ilk açılan ekran -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Ana ekran -->
+        <activity android:name=".MainActivity" />
+
+        <!-- Tarif ekranları -->
+        <activity android:name=".ui.RecipeActivity" />
+        <activity android:name=".ui.RecipeDetailActivity" />
 
     </application>
 </manifest>
