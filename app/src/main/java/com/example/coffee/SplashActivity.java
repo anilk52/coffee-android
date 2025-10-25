@@ -1,23 +1,15 @@
 package com.example.coffee;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class SplashActivity extends AppCompatActivity {
-    private static final long SPLASH_DELAY_MS = 700;
-
+public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
-        }, SPLASH_DELAY_MS);
+        // Görsel/tema üzerinden splash gösteriyoruz; layout gerekmiyor
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
