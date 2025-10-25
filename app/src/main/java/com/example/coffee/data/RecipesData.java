@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * RecipesData — uygulamada kullanılacak kahve tariflerini sağlar.
- * getAll() metodu Recipe listesini döndürür.
- * findByName() metodu isme göre tarif bulur.
  */
 public class RecipesData {
 
@@ -71,5 +69,25 @@ public class RecipesData {
             }
         }
         return null;
+    }
+
+    // ❗RecipeActivity'nin kullandığı başlık listeleri
+    public static List<String> allTitles() {
+        List<String> titles = new ArrayList<>();
+        for (Recipe r : getAll()) {
+            if (r != null && r.getName() != null) titles.add(r.getName());
+        }
+        return titles;
+    }
+
+    public static List<String> titlesForCategory(String category) {
+        List<String> titles = new ArrayList<>();
+        if (category == null || category.trim().isEmpty()) return titles;
+        String c = category.trim().toLowerCase();
+        for (Recipe r : getAll()) {
+            String rc = r.getCategory() == null ? "" : r.getCategory().toLowerCase();
+            if (rc.contains(c)) titles.add(r.getName());
+        }
+        return titles;
     }
 }
