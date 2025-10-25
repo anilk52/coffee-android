@@ -1,17 +1,16 @@
 package com.example.coffee;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.coffee.databinding.ActivityMainBinding;
-import java.util.Arrays;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CoffeeAdapter.OnCoffeeClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.coffee.databinding.ActivityMainBinding;
+import com.example.coffee.ui.RecipeActivity;
+
+public class MainActivity extends AppCompatActivity {
+
     private ActivityMainBinding binding;
-    private CoffeeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,18 +18,19 @@ public class MainActivity extends AppCompatActivity implements CoffeeAdapter.OnC
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        List<String> coffees = Arrays.asList(
-                "Türk Kahvesi","Americano","Latte","Cappuccino","Mocha","Flat White","Macchiato"
-        );
+        binding.btnEspresso.setOnClickListener(v ->
+                openCategory("Espresso Bazlı"));
 
-        adapter = new CoffeeAdapter(coffees, this);
-        RecyclerView rv = binding.recyclerView;
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(adapter);
+        binding.btnFilter.setOnClickListener(v ->
+                openCategory("Filtre Kahve"));
+
+        binding.btnAlcohol.setOnClickListener(v ->
+                openCategory("Alkollü Kahve"));
     }
 
-    @Override
-    public void onCoffeeClick(String name) {
-        Toast.makeText(this, name + " seçildi", Toast.LENGTH_SHORT).show();
+    private void openCategory(String category) {
+        Intent i = new Intent(this, RecipeActivity.class);
+        i.putExtra("category", category);
+        startActivity(i);
     }
 }
