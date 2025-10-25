@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    
+    <string name="app_name">Bdino Coffee</string>
+    
     <!-- Uygulama adı -->
     <string name="app_name">Bdino Coffee</string>
     <!-- app_name'in alias'ı (RecipeDetailActivity yedek başlık için) -->
