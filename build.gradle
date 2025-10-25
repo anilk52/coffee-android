@@ -1,10 +1,9 @@
-plugins {
-    id 'com.android.application' version '8.6.1' apply false
-    id 'com.android.library' version '8.6.1' apply false
-    // Kotlin gerekirse aktif et:
-    // id 'org.jetbrains.kotlin.android' version '1.9.24' apply false
+// Top-level build file
+buildscript {
+    repositories { google(); mavenCentral() }
+    dependencies { classpath "com.android.tools.build:gradle:8.6.0" }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+allprojects { repositories { google(); mavenCentral() } }
+
+tasks.register("clean", Delete) { delete rootProject.layout.buildDirectory }
