@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Coffee</string>
-
-    <string name="hello">Merhaba!</string>
-    <string name="espresso">ESPRESSO BAZLILAR</string>
-    <string name="filter">FİLTRE KAHVELER</string>
-    <string name="alcohol">ALKOLLÜ KAHVELER</string>
-
-    <string name="ingredients">Ingredients</string>
-    <string name="steps">Preparation</string>
-    <string name="tips">Barista Tips</string>
-    <string name="no_recipes">No recipes available.</string>
-    <string name="not_found">Recipe not found.</string>
+    <string name="app_name">Bidino Coffee</string>
+    <string name="search">Ara</string>
+    <!-- item_recipe.xml için örnek içerik -->
+    <string name="app_name_">Kahve</string>
 </resources>
