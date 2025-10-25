@@ -9,11 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
-        <activity android:name=".MainActivity">
+
+        <!-- Splash'ı kullanmak istiyorsan LAUNCHER buna ver; yoksa bırak. -->
+        <!--
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        -->
+
+        <activity android:name=".ui.RecipeDetailActivity" />
+        <activity android:name=".ui.RecipeActivity" />
+
+        <activity android:name=".MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
