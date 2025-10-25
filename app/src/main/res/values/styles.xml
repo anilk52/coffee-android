@@ -1,20 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Uygulamanın ana teması -->
+
+    <!-- Uygulamanın temel teması -->
     <style name="Theme.Coffee" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorAccent">@color/teal_200</item>
     </style>
 
-    <!-- Açılış ekranı teması (AndroidX SplashScreen ile) -->
+    <!-- Splash ekran teması (AndroidX SplashScreen) -->
     <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <!-- Arka plan rengi -->
+        <!-- Arka plan -->
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
 
-        <!-- Animasyonlu ikon (mipmap-anydpi-v26/ic_coffee_launcher.xml) -->
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_coffee_launcher</item>
+        <!-- 🔹 Kullanılan ikon: mipmap-anydpi/ic_launcher.xml -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
 
         <!-- Splash sonrası geçilecek tema -->
         <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
     </style>
+
 </resources>
