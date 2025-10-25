@@ -4,14 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_marginBottom="12dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp"
-    app:contentPadding="12dp"
     app:shapeAppearanceOverlay="@style/Shape.RoundedXL">
 
-    <!-- Satır düzeni -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -35,24 +33,20 @@
             <TextView
                 android:id="@+id/txtTitle"
                 style="@style/Text.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Latte" />
+                android:text="Latte"/>
 
             <TextView
                 android:id="@+id/txtSubtitle"
                 style="@style/Text.Body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sütlü, yumuşak tat" />
+                android:text="Sütlü, yumuşak tat"/>
+
+            <!-- M2 hatasını çözen değişiklik: Material3 Chip stili -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCategory"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:text="Sıcak" />
         </LinearLayout>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipCategory"
-            style="@style/Widget.MaterialComponents.Chip.Assist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sıcak"/>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
