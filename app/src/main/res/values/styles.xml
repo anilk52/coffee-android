@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Uygulama teması -->
+    <!-- Uygulama ana teması -->
     <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Eski cihazlarda güvenli: -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <!-- Android 12+ Splash -->
-    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
-    </style>
-
-    <!-- ====== Typography grubu ====== -->
-    <style name="Text"/>
-    <style name="Text.Title" parent="TextAppearance.Material3.TitleMedium"/>
-    <style name="Text.Body" parent="TextAppearance.Material3.BodyMedium"/>
-
-    <!-- ====== Shape grubu (kart köşeleri için) ====== -->
-    <style name="Shape"/>
-    <style name="Shape.RoundedXL" parent="ShapeAppearance.Material3.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">20dp</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorSecondary">@color/teal_200</item>
     </style>
 
 </resources>
