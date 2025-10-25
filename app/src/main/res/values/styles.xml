@@ -1,36 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Uygulama teması: sade, sağlam bir temel -->
+
+    <!-- Uygulama teması -->
     <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- İstersen renkleri değiştir -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorPrimary">#795548</item>
         <item name="colorPrimaryVariant">#5D4037</item>
         <item name="colorSecondary">#FFA000</item>
-
-        <!-- Eski cihazlarda sorun çıkarmasın -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <!-- Eski API’lerde çalışan Splash teması -->
+    <!-- Eski API’lerde (API < 31) Splash için kullandığımız tema -->
     <style name="Theme.Coffee.Splash" parent="Theme.Coffee">
         <item name="android:windowBackground">@color/ic_launcher_background</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <!-- Kartlarda büyük yuvarlatma -->
-<style name="Shape.RoundedXL" parent="">
-    <item name="cornerFamily">rounded</item>
-    <item name="cornerSize">20dp</item>
-</style>
+    <!-- Kartlar için köşe yuvarlama (item_recipe.xml’de app:shapeAppearanceOverlay) -->
+    <style name="Shape.RoundedXL">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
 
-<!-- Başlık / içerik metinleri -->
-<style name="Text.Title">
-    <item name="android:textSize">18sp</item>
-    <item name="android:textStyle">bold</item>
-</style>
-<style name="Text.Body">
-    <item name="android:textSize">14sp</item>
-    <item name="android:textColor">#99000000</item>
-</style>
+    <!-- METİN STİLLERİ -->
+    <!-- Genel bir temel stil istersen -->
+    <style name="Text" parent="TextAppearance.MaterialComponents.Body1"/>
+
+    <style name="Text.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Text.Body" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>
