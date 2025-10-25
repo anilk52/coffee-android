@@ -4,38 +4,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:background="#121212"
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/txtHello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello"
-        android:textSize="28sp"
-        android:layout_marginBottom="24dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnEspresso"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/espresso"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Merhaba!"
+        android:textColor="#EDE0D4"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 5 kategori butonu -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEspresso"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ESPRESSO"
+        android:textAllCaps="true"
+        android:textColor="#B38867"
+        app:strokeColor="#B38867"
+        app:strokeWidth="2dp"
+        android:layout_marginBottom="12dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnFilter"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_marginBottom="8dp"/>
+        android:text="FİLTRE"
+        android:textAllCaps="true"
+        android:textColor="#B38867"
+        app:strokeColor="#B38867"
+        app:strokeWidth="2dp"
+        android:layout_marginBottom="12dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSpecial"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SPECIAL"
+        android:textAllCaps="true"
+        android:textColor="#B38867"
+        app:strokeColor="#B38867"
+        app:strokeWidth="2dp"
+        android:layout_marginBottom="12dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAlcohol"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/alcohol"
-        style="?attr/materialButtonOutlinedStyle"/>
+        android:text="ALKOLLÜ"
+        android:textAllCaps="true"
+        android:textColor="#B38867"
+        app:strokeColor="#B38867"
+        app:strokeWidth="2dp"
+        android:layout_marginBottom="12dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnIce"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ICE"
+        android:textAllCaps="true"
+        android:textColor="#B38867"
+        app:strokeColor="#B38867"
+        app:strokeWidth="2dp"/>
+
 </LinearLayout>
