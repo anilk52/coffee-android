@@ -4,12 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_margin="12dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp"
+    app:contentPadding="12dp"
     app:shapeAppearanceOverlay="@style/Shape.RoundedXL">
 
+    <!-- Satır düzeni -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,11 +23,11 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="@string/app_name"/>
+            android:contentDescription="@string/app_name" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -33,17 +35,24 @@
             <TextView
                 android:id="@+id/txtTitle"
                 style="@style/Text.Title"
-                android:text="Latte"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latte" />
 
             <TextView
                 android:id="@+id/txtSubtitle"
                 style="@style/Text.Body"
-                android:text="Sütlü, yumuşak tat"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sütlü, yumuşak tat" />
         </LinearLayout>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipCategory"
             style="@style/Widget.MaterialComponents.Chip.Assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Sıcak"/>
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>
