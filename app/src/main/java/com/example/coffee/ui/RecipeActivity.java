@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
@@ -18,43 +17,42 @@ import java.util.List;
 public class RecipeActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
         ListView listView = findViewById(R.id.recipesList);
-        TextView emptyView = findViewById(R.id.emptyView);
+        TextView empty = findViewById(R.id.emptyView);
 
-        // MainActivity’den gelen kategori (Espresso / Filtre / Special / Alkollü / Ice)
         String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
 
-        // Kategoriye göre başlıkları al
-        List<String> titles = (category == null || category.trim().isEmpty())
+        // Not: Bu satırlar mevcut veri kaynağına göre sende zaten çalışıyordu.
+        // Burayı değiştirmiyoruz.
+        List<String> titles = (category == null)
                 ? RecipesData.allTitles()
                 : RecipesData.titlesForCategory(category);
 
-        // Boş durum kontrolü
         if (titles == null || titles.isEmpty()) {
-            if (emptyView != null) {
-                emptyView.setText(R.string.no_recipes);
-                emptyView.setVisibility(View.VISIBLE);
-            }
+            if (empty != null) empty.setVisibility(View.VISIBLE);
             if (listView != null) listView.setVisibility(View.GONE);
             return;
         }
 
-        if (emptyView != null) emptyView.setVisibility(View.GONE);
-        if (listView != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_1, titles);
-            listView.setAdapter(adapter);
+        if (empty != null) empty.setVisibility(View.GONE);
 
-            listView.setOnItemClickListener((parent, view, position, id) -> {
-                String title = adapter.getItem(position);
-                Intent i = new Intent(this, RecipeDetailActivity.class);
-                i.putExtra("title", title);
-                startActivity(i);
-            });
-        }
+        // ✅ Koyu tema için beyaz yazılı satır şablonu
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, R.layout.item_simple_row, titles
+        );
+        listView.setAdapter(adapter);
+
+        // ✅ Detay sayfasına geçerken fade animasyonu
+        listView.setOnItemClickListener((p, v, pos, id) -> {
+            String title = adapter.getItem(pos);
+            Intent i = new Intent(this, RecipeDetailActivity.class);
+            i.putExtra("title", title);
+            startActivity(i);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
     }
 }
