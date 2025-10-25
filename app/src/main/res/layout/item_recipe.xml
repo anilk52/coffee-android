@@ -5,39 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
+    android:foreground="?attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp"
     app:shapeAppearanceOverlay="@style/Shape.RoundedXL">
 
     <LinearLayout
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/ic_coffee"   <!-- küçük vektör ikon -->
-            android:contentDescription="@string/app_name" />
+            android:src="@drawable/ic_launcher_foreground"
+            android:contentDescription="@string/app_name"/>
 
         <LinearLayout
-            android:layout_marginStart="12dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtTitle"
                 style="@style/Text.Title"
-                android:text="Espresso" />
+                android:text="Latte"/>
 
             <TextView
                 android:id="@+id/txtSubtitle"
                 style="@style/Text.Body"
-                android:text="Yoğun, çift shot." />
+                android:text="Sütlü, yumuşak tat"/>
         </LinearLayout>
 
         <com.google.android.material.chip.Chip
