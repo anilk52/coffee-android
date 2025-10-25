@@ -17,4 +17,20 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <!-- Kartlarda büyük yuvarlatma -->
+<style name="Shape.RoundedXL" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSize">20dp</item>
+</style>
+
+<!-- Başlık / içerik metinleri -->
+<style name="Text.Title">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textStyle">bold</item>
+</style>
+<style name="Text.Body">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">#99000000</item>
+</style>
 </resources>
