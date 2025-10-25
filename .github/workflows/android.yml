@@ -1,5 +1,4 @@
 name: Android CI
-
 on:
   push:
     branches: [ "main" ]
@@ -8,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,21 +15,13 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Install SDK components
-        run: |
-          sdkmanager --update
-          sdkmanager "platform-tools" "tools"
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
-          # Eski platformları da ekle (aapt2 font referansları için güvenli)
-          sdkmanager "platforms;android-33" "platforms;android-30" "platforms;android-28"
-
-      - name: Make Gradle wrapper executable
-        run: chmod +x ./gradlew
+        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
       - name: Clean Gradle
         run: ./gradlew clean
