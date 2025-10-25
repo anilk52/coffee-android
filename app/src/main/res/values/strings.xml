@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <!-- Uygulama adı (TEK KEZ) -->
     <string name="app_name">Bdino Coffee</string>
-    
-    <!-- Uygulama adı -->
-    <string name="app_name">Bdino Coffee</string>
-    <!-- app_name'in alias'ı (RecipeDetailActivity yedek başlık için) -->
+    <!-- alias -->
     <string name="app_name_">@string/app_name</string>
 
     <!-- Menü - arama -->
@@ -25,5 +22,4 @@
     <!-- Hata ve boş liste mesajları -->
     <string name="no_recipes">No recipes available.</string>
     <string name="not_found">Recipe not found.</string>
-
 </resources>
