@@ -1,0 +1,5 @@
+<!-- res/values-night/colors.xml -->
+<resources>
+    <color name="colorPrimary">#B38867</color>
+    <color name="colorSecondary">#8B6B5E</color>
+</resources>
