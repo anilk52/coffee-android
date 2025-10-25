@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bidino Coffee</string>
+    <string name="app_name">Bdino Coffee</string>
     <string name="search">Ara</string>
     <!-- item_recipe.xml için örnek içerik -->
     <string name="app_name_">Kahve</string>
