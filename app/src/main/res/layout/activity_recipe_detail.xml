@@ -45,9 +45,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:dividerPadding="8dp"
             android:showDividers="middle"
-            android:divider="?android:attr/dividerVertical">
+            android:divider="?android:attr/dividerVertical"
+            android:dividerPadding="8dp">
 
             <!-- Açıklama -->
             <TextView
@@ -128,3 +128,4 @@
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+```0
