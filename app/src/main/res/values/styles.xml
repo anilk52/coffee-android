@@ -1,17 +1,19 @@
 <resources>
 
-    <!-- Uygulama ana teması -->
-    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#795548</item>
-        <item name="colorPrimaryVariant">#5D4037</item>
-        <item name="colorSecondary">#FFA000</item>
+    <!-- Ana tema -->
+    <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#6F4E37</item>
+        <item name="colorPrimaryContainer">#B38867</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#A1887F</item>
+        <item name="android:statusBarColor">@color/ic_launcher_background</item>
     </style>
 
-    <!-- Eski cihazlarda çalışan splash tanımı (API < 31) -->
-    <style name="Theme.Coffee.Splash" parent="Theme.Coffee">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowNoTitle">true</item>
+    <!-- Splash teması -->
+    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
     </style>
 
 </resources>
