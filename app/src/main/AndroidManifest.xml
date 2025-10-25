@@ -7,9 +7,10 @@
         android:label="Bdino Coffee"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Açılış (LAUNCHER) -->
+        <!-- LAUNCHER (ilk açılan ekran) -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -25,12 +26,15 @@
             android:name=".MainActivity"
             android:exported="false" />
 
-        <!-- Liste ve detay ekranları -->
+        <!-- Kahve listesi -->
         <activity
             android:name=".ui.RecipeActivity"
             android:exported="false" />
+
+        <!-- Kahve detayı -->
         <activity
             android:name=".ui.RecipeDetailActivity"
             android:exported="false" />
     </application>
+
 </manifest>
