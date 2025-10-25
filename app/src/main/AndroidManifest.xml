@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.coffee">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -10,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
 
-        <!-- Splash ilk açılan ekran -->
+        <!-- LAUNCHER: Splash -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -21,7 +20,10 @@
             </intent-filter>
         </activity>
 
+        <!-- Ana ekran -->
         <activity android:name=".MainActivity" />
+
+        <!-- Liste ve detay -->
         <activity android:name=".ui.RecipeActivity" />
         <activity android:name=".ui.RecipeDetailActivity" />
 
