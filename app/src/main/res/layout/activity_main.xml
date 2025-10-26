@@ -1,204 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bdino_beige">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp">
 
         <TextView
-            android:id="@+id/tvGreeting"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtHello"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="☕ Selam Barista!"
             android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="@color/bdino_dark"
-            android:paddingBottom="12dp"/>
+            android:textSize="26sp"
+            android:paddingBottom="16dp" />
 
-        <!-- 2 sütun grid -->
-        <androidx.gridlayout.widget.GridLayout
+        <Button
+            android:id="@+id/btnEspresso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="3"
-            android:useDefaultMargins="true">
+            android:text="Espresso" />
 
-            <!-- ESPRESSO -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardEspresso"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="18dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/bdino_light_brown">
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
+        <Button
+            android:id="@+id/btnFiltre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filtre" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="☕"
-                        android:textSize="28sp"/>
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Espresso"
-                        android:textStyle="bold"
-                        android:textColor="@color/bdino_dark"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+        <Button
+            android:id="@+id/btnSpecial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Special" />
 
-            <!-- FİLTRE -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFiltre"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="18dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/bdino_light_brown">
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
+        <Button
+            android:id="@+id/btnAlkollu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alkollü" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🪄"
-                        android:textSize="28sp"/>
+        <Space android:layout_width="match_parent" android:layout_height="12dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Filtre"
-                        android:textStyle="bold"
-                        android:textColor="@color/bdino_dark"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- SPECIAL -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSpecial"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="18dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/bdino_light_brown">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="⭐"
-                        android:textSize="28sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Special"
-                        android:textStyle="bold"
-                        android:textColor="@color/bdino_dark"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ALKOLLÜ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAlkollu"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="18dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/bdino_light_brown">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🥃"
-                        android:textSize="28sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Alkollü"
-                        android:textStyle="bold"
-                        android:textColor="@color/bdino_dark"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ICE -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardIce"
-                android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="18dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/bdino_light_brown">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🧊"
-                        android:textSize="28sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ice"
-                        android:textStyle="bold"
-                        android:textColor="@color/bdino_dark"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </androidx.gridlayout.widget.GridLayout>
+        <Button
+            android:id="@+id/btnIce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ice" />
     </LinearLayout>
 </ScrollView>
