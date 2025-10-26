@@ -6,87 +6,87 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-    private final List<Recipe> allRecipes = new ArrayList<>();
-    private final List<Recipe> filteredRecipes = new ArrayList<>();
-    private final OnRecipeClick listener;
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
-    public interface OnRecipeClick {
-        void onClick(Recipe recipe);
+    public interface OnRecipeClick { void onClick(Recipe r); }
+
+    private final List<Recipe> all = new ArrayList<>();
+    private final List<Recipe> shown = new ArrayList<>();
+    private final OnRecipeClick onClick;
+
+    public RecipeAdapter(OnRecipeClick onClick) {
+        this.onClick = onClick;
     }
 
-    public RecipeAdapter(OnRecipeClick listener) {
-        this.listener = listener;
-    }
-
-    public void submit(List<Recipe> data) {
-        allRecipes.clear();
-        filteredRecipes.clear();
-        if (data != null) {
-            allRecipes.addAll(data);
-            filteredRecipes.addAll(data);
+    public void submit(List<Recipe> items) {
+        all.clear();
+        shown.clear();
+        if (items != null) {
+            all.addAll(items);
+            shown.addAll(items);
         }
         notifyDataSetChanged();
     }
 
-    /** Arama veya filtreleme için **/
-    public void filter(String query) {
-        filteredRecipes.clear();
-        if (query == null || query.trim().isEmpty()) {
-            filteredRecipes.addAll(allRecipes);
+    // Arama/filtre (RecipeActivity bu metodu çağırıyor)
+    public void filter(String q) {
+        shown.clear();
+        if (q == null || q.trim().isEmpty()) {
+            shown.addAll(all);
         } else {
-            String lower = query.toLowerCase();
-            for (Recipe r : allRecipes) {
-                if (r.getName().toLowerCase().contains(lower)
-                        || r.getDescription().toLowerCase().contains(lower)) {
-                    filteredRecipes.add(r);
+            String s = q.trim().toLowerCase();
+            for (Recipe r : all) {
+                String name = safe(r.getName());
+                String desc = safe(r.getDescription());
+                if (name.contains(s) || desc.contains(s)) {
+                    shown.add(r);
                 }
             }
         }
         notifyDataSetChanged();
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
-        return new ViewHolder(view);
+    private static String safe(String s) { return s == null ? "" : s.toLowerCase(); }
+
+    @NonNull @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup p, int v) {
+        View view = LayoutInflater.from(p.getContext()).inflate(R.layout.item_recipe, p, false);
+        return new VH(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Recipe recipe = filteredRecipes.get(position);
-        holder.txtName.setText(recipe.getName());
-        holder.txtDesc.setText(recipe.getDescription());
-        holder.img.setImageResource(recipe.getImageRes());
-        holder.itemView.setOnClickListener(v -> listener.onClick(recipe));
+    public void onBindViewHolder(@NonNull VH h, int pos) {
+        Recipe r = shown.get(pos);
+        h.title.setText(r.getName());
+        h.subtitle.setText(safe(r.getDescription()).isEmpty() ? " " : r.getDescription());
+        h.img.setImageResource(r.getImageResId());
+        // chipCategory varsa göster
+        if (h.chip != null) h.chip.setText(safe(r.getCategory()).isEmpty() ? "Kahve" : r.getCategory());
+
+        h.itemView.setOnClickListener(v -> { if (onClick != null) onClick.onClick(r); });
     }
 
-    @Override
-    public int getItemCount() {
-        return filteredRecipes.size();
-    }
+    @Override public int getItemCount() { return shown.size(); }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName, txtDesc;
+    static class VH extends RecyclerView.ViewHolder {
         ImageView img;
-
-        ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
-            txtDesc = itemView.findViewById(R.id.txtDesc);
-            img = itemView.findViewById(R.id.img);
+        TextView title, subtitle, chip;
+        VH(@NonNull View v) {
+            super(v);
+            img = v.findViewById(R.id.img);
+            title = v.findViewById(R.id.txtTitle);
+            subtitle = v.findViewById(R.id.txtSubtitle);
+            // item_recipe.xml’de TextView chip kullanıyoruz
+            chip = v.findViewById(R.id.chipCategory);
         }
     }
 }
