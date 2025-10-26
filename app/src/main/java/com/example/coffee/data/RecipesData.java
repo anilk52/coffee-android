@@ -12,7 +12,7 @@ public class RecipesData {
     public static final String CAT_ESPRESSO = "ESPRESSO";
     public static final String CAT_FILTRE   = "FİLTRE";
     public static final String CAT_SPECIAL  = "SPECIAL";
-    public static final String CAT_ALKOLLU  = "ALKOLLÜ";
+    public static final String CAT_ALKOLLÜ  = "ALKOLLÜ";
     public static final String CAT_ICE      = "ICE";
 
     public static List<Recipe> getAll() {
@@ -58,9 +58,7 @@ public class RecipesData {
 
     public static Recipe findByName(String name) {
         if (name == null || name.trim().isEmpty()) return null;
-        for (Recipe r : getAll()) {
-            if (r.getName().equalsIgnoreCase(name.trim())) return r;
-        }
+        for (Recipe r : getAll()) if (r.getName().equalsIgnoreCase(name.trim())) return r;
         return null;
     }
 
@@ -75,9 +73,16 @@ public class RecipesData {
         String key = category.trim();
         List<String> out = new ArrayList<>();
         for (Recipe r : getAll()) {
-            if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(key)) {
-                out.add(r.getName());
-            }
+            if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(key)) out.add(r.getName());
+        }
+        return out;
+    }
+
+    public static List<Recipe> getByCategory(String category) {
+        List<Recipe> out = new ArrayList<>();
+        if (category == null || category.trim().isEmpty()) return out;
+        for (Recipe r : getAll()) {
+            if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(category.trim())) out.add(r);
         }
         return out;
     }
