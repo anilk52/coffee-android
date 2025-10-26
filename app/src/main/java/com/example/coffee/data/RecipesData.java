@@ -12,9 +12,10 @@ public class RecipesData {
     public static final String CAT_ESPRESSO = "ESPRESSO";
     public static final String CAT_FILTRE   = "FİLTRE";
     public static final String CAT_SPECIAL  = "SPECIAL";
-    public static final String CAT_ALKOLLU  = "ALKOLLÜ"; // ← AD: ALKOLLU (ASCII), DEĞER: "ALKOLLÜ"
+    public static final String CAT_ALKOLLU  = "ALKOLLÜ"; // AD: ALKOLLU (ASCII), DEĞER: "ALKOLLÜ"
     public static final String CAT_ICE      = "ICE";
 
+    // TÜM TARİFLER
     public static List<Recipe> getAll() {
         List<Recipe> list = new ArrayList<>();
 
@@ -56,18 +57,21 @@ public class RecipesData {
         return list;
     }
 
+    // İsimle bul
     public static Recipe findByName(String name) {
         if (name == null || name.trim().isEmpty()) return null;
         for (Recipe r : getAll()) if (r.getName().equalsIgnoreCase(name.trim())) return r;
         return null;
     }
 
+    // Tüm başlıklar
     public static List<String> allTitles() {
         List<String> out = new ArrayList<>();
         for (Recipe r : getAll()) out.add(r.getName());
         return out;
     }
 
+    // Kategori başlıkları
     public static List<String> titlesForCategory(String category) {
         if (category == null || category.trim().isEmpty()) return Collections.emptyList();
         String key = category.trim();
@@ -78,9 +82,14 @@ public class RecipesData {
         return out;
     }
 
-    public static List<Recipe> getByCategory(String category) {
+    // Activity’nin çağırdığı metod (RecipeActivity için)
+    public static List<Recipe> forCategory(String category) {
+        if (category == null || category.trim().isEmpty()
+                || category.equalsIgnoreCase("Tarifler")
+                || category.equalsIgnoreCase("Tüm Tarifler")) {
+            return getAll();
+        }
         List<Recipe> out = new ArrayList<>();
-        if (category == null || category.trim().isEmpty()) return out;
         for (Recipe r : getAll()) {
             if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(category.trim())) out.add(r);
         }
