@@ -3,12 +3,12 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.RecipeActivity;
+import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,31 +24,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnEspresso = findViewById(R.id.btnEspresso);
-        Button btnFiltre   = findViewById(R.id.btnFiltre);
-        Button btnSpecial  = findViewById(R.id.btnSpecial);
-        Button btnAlkollu  = findViewById(R.id.btnAlkollu);
-        Button btnIce      = findViewById(R.id.btnIce);
+        MaterialCardView cardEspresso = findViewById(R.id.cardEspresso);
+        MaterialCardView cardFiltre   = findViewById(R.id.cardFiltre);
+        MaterialCardView cardSpecial  = findViewById(R.id.cardSpecial);
+        MaterialCardView cardAlkollu  = findViewById(R.id.cardAlkollu);
+        MaterialCardView cardIce      = findViewById(R.id.cardIce);
 
-        View.OnClickListener listener = v -> {
+        View.OnClickListener l = v -> {
             int id = v.getId();
-            if (id == R.id.btnEspresso) {
+            if (id == R.id.cardEspresso) {
                 openCategory(RecipesData.CAT_ESPRESSO);
-            } else if (id == R.id.btnFiltre) {
+            } else if (id == R.id.cardFiltre) {
                 openCategory(RecipesData.CAT_FILTRE);
-            } else if (id == R.id.btnSpecial) {
+            } else if (id == R.id.cardSpecial) {
                 openCategory(RecipesData.CAT_SPECIAL);
-            } else if (id == R.id.btnAlkollu) {
+            } else if (id == R.id.cardAlkollu) {
                 openCategory(RecipesData.CAT_ALKOLLU);
-            } else if (id == R.id.btnIce) {
+            } else if (id == R.id.cardIce) {
                 openCategory(RecipesData.CAT_ICE);
             }
         };
 
-        btnEspresso.setOnClickListener(listener);
-        btnFiltre.setOnClickListener(listener);
-        btnSpecial.setOnClickListener(listener);
-        btnAlkollu.setOnClickListener(listener);
-        btnIce.setOnClickListener(listener);
+        cardEspresso.setOnClickListener(l);
+        cardFiltre.setOnClickListener(l);
+        cardSpecial.setOnClickListener(l);
+        cardAlkollu.setOnClickListener(l);
+        cardIce.setOnClickListener(l);
     }
 }
