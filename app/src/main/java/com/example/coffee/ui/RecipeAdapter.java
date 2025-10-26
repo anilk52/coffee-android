@@ -6,71 +6,87 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
-import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
+    private final List<Recipe> allRecipes = new ArrayList<>();
+    private final List<Recipe> filteredRecipes = new ArrayList<>();
+    private final OnRecipeClick listener;
 
     public interface OnRecipeClick {
-        void onClick(Recipe r);
+        void onClick(Recipe recipe);
     }
 
-    private final List<Recipe> all = new ArrayList<>();
-    private final OnRecipeClick onClick;
-
-    public RecipeAdapter(OnRecipeClick onClick) {
-        this.onClick = onClick;
+    public RecipeAdapter(OnRecipeClick listener) {
+        this.listener = listener;
     }
 
-    public void submit(List<Recipe> items) {
-        all.clear();
-        if (items != null) all.addAll(items);
+    public void submit(List<Recipe> data) {
+        allRecipes.clear();
+        filteredRecipes.clear();
+        if (data != null) {
+            allRecipes.addAll(data);
+            filteredRecipes.addAll(data);
+        }
+        notifyDataSetChanged();
+    }
+
+    /** Arama veya filtreleme için **/
+    public void filter(String query) {
+        filteredRecipes.clear();
+        if (query == null || query.trim().isEmpty()) {
+            filteredRecipes.addAll(allRecipes);
+        } else {
+            String lower = query.toLowerCase();
+            for (Recipe r : allRecipes) {
+                if (r.getName().toLowerCase().contains(lower)
+                        || r.getDescription().toLowerCase().contains(lower)) {
+                    filteredRecipes.add(r);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recipe, parent, false);
-        return new VH(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH holder, int position) {
-        Recipe r = all.get(position);
-        holder.title.setText(r.getName());
-        holder.subtitle.setText(r.getDescription());
-        holder.chip.setText(r.getCategory());
-        holder.img.setImageResource(r.getImageResId());
-
-        holder.itemView.setOnClickListener(v -> {
-            if (onClick != null) onClick.onClick(r);
-        });
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Recipe recipe = filteredRecipes.get(position);
+        holder.txtName.setText(recipe.getName());
+        holder.txtDesc.setText(recipe.getDescription());
+        holder.img.setImageResource(recipe.getImageRes());
+        holder.itemView.setOnClickListener(v -> listener.onClick(recipe));
     }
 
     @Override
     public int getItemCount() {
-        return all.size();
+        return filteredRecipes.size();
     }
 
-    static class VH extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName, txtDesc;
         ImageView img;
-        TextView title, subtitle;
-        Chip chip;
-        VH(@NonNull View v) {
-            super(v);
-            img = v.findViewById(R.id.img);
-            title = v.findViewById(R.id.txtTitle);
-            subtitle = v.findViewById(R.id.txtSubtitle);
-            chip = v.findViewById(R.id.chipCategory);
+
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtName = itemView.findViewById(R.id.txtName);
+            txtDesc = itemView.findViewById(R.id.txtDesc);
+            img = itemView.findViewById(R.id.img);
         }
     }
 }
