@@ -12,7 +12,7 @@ public class RecipesData {
     public static final String CAT_ESPRESSO = "ESPRESSO";
     public static final String CAT_FILTRE   = "FİLTRE";
     public static final String CAT_SPECIAL  = "SPECIAL";
-    public static final String CAT_ALKOLLÜ  = "ALKOLLÜ";
+    public static final String CAT_ALKOLLU  = "ALKOLLÜ"; // ← AD: ALKOLLU (ASCII), DEĞER: "ALKOLLÜ"
     public static final String CAT_ICE      = "ICE";
 
     public static List<Recipe> getAll() {
