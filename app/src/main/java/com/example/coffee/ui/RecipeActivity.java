@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,9 +21,9 @@ import java.util.List;
 public class RecipeActivity extends AppCompatActivity {
 
     private RecipeAdapter adapter;
-    private SearchView searchView;
     private TextView emptyView;
     private TextView txtCategory;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,10 @@ public class RecipeActivity extends AppCompatActivity {
 
         List<Recipe> recipes = RecipesData.forCategory(category);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, lm.getOrientation()));
+
         adapter = new RecipeAdapter(recipe -> {
             Intent i = new Intent(this, RecipeDetailActivity.class);
             i.putExtra("recipe_name", recipe.getName());
@@ -52,18 +56,43 @@ public class RecipeActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         adapter.submit(recipes);
+        toggleEmpty(adapter.getItemCount() == 0);
 
-        toggleEmpty(recipes == null || recipes.isEmpty());
-
+        // Arama
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String q) { adapter.filter(q); return true; }
-            @Override public boolean onQueryTextChange(String q) { adapter.filter(q); return true; }
+            @Override public boolean onQueryTextSubmit(String q) {
+                adapter.filter(q);
+                toggleEmpty(adapter.getItemCount() == 0);
+                return true;
+            }
+            @Override public boolean onQueryTextChange(String q) {
+                adapter.filter(q);
+                toggleEmpty(adapter.getItemCount() == 0);
+                return true;
+            }
         });
 
-        btnAll.setOnClickListener(v -> adapter.filter(null));
-        btnS.setOnClickListener(v -> adapter.filter("S —"));
-        btnM.setOnClickListener(v -> adapter.filter("M —"));
-        btnL.setOnClickListener(v -> adapter.filter("L —"));
+        // Hızlı boyut filtreleri (S / M / L anahtarına göre açıklamada arar)
+        btnAll.setOnClickListener(v -> {
+            searchView.setQuery("", false);
+            adapter.filter(null);
+            toggleEmpty(adapter.getItemCount() == 0);
+        });
+        btnS.setOnClickListener(v -> {
+            searchView.setQuery("S —", false);
+            adapter.filter("S —");
+            toggleEmpty(adapter.getItemCount() == 0);
+        });
+        btnM.setOnClickListener(v -> {
+            searchView.setQuery("M —", false);
+            adapter.filter("M —");
+            toggleEmpty(adapter.getItemCount() == 0);
+        });
+        btnL.setOnClickListener(v -> {
+            searchView.setQuery("L —", false);
+            adapter.filter("L —");
+            toggleEmpty(adapter.getItemCount() == 0);
+        });
     }
 
     private void toggleEmpty(boolean show) {
