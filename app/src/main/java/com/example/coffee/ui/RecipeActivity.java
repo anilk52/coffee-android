@@ -2,7 +2,10 @@ package com.example.coffee.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,45 +13,65 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
-import com.google.android.material.appbar.MaterialToolbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Kategoriye göre tarif listesini gösterir.
+ * Intent extra: "category" (null ise tüm tarifler)
+ */
 public class RecipeActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private RecipeAdapter adapter;
+    private TextView txtCategory;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // DOĞRU LAYOUT
-        setContentView(R.layout.activity_recipes);
+        setContentView(R.layout.activity_recipe);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        RecyclerView recycler = findViewById(R.id.recipesList);
+        recyclerView = findViewById(R.id.recyclerView);
+        txtCategory  = findViewById(R.id.txtCategory);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Tıklamada detay sayfasını aç
+        adapter = new RecipeAdapter(recipe -> {
+            Intent i = new Intent(this, RecipeDetailActivity.class);
+            i.putExtra("recipe_name", recipe.getName());
+            i.putExtra("recipe_desc", recipe.getDescription());
+            startActivity(i);
+        });
+        recyclerView.setAdapter(adapter);
+
+        // Kategori oku
         String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
 
         // Başlık
-        String title = (category == null) ? "Tüm Tarifler ☕" : (category + " ☕");
-        toolbar.setTitle(title);
-        toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material);
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        txtCategory.setText(getTitleFor(category));
 
         // Veri
-        List<Recipe> data = (category == null)
-                ? RecipesData.getAll()
-                : RecipesData.getByCategory(category);
+        List<Recipe> all = RecipesData.getAll();
+        List<Recipe> shown = filterByCategory(all, category);
+        adapter.submit(shown);
+    }
 
-        // DOĞRU ADAPTER (ui paketi)
-        RecipeAdapter adapter = new RecipeAdapter(r -> {
-            Intent i = new Intent(this, RecipeDetailActivity.class);
-            i.putExtra("recipe_name", r.getName());
-            i.putExtra("recipe_desc", r.getDescription());
-            startActivity(i);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
+    private static String getTitleFor(@Nullable String cat) {
+        if (TextUtils.isEmpty(cat)) return "Tüm Tarifler";
+        return cat;
+    }
 
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.setAdapter(adapter);
-        adapter.submit(data);
+    private static List<Recipe> filterByCategory(List<Recipe> list, @Nullable String cat) {
+        if (list == null) return new ArrayList<>();
+        if (TextUtils.isEmpty(cat)) return new ArrayList<>(list);
+        List<Recipe> out = new ArrayList<>();
+        for (Recipe r : list) {
+            if (r != null && cat.equalsIgnoreCase(r.getCategory())) {
+                out.add(r);
+            }
+        }
+        return out;
     }
 }
