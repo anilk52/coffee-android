@@ -2,16 +2,15 @@ package com.example.coffee.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.List;
 
@@ -22,39 +21,33 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
 
-        ListView listView = findViewById(R.id.recipesList);
-        TextView empty = findViewById(R.id.emptyView);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        RecyclerView recycler = findViewById(R.id.recipesList);
 
         String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
-        List<String> titles = (category == null)
-                ? RecipesData.allTitles()
-                : RecipesData.titlesForCategory(category);
 
-        if (titles == null || titles.isEmpty()) {
-            if (empty != null) empty.setVisibility(View.VISIBLE);
-            if (listView != null) listView.setVisibility(View.GONE);
-            return;
-        }
+        // Başlık
+        String title = (category == null) ? "Tüm Tarifler ☕" : (category + " ☕");
+        toolbar.setTitle(title);
+        toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        if (empty != null) empty.setVisibility(View.GONE);
+        // Veri
+        List<Recipe> data = (category == null)
+                ? RecipesData.getAll()
+                : RecipesData.getByCategory(category);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.item_simple_row, titles
-        );
-        listView.setAdapter(adapter);
-
-        // ✅ Detay ekranına doğru anahtarlarla veri gönder
-        listView.setOnItemClickListener((p, v, pos, id) -> {
-            String title = adapter.getItem(pos);
-            Recipe r = RecipesData.findByName(title);
-
+        // Adapter (mevcut RecipeAdapter’ını kullanıyoruz)
+        RecipeAdapter adapter = new RecipeAdapter(r -> {
             Intent i = new Intent(this, RecipeDetailActivity.class);
-            i.putExtra("recipe_name", title); // Detay bu anahtarı bekliyor
-            if (r != null && r.getDescription() != null && !r.getDescription().trim().isEmpty()) {
-                i.putExtra("recipe_desc", r.getDescription());
-            }
+            i.putExtra("recipe_name", r.getName());
+            i.putExtra("recipe_desc", r.getDescription());
             startActivity(i);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setAdapter(adapter);
+        adapter.submit(data);
     }
 }
