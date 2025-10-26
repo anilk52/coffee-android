@@ -1,81 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#121212"
-    android:padding="24dp">
+    android:background="@color/bdino_beige">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Merhaba!"
-        android:textColor="#EDE0D4"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <!-- 5 kategori butonu -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnEspresso"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ESPRESSO"
-        android:textAllCaps="true"
-        android:textColor="#B38867"
-        app:strokeColor="#B38867"
-        app:strokeWidth="2dp"
-        android:layout_marginBottom="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="☕ Kategoriler"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/bdino_dark"
+            android:paddingBottom="12dp"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFilter"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FİLTRE"
-        android:textAllCaps="true"
-        android:textColor="#B38867"
-        app:strokeColor="#B38867"
-        app:strokeWidth="2dp"
-        android:layout_marginBottom="12dp"/>
+        <Button
+            android:id="@+id/btnEspresso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Espresso" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSpecial"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SPECIAL"
-        android:textAllCaps="true"
-        android:textColor="#B38867"
-        app:strokeColor="#B38867"
-        app:strokeWidth="2dp"
-        android:layout_marginBottom="12dp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAlcohol"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ALKOLLÜ"
-        android:textAllCaps="true"
-        android:textColor="#B38867"
-        app:strokeColor="#B38867"
-        app:strokeWidth="2dp"
-        android:layout_marginBottom="12dp"/>
+        <Button
+            android:id="@+id/btnFiltre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filtre" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnIce"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ICE"
-        android:textAllCaps="true"
-        android:textColor="#B38867"
-        app:strokeColor="#B38867"
-        app:strokeWidth="2dp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSpecial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Special" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <Button
+            android:id="@+id/btnAlkollu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alkollü" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <Button
+            android:id="@+id/btnIce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ice" />
+    </LinearLayout>
+</ScrollView>
