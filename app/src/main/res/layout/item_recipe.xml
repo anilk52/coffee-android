@@ -6,6 +6,7 @@
     android:layout_margin="12dp"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
     android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
@@ -16,8 +17,9 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_foreground"
             android:contentDescription="@string/app_name"/>
 
@@ -25,25 +27,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtTitle"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="@style/TextAppearance.MaterialComponents.TitleMedium"
                 android:textStyle="bold"
-                android:text="Latte"/>
+                android:textColor="@android:color/black"
+                android:text="Kahve Adı"/>
 
             <TextView
                 android:id="@+id/txtSubtitle"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:text="Sütlü, yumuşak tat"/>
+                style="@style/TextAppearance.MaterialComponents.BodySmall"
+                android:text="Kısa açıklama"
+                android:textColor="#666666"
+                android:maxLines="2"
+                android:ellipsize="end"/>
         </LinearLayout>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kahve"/>
+            android:text="Kategori"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textColor="@android:color/white"
+            android:chipBackgroundColor="@color/bdino_brown"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
