@@ -2,11 +2,12 @@ package com.example.coffee.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,30 +15,35 @@ import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Kategoriye göre tarif listesini gösterir.
- * Intent extra: "category" (null ise tüm tarifler)
- */
 public class RecipeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private RecipeAdapter adapter;
+    private SearchView searchView;
+    private TextView emptyView;
     private TextView txtCategory;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        txtCategory  = findViewById(R.id.txtCategory);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        emptyView   = findViewById(R.id.emptyView);
+        txtCategory = findViewById(R.id.txtCategory);
+        searchView  = findViewById(R.id.searchView);
+        Button btnAll = findViewById(R.id.btnAll);
+        Button btnS   = findViewById(R.id.btnS);
+        Button btnM   = findViewById(R.id.btnM);
+        Button btnL   = findViewById(R.id.btnL);
+
+        String category = getIntent() != null ? getIntent().getStringExtra("category") : "Tarifler";
+        txtCategory.setText(category);
+
+        List<Recipe> recipes = RecipesData.forCategory(category);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Tıklamada detay sayfasını aç
         adapter = new RecipeAdapter(recipe -> {
             Intent i = new Intent(this, RecipeDetailActivity.class);
             i.putExtra("recipe_name", recipe.getName());
@@ -45,33 +51,22 @@ public class RecipeActivity extends AppCompatActivity {
             startActivity(i);
         });
         recyclerView.setAdapter(adapter);
+        adapter.submit(recipes);
 
-        // Kategori oku
-        String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
+        toggleEmpty(recipes == null || recipes.isEmpty());
 
-        // Başlık
-        txtCategory.setText(getTitleFor(category));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override public boolean onQueryTextSubmit(String q) { adapter.filter(q); return true; }
+            @Override public boolean onQueryTextChange(String q) { adapter.filter(q); return true; }
+        });
 
-        // Veri
-        List<Recipe> all = RecipesData.getAll();
-        List<Recipe> shown = filterByCategory(all, category);
-        adapter.submit(shown);
+        btnAll.setOnClickListener(v -> adapter.filter(null));
+        btnS.setOnClickListener(v -> adapter.filter("S —"));
+        btnM.setOnClickListener(v -> adapter.filter("M —"));
+        btnL.setOnClickListener(v -> adapter.filter("L —"));
     }
 
-    private static String getTitleFor(@Nullable String cat) {
-        if (TextUtils.isEmpty(cat)) return "Tüm Tarifler";
-        return cat;
-    }
-
-    private static List<Recipe> filterByCategory(List<Recipe> list, @Nullable String cat) {
-        if (list == null) return new ArrayList<>();
-        if (TextUtils.isEmpty(cat)) return new ArrayList<>(list);
-        List<Recipe> out = new ArrayList<>();
-        for (Recipe r : list) {
-            if (r != null && cat.equalsIgnoreCase(r.getCategory())) {
-                out.add(r);
-            }
-        }
-        return out;
+    private void toggleEmpty(boolean show) {
+        if (emptyView != null) emptyView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }
