@@ -23,7 +23,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
     }
 
     private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
     private final OnRecipeClick onClick;
 
     public RecipeAdapter(OnRecipeClick onClick) {
@@ -33,46 +32,34 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
     public void submit(List<Recipe> items) {
         all.clear();
         if (items != null) all.addAll(items);
-        filter(null);
-    }
-
-    public void filter(String q) {
-        shown.clear();
-        if (q == null || q.trim().isEmpty()) {
-            shown.addAll(all);
-        } else {
-            String s = q.trim().toLowerCase();
-            for (Recipe r : all) {
-                String name = safe(r.getName());
-                String desc = safe(r.getDescription()); // varsa
-                if (name.contains(s) || desc.contains(s)) {
-                    shown.add(r);
-                }
-            }
-        }
         notifyDataSetChanged();
     }
 
-    private static String safe(String s) { return s == null ? "" : s.toLowerCase(); }
-
     @NonNull
-    @Override public VH onCreateViewHolder(@NonNull ViewGroup p, int v) {
-        View view = LayoutInflater.from(p.getContext())
-                .inflate(R.layout.item_recipe, p, false);
+    @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_recipe, parent, false);
         return new VH(view);
     }
 
-    @Override public void onBindViewHolder(@NonNull VH h, int pos) {
-        Recipe r = shown.get(pos);
-        h.title.setText(r.getName());
-        h.subtitle.setText(safe(r.getDescription()).isEmpty() ? " " : r.getDescription());
-        h.chip.setText(safe(r.getCategory()).isEmpty() ? "Kahve" : r.getCategory());
-        h.itemView.setOnClickListener(v -> {
+    @Override
+    public void onBindViewHolder(@NonNull VH holder, int position) {
+        Recipe r = all.get(position);
+        holder.title.setText(r.getName());
+        holder.subtitle.setText(r.getDescription());
+        holder.chip.setText(r.getCategory());
+        holder.img.setImageResource(r.getImageResId());
+
+        holder.itemView.setOnClickListener(v -> {
             if (onClick != null) onClick.onClick(r);
         });
     }
 
-    @Override public int getItemCount() { return shown.size(); }
+    @Override
+    public int getItemCount() {
+        return all.size();
+    }
 
     static class VH extends RecyclerView.ViewHolder {
         ImageView img;
