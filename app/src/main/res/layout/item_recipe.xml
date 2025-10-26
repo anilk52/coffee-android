@@ -32,27 +32,31 @@
 
             <TextView
                 android:id="@+id/txtTitle"
-                style="@style/TextAppearance.MaterialComponents.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
+                android:textSize="16sp"
                 android:text="Kahve Adı"/>
 
             <TextView
                 android:id="@+id/txtSubtitle"
-                style="@style/TextAppearance.MaterialComponents.BodySmall"
-                android:text="Kısa açıklama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="#666666"
+                android:textSize="13sp"
                 android:maxLines="2"
-                android:ellipsize="end"/>
+                android:ellipsize="end"
+                android:text="Kısa açıklama"/>
         </LinearLayout>
 
-        <com.google.android.material.chip.Chip
+        <TextView
             android:id="@+id/chipCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategori"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:background="@color/colorSecondary"
             android:textColor="@android:color/white"
-            android:chipBackgroundColor="@color/bdino_brown"/>
+            android:padding="6dp"
+            android:text="Kategori"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
