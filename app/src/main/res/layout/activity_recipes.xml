@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bdino_dark"
-    android:padding="16dp">
+    android:background="@color/bdino_dark">
 
-    <TextView
-        android:id="@+id/emptyView"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_recipes"
-        android:textColor="@color/bdino_beige"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textStyle="bold"
-        android:visibility="gone"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bdino_brown"
+        app:titleTextColor="@android:color/white"
+        app:navigationIconTint="@android:color/white" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#553E2723"
-        android:dividerHeight="1dp"
-        android:listSelector="@android:color/transparent"/>
+        android:padding="12dp"/>
 </LinearLayout>
