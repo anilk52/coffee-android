@@ -2,26 +2,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bdino_beige">
+    android:background="@color/coffee_beige">
 
-    <!-- Logo: kaynak telefonda yoksa boş kalsın; kodda set edilecek -->
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/app_name" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <!-- Yedek başlık: logo bulunamazsa görünecek -->
-    <TextView
-        android:id="@+id/txtFallback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="BDINO Coffee"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/bdino_text_primary"
-        android:visibility="gone"/>
+        <!-- Logo (geçici olarak ic_launcher; logoyu ekleyince @drawable/bdino_logo yapacağız) -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selam Barista!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/coffee_deep_green"/>
+    </LinearLayout>
+
 </FrameLayout>
