@@ -1,34 +1,38 @@
 package com.example.coffee;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.splashscreen.SplashScreen;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Android 12+ native splash
-        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Sadece "☕ Selam Barista!" yazısını fade-in yap
-        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        TextView txtHello = findViewById(R.id.txtHello);
-        if (txtHello != null) txtHello.startAnimation(fadeIn);
+        ImageView logo = findViewById(R.id.imgLogo);
+        TextView fallback = findViewById(R.id.txtFallback);
 
-        // 1.5 sn sonra ana ekrana geç
+        // drawable/logo_bdino varsa kullan; yoksa metin kalsın
+        int resId = getResources().getIdentifier("logo_bdino", "drawable", getPackageName());
+        if (resId != 0) {
+            logo.setImageResource(resId);
+            fallback.setVisibility(View.GONE);
+        } else {
+            fallback.setVisibility(View.VISIBLE);
+        }
+
+        // 1.2 saniye sonra ana ekrana geç
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
-        }, 1500);
+        }, 1200);
     }
 }
