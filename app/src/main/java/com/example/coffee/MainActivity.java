@@ -17,36 +17,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Butonlar
         findViewById(R.id.btnEspresso).setOnClickListener(this);
         findViewById(R.id.btnFiltre).setOnClickListener(this);
         findViewById(R.id.btnSpecial).setOnClickListener(this);
         findViewById(R.id.btnAlkollu).setOnClickListener(this);
         findViewById(R.id.btnIce).setOnClickListener(this);
+        findViewById(R.id.btnTurk).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        String category;
-        int id = v.getId();
-        if (id == R.id.btnEspresso) {
-            category = RecipesData.CAT_ESPRESSO;
-        } else if (id == R.id.btnFiltre) {
-            category = RecipesData.CAT_FILTRE;
-        } else if (id == R.id.btnSpecial) {
-            category = RecipesData.CAT_SPECIAL;
-        } else if (id == R.id.btnAlkollu) {
-            category = RecipesData.CAT_ALKOLLU;
-        } else if (id == R.id.btnIce) {
-            category = RecipesData.CAT_ICE;
-        } else {
-            category = null;
-        }
-        openCategory(category);
-    }
+        String category = null;
 
-    private void openCategory(String category) {
-        Intent i = new Intent(this, RecipeActivity.class);
-        i.putExtra("category", category);
-        startActivity(i);
+        switch (v.getId()) {
+            case R.id.btnEspresso:
+                category = RecipesData.CAT_ESPRESSO;
+                break;
+            case R.id.btnFiltre:
+                category = RecipesData.CAT_FILTRE;
+                break;
+            case R.id.btnSpecial:
+                category = RecipesData.CAT_SPECIAL;
+                break;
+            case R.id.btnAlkollu:
+                category = RecipesData.CAT_ALKOLLU;
+                break;
+            case R.id.btnIce:
+                category = RecipesData.CAT_ICE;
+                break;
+            case R.id.btnTurk:
+                category = RecipesData.CAT_TURK;
+                break;
+        }
+
+        if (category != null) {
+            Intent intent = new Intent(this, RecipeActivity.class);
+            intent.putExtra("category", category);
+            startActivity(intent);
+        }
     }
 }
