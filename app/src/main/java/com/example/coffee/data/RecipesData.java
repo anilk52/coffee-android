@@ -180,36 +180,55 @@ public class RecipesData {
                 "L — 350 ml",
                 "Buzla servis et; gerekirse suyla aç."));
 
-        // ---------- TÜRK KAHVESİ ----------
-list.add(new Recipe("Sade Türk Kahvesi",
-        "Köpüklü, sade pişirim. Şeker yok.",
-        CAT_TURK, R.drawable.ic_launcher_foreground,
-        "T — 70 ml",
-        "Soğuk suyla başla; taşmadan köpüğü al."));
+        // ---------- TÜRK KAHVESİ (5 tarif, şeker seçenekleri notta) ----------
+final String SUGAR_NOTE =
+        "Şeker seçenekleri: Sade (0), Az (½ tatlı kaşığı ≈ 1 küp), " +
+        "Orta (1 tatlı kaşığı ≈ 2 küp), Şekerli (2 tatlı kaşığı ≈ 3–4 küp).";
 
-list.add(new Recipe("Az Şekerli Türk Kahvesi",
-        "Hafif tatlı, dengeli aroma. ½ tatlı kaşığı (1 küp) şeker.",
-        CAT_TURK, R.drawable.ic_launcher_foreground,
+list.add(new Recipe(
+        "Türk Kahvesi",
+        "Cezvede yavaş pişirim, fincanda köpüklü servis.",
+        CAT_TURK,
+        R.drawable.ic_launcher_foreground,
         "T — 70 ml",
-        "Kahveyle beraber şekeri cezveye ekle, karıştırmadan pişir."));
+        SUGAR_NOTE + " Soğuk suyla başla; taşmadan köpüğü al."
+));
 
-list.add(new Recipe("Orta Şekerli Türk Kahvesi",
-        "Klasik Türk usulü. 1 tatlı kaşığı (2 küp) şeker.",
-        CAT_TURK, R.drawable.ic_launcher_foreground,
-        "T — 70 ml",
-        "Şekeri ve kahveyi soğuk suya ekle; yavaş karıştır, köpüğü taşıma."));
+list.add(new Recipe(
+        "Menengiç",
+        "Kafeinsiz, doğal ve yağlı aromalı içim.",
+        CAT_TURK,
+        R.drawable.ic_launcher_foreground,
+        "T — 100 ml",
+        SUGAR_NOTE + " Kısık ateşte yavaş ısıt; kaynatma."
+));
 
-list.add(new Recipe("Şekerli Türk Kahvesi",
-        "Tatlı sevenler için. 2 tatlı kaşığı (3–4 küp) şeker.",
-        CAT_TURK, R.drawable.ic_launcher_foreground,
-        "T — 70 ml",
-        "Kısık ateşte ağır ağır pişir; köpüğü fincanlara eşit pay et."));
+list.add(new Recipe(
+        "Dibek Kahvesi",
+        "İri öğütüm, dolgun ve aromatik gövde.",
+        CAT_TURK,
+        R.drawable.ic_launcher_foreground,
+        "T — 100 ml",
+        SUGAR_NOTE + " Kaynama noktasına yaklaşmadan ocaktan al."
+));
 
-list.add(new Recipe("Sütlü Türk Kahvesi",
-        "Yumuşak içimli, sütlü versiyon.",
-        CAT_TURK, R.drawable.ic_launcher_foreground,
+list.add(new Recipe(
+        "Sütlü Türk Kahvesi",
+        "Daha yumuşak içim; suyun bir kısmı süt ile değiştirilir.",
+        CAT_TURK,
+        R.drawable.ic_launcher_foreground,
         "T — 90 ml",
-        "Suyun yarısını sütle değiştir; taşmadan pişir."));
+        SUGAR_NOTE + " Süt oranını %30–50 arası tut; taşmaya dikkat."
+));
+
+list.add(new Recipe(
+        "Damla Sakızlı Türk Kahvesi",
+        "Hafif sakız aromalı, tatlımsı profil.",
+        CAT_TURK,
+        R.drawable.ic_launcher_foreground,
+        "T — 70 ml",
+        SUGAR_NOTE + " Çok az sakız kullan; aroma baskın olmasın."
+));
         return list;
     }
 
