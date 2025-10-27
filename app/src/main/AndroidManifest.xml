@@ -1,22 +1,42 @@
-<application
-    android:allowBackup="true"
-    android:label="Bdino Coffee"
-    android:icon="@mipmap/ic_launcher"
-    android:roundIcon="@mipmap/ic_launcher"
-    android:supportsRtl="true">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- LAUNCHER: Splash -->
-    <activity
-        android:name=".SplashActivity"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="BDINO Coffee"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Coffee">
 
-    <!-- Ana ekran -->
-    <activity
-        android:name=".MainActivity"
-        android:exported="false" />
-</application>
+        <!-- Splash ekran: uygulama açılış noktası -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Ana ekran -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Tarif ekranı -->
+        <activity
+            android:name=".ui.RecipeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Tarif detay ekranı -->
+        <activity
+            android:name=".ui.RecipeDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+    </application>
+</manifest>
