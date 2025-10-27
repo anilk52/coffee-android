@@ -1,10 +1,2 @@
-<resources>
-
-    <!-- Android 12 (API 31+) SplashScreen teması -->
-    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
-    </style>
-
-</resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources/>
