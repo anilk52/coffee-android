@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/bdino_brown"
-    android:padding="24dp">
+    android:background="@color/bdino_beige">
 
+    <!-- Logo: kaynak telefonda yoksa boş kalsın; kodda set edilecek -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name" />
+
+    <!-- Yedek başlık: logo bulunamazsa görünecek -->
     <TextView
-        android:id="@+id/txtHello"
+        android:id="@+id/txtFallback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="☕ Selam Barista!"
-        android:textColor="@color/bdino_beige"
+        android:layout_gravity="center"
+        android:text="BDINO Coffee"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:textSize="26sp" />
-</LinearLayout>
+        android:textColor="@color/bdino_text_primary"
+        android:visibility="gone"/>
+</FrameLayout>
