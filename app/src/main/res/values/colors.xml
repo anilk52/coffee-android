@@ -8,8 +8,11 @@
     <color name="bdino_cream">#F5E6D3</color>
     <color name="bdino_dark">#2C1E12</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-
+    <color name="black">#000000</color> 
+    <color name="coffee_beige">#F6EDE5</color>
+    <color name="coffee_deep_green">#0F5A42</color>
+    <color name="coffee_brown">#4A2E1F</color>
+ 
     <!-- LAUNCHER için gereken eski anahtar (geri ekliyoruz) -->
     <color name="ic_launcher_background">#6F4E37</color>
 
