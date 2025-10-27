@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BDINO paleti -->
+    <!-- BDINO Coffee ana renk paleti -->
     <color name="coffee_beige">#F6EDE5</color>
     <color name="coffee_deep_green">#0F5A42</color>
     <color name="coffee_brown">#4A2E1F</color>
 
-    <!-- Metin tonları (opsiyonel) -->
+    <!-- Metin tonları -->
     <color name="bdino_text_primary">#1E1E1E</color>
     <color name="bdino_text_secondary">#6E6E6E</color>
 </resources>
