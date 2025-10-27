@@ -65,3 +65,31 @@ public class RecipesData {
         return list;
     }
 }
+
+// --- Filtreleme: kategoriye göre liste döndür ---
+    public static List<Recipe> forCategory(String category) {
+        List<Recipe> all = getAll();
+        if (category == null || category.trim().isEmpty()
+                || category.equalsIgnoreCase("ALL")
+                || category.equalsIgnoreCase("Tarifler")) {
+            return all;
+        }
+        List<Recipe> out = new ArrayList<>();
+        for (Recipe r : all) {
+            if (r.getCategory() != null && r.getCategory().equalsIgnoreCase(category)) {
+                out.add(r);
+            }
+        }
+        return out;
+    }
+
+    // --- İsme göre tek tarif döndür ---
+    public static Recipe findByName(String name) {
+        if (name == null || name.trim().isEmpty()) return null;
+        for (Recipe r : getAll()) {
+            if (r.getName() != null && r.getName().equalsIgnoreCase(name.trim())) {
+                return r;
+            }
+        }
+        return null;
+    }
