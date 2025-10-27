@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Uygulama genel teması (TEK KOPYA) -->
+
+    <!-- Uygulama genel teması -->
     <style name="Theme.Coffee" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/coffee_beige</item>
         <item name="android:statusBarColor">@color/coffee_brown</item>
         <item name="android:navigationBarColor">@color/coffee_brown</item>
-
-        <!-- AppCompat renkleri -->
         <item name="colorPrimary">@color/coffee_deep_green</item>
         <item name="colorAccent">@color/coffee_deep_green</item>
     </style>
 
-    <!-- Splash teması -->
+    <!-- Splash ekranı teması -->
     <style name="Theme_Coffee_Splash" parent="Theme.Coffee">
         <item name="android:windowBackground">@color/coffee_beige</item>
     </style>
+
 </resources>
