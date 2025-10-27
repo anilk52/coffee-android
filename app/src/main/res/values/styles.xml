@@ -1,42 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Ana Tema -->
-    <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/bdino_brown</item>
-        <item name="colorPrimaryVariant">@color/bdino_light_brown</item>
-        <item name="colorSecondary">@color/bdino_light_brown</item>
-        <item name="android:statusBarColor">@color/bdino_dark</item>
-        <item name="android:windowBackground">@color/bdino_beige</item>
-    </style>
-
-    <!-- Splash Teması -->
-    <style name="Theme.Coffee.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/bdino_brown</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="postSplashScreenTheme">@style/Theme.Coffee</item>
-    </style>
-
-    <!-- Detay ekranı başlık renkleri -->
-    <style name="TextAppearance.Coffee.CollapsedTitle" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <!-- Uygulama genel teması -->
+    <!-- Uygulama genel teması (TEK KOPYA) -->
     <style name="Theme.Coffee" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/coffee_beige</item>
         <item name="android:statusBarColor">@color/coffee_brown</item>
         <item name="android:navigationBarColor">@color/coffee_brown</item>
-        <item name="android:windowBackground">@color/coffee_beige</item>
+
+        <!-- AppCompat renkleri -->
+        <item name="colorPrimary">@color/coffee_deep_green</item>
+        <item name="colorAccent">@color/coffee_deep_green</item>
     </style>
 
-    <!-- Splash teması: hızlı açılış için düz arka plan -->
+    <!-- Splash teması -->
     <style name="Theme_Coffee_Splash" parent="Theme.Coffee">
         <item name="android:windowBackground">@color/coffee_beige</item>
     </style>
-
-    <!-- DÜZELTİLDİ: Display1 yerine Headline4 -->
-    <style name="TextAppearance.Coffee.ExpandedTitle" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
 </resources>
