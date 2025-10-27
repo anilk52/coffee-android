@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
-    public interface OnRecipeClick { void onClick(Recipe r); }
+    public interface OnRecipeClick {
+        void onClick(Recipe r);
+    }
 
     private final List<Recipe> all = new ArrayList<>();
     private final List<Recipe> shown = new ArrayList<>();
@@ -37,7 +39,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         notifyDataSetChanged();
     }
 
-    // Arama/filtre (RecipeActivity bu metodu çağırıyor)
     public void filter(String q) {
         shown.clear();
         if (q == null || q.trim().isEmpty()) {
@@ -67,26 +68,61 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int pos) {
         Recipe r = shown.get(pos);
         h.title.setText(r.getName());
-        h.subtitle.setText(safe(r.getDescription()).isEmpty() ? " " : r.getDescription());
-        h.img.setImageResource(r.getImageResId());
-        // chipCategory varsa göster
-        if (h.chip != null) h.chip.setText(safe(r.getCategory()).isEmpty() ? "Kahve" : r.getCategory());
+        h.subtitle.setText(r.getDescription() == null ? "" : r.getDescription());
 
-        h.itemView.setOnClickListener(v -> { if (onClick != null) onClick.onClick(r); });
+        // Görsel
+        if (r.getImageResId() != 0) {
+            h.img.setImageResource(r.getImageResId());
+        } else {
+            h.img.setImageResource(R.drawable.ic_launcher_foreground);
+        }
+
+        // Kategori etiket
+        String cat = r.getCategory() == null ? "Kahve" : r.getCategory();
+        h.chip.setText(cat);
+
+        // Boyut gösterimi:
+        // Alkollü kategoride sabit servis kullan (ör: "Standart servis: 250 ml")
+        if (cat.equalsIgnoreCase("ALKOLLÜ") || cat.equalsIgnoreCase("ALKOLLU")) {
+            // Eğer RecipesData içinde cupSize ayarlı değilse bu default kullanılacak
+            String sizeText = (r.getCupSize() != null && !r.getCupSize().trim().isEmpty())
+                    ? r.getCupSize()
+                    : "Standart servis: 250 ml";
+            h.size.setText(sizeText);
+        } else {
+            // Diğer kategoriler için cupSize göster (örn. "M — 240 ml")
+            String sizeText = (r.getCupSize() != null && !r.getCupSize().trim().isEmpty())
+                    ? r.getCupSize()
+                    : ""; // boşsa gösterme
+            h.size.setText(sizeText);
+        }
+
+        // İpucu varsa göster, yoksa gizle
+        if (r.getTip() != null && !r.getTip().trim().isEmpty()) {
+            h.tip.setVisibility(View.VISIBLE);
+            h.tip.setText(r.getTip());
+        } else {
+            h.tip.setVisibility(View.GONE);
+        }
+
+        h.itemView.setOnClickListener(v -> {
+            if (onClick != null) onClick.onClick(r);
+        });
     }
 
     @Override public int getItemCount() { return shown.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView title, subtitle, chip;
+        TextView title, subtitle, chip, size, tip;
         VH(@NonNull View v) {
             super(v);
             img = v.findViewById(R.id.img);
             title = v.findViewById(R.id.txtTitle);
             subtitle = v.findViewById(R.id.txtSubtitle);
-            // item_recipe.xml’de TextView chip kullanıyoruz
             chip = v.findViewById(R.id.chipCategory);
+            size = v.findViewById(R.id.txtSize);
+            tip = v.findViewById(R.id.txtTip);
         }
     }
 }
