@@ -1,55 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="@android:color/white"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#121212">
 
-    <TextView
-        android:text="Selam Barista 👋"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnEspresso"
-        android:text="Espresso Bazlılar"
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnFiltre"
-        android:text="Filtre Kahveler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txtTitle"
+            android:text="Merhaba!"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#EBDDCB"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btnSpecial"
-        android:text="Special"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <Button android:id="@+id/btnEspresso" android:text="ESPRESSO" style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnFiltre" android:text="FİLTRE"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnSpecial" android:text="SPECIAL"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnAlkollu" android:text="ALKOLLÜ"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnIce" android:text="ICE"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnTurk" android:text="TÜRK KAHVELERİ"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnAlkollu"
-        android:text="Alkollü Kahveler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnIce"
-        android:text="Soğuk Kahveler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnTurk"
-        android:text="Türk Kahvesi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
