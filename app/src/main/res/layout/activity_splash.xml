@@ -10,22 +10,22 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!-- Logo (geçici olarak ic_launcher; logoyu ekleyince @drawable/bdino_logo yapacağız) -->
+        <!-- Logo yüklenince ImageView'a @drawable/logo_bdino verilecek -->
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/app_name" />
+            android:src="@drawable/placeholder_cup"
+            android:contentDescription="@string/app_name"
+            android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selam Barista!"
-            android:textSize="20sp"
+            android:text="BDINO COFFEE ☕"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
             android:textColor="@color/coffee_deep_green"/>
     </LinearLayout>
-
 </FrameLayout>
