@@ -3,7 +3,6 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.data.RecipesData;
@@ -11,8 +10,7 @@ import com.example.coffee.ui.RecipeActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -24,28 +22,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnTurk).setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         int id = v.getId();
-        String category = null;
+        String cat = null;
+        if (id == R.id.btnEspresso)      cat = RecipesData.CAT_ESPRESSO;
+        else if (id == R.id.btnFiltre)   cat = RecipesData.CAT_FILTRE;
+        else if (id == R.id.btnSpecial)  cat = RecipesData.CAT_SPECIAL;
+        else if (id == R.id.btnAlkollu)  cat = RecipesData.CAT_ALKOLLU;
+        else if (id == R.id.btnIce)      cat = RecipesData.CAT_ICE;
+        else if (id == R.id.btnTurk)     cat = RecipesData.CAT_TURK;
 
-        if (id == R.id.btnEspresso) {
-            category = RecipesData.CAT_ESPRESSO;
-        } else if (id == R.id.btnFiltre) {
-            category = RecipesData.CAT_FILTRE;
-        } else if (id == R.id.btnSpecial) {
-            category = RecipesData.CAT_SPECIAL;
-        } else if (id == R.id.btnAlkollu) {
-            category = RecipesData.CAT_ALKOLLU;
-        } else if (id == R.id.btnIce) {
-            category = RecipesData.CAT_ICE;
-        } else if (id == R.id.btnTurk) {
-            category = RecipesData.CAT_TURK;
-        }
-
-        if (category != null) {
+        if (cat != null) {
             Intent i = new Intent(this, RecipeActivity.class);
-            i.putExtra("category", category);
+            i.putExtra("category", cat);
             startActivity(i);
         }
     }
