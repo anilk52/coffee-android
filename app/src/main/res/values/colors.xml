@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Ana palet (açık tema) -->
+    <!-- Ana palet -->
     <color name="coffee_brown">#6F4E37</color>
     <color name="coffee_brown_text">#5A3D2B</color>
     <color name="deep_green">#2E7D32</color>
     <color name="cream_beige">#F5EFE6</color>
+
+    <!-- Nötrler -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="soft_white">#FFFFFF</color>
     <color name="soft_black">#121212</color>
 
-    <!-- Material renk eşlemesi -->
+    <!-- Material eşlemesi -->
     <color name="mdc_primary">#6F4E37</color>
     <color name="mdc_on_primary">#FFFFFF</color>
     <color name="mdc_secondary">#2E7D32</color>
@@ -21,8 +25,8 @@
     <!-- Splash -->
     <color name="splash_bg">#F5EFE6</color>
 
-    <!-- Uyumluluk: temada referans verilen eski adlar -->
-    <color name="coffee_beige">#F5EFE6</color>        <!-- = cream_beige -->
-    <color name="coffee_deep_green">#2E7D32</color>   <!-- = deep_green -->
-    <color name="coffee_latte_brown">#6F4E37</color>  <!-- = coffee_brown -->
+    <!-- Uyumluluk (temada bu adlar kullanılıyorsa kırılsın diye) -->
+    <color name="coffee_beige">#F5EFE6</color>
+    <color name="coffee_deep_green">#2E7D32</color>
+    <color name="coffee_latte_brown">#6F4E37</color>
 </resources>
