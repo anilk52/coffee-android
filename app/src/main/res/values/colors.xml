@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tema renkleri -->
-    <color name="coffee_deep_green">#204B3A</color>
-    <color name="coffee_latte_brown">#B38867</color>
-    <color name="coffee_beige">#F3EBDD</color>
+    <!-- Ana palet (açık tema) -->
+    <color name="coffee_brown">#6F4E37</color>
+    <color name="coffee_brown_text">#5A3D2B</color>
+    <color name="deep_green">#2E7D32</color>
+    <color name="cream_beige">#F5EFE6</color>
+    <color name="soft_white">#FFFFFF</color>
+    <color name="soft_black">#121212</color>
 
-    <!-- Metin rengi -->
-    <color name="coffee_brown_text">#5D4037</color>
+    <!-- Material renk eşlemesi -->
+    <color name="mdc_primary">#6F4E37</color>
+    <color name="mdc_on_primary">#FFFFFF</color>
+    <color name="mdc_secondary">#2E7D32</color>
+    <color name="mdc_on_secondary">#FFFFFF</color>
+    <color name="mdc_background">#F5EFE6</color>
+    <color name="mdc_on_background">#5A3D2B</color>
+    <color name="mdc_surface">#FFFFFF</color>
+    <color name="mdc_on_surface">#5A3D2B</color>
 
-    <!-- Genel -->
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
+    <!-- Splash -->
+    <color name="splash_bg">#F5EFE6</color>
 </resources>
