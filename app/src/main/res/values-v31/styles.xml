@@ -1,22 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Android 12+ özel tema varyasyonu -->
+    <!-- Android 12+ varyasyon -->
     <style name="Theme.BdinoCoffee" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/coffee_beige</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/coffee_beige</item>
         <item name="android:windowBackground">@color/coffee_beige</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:fontFamily">sans-serif</item>
+
         <item name="colorPrimary">@color/coffee_deep_green</item>
         <item name="colorSecondary">@color/coffee_latte_brown</item>
     </style>
 
-    <!-- Splash teması (Android 12+) -->
     <style name="Theme.BdinoCoffee.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/coffee_beige</item>
         <item name="android:windowBackground">@color/coffee_beige</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/coffee_beige</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
 </resources>
