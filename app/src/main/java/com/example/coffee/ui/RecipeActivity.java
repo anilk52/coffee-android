@@ -3,39 +3,70 @@ package com.example.coffee.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
+import com.example.coffee.adapter.RecipeAdapter;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.List;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeClick {
+public class RecipeActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private TextView txtCategory;
     private RecipeAdapter adapter;
 
-    @Override protected void onCreate(Bundle b) {
-        super.onCreate(b);
-        setContentView(R.layout.activity_recipe);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recipes);
 
-        String category = getIntent().getStringExtra("category");
-        TextView txtCategory = findViewById(R.id.txtCategory);
-        txtCategory.setText(category);
+        // View refs
+        recyclerView = findViewById(R.id.recyclerView);
+        txtCategory  = findViewById(R.id.txtCategory);
 
-        RecyclerView rv = findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
 
-        List<Recipe> data = RecipesData.forCategory(category);
-        adapter = new RecipeAdapter(data, this);
-        rv.setAdapter(adapter);
+        // Intent’ten kategori al
+        Intent i = getIntent();
+        String category = (i != null) ? i.getStringExtra("category") : null;
+
+        // Başlık
+        txtCategory.setText(categoryLabel(category));
+
+        // Veri
+        List<Recipe> recipes = RecipesData.forCategory(category);
+
+        // Adapter
+        adapter = new RecipeAdapter(
+                this,
+                recipes,
+                recipe -> {
+                    Intent d = new Intent(RecipeActivity.this, RecipeDetailActivity.class);
+                    d.putExtra("name", recipe.getName()); // modelde getTitle() ise buna göre değiştir
+                    startActivity(d);
+                }
+        );
+        recyclerView.setAdapter(adapter);
     }
 
-    @Override public void onRecipeClick(Recipe recipe) {
-        Intent i = new Intent(this, RecipeDetailActivity.class);
-        i.putExtra("name", recipe.getName());
-        startActivity(i);
+    private String categoryLabel(String cat) {
+        if (cat == null) return "TÜM TARİFLER";
+        switch (cat) {
+            case RecipesData.CAT_ESPRESSO: return "ESPRESSO";
+            case RecipesData.CAT_FILTRE:   return "FİLTRE";
+            case RecipesData.CAT_SPECIAL:  return "SPECIAL";
+            case RecipesData.CAT_ALKOLLU:  return "ALKOLLÜ";
+            case RecipesData.CAT_ICE:      return "ICE";
+            case RecipesData.CAT_TURK:     return "TÜRK KAHVESİ";
+            default: return "TARİFLER";
+        }
     }
 }
