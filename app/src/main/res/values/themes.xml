@@ -1,16 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Uygulamanın ana teması -->
+
+    <!-- Açık tema (varsayılan) -->
     <style name="Theme.BdinoCoffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/coffee_deep_green</item>
-        <item name="colorSecondary">@color/coffee_latte_brown</item>
+        <!-- Renkler -->
+        <item name="colorPrimary">@color/mdc_primary</item>
+        <item name="colorOnPrimary">@color/mdc_on_primary</item>
+        <item name="colorSecondary">@color/mdc_secondary</item>
+        <item name="colorOnSecondary">@color/mdc_on_secondary</item>
+        <item name="android:colorBackground">@color/mdc_background</item>
+        <item name="colorSurface">@color/mdc_surface</item>
+        <item name="colorOnSurface">@color/mdc_on_surface</item>
 
-        <!-- Arka plan ve sistem barlar -->
-        <item name="android:windowBackground">@color/coffee_beige</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- Varsayılan arka plan -->
+        <item name="android:windowBackground">@color/mdc_background</item>
     </style>
 
-    <!-- Splash teması -->
-    <style name="Theme.BdinoCoffee.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@color/coffee_beige</item>
+    <!-- Koyu tema (ileride Ayarlar’dan seçilecek) -->
+    <style name="Theme.BdinoCoffee.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/coffee_brown</item>
+        <item name="colorOnPrimary">@color/soft_white</item>
+        <item name="colorSecondary">@color/deep_green</item>
+        <item name="colorOnSecondary">@color/soft_white</item>
+        <item name="android:colorBackground">@color/soft_black</item>
+        <item name="colorSurface">@color/soft_black</item>
+        <item name="colorOnSurface">@color/soft_white</item>
+
+        <item name="android:windowBackground">@color/soft_black</item>
     </style>
+
 </resources>
