@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BRAND / ANA RENKLER -->
-    <color name="coffee_beige">#F4EDE6</color>            <!-- Arka plan -->
-    <color name="coffee_deep_green">#1E4D3A</color>       <!-- BDINO yeşili -->
-    <color name="coffee_latte_brown">#C2A58B</color>      <!-- Latte kahvesi -->
-    <color name="coffee_espresso_brown">#8C6A55</color>   <!-- Kontrast kahve -->
+    <!-- Tema renkleri -->
+    <color name="coffee_deep_green">#204B3A</color>
+    <color name="coffee_latte_brown">#B38867</color>
+    <color name="coffee_beige">#F3EBDD</color>
 
-    <!-- YAZI RENKLERİ -->
-    <color name="coffee_text_primary">#2B2A28</color>
-    <color name="coffee_text_secondary">#5E574F</color>
+    <!-- Metin rengi -->
+    <color name="coffee_brown_text">#5D4037</color>
 
-    <!-- YARDIMCI -->
-    <color name="coffee_cream_white">#FFFDF9</color>
-    <color name="coffee_divider">#E7DACF</color>
-    <color name="coffee_ripple">#1E4D3A1A</color> <!-- 10% opacity -->
+    <!-- Genel -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
