@@ -45,7 +45,7 @@ public final class RecipesData {
 
         list.add(new Recipe(
                 "Americano", "Espresso üstüne sıcak su.",
-                CAT_ESPRESSO, R.drawable.cup_l_350, "L — 240–350 ml",
+                CAT_ESPRESSO, R.drawable.cup_l_350ml, "L — 240–350 ml",
                 "Shot → su (üst üste), crema korunsun."));
 
         // FİLTRE
@@ -71,7 +71,7 @@ public final class RecipesData {
 
         list.add(new Recipe(
                 "Batch Brew", "Sabit oran, servislik demlenmiş.",
-                CAT_FILTRE, R.drawable.cup_l_350, "L — 300–350 ml",
+                CAT_FILTRE, R.drawable.cup_l_350ml, "L — 300–350 ml",
                 "1:15–1:17 oran, taze kalması için ısıtma plağına dikkat."));
 
         // SPECIAL (sütlüler)
