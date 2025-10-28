@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources/>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Coffee" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/coffee_text_primary</item>
+        <item name="android:colorBackground">@color/coffee_beige</item>
+        <item name="android:statusBarColor">@color/coffee_deep_green</item>
+        <item name="android:navigationBarColor">@color/coffee_deep_green</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>
