@@ -24,12 +24,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
     private final List<Recipe> all = new ArrayList<>();
     private final List<Recipe> shown = new ArrayList<>();
 
-    // RecipeActivity’de tek parametreyle kullandığın biçime uyumlu
     public RecipeAdapter(@NonNull OnItemClick onItemClick) {
         this.onItemClick = onItemClick;
     }
 
-    /** Tam listeyi yükler (ilk açılışta kullan) */
     public void submit(@NonNull List<Recipe> data) {
         all.clear();
         all.addAll(data);
@@ -38,7 +36,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         notifyDataSetChanged();
     }
 
-    /** Arama için basit isim filtrelemesi */
     public void filter(@Nullable String query) {
         shown.clear();
         if (query == null || query.trim().isEmpty()) {
@@ -67,11 +64,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         h.txtName.setText(r.getName());
         h.txtDesc.setText(r.getDescription());
 
+        // 🔹 Placeholder yerine BDINO logoyu koyuyoruz
         int imgRes = (r.getImageResId() != 0)
                 ? r.getImageResId()
-                : R.drawable.ic_placeholder_logo;   // drawable’da mevcut olmalı
-        h.img.setImageResource(imgRes);
+                : R.drawable.logo_bdino;
 
+        h.img.setImageResource(imgRes);
         h.itemView.setOnClickListener(v -> onItemClick.onClick(r));
     }
 
