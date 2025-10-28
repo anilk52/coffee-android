@@ -1,16 +1,15 @@
 package com.example.coffee.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.widget.TextView;
 
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
@@ -21,57 +20,51 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private TextView txtCategory;
     private RecipeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // DOĞRU LAYOUT ADI:
         setContentView(R.layout.activity_recipe);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        txtCategory  = findViewById(R.id.txtCategory);
+        setSupportActionBar(findViewById(R.id.topAppBar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        findViewById(R.id.topAppBar).setOnClickListener(v -> onBackPressed());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecipeAdapter(recipe -> {
-            // tıklama: ileride detay sayfasına gidersin
-            // startActivity(new Intent(this, RecipeDetailActivity.class).putExtra("recipe_name", recipe.getName()));
-        });
-        recyclerView.setAdapter(adapter);
+        TextView txtCat = findViewById(R.id.txtCategory);
+        EditText edtSearch = findViewById(R.id.edtSearch);
+        RecyclerView rv = findViewById(R.id.rvList);
 
         String category = getIntent() != null ? getIntent().getStringExtra("category") : null;
-        if (!TextUtils.isEmpty(category)) {
-            txtCategory.setText(category);
-            txtCategory.setVisibility(TextView.VISIBLE);
-        } else {
-            txtCategory.setVisibility(TextView.GONE);
-        }
+        if (category == null) category = "Tüm Tarifler";
+        txtCat.setText(category);
 
-        // Veri yükle (forCategory yoksa getAll'a düşer)
-        List<Recipe> data = new ArrayList<>();
-        try {
-            if (!TextUtils.isEmpty(category)) {
-                data = RecipesData.forCategory(category);
-            } else {
-                data = RecipesData.getAll();
-            }
-        } catch (Throwable ignore) {
-            data = RecipesData.getAll();
-        }
-        adapter.submit(data);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView sv = (SearchView) item.getActionView();
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String q) { adapter.filter(q); return true; }
-            @Override public boolean onQueryTextChange(String q) { adapter.filter(q); return true; }
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecipeAdapter(recipe -> {
+            Intent i = new Intent(this, RecipeDetailActivity.class);
+            i.putExtra("recipe_name", recipe.getName());
+            i.putExtra("recipe_desc", recipe.getDescription());
+            startActivity(i);
         });
-        return true;
+        rv.setAdapter(adapter);
+
+        // veri
+        List<Recipe> all = RecipesData.getAll();
+        List<Recipe> filtered = new ArrayList<>();
+        if (all != null) {
+            for (Recipe r : all) {
+                if (category.equals("Tüm Tarifler") || category.equalsIgnoreCase(r.getCategory())) {
+                    filtered.add(r);
+                }
+            }
+        }
+        adapter.submit(filtered);
+
+        // arama
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            @Override public void afterTextChanged(Editable s) { adapter.filter(s == null ? null : s.toString()); }
+        });
     }
 }
