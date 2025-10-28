@@ -1,37 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#121212">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="24dp"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?attr/actionBarSize"
+        android:title="@string/app_name"
+        app:menu="@menu/main_menu"
+        app:titleCentered="true"/>
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:text="Merhaba!"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#EBDDCB"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button android:id="@+id/btnEspresso" android:text="ESPRESSO" style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <Button android:id="@+id/btnFiltre" android:text="FİLTRE"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <Button android:id="@+id/btnSpecial" android:text="SPECIAL"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <Button android:id="@+id/btnAlkollu" android:text="ALKOLLÜ"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <Button android:id="@+id/btnIce" android:text="ICE"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <Button android:id="@+id/btnTurk" android:text="TÜRK KAHVELERİ"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-    </LinearLayout>
-</ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
