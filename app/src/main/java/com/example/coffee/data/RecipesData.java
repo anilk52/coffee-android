@@ -2,90 +2,77 @@ package com.example.coffee.data;
 
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesData {
 
     public static final String CAT_ESPRESSO = "Espresso";
-    public static final String CAT_FILTRE   = "Filter";
+    public static final String CAT_FILTRE   = "Filtre";
     public static final String CAT_SPECIAL  = "Special";
-    public static final String CAT_ALKOLLU  = "Alcoholic";
-    public static final String CAT_ICE      = "Iced";
-    public static final String CAT_TURK     = "Turkish";
+    public static final String CAT_ALKOLLU  = "Alkollu";
+    public static final String CAT_ICE      = "Ice";
+    public static final String CAT_TURK     = "Turk";
 
-    /** Tüm tarifler */
     public static List<Recipe> getAll() {
         List<Recipe> list = new ArrayList<>();
 
-        // Espresso
-        list.add(new Recipe("Espresso",  "Tek shot, yoğun lezzet.",  CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Ristretto", "Daha kısa, daha yoğun.",    CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Lungo",     "Uzun akışlı espresso.",     CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Doppio",    "Çift shot espresso.",       CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Macchiato", "Espresso + az süt köpüğü.", CAT_ESPRESSO, R.drawable.ic_launcher_foreground));
+        // Espresso tabanı
+        list.add(new Recipe("Espresso", "Tek shot, yoğun lezzet.", CAT_ESPRESSO,
+                R.drawable.cup_s_150ml, "S — 30 ml", "Taze öğütülmüş kahve kullan."));
+        list.add(new Recipe("Americano", "Espresso + sıcak su.", CAT_ESPRESSO,
+                R.drawable.cup_l_350ml, "L — 300–350 ml", "Su oranını kişiye göre ayarla."));
+        list.add(new Recipe("Macchiato", "Espresso + az süt köpüğü.", CAT_ESPRESSO,
+                R.drawable.cup_s_150ml, "S — 100 ml", "Köpükle leke bırakmak esas."));
 
-        // Filter
-        list.add(new Recipe("Americano",    "Espresso + sıcak su.",           CAT_FILTRE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Pour Over",    "V60 ile temiz, berrak fincan.",  CAT_FILTRE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("French Press", "Klasik tam gövde.",              CAT_FILTRE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Chemex",       "Hafif gövdeli, berrak tat.",     CAT_FILTRE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("AeroPress",    "Yoğun ama pürüzsüz.",             CAT_FILTRE, R.drawable.ic_launcher_foreground));
+        // Filtre
+        list.add(new Recipe("Pour Over", "V60 ile temiz tat.", CAT_FILTRE,
+                R.drawable.cup_m_240ml, "M — 250 ml", "Dairesel döküş, sabır ister."));
+        list.add(new Recipe("French Press", "Klasik yoğun filtre.", CAT_FILTRE,
+                R.drawable.cup_m_240ml, "M — 300 ml", "4 dk demleme ideal."));
 
-        // Special
-        list.add(new Recipe("Latte",       "Espresso + bol süt.",                 CAT_SPECIAL, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Cappuccino",  "Espresso + süt köpüğü.",               CAT_SPECIAL, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Flat White",  "Espresso + mikroköpük.",               CAT_SPECIAL, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Mocha",       "Espresso + çikolata + süt.",           CAT_SPECIAL, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Cortado",     "1:1 espresso ve süt.",                 CAT_SPECIAL, R.drawable.ic_launcher_foreground));
+        // Special (sütlü)
+        list.add(new Recipe("Latte", "Espresso + bol süt.", CAT_SPECIAL,
+                R.drawable.cup_m_240ml, "L — 300 ml", "Latte art için mikroköpük."));
+        list.add(new Recipe("Cappuccino", "Espresso + süt köpüğü.", CAT_SPECIAL,
+                R.drawable.cup_m_240ml, "M — 240 ml", "Yaklaşık 1:1:1 denge."));
 
-        // Alcoholic
-        list.add(new Recipe("Irish Coffee",     "Viski + kahve + krema.",          CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Espresso Martini", "Votka + kahve likörü + espresso.",CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Carajillo",        "Brandy + espresso.",              CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Kahlúa Latte",     "Kahve likörü + süt.",             CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Baileys Coffee",   "Baileys + kahve.",                 CAT_ALKOLLU, R.drawable.ic_launcher_foreground));
+        // Alkollü
+        list.add(new Recipe("Irish Coffee", "Viski + kahve + krema.", CAT_ALKOLLU,
+                R.drawable.cup_irish, "M — 250 ml", "Viski önce, krema en son."));
+        list.add(new Recipe("Espresso Martini", "Votka + kahve likörü + espresso.", CAT_ALKOLLU,
+                R.drawable.cup_martini, "S — 150 ml", "İyi shake; üstte ince köpük."));
 
-        // Iced
-        list.add(new Recipe("Iced Americano", "Espresso + soğuk su + buz.", CAT_ICE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Iced Latte",     "Espresso + süt + buz.",      CAT_ICE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Cold Brew",      "12–18 saat demleme.",        CAT_ICE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Affogato",       "Espresso + dondurma.",       CAT_ICE, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Frappe",         "Blender köpüklü soğuk.",     CAT_ICE, R.drawable.ic_launcher_foreground));
+        // Soğuk
+        list.add(new Recipe("Iced Latte", "Espresso + süt + buz.", CAT_ICE,
+                R.drawable.cup_ice, "L — 300 ml", "Soğuk süt kullan."));
+        list.add(new Recipe("Iced Americano", "Espresso + soğuk su + buz.", CAT_ICE,
+                R.drawable.cup_ice, "L — 300 ml", "Buzu abartma, aroma gider."));
 
-        // Turkish
-        list.add(new Recipe("Türk Kahvesi",        "Klasik cezve demleme.",             CAT_TURK, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Menengiç Kahvesi",    "Kafeinsiz, aromatik tat.",          CAT_TURK, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Dibek Kahvesi",       "Yumuşak içim, farklı öğütüm.",      CAT_TURK, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Osmanlı Kahvesi",     "Baharatlı karışım.",                CAT_TURK, R.drawable.ic_launcher_foreground));
-        list.add(new Recipe("Sütlü Türk Kahvesi",  "Klasik tarife süt dokunuşu.",       CAT_TURK, R.drawable.ic_launcher_foreground));
+        // Türk
+        list.add(new Recipe("Türk Kahvesi", "Klasik cezve demleme.", CAT_TURK,
+                R.drawable.cup_t_70ml, "S — 70 ml",
+                "Soğuk su, ince öğütülmüş kahve.\nNot: Sade:0, Az:1, Orta:2, Şekerli:3 çay kaşığı."));
+        list.add(new Recipe("Menengiç Kahvesi", "Kafeinsiz, aromatik.", CAT_TURK,
+                R.drawable.cup_t_70ml, "S — 70 ml", "Kısık ateşte pişir."));
 
         return list;
     }
 
-    /** Kategoriye göre filtre */
     public static List<Recipe> forCategory(String category) {
-        List<Recipe> result = new ArrayList<>();
-        if (category == null || category.trim().isEmpty()) {
-            return getAll();
+        List<Recipe> all = getAll();
+        if (category == null || category.trim().isEmpty()) return all;
+        List<Recipe> out = new ArrayList<>();
+        for (Recipe r : all) {
+            if (category.equals(r.getCategory())) out.add(r);
         }
-        String c = category.trim().toLowerCase();
-        for (Recipe r : getAll()) {
-            if (r.getCategory() != null && r.getCategory().toLowerCase().equals(c)) {
-                result.add(r);
-            }
-        }
-        return result;
+        return out;
     }
 
-    /** İsme göre bul */
     public static Recipe findByName(String name) {
-        if (name == null || name.trim().isEmpty()) return null;
+        if (name == null) return null;
         for (Recipe r : getAll()) {
-            if (r.getName() != null && r.getName().equalsIgnoreCase(name.trim())) {
-                return r;
-            }
+            if (name.equals(r.getName())) return r;
         }
         return null;
     }
