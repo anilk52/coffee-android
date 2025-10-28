@@ -1,6 +1,5 @@
 package com.example.coffee.data;
 
-import com.example.coffee.model.Recipe;
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
 import java.util.ArrayList;
