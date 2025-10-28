@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_margin="8dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="2dp"
     app:cardCornerRadius="16dp"
     android:foreground="?attr/selectableItemBackground">
 
@@ -13,77 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="14dp"
-        android:gravity="center_vertical">
+        android:padding="12dp">
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@null"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kahve Adı"
+                android:text="İsim"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:maxLines="1"
-                android:ellipsize="end"/>
+                android:textSize="16sp"/>
 
             <TextView
-                android:id="@+id/txtSubtitle"
+                android:id="@+id/txtDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kısa açıklama"
-                android:textSize="14sp"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:alpha="0.85"/>
-            
-            <!-- Boyut / sabit servis -->
-            <TextView
-                android:id="@+id/txtSize"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="M — 240 ml"
-                android:textSize="12sp"
-                android:layout_marginTop="6dp"
-                android:alpha="0.9"/>
-
-            <!-- Opsiyonel küçük ipucu -->
-            <TextView
-                android:id="@+id/txtTip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Barista ipucu örnek"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"
-                android:alpha="0.7"/>
+                android:textSize="14sp"/>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/chipCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:text="Kategori"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:background="@android:color/darker_gray"
-            android:alpha="0.9"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
