@@ -1,16 +1,24 @@
 package com.example.coffee.model;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+
 public class Recipe {
     private final String name;
-    private final String desc;
-    private final String category;
-    private final int imageResId;
-    private final String size;
-    private final String tips;
+    private final String description;
+    private final String category;   // CAT_ESPRESSO, CAT_FILTRE, ...
+    private final String size;       // “S — 30 ml” gibi
+    private final String tips;       // barista ipucu
+    @DrawableRes private final int imageResId;
 
-    public Recipe(String name, String desc, String category, int imageResId, String size, String tips) {
+    public Recipe(@NonNull String name,
+                  @NonNull String description,
+                  @NonNull String category,
+                  @DrawableRes int imageResId,
+                  @NonNull String size,
+                  @NonNull String tips) {
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.category = category;
         this.imageResId = imageResId;
         this.size = size;
@@ -18,7 +26,7 @@ public class Recipe {
     }
 
     public String getName() { return name; }
-    public String getDesc() { return desc; }
+    public String getDescription() { return description; }  // ← BUNA GÜVENELİM
     public String getCategory() { return category; }
     public int getImageResId() { return imageResId; }
     public String getSize() { return size; }
