@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/coffee_beige"
-    tools:context=".SplashActivity">
+    android:background="@color/coffee_beige">
 
-    <!-- Logo Placeholder -->
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/ic_placeholder_logo"
-        android:contentDescription="@string/app_name" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <!-- Selamlama Yazısı -->
-    <TextView
-        android:id="@+id/txtGreeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selam Barista!"
-        android:textColor="@color/coffee_deep_green"
-        android:textSize="20sp"
-        android:fontFamily="@font/poppins_medium"
-        android:layout_below="@id/imgLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/logo_bdino"
+            android:contentDescription="@string/app_name"
+            android:layout_marginBottom="16dp"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txtGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selam Barista!"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/coffee_deep_green"/>
+    </LinearLayout>
+</FrameLayout>
