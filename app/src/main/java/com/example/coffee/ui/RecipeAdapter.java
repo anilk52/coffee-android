@@ -1,6 +1,5 @@
 package com.example.coffee.ui;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,70 +7,78 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.data.model.Recipe;
+import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
-    public interface OnItemClick {
-        void onClick(Recipe item);
-    }
+    public interface OnItemClick { void onClick(Recipe item); }
 
-    private final LayoutInflater inflater;
     private final OnItemClick onItemClick;
-    private final List<Recipe> items = new ArrayList<>();
+    private final List<Recipe> all = new ArrayList<>();
+    private final List<Recipe> shown = new ArrayList<>();
 
-    public RecipeAdapter(@NonNull Context ctx, @NonNull List<Recipe> initial,
-                         @NonNull OnItemClick listener) {
-        this.inflater = LayoutInflater.from(ctx);
-        this.onItemClick = listener;
-        if (initial != null) items.addAll(initial);
+    // RecipeActivity’de tek parametreyle kullandığın biçime uyumlu
+    public RecipeAdapter(@NonNull OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
     }
 
-    public void updateData(@NonNull List<Recipe> newItems) {
-        items.clear();
-        items.addAll(newItems);
+    /** Tam listeyi yükler (ilk açılışta kullan) */
+    public void submit(@NonNull List<Recipe> data) {
+        all.clear();
+        all.addAll(data);
+        shown.clear();
+        shown.addAll(data);
         notifyDataSetChanged();
     }
 
-    @NonNull
-    @Override
+    /** Arama için basit isim filtrelemesi */
+    public void filter(@Nullable String query) {
+        shown.clear();
+        if (query == null || query.trim().isEmpty()) {
+            shown.addAll(all);
+        } else {
+            String q = query.toLowerCase();
+            for (Recipe r : all) {
+                if (r.getName().toLowerCase().contains(q)) {
+                    shown.add(r);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    @NonNull @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.item_recipe, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_recipe, parent, false);
         return new VH(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH holder, int position) {
-        final Recipe r = items.get(position);
+    public void onBindViewHolder(@NonNull VH h, int position) {
+        final Recipe r = shown.get(position);
+        h.txtName.setText(r.getName());
+        h.txtDesc.setText(r.getDescription());
 
-        holder.txtName.setText(r.getName());
-        holder.txtDesc.setText(r.getDesc());
+        int imgRes = (r.getImageResId() != 0)
+                ? r.getImageResId()
+                : R.drawable.ic_placeholder_logo;   // drawable’da mevcut olmalı
+        h.img.setImageResource(imgRes);
 
-        // Görsel yoksa placeholder göster
-        int imgRes = r.getImageResId() != 0 ? r.getImageResId() : R.drawable.ic_placeholder_logo;
-        holder.img.setImageResource(imgRes);
-
-        holder.itemView.setOnClickListener(v -> {
-            if (onItemClick != null) onItemClick.onClick(r);
-        });
+        h.itemView.setOnClickListener(v -> onItemClick.onClick(r));
     }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
+    @Override public int getItemCount() { return shown.size(); }
 
     static class VH extends RecyclerView.ViewHolder {
-        ImageView img;
-        TextView txtName;
-        TextView txtDesc;
-
+        ImageView img; TextView txtName; TextView txtDesc;
         VH(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
