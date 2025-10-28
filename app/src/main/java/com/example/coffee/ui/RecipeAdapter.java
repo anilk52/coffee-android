@@ -1,5 +1,6 @@
 package com.example.coffee.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,59 +11,67 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.model.Recipe;
+import com.example.coffee.data.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
-    public interface OnRecipeClick { void onClick(Recipe r); }
-
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
-    private final OnRecipeClick onClick;
-
-    public RecipeAdapter(OnRecipeClick onClick) { this.onClick = onClick; }
-
-    public void submit(List<Recipe> list){
-        all.clear();
-        if (list != null) all.addAll(list);
-        filter(null);
+    public interface OnItemClick {
+        void onClick(Recipe item);
     }
 
-    public void filter(String q){
-        shown.clear();
-        if (q == null || q.trim().isEmpty()){
-            shown.addAll(all);
-        } else {
-            String s = q.trim().toLowerCase();
-            for (Recipe r : all){
-                String n = r.getName() == null ? "" : r.getName().toLowerCase();
-                String d = r.getDescription() == null ? "" : r.getDescription().toLowerCase();
-                if (n.contains(s) || d.contains(s)) shown.add(r);
-            }
-        }
+    private final LayoutInflater inflater;
+    private final OnItemClick onItemClick;
+    private final List<Recipe> items = new ArrayList<>();
+
+    public RecipeAdapter(@NonNull Context ctx, @NonNull List<Recipe> initial,
+                         @NonNull OnItemClick listener) {
+        this.inflater = LayoutInflater.from(ctx);
+        this.onItemClick = listener;
+        if (initial != null) items.addAll(initial);
+    }
+
+    public void updateData(@NonNull List<Recipe> newItems) {
+        items.clear();
+        items.addAll(newItems);
         notifyDataSetChanged();
     }
 
-    @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup p, int v) {
-        View view = LayoutInflater.from(p.getContext()).inflate(R.layout.item_recipe, p, false);
-        return new VH(view);
+    @NonNull
+    @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = inflater.inflate(R.layout.item_recipe, parent, false);
+        return new VH(v);
     }
 
-    @Override public void onBindViewHolder(@NonNull VH h, int pos) {
-        Recipe r = shown.get(pos);
-        h.txtName.setText(r.getName());
-        h.txtDesc.setText(r.getDescription() == null ? "" : r.getDescription());
-        if (r.getImageResId() != 0) h.img.setImageResource(r.getImageResId());
-        h.itemView.setOnClickListener(v -> { if (onClick != null) onClick.onClick(r); });
+    @Override
+    public void onBindViewHolder(@NonNull VH holder, int position) {
+        final Recipe r = items.get(position);
+
+        holder.txtName.setText(r.getName());
+        holder.txtDesc.setText(r.getDesc());
+
+        // Görsel yoksa placeholder göster
+        int imgRes = r.getImageResId() != 0 ? r.getImageResId() : R.drawable.ic_placeholder_logo;
+        holder.img.setImageResource(imgRes);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClick != null) onItemClick.onClick(r);
+        });
     }
 
-    @Override public int getItemCount() { return shown.size(); }
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 
     static class VH extends RecyclerView.ViewHolder {
-        ImageView img; TextView txtName; TextView txtDesc;
+        ImageView img;
+        TextView txtName;
+        TextView txtDesc;
+
         VH(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
