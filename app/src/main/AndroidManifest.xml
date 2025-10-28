@@ -3,26 +3,36 @@
 
     <application
         android:allowBackup="true"
-        android:label="BDINO Coffee"
+        android:label="Bdino Coffee"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Coffee">
+        android:theme="@style/Theme.BdinoCoffee">
 
-        <!-- Splash ekranı (uygulama açılışında) -->
+        <!-- LAUNCHER: Splash -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme_Coffee_Splash">
+            android:theme="@style/Theme.BdinoCoffee.Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <!-- Diğer aktiviteler -->
-        <activity android:name=".MainActivity" android:exported="false" />
-        <activity android:name=".ui.RecipeActivity" android:exported="false" />
-        <activity android:name=".ui.RecipeDetailActivity" android:exported="false" />
+        <!-- Ana ekran -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Liste ekranı -->
+        <activity
+            android:name="com.example.coffee.ui.RecipeActivity"
+            android:exported="false" />
+
+        <!-- Detay ekranı -->
+        <activity
+            android:name="com.example.coffee.ui.RecipeDetailActivity"
+            android:exported="false" />
 
     </application>
 
