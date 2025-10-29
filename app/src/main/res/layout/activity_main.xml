@@ -61,7 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Kısa & yoğun"
+                            android:text="Kısa &amp; yoğun"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Temiz & berrak"
+                            android:text="Temiz &amp; berrak"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Tarz & yorum"
+                            android:text="Tarz &amp; yorum"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Şık & kokteyl"
+                            android:text="Şık &amp; kokteyl"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -197,7 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Serin & ferah"
+                            android:text="Serin &amp; ferah"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
