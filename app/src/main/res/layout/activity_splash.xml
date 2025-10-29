@@ -25,12 +25,15 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
-            android:id="@+id/txtGreeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selam Barista!"
-            android:textSize="24sp"
-            android:textStyle="bold"
+    android:id="@+id/txtGreeting"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="BDINO ile daha lezzetli!"
+    android:textSize="22sp"
+    android:textColor="@color/coffee_deep_green"
+    android:fontFamily="@font/montserrat_semibold"
+    android:layout_marginTop="4dp"
+    android:letterSpacing="0.02"/>
             android:textColor="@color/coffee_deep_green"/>
     </LinearLayout>
 </FrameLayout>
