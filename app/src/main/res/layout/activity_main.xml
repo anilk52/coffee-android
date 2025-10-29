@@ -13,7 +13,6 @@
         android:background="@color/coffee_beige"
         app:title="BDINO Coffee"
         app:titleTextColor="@color/coffee_deep_green"
-        app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
         app:menu="@menu/main_menu" />
 
     <ScrollView
@@ -61,7 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Kısa &amp; yoğun"
+                            android:text="Kısa &amp; Yoğun"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -95,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Temiz &amp; berrak"
+                            android:text="Temiz &amp; Berrak"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -129,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Tarz &amp; yorum"
+                            android:text="Tarz &amp; Yorum"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -163,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Şık &amp; kokteyl"
+                            android:text="Şık &amp; Kokteyl"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -197,7 +196,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Serin &amp; ferah"
+                            android:text="Serin &amp; Ferah"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
@@ -231,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
-                            android:text="Klasik cezve"
+                            android:text="Klasik Cezve"
                             android:textSize="12sp"
                             android:textColor="@color/coffee_latte_brown"
                             android:layout_width="wrap_content"
