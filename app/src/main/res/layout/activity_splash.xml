@@ -11,29 +11,25 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <<!-- activity_splash.xml içindeki ImageView -->
-<ImageView
-    <ImageView
-    android:id="@+id/imgLogo"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
-    android:scaleType="fitCenter"
-    android:src="@drawable/logo_bdino"
-    android:layout_marginBottom="20dp"
-    android:contentDescription="@string/app_name" />
-            android:contentDescription="@string/app_name"
-            android:layout_marginBottom="16dp"/>
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_bdino"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/app_name" />
 
+        <!-- Selamlama -->
         <TextView
-    android:id="@+id/txtGreeting"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="BDINO ile daha lezzetli!"
-    android:textSize="22sp"
-    android:textColor="@color/coffee_deep_green"
-    android:fontFamily="@font/montserrat_semibold"
-    android:layout_marginTop="4dp"
-    android:letterSpacing="0.02"/>
-            android:textColor="@color/coffee_deep_green"/>
+            android:id="@+id/txtGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selam Barista!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/coffee_deep_green" />
+
     </LinearLayout>
 </FrameLayout>
