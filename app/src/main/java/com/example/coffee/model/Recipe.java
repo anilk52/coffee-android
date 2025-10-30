@@ -1,32 +1,31 @@
 package com.example.coffee.model;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class Recipe {
-    private final String title;
-    private final String subtitle;      // kısa tanım
-    private final int category;         // kategori id
-    @DrawableRes private final int imageResId;
-    private final String sizeNote;      // bardak/ölçü bilgisi
-    private final String tip;           // barista ipucu
-    private final String instructions;  // *** adım adım tarif ***
+    private final String name;
+    private final String shortDesc;
+    private final String category;   // "ESPRESSO","FILTER","SPECIAL","ALCOHOLIC","ICED","TURKISH"
+    private final int imageResId;    // 0 ise adapter fallback ikon gösterir
+    private final String cupSize;
 
-    public Recipe(String title, String subtitle, int category, int imageResId,
-                  String sizeNote, String tip, String instructions) {
-        this.title = title;
-        this.subtitle = subtitle;
+    public Recipe(@NonNull String name,
+                  @Nullable String shortDesc,
+                  @NonNull String category,
+                  @DrawableRes int imageResId,
+                  @Nullable String cupSize) {
+        this.name = name;
+        this.shortDesc = shortDesc;
         this.category = category;
         this.imageResId = imageResId;
-        this.sizeNote = sizeNote;
-        this.tip = tip;
-        this.instructions = instructions;
+        this.cupSize = cupSize;
     }
 
-    public String getTitle() { return title; }
-    public String getSubtitle() { return subtitle; }
-    public int getCategory() { return category; }
+    public String getName() { return name; }
+    public String getShortDesc() { return shortDesc; }
+    public String getCategory() { return category; }
     public int getImageResId() { return imageResId; }
-    public String getSizeNote() { return sizeNote; }
-    public String getTip() { return tip; }
-    public String getInstructions() { return instructions; }
+    public String getCupSize() { return cupSize; }
 }
