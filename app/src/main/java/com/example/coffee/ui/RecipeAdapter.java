@@ -1,13 +1,17 @@
 package com.example.coffee.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
@@ -16,42 +20,38 @@ import com.example.coffee.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> implements Filterable {
 
-    public interface OnItemClick { void onClick(Recipe item); }
+    private final Context context;
+    private final List<Recipe> original;   // tam liste
+    private List<Recipe> filtered;         // ekranda gösterilen liste
 
-    private final OnItemClick onItemClick;
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
-
-    public RecipeAdapter(@NonNull OnItemClick onItemClick) {
-        this.onItemClick = onItemClick;
+    public RecipeAdapter(Context context, List<Recipe> items) {
+        this.context = context;
+        this.original = new ArrayList<>(items);
+        this.filtered = new ArrayList<>(items);
+        setHasStableIds(true);
     }
 
-    public void submit(@NonNull List<Recipe> data) {
-        all.clear();
-        all.addAll(data);
-        shown.clear();
-        shown.addAll(data);
+    // Dışarıdan veri güncellemek için
+    public void setItems(List<Recipe> items) {
+        original.clear();
+        original.addAll(items);
+        filtered = new ArrayList<>(items);
         notifyDataSetChanged();
     }
 
-    public void filter(@Nullable String query) {
-        shown.clear();
-        if (query == null || query.trim().isEmpty()) {
-            shown.addAll(all);
-        } else {
-            String q = query.toLowerCase();
-            for (Recipe r : all) {
-                if (r.getName().toLowerCase().contains(q)) {
-                    shown.add(r);
-                }
-            }
-        }
-        notifyDataSetChanged();
+    public Recipe getItem(int position) {
+        return filtered.get(position);
     }
 
-    @NonNull @Override
+    @Override public long getItemId(int position) {
+        // Stabil ID: başlığa göre hash
+        return filtered.get(position).getTitle().hashCode();
+    }
+
+    @NonNull
+    @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recipe, parent, false);
@@ -60,28 +60,76 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
     @Override
     public void onBindViewHolder(@NonNull VH h, int position) {
-        final Recipe r = shown.get(position);
-        h.txtName.setText(r.getName());
-        h.txtDesc.setText(r.getDescription());
+        Recipe item = filtered.get(position);
 
-        // 🔹 Placeholder yerine BDINO logoyu koyuyoruz
-        int imgRes = (r.getImageResId() != 0)
-                ? r.getImageResId()
-                : R.drawable.logo_bdino;
+        h.txtTitle.setText(item.getTitle());
+        h.txtSubtitle.setText(item.getSubtitle());
 
-        h.img.setImageResource(imgRes);
-        h.itemView.setOnClickListener(v -> onItemClick.onClick(r));
+        int imgRes = (item.getImageResId() != 0) ? item.getImageResId() : R.drawable.logo_bdino;
+        h.imgThumb.setImageResource(imgRes);
+
+        h.card.setOnClickListener(v -> {
+            Intent i = new Intent(context, RecipeDetailActivity.class);
+            i.putExtra(RecipeDetailActivity.EXTRA_TITLE, item.getTitle());
+            i.putExtra(RecipeDetailActivity.EXTRA_SUBTITLE, item.getSubtitle());
+            i.putExtra(RecipeDetailActivity.EXTRA_IMAGE, item.getImageResId());
+            i.putExtra(RecipeDetailActivity.EXTRA_SIZE, item.getSizeNote());
+            i.putExtra(RecipeDetailActivity.EXTRA_TIP, item.getTip());
+            i.putExtra(RecipeDetailActivity.EXTRA_INSTRUCTIONS, item.getInstructions());
+            context.startActivity(i);
+        });
     }
 
-    @Override public int getItemCount() { return shown.size(); }
+    @Override
+    public int getItemCount() {
+        return filtered.size();
+    }
 
+    // ---------- Filterable (arama kutusu için) ----------
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence query) {
+                String q = query == null ? "" : query.toString().trim().toLowerCase();
+                List<Recipe> out = new ArrayList<>();
+                if (q.isEmpty()) {
+                    out.addAll(original);
+                } else {
+                    for (Recipe r : original) {
+                        if (r.getTitle().toLowerCase().contains(q)
+                                || r.getSubtitle().toLowerCase().contains(q)) {
+                            out.add(r);
+                        }
+                    }
+                }
+                FilterResults fr = new FilterResults();
+                fr.values = out;
+                fr.count = out.size();
+                return fr;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filtered = (List<Recipe>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    // ---------- ViewHolder ----------
     static class VH extends RecyclerView.ViewHolder {
-        ImageView img; TextView txtName; TextView txtDesc;
+        CardView card;
+        ImageView imgThumb;
+        TextView txtTitle, txtSubtitle;
+
         VH(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img);
-            txtName = itemView.findViewById(R.id.txtName);
-            txtDesc = itemView.findViewById(R.id.txtDesc);
+            card = itemView.findViewById(R.id.cardRoot);
+            imgThumb = itemView.findViewById(R.id.imgThumb);
+            txtTitle = itemView.findViewById(R.id.txtTitle);
+            txtSubtitle = itemView.findViewById(R.id.txtSubtitle);
         }
     }
 }
