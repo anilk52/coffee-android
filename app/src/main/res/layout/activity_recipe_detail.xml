@@ -1,57 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/coffee_beige">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing"
+        <ImageView
+            android:id="@+id/imgPhoto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:titleEnabled="true"
-            app:expandedTitleMarginStart="16dp"
-            app:expandedTitleMarginEnd="16dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:id="@+id/imgHeader"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_foreground"
-                android:contentDescription="@string/app_name"
-                app:layout_collapseMode="parallax"/>
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:navigationIconTint="@android:color/white"
-                app:titleTextColor="@android:color/white"
-                app:layout_collapseMode="pin"/>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="220dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo_bdino"
+            android:contentDescription="@string/app_name"
+            android:background="@drawable/bg_card" />
 
         <TextView
-            android:id="@+id/txtContent"
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Başlık"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/coffee_deep_green"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/txtSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kısa tanım"
+            android:textSize="16sp"
+            android:textColor="@color/coffee_brown"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/txtSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bardak/Ölçü"
+            android:textSize="14sp"
+            android:textColor="@color/coffee_brown"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/txtTip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Barista İpucu"
+            android:textSize="14sp"
+            android:textColor="@color/coffee_brown"
+            android:layout_marginTop="6dp"/>
+
+        <!-- Bölüm başlığı -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textSize="16sp"
-            android:text="Tarif içeriği burada…"/>
-    </ScrollView>
+            android:text="Tarif"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/coffee_deep_green"
+            android:layout_marginTop="16dp"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/txtInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/coffee_brown"
+            android:layout_marginTop="6dp"/>
+
+    </LinearLayout>
+</ScrollView>
