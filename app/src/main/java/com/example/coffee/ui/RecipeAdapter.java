@@ -15,78 +15,82 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> implements Filterable {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.Holder> implements Filterable {
 
     public interface OnItemClick { void onClick(Recipe item); }
 
     private final Context context;
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> items = new ArrayList<>();
-    private OnItemClick click;
+    private final List<Recipe> original = new ArrayList<>();
+    private final List<Recipe> visible = new ArrayList<>();
+    private OnItemClick onItemClick;
 
     public RecipeAdapter(@NonNull Context ctx, @NonNull List<Recipe> initial) {
         this.context = ctx;
         setItems(initial);
     }
 
-    public void setOnItemClick(OnItemClick c) { this.click = c; }
+    public void setOnItemClick(OnItemClick l) { this.onItemClick = l; }
 
-    public void setItems(@NonNull List<Recipe> newItems) {
-        all.clear();
-        all.addAll(newItems);
-        items.clear();
-        items.addAll(newItems);
+    public void setItems(@NonNull List<Recipe> data) {
+        original.clear();
+        original.addAll(data);
+        visible.clear();
+        visible.addAll(data);
         notifyDataSetChanged();
     }
 
     @NonNull @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
-        return new VH(v);
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+        return new Holder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH h, int pos) {
-        final Recipe r = items.get(pos);
+    public void onBindViewHolder(@NonNull Holder h, int position) {
+        final Recipe r = visible.get(position);
 
-        h.txtTitle.setText(r.getName());
-
-        String sub = joinNonEmpty(" • ",
+        h.txtTitle.setText(safe(r.getName()));
+        String meta = joinNonEmpty(" • ",
                 safe(r.getShortDesc()),
-                safe(RecipesData.categoryLabel(r.getCategory())),
-                safe(r.getCupSize())
-        );
-        h.txtSubtitle.setText(sub);
+                safe(r.getCupSize()));
+        h.txtMeta.setText(meta);
 
-        int imgRes = r.getImageResId() != 0 ? r.getImageResId() : R.drawable.logo_bdino;
-        h.imgThumb.setImageResource(imgRes);
+        int res = r.getImageResId();
+        if (res != 0) {
+            h.imgThumb.setImageResource(res);
+        } else {
+            // Projede placeholder yoksa bile derlensin diye Android ikonunu kullandım
+            h.imgThumb.setImageResource(android.R.drawable.ic_menu_gallery);
+        }
 
         h.card.setOnClickListener(v -> {
-            if (click != null) click.onClick(r);
+            if (onItemClick != null) onItemClick.onClick(r);
         });
     }
 
     @Override
-    public int getItemCount() { return items.size(); }
+    public int getItemCount() { return visible.size(); }
 
     @Override
     public Filter getFilter() {
         return new Filter() {
-            @Override protected FilterResults performFiltering(CharSequence cs) {
-                String q = cs == null ? "" : cs.toString().trim().toLowerCase();
+            @Override protected FilterResults performFiltering(CharSequence constraint) {
+                String q = constraint == null ? "" : constraint.toString().toLowerCase(Locale.ROOT).trim();
                 List<Recipe> out = new ArrayList<>();
-                if (q.isEmpty()) {
-                    out.addAll(all);
+                if (TextUtils.isEmpty(q)) {
+                    out.addAll(original);
                 } else {
-                    for (Recipe r : all) {
-                        if (r.getName().toLowerCase().contains(q)) out.add(r);
+                    for (Recipe r : original) {
+                        if (!TextUtils.isEmpty(r.getName())
+                                && r.getName().toLowerCase(Locale.ROOT).contains(q)) {
+                            out.add(r);
+                        }
                     }
                 }
                 FilterResults fr = new FilterResults();
@@ -95,41 +99,41 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> implem
                 return fr;
             }
 
-            @Override protected void publishResults(CharSequence cs, FilterResults fr) {
-                items.clear();
-                if (fr.values instanceof List) {
+            @Override protected void publishResults(CharSequence constraint, FilterResults results) {
+                visible.clear();
+                if (results != null && results.values instanceof List) {
                     //noinspection unchecked
-                    items.addAll((List<Recipe>) fr.values);
+                    visible.addAll((List<Recipe>) results.values);
                 }
                 notifyDataSetChanged();
             }
         };
     }
 
-    static String safe(String s) { return TextUtils.isEmpty(s) ? "" : s; }
+    private static String safe(String s) { return s == null ? "" : s; }
 
-    static String joinNonEmpty(String sep, String... parts) {
-        StringBuilder b = new StringBuilder();
+    private static String joinNonEmpty(String sep, String... parts) {
+        StringBuilder sb = new StringBuilder();
         for (String p : parts) {
-            if (!TextUtils.isEmpty(p)) {
-                if (b.length() > 0) b.append(sep);
-                b.append(p);
+            if (p != null && !p.trim().isEmpty()) {
+                if (sb.length() > 0) sb.append(sep);
+                sb.append(p.trim());
             }
         }
-        return b.toString();
+        return sb.toString();
     }
 
-    static class VH extends RecyclerView.ViewHolder {
+    static class Holder extends RecyclerView.ViewHolder {
         CardView card;
         ImageView imgThumb;
-        TextView txtTitle, txtSubtitle;
+        TextView txtTitle, txtMeta;
 
-        VH(@NonNull View itemView) {
+        Holder(@NonNull View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.cardRoot);
             imgThumb = itemView.findViewById(R.id.imgThumb);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtSubtitle = itemView.findViewById(R.id.txtSubtitle);
+            txtMeta = itemView.findViewById(R.id.txtMeta);
         }
     }
 }
