@@ -1,34 +1,32 @@
 package com.example.coffee.model;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
 
 public class Recipe {
-    private final String name;
-    private final String description;
-    private final String category;   // CAT_ESPRESSO, CAT_FILTRE, ...
-    private final String size;       // “S — 30 ml” gibi
-    private final String tips;       // barista ipucu
+    private final String title;
+    private final String subtitle;      // kısa tanım
+    private final int category;         // kategori id
     @DrawableRes private final int imageResId;
+    private final String sizeNote;      // bardak/ölçü bilgisi
+    private final String tip;           // barista ipucu
+    private final String instructions;  // *** adım adım tarif ***
 
-    public Recipe(@NonNull String name,
-                  @NonNull String description,
-                  @NonNull String category,
-                  @DrawableRes int imageResId,
-                  @NonNull String size,
-                  @NonNull String tips) {
-        this.name = name;
-        this.description = description;
+    public Recipe(String title, String subtitle, int category, int imageResId,
+                  String sizeNote, String tip, String instructions) {
+        this.title = title;
+        this.subtitle = subtitle;
         this.category = category;
         this.imageResId = imageResId;
-        this.size = size;
-        this.tips = tips;
+        this.sizeNote = sizeNote;
+        this.tip = tip;
+        this.instructions = instructions;
     }
 
-    public String getName() { return name; }
-    public String getDescription() { return description; }  // ← BUNA GÜVENELİM
-    public String getCategory() { return category; }
+    public String getTitle() { return title; }
+    public String getSubtitle() { return subtitle; }
+    public int getCategory() { return category; }
     public int getImageResId() { return imageResId; }
-    public String getSize() { return size; }
-    public String getTips() { return tips; }
+    public String getSizeNote() { return sizeNote; }
+    public String getTip() { return tip; }
+    public String getInstructions() { return instructions; }
 }
