@@ -2,79 +2,52 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/coffee_beige">
+    android:padding="16dp">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center_horizontal">
 
         <ImageView
-            android:id="@+id/imgPhoto"
-            android:layout_width="match_parent"
+            android:id="@+id/imgRecipe"
+            android:layout_width="220dp"
             android:layout_height="220dp"
+            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo_bdino"
-            android:contentDescription="@string/app_name"
-            android:background="@drawable/bg_card" />
+            android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/txtTitle"
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Başlık"
-            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/coffee_deep_green"
-            android:layout_marginTop="16dp"/>
+            android:textSize="22sp"
+            android:layout_marginBottom="8dp" />
 
         <TextView
-            android:id="@+id/txtSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kısa tanım"
-            android:textSize="16sp"
-            android:textColor="@color/coffee_brown"
-            android:layout_marginTop="4dp"/>
-
-        <TextView
-            android:id="@+id/txtSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bardak/Ölçü"
-            android:textSize="14sp"
-            android:textColor="@color/coffee_brown"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/txtTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Barista İpucu"
-            android:textSize="14sp"
-            android:textColor="@color/coffee_brown"
-            android:layout_marginTop="6dp"/>
-
-        <!-- Bölüm başlığı -->
-        <TextView
+            android:id="@+id/txtDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tarif"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/coffee_deep_green"
-            android:layout_marginTop="16dp"/>
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp" />
 
         <TextView
-            android:id="@+id/txtInstructions"
+            android:id="@+id/txtCup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="@color/coffee_brown"
-            android:layout_marginTop="6dp"/>
+            android:textColor="#6B4F36"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/txtTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="#4CAF50" />
 
     </LinearLayout>
 </ScrollView>
