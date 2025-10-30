@@ -1,258 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/coffee_beige">
+    android:fillViewport="true">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/coffee_beige"
-        app:title="BDINO Coffee"
-        app:titleTextColor="@color/coffee_deep_green"
-        app:menu="@menu/main_menu" />
+        android:layout_height="wrap_content">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginTop="?attr/actionBarSize">
+        <TextView
+            android:id="@+id/txtBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BDINO Coffee"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginBottom="16dp" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:padding="16dp"
+        <Button
+            android:id="@+id/btnEspresso"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp"
+            android:text="Espresso" />
 
-            <!-- 1. Satır: Espresso - Filtre -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnFilter"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Filtre" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardEspresso"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
+        <Button
+            android:id="@+id/btnSpecial"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Special" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+        <Button
+            android:id="@+id/btnAlcohol"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Alkollü" />
 
-                        <TextView
-                            android:text="Espresso"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btnIced"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Soğuk" />
 
-                        <TextView
-                            android:text="Kısa &amp; Yoğun"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+        <Button
+            android:id="@+id/btnTurkish"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:text="Türk Kahvesi" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardFiltre"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:text="Filtre"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="Temiz &amp; Berrak"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <!-- 2. Satır: Special - Alkollü -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardSpecial"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:text="Special"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="Tarz &amp; Yorum"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardAlkollu"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:text="Alkollü"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="Şık &amp; Kokteyl"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <!-- 3. Satır: Iced - Türk -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardIce"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:text="Iced"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="Serin &amp; Ferah"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardTurk"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="20dp"
-                    app:cardUseCompatPadding="true"
-                    app:strokeColor="@color/coffee_latte_brown"
-                    app:strokeWidth="1dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:text="Türk"
-                            android:textStyle="bold"
-                            android:textSize="18sp"
-                            android:textColor="@color/coffee_deep_green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:text="Klasik Cezve"
-                            android:textSize="12sp"
-                            android:textColor="@color/coffee_latte_brown"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</ScrollView>
