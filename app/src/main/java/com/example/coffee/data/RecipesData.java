@@ -45,7 +45,7 @@ public final class RecipesData {
         list.add(new Recipe("Romano",          "Espresso + limon kabuğu.",                CAT_ESPRESSO, R.drawable.ic_placeholder_logo, "70 ml fincan",  "Limon kabuğu yağıyla aroma."));
         list.add(new Recipe("Americano",       "Espresso üzerine sıcak su.",              CAT_ESPRESSO, R.drawable.ic_placeholder_logo, "350 ml kupa",   "Önce su, sonra shot."));
         // Elinde kesin var dediğin görsel:
-        list.add(new Recipe("Affogato",        "Espresso + vanilyalı dondurma.",          CAT_ESPRESSO, R.drawable.cup_affogato150ml,   "150 ml fincan", "Sıcak shot’ı dondurmanın üstüne."));
+        list.add(new Recipe("Affogato",        "Espresso + vanilyalı dondurma.",          CAT_ESPRESSO, R.drawable.cup_affogato_150ml,   "150 ml fincan", "Sıcak shot’ı dondurmanın üstüne."));
 
         // ==================== FİLTRE / DEMLEME ====================
         list.add(new Recipe("V60 Pour Over",   "Klasik filtre demleme yöntemi.",          CAT_FILTER,   R.drawable.ic_placeholder_logo, "350 ml ekipman","Spiral döküş, 3 dk demleme."));
