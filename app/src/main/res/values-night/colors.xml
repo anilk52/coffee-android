@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="coffee_beige">#3B3A37</color>
-    <color name="coffee_latte_brown">#9E704F</color>
-    <color name="coffee_deep_green">#1F3B31</color>
-    <color name="coffee_cream_white">#121212</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="coffee_beige">#1E1E1E</color>
+    <color name="coffee_latte_brown">#C18A58</color>
+    <color name="coffee_deep_green">#BFE3D6</color>
+    <color name="coffee_cream_white">#141414</color>
 
-    <color name="colorPrimary">@color/coffee_deep_green</color>
-    <color name="colorPrimaryVariant">#162C24</color>
-    <color name="colorOnPrimary">@color/white</color>
+    <color name="coffee_brown">@color/coffee_latte_brown</color>
+    <color name="soft_white">#ECECEC</color>
+    <color name="deep_green">#BFE3D6</color>
 
-    <color name="colorSecondary">@color/coffee_latte_brown</color>
-    <color name="colorOnSecondary">@color/white</color>
+    <color name="mdc_primary">@color/deep_green</color>
+    <color name="mdc_on_primary">#121212</color>
 
-    <color name="colorBackground">@color/coffee_cream_white</color>
-    <color name="colorOnBackground">@color/white</color>
+    <color name="mdc_secondary">@color/coffee_latte_brown</color>
+    <color name="mdc_on_secondary">#121212</color>
 
-    <color name="colorSurface">#1E1E1E</color>
-    <color name="colorOnSurface">@color/white</color>
+    <color name="mdc_background">#121212</color>
+    <color name="mdc_surface">#1C1C1C</color>
+    <color name="mdc_on_surface">#E6E6E6</color>
 
-    <color name="card_bg">#1E1E1E</color>
-    <color name="card_stroke">#33FFFFFF</color>
-
-    <color name="ripple_tint">#33FFFFFF</color>
 </resources>
