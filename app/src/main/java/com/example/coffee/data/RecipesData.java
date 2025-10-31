@@ -11,6 +11,7 @@ public final class RecipesData {
 
     private RecipesData() {}
 
+    // Kategori sabitleri
     public static final String CAT_ESPRESSO  = "ESPRESSO";
     public static final String CAT_FILTER    = "FILTER";
     public static final String CAT_SPECIAL   = "SPECIAL";
@@ -21,34 +22,15 @@ public final class RecipesData {
     private static final List<Recipe> ALL = new ArrayList<>();
 
     static {
-        // Görsel adlarının uyuşmama riskine karşı, garanti placeholder kullandım.
-        // İstersen cup görseller tam oturduğunda bunları tek tek değiştiririz.
+        // NOT: imageResId şimdilik garanti için placeholder.
+        // Bardak görsellerinin kesin adları netleşince sadece bu alanları ilgili cup_*.png ile değiştir.
+        // Örn: R.drawable.cup_m_240, R.drawable.cup_t_70, vb.
+
+        // ESPRESSO (2)
         ALL.add(new Recipe(
                 R.drawable.ic_placeholder_logo,
-                "Türk Kahvesi",
-                "Klasik, cezvede ince çekim",
-                "İnce çekilmiş kahve cezvede köpükle pişirilir.",
-                "1 fincan • 70 ml",
-                "Taze öğüt, soğuk su kullan.",
-                "Lokumla servis tavsiye.",
-                CAT_TURKISH,
-                "T – 70 ml"
-        ));
-
-        ALL.add(new Recipe(
-                R.drawable.ic_placeholder_logo,
-                "Caffè Latte",
-                "Espresso + süt, kalp latte art",
-                "1 shot espresso üzerine buharda ısıtılmış süt eklenir.",
-                "M – 240 ml",
-                "Süt 60–65°C arası olsun.",
-                "Krema için mikrofoam şart.",
-                CAT_ESPRESSO,
-                "M – 240 ml"
-        ));
-    }
-
-    public static List<Recipe> getAll() {
-        return Collections.unmodifiableList(ALL);
-    }
-}
+                "Espresso",
+                "Yoğun, kısa çekim",
+                "18–20 g kahveden ~25–30 sn’de 25–30 ml çıkış alınır.",
+                "S – 30 ml",
+                "Taze öğüt, 9 bar, 92–
