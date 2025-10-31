@@ -1,108 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     android:background="@color/coffee_cream_white"
-    tools:context=".MainActivity">
+    android:padding="16dp"
+    tools:context=".ui.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- BDINO Coffee Logo -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo_bdino"
+        android:contentDescription="@string/app_name"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="16dp"
+        android:tint="@null" />
+
+    <!-- Selam Barista veya başlık -->
+    <TextView
+        android:id="@+id/txtGreeting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:text="Selam Barista!"
+        android:textColor="@color/coffee_deep_green"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp" />
 
-        <!-- Logo -->
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:src="@drawable/logo_bdino"
-            android:contentDescription="BDINO Coffee"
-            android:layout_marginBottom="32dp" />
+    <!-- Kategoriler -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never">
 
-        <!-- Başlık -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BDINO Coffee Menu"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/coffee_deep_green"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Kategoriler -->
         <GridLayout
+            android:id="@+id/gridCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
             android:rowCount="3"
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false"
-            android:rowOrderPreserved="false"
             android:useDefaultMargins="true">
 
-            <Button
-                android:id="@+id/btnEspresso"
-                style="?attr/borderlessButtonStyle"
-                android:text="Espresso Bazlı"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
+            <!-- Espresso -->
+            <LinearLayout
+                android:id="@+id/cardEspresso"
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/btnFilter"
-                style="?attr/borderlessButtonStyle"
-                android:text="Filtre Kahve"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_espresso_70ml"
+                    android:contentDescription="Espresso" />
 
-            <Button
-                android:id="@+id/btnSpecial"
-                style="?attr/borderlessButtonStyle"
-                android:text="Special"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Espresso"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btnAlcohol"
-                style="?attr/borderlessButtonStyle"
-                android:text="Alkollü"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
+            <!-- Filter -->
+            <LinearLayout
+                android:id="@+id/cardFilter"
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/btnIced"
-                style="?attr/borderlessButtonStyle"
-                android:text="Iced"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_v60"
+                    android:contentDescription="Filtre Kahve" />
 
-            <Button
-                android:id="@+id/btnTurkish"
-                style="?attr/borderlessButtonStyle"
-                android:text="Türk Kahvesi"
-                android:backgroundTint="@color/coffee_latte_brown"
-                android:textColor="@color/white"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filtre"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Special -->
+            <LinearLayout
+                android:id="@+id/cardSpecial"
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_pistachio_latte"
+                    android:contentDescription="Special Kahve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Special"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Alkollü -->
+            <LinearLayout
+                android:id="@+id/cardAlcoholic"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_irish_coffee"
+                    android:contentDescription="Alkollü Kahve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alkollü"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Iced -->
+            <LinearLayout
+                android:id="@+id/cardIced"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_iced_latte"
+                    android:contentDescription="Iced Kahve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iced"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Türk -->
+            <LinearLayout
+                android:id="@+id/cardTurkish"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/cup_t_70ml"
+                    android:contentDescription="Türk Kahvesi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Türk"
+                    android:textColor="@color/deep_green"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
         </GridLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+</LinearLayout>
