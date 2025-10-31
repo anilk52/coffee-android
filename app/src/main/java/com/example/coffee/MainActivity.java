@@ -2,32 +2,35 @@ package com.example.coffee;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.RecipeActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private LinearLayout cardEspresso, cardFilter, cardSpecial, cardAlcoholic, cardIced, cardTurkish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnEspresso = findViewById(R.id.btnEspresso);
-        Button btnFilter = findViewById(R.id.btnFilter);
-        Button btnSpecial = findViewById(R.id.btnSpecial);
-        Button btnAlcohol = findViewById(R.id.btnAlcohol);
-        Button btnIced = findViewById(R.id.btnIced);
-        Button btnTurkish = findViewById(R.id.btnTurkish);
+        cardEspresso  = findViewById(R.id.cardEspresso);
+        cardFilter    = findViewById(R.id.cardFilter);
+        cardSpecial   = findViewById(R.id.cardSpecial);
+        cardAlcoholic = findViewById(R.id.cardAlcoholic);
+        cardIced      = findViewById(R.id.cardIced);
+        cardTurkish   = findViewById(R.id.cardTurkish);
 
-        btnEspresso.setOnClickListener(v -> openCategory(RecipesData.CAT_ESPRESSO));
-        btnFilter.setOnClickListener(v -> openCategory(RecipesData.CAT_FILTER));
-        btnSpecial.setOnClickListener(v -> openCategory(RecipesData.CAT_SPECIAL));
-        btnAlcohol.setOnClickListener(v -> openCategory(RecipesData.CAT_ALCOHOLIC));
-        btnIced.setOnClickListener(v -> openCategory(RecipesData.CAT_ICED));
-        btnTurkish.setOnClickListener(v -> openCategory(RecipesData.CAT_TURKISH));
+        cardEspresso.setOnClickListener(v -> openCategory("Espresso"));
+        cardFilter.setOnClickListener(v -> openCategory("Filter"));
+        cardSpecial.setOnClickListener(v -> openCategory("Special"));
+        cardAlcoholic.setOnClickListener(v -> openCategory("Alcoholic"));
+        cardIced.setOnClickListener(v -> openCategory("Iced"));
+        cardTurkish.setOnClickListener(v -> openCategory("Turkish"));
     }
 
     private void openCategory(String category) {
