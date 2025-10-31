@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
@@ -24,6 +25,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.activity_recipe_detail);
+
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         coffeeImage       = findViewById(R.id.coffeeImage);
@@ -51,13 +55,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (recipe.getImageResId() != 0) coffeeImage.setImageResource(recipe.getImageResId());
         else coffeeImage.setImageResource(R.drawable.ic_placeholder_logo);
 
-        coffeeName.setText(recipe.getName() != null ? recipe.getName() : "");
-        coffeeDescription.setText(recipe.getDescription() != null ? recipe.getDescription() : "");
-        coffeeMeasure.setText(recipe.getMeasure() != null ? recipe.getMeasure() : "");
-        coffeeTip.setText(recipe.getTip() != null ? recipe.getTip() : "");
-        coffeeNote.setText(recipe.getNote() != null ? recipe.getNote() : "");
-
-        setTitle(recipe.getName() != null ? recipe.getName() : getString(R.string.app_name));
+        coffeeName.setText(recipe.getName());
+        coffeeDescription.setText(recipe.getDescription());
+        coffeeMeasure.setText(recipe.getMeasure());
+        coffeeTip.setText(recipe.getTip());
+        coffeeNote.setText(recipe.getNote());
+        setTitle(recipe.getName());
 
         shareButton.setOnClickListener(v -> shareCurrent());
     }
