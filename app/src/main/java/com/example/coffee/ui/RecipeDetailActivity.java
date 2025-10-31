@@ -3,70 +3,51 @@ package com.example.coffee.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
+import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
-    private static final String K_NAME  = "name";
-    private static final String K_DESC  = "desc";
-    private static final String K_CUP   = "cup";
-    private static final String K_TIP   = "tip";
-    private static final String K_IMAGE = "image";
+    private static final String EXTRA_RECIPE = "extra_recipe";
 
-    private ImageView imgRecipe;
-    private TextView txtTitle, txtDesc, txtCup, txtTip;
-
-    /** Liste ekranından çağır: Recipe nesnesini alan güvenli başlatıcı */
-    public static void start(Context ctx, Recipe r) {
-        Intent i = new Intent(ctx, RecipeDetailActivity.class);
-        i.putExtra(K_NAME,  safe(r.getName()));
-        i.putExtra(K_DESC,  safe(r.getDescription()));
-        i.putExtra(K_CUP,   safe(r.getCupSize()));
-        i.putExtra(K_TIP,   safe(r.getTip()));
-        i.putExtra(K_IMAGE, r.getImageResId());
-        ctx.startActivity(i);
+    public static void start(Context context, Recipe recipe) {
+        Intent intent = new Intent(context, RecipeDetailActivity.class);
+        intent.putExtra(EXTRA_RECIPE, recipe);
+        context.startActivity(intent);
     }
 
+    private ImageView imgRecipe;
+    private TextView txtTitle, txtDesc, txtSteps, txtCup, txtCategory;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
         imgRecipe = findViewById(R.id.imgRecipe);
-        txtTitle  = findViewById(R.id.txtTitle);
-        txtDesc   = findViewById(R.id.txtDesc);
-        txtCup    = findViewById(R.id.txtCup);
-        txtTip    = findViewById(R.id.txtTip);
+        txtTitle = findViewById(R.id.txtTitle);
+        txtDesc = findViewById(R.id.txtDesc);
+        txtSteps = findViewById(R.id.txtSteps);
+        txtCup = findViewById(R.id.txtCup);
+        txtCategory = findViewById(R.id.txtCategory);
 
-        // intent verilerini çek
-        String name = getIntent().getStringExtra(K_NAME);
-        String desc = getIntent().getStringExtra(K_DESC);
-        String cup  = getIntent().getStringExtra(K_CUP);
-        String tip  = getIntent().getStringExtra(K_TIP);
-        int image   = getIntent().getIntExtra(K_IMAGE, 0);
+        Recipe recipe = (Recipe) getIntent().getSerializableExtra(EXTRA_RECIPE);
+        if (recipe == null) return;
 
-        // görseller ve metinler
-        txtTitle.setText(safe(name));
-        txtDesc.setText(safe(desc));
-        txtCup.setText(safe(cup));
-        txtTip.setText(safe(tip));
+        txtTitle.setText(recipe.getName());
+        txtDesc.setText(recipe.getDescription());
+        txtSteps.setText(recipe.getSteps());
+        txtCup.setText(recipe.getCupSize());
+        txtCategory.setText(RecipesData.categoryLabel(recipe.getCategory()));
 
-        if (image != 0) {
-            imgRecipe.setImageResource(image);
-        } else {
-            imgRecipe.setImageResource(R.drawable.logo_bdino); // fallback
+        if (recipe.getImageResId() != 0) {
+            imgRecipe.setImageResource(recipe.getImageResId());
         }
-    }
-
-    private static String safe(String s) {
-        return TextUtils.isEmpty(s) ? "" : s;
     }
 }
