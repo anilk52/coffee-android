@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/coffee_cream_white"
     android:padding="16dp"
-    tools:context=".ui.MainActivity">
+    tools:context="MainActivity">
 
     <!-- BDINO Coffee Logo -->
     <ImageView
