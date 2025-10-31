@@ -16,33 +16,37 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private final List<Recipe> allRecipes = new ArrayList<>();
+    private final List<Recipe> all = new ArrayList<>();
     private final List<Recipe> shown = new ArrayList<>();
     private RecipeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
-        // Senin dosya adın: res/layout/activityrecipe.xml
-        setContentView(R.layout.activityrecipe);
+        // HATAYI KESMEK İÇİN: activity_recipe kullanıyoruz
+        setContentView(R.layout.activity_recipe);
 
         RecyclerView rv = findViewById(R.id.recyclerRecipes);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        if (rv != null) {
+            rv.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new RecipeAdapter(shown);
+            rv.setAdapter(adapter);
+        } else {
+            // Recycler yoksa bile crash olmasın
+            adapter = new RecipeAdapter(shown);
+        }
 
-        adapter = new RecipeAdapter(shown);
-        rv.setAdapter(adapter);
-
-        allRecipes.clear();
-        allRecipes.addAll(RecipesData.getAll());
+        all.clear();
+        all.addAll(RecipesData.getAll());
 
         String category = getIntent().getStringExtra("category");
         shown.clear();
 
         if (TextUtils.isEmpty(category)) {
-            shown.addAll(allRecipes);
+            shown.addAll(all);
             setTitle(R.string.app_name);
         } else {
-            for (Recipe r : allRecipes) {
+            for (Recipe r : all) {
                 if (category.equalsIgnoreCase(r.getCategory())) {
                     shown.add(r);
                 }
