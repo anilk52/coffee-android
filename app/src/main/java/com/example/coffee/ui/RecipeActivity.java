@@ -1,8 +1,11 @@
 package com.example.coffee.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,44 +19,43 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
+    private RecyclerView recyclerRecipes;
     private RecipeAdapter adapter;
+    private EditText searchInput;
+    private List<Recipe> allRecipes = new ArrayList<>();
+    private List<Recipe> filtered = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle b) {
+    protected void onCreate(@Nullable Bundle b) {
         super.onCreate(b);
-        // HATAYI KESMEK İÇİN: activity_recipe kullanıyoruz
         setContentView(R.layout.activity_recipe);
 
-        RecyclerView rv = findViewById(R.id.recyclerRecipes);
-        if (rv != null) {
-            rv.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new RecipeAdapter(shown);
-            rv.setAdapter(adapter);
-        } else {
-            // Recycler yoksa bile crash olmasın
-            adapter = new RecipeAdapter(shown);
-        }
+        recyclerRecipes = findViewById(R.id.recyclerRecipes);
+        searchInput = findViewById(R.id.searchInput);
 
-        all.clear();
-        all.addAll(RecipesData.getAll());
+        recyclerRecipes.setLayoutManager(new LinearLayoutManager(this));
+        allRecipes = RecipesData.getAll();
+        filtered.addAll(allRecipes);
 
-        String category = getIntent().getStringExtra("category");
-        shown.clear();
+        adapter = new RecipeAdapter(this, filtered);
+        recyclerRecipes.setAdapter(adapter);
 
-        if (TextUtils.isEmpty(category)) {
-            shown.addAll(all);
-            setTitle(R.string.app_name);
-        } else {
-            for (Recipe r : all) {
-                if (category.equalsIgnoreCase(r.getCategory())) {
-                    shown.add(r);
+        // Dinamik filtreleme
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String q = s.toString().toLowerCase();
+                filtered.clear();
+                for (Recipe r : allRecipes) {
+                    if (r.getName().toLowerCase().contains(q) ||
+                        r.getDescription().toLowerCase().contains(q)) {
+                        filtered.add(r);
+                    }
                 }
+                adapter.notifyDataSetChanged();
             }
-            setTitle(category);
-        }
-
-        adapter.notifyDataSetChanged();
+        });
     }
 }
