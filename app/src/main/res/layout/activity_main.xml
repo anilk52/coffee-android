@@ -1,76 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/coffee_beige">
 
+    <!-- Üst Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent" android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:background="@color/coffee_cream_white"
-        android:paddingStart="16dp" android:paddingEnd="16dp" />
+        app:title="BDINO Coffee"
+        app:titleTextColor="@color/coffee_deep_green"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <!-- İçerik -->
     <ScrollView
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
         <LinearLayout
-            android:orientation="vertical" android:padding="16dp"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/logo"
                 android:src="@drawable/logo_bdino"
-                android:layout_width="120dp" android:layout_height="120dp"
-                android:layout_gravity="center" android:contentDescription="BDINO"/>
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:contentDescription="BDINO Logo"
+                android:layout_marginBottom="12dp"/>
 
             <GridLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:columnCount="2" android:useDefaultMargins="true"
-                android:layout_marginTop="8dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:useDefaultMargins="true">
 
                 <FrameLayout
                     android:id="@+id/cardEspresso"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
 
                 <FrameLayout
                     android:id="@+id/cardFilter"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
 
                 <FrameLayout
                     android:id="@+id/cardSpecial"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
 
                 <FrameLayout
                     android:id="@+id/cardAlcoholic"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
 
                 <FrameLayout
                     android:id="@+id/cardIced"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
 
                 <FrameLayout
                     android:id="@+id/cardTurkish"
-                    android:layout_width="0dp" android:layout_height="120dp"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
+                    android:background="@drawable/bg_card"
+                    android:padding="12dp" />
             </GridLayout>
         </LinearLayout>
     </ScrollView>
