@@ -2,40 +2,31 @@ package com.example.coffee;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.RecipeActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    private LinearLayout cardEspresso, cardFilter, cardSpecial, cardAlcoholic, cardIced, cardTurkish;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cardEspresso  = findViewById(R.id.cardEspresso);
-        cardFilter    = findViewById(R.id.cardFilter);
-        cardSpecial   = findViewById(R.id.cardSpecial);
-        cardAlcoholic = findViewById(R.id.cardAlcoholic);
-        cardIced      = findViewById(R.id.cardIced);
-        cardTurkish   = findViewById(R.id.cardTurkish);
-
-        cardEspresso.setOnClickListener(v -> openCategory("Espresso"));
-        cardFilter.setOnClickListener(v -> openCategory("Filter"));
-        cardSpecial.setOnClickListener(v -> openCategory("Special"));
-        cardAlcoholic.setOnClickListener(v -> openCategory("Alcoholic"));
-        cardIced.setOnClickListener(v -> openCategory("Iced"));
-        cardTurkish.setOnClickListener(v -> openCategory("Turkish"));
+        setupCard(R.id.cardEspresso, RecipesData.CAT_ESPRESSO);
+        setupCard(R.id.cardFilter, RecipesData.CAT_FILTER);
+        setupCard(R.id.cardSpecial, RecipesData.CAT_SPECIAL);
+        setupCard(R.id.cardAlcoholic, RecipesData.CAT_ALCOHOLIC);
+        setupCard(R.id.cardIced, RecipesData.CAT_ICED);
+        setupCard(R.id.cardTurkish, RecipesData.CAT_TURKISH);
     }
 
-    private void openCategory(String category) {
-        Intent i = new Intent(this, RecipeActivity.class);
-        i.putExtra("category", category);
-        startActivity(i);
+    private void setupCard(int cardId, String category) {
+        LinearLayout card = findViewById(cardId);
+        card.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, RecipeActivity.class);
+            i.putExtra("category", category);
+            startActivity(i);
+        });
     }
 }
