@@ -1,61 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/coffee_cream_white"
-    android:padding="16dp">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/imgRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="16dp" />
-
+        <!-- Adım 3'te detay ID’leri eklenecek -->
         <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:textColor="@color/coffee_deep_green" />
-
-        <TextView
-            android:id="@+id/txtCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/coffee_latte_brown"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/txtCup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/coffee_latte_brown"
-            android:layout_marginTop="2dp" />
-
-        <TextView
-            android:id="@+id/txtDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textSize="16sp"
-            android:textColor="@color/coffee_latte_brown" />
-
-        <TextView
-            android:id="@+id/txtSteps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="15sp"
-            android:textColor="@color/coffee_deep_green" />
-
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Tarif Detayı" android:textSize="18sp"/>
     </LinearLayout>
 </ScrollView>
