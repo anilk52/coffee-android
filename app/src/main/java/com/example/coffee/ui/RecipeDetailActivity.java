@@ -3,82 +3,70 @@ package com.example.coffee.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
-    private ImageView imgRecipe;
-    private TextView txtName, txtDesc, txtCup, txtTip;
+    private static final String K_NAME  = "name";
+    private static final String K_DESC  = "desc";
+    private static final String K_CUP   = "cup";
+    private static final String K_TIP   = "tip";
+    private static final String K_IMAGE = "image";
 
-    // 🔹 Kolay başlatma metodu
-    public static void start(Context ctx, String recipeName) {
+    private ImageView imgRecipe;
+    private TextView txtTitle, txtDesc, txtCup, txtTip;
+
+    /** Liste ekranından çağır: Recipe nesnesini alan güvenli başlatıcı */
+    public static void start(Context ctx, Recipe r) {
         Intent i = new Intent(ctx, RecipeDetailActivity.class);
-        i.putExtra("recipe_name", recipeName);
+        i.putExtra(K_NAME,  safe(r.getName()));
+        i.putExtra(K_DESC,  safe(r.getDescription()));
+        i.putExtra(K_CUP,   safe(r.getCupSize()));
+        i.putExtra(K_TIP,   safe(r.getTip()));
+        i.putExtra(K_IMAGE, r.getImageResId());
         ctx.startActivity(i);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
         imgRecipe = findViewById(R.id.imgRecipe);
-        txtName = findViewById(R.id.txtName);
-        txtDesc = findViewById(R.id.txtDesc);
-        txtCup = findViewById(R.id.txtCup);
-        txtTip = findViewById(R.id.txtTip);
+        txtTitle  = findViewById(R.id.txtTitle);
+        txtDesc   = findViewById(R.id.txtDesc);
+        txtCup    = findViewById(R.id.txtCup);
+        txtTip    = findViewById(R.id.txtTip);
 
-        // Gelen tarif ismini al
-        String name = getIntent().getStringExtra("recipe_name");
-        if (name == null) {
-            finish();
-            return;
-        }
+        // intent verilerini çek
+        String name = getIntent().getStringExtra(K_NAME);
+        String desc = getIntent().getStringExtra(K_DESC);
+        String cup  = getIntent().getStringExtra(K_CUP);
+        String tip  = getIntent().getStringExtra(K_TIP);
+        int image   = getIntent().getIntExtra(K_IMAGE, 0);
 
-        // Tarifleri bul ve eşleşeni göster
-        Recipe target = null;
-        for (Recipe r : RecipesData.getAll()) {
-            if (r.getName().equalsIgnoreCase(name)) {
-                target = r;
-                break;
-            }
-        }
+        // görseller ve metinler
+        txtTitle.setText(safe(name));
+        txtDesc.setText(safe(desc));
+        txtCup.setText(safe(cup));
+        txtTip.setText(safe(tip));
 
-        if (target == null) {
-            txtName.setText("Tarif bulunamadı");
-            return;
-        }
-
-        // Görseller ve bilgiler
-        txtName.setText(target.getName());
-        txtDesc.setText(target.getDescription());
-        txtCup.setText(target.getCupSize());
-        txtTip.setText(getTipFor(target.getName()));
-
-        if (target.getImageRes() != 0) {
-            imgRecipe.setImageResource(target.getImageRes());
+        if (image != 0) {
+            imgRecipe.setImageResource(image);
         } else {
-            imgRecipe.setImageResource(R.drawable.ic_placeholder_logo);
+            imgRecipe.setImageResource(R.drawable.logo_bdino); // fallback
         }
     }
 
-    // 🔹 Küçük barista ipuçları
-    private String getTipFor(String name) {
-        switch (name.toLowerCase()) {
-            case "espresso": return "Shot 25 sn civarı akmalı.";
-            case "doppio": return "İki shot; öğütüm biraz daha kalın.";
-            case "latte": return "Süt 60°C, köpüğü kadifemsi olsun.";
-            case "cappuccino": return "Köpük kubbe gibi kabarsın.";
-            case "affogato": return "Espressoyu dondurmanın üstüne hemen dök.";
-            case "turk kahvesi": return "Köpüğü taşmadan alın; yavaş ateşte pişirin.";
-            default: return "Barista ipucu: Demleme süresini not al, kıvamını yakala!";
-        }
+    private static String safe(String s) {
+        return TextUtils.isEmpty(s) ? "" : s;
     }
 }
