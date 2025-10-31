@@ -27,7 +27,7 @@ public class RecipesData {
         list.add(new Recipe("Macchiato", "Espresso üstüne az süt köpüğü.", CAT_ESPRESSO, R.drawable.cup_macchiato_120ml, "120 ml fincan", "Köpük fazla olmamalı, yüzeyi kaplasın."));
         list.add(new Recipe("Cortado", "Espresso + eşit miktar süt.", CAT_ESPRESSO, R.drawable.cup_cortado_150ml, "150 ml bardak", "Süt 60–65°C civarında olmalı."));
         list.add(new Recipe("Flat White", "İnce mikrofoam ile dengeli içim.", CAT_ESPRESSO, R.drawable.cup_flatwhite_240ml, "240 ml bardak", "Shot süresi 30 sn civarında olmalı."));
-        list.add(new Recipe("Cappuccino", "1:1:1 oranında espresso, süt ve köpük.", CAT_ESPRESSO, R.drawable.cup_cappuccino_240ml, "240 ml kupa", "Köpüğü ince mikro yapıda olmalı."));
+        list.add(new Recipe("Cappuccino", "1:1:1 oranında espresso, süt ve köpük.", CAT_ESPRESSO, R.drawable.cup_cappucino_240ml, "240 ml kupa", "Köpüğü ince mikro yapıda olmalı."));
         list.add(new Recipe("Latte", "Espresso üstüne bol süt.", CAT_ESPRESSO, R.drawable.cup_latte_300ml, "300 ml bardak", "Köpük yüzeyde ince tabaka olmalı."));
         list.add(new Recipe("Piccolo Latte", "Küçük bardakta latte versiyonu.", CAT_ESPRESSO, R.drawable.cup_piccolalatte_120ml, "120 ml bardak", "Yoğun espresso kullan."));
         list.add(new Recipe("Con Panna", "Espresso üstüne krem şanti.", CAT_ESPRESSO, R.drawable.cup_conpanna_100ml, "100 ml fincan", "Soğuk şanti kullanma, sıcak krema tercih et."));
