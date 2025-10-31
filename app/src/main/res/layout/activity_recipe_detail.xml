@@ -6,9 +6,40 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:padding="16dp">
 
-        <!-- Adım 3'te detay ID’leri eklenecek -->
+        <ImageView
+            android:id="@+id/coffeeImage"
+            android:layout_width="match_parent" android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
+
         <TextView
+            android:id="@+id/coffeeName"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Tarif Detayı" android:textSize="18sp"/>
+            android:text="Tarif Adı" android:textSize="20sp"
+            android:paddingTop="12dp"/>
+
+        <TextView
+            android:id="@+id/coffeeDescription"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Tarif açıklaması burada" android:paddingTop="8dp"/>
+
+        <TextView
+            android:id="@+id/coffeeMeasure"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Ölçü" android:paddingTop="8dp"/>
+
+        <TextView
+            android:id="@+id/coffeeTip"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Barista ipucu" android:paddingTop="8dp"/>
+
+        <TextView
+            android:id="@+id/coffeeNote"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Eğlenceli not" android:paddingTop="8dp"/>
+
+        <ImageView
+            android:id="@+id/shareButton"
+            android:layout_width="48dp" android:layout_height="48dp"
+            android:layout_marginTop="16dp" android:contentDescription="Paylaş"/>
     </LinearLayout>
 </ScrollView>
