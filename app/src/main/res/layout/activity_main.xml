@@ -19,7 +19,7 @@
             android:id="@+id/imgLogo"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/ic_bdino_logo"
+            android:src="@drawable/logo_bdino"
             android:contentDescription="BDINO Coffee"
             android:layout_marginBottom="32dp" />
 
