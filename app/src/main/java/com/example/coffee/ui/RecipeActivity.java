@@ -19,51 +19,56 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    public static final String EXTRA_CATEGORY = "category"; // String (örn: "Espresso")
+    public static final String EXTRA_CATEGORY = "category"; // Örn: "Espresso"
 
     private RecipeAdapter adapter;
-    private final List<Recipe> all = new ArrayList<>();
+    private final List<Recipe> allRecipes = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipes);
+        setContentView(R.layout.activity_recipe); // ✅ tekil dosya ismi
 
-        // View’lar
-        RecyclerView recycler = findViewById(R.id.recyclerRecipes);
-        EditText edtSearch = findViewById(R.id.edtSearch);
+        RecyclerView recyclerView = findViewById(R.id.recyclerRecipes);
+        EditText searchBox = findViewById(R.id.edtSearch);
 
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Veri
-        String category = getIntent().getStringExtra(EXTRA_CATEGORY); // null olabilir
-        all.clear();
-        all.addAll(RecipesData.getAll());   // tüm tarifler
+        // Tüm tarifleri yükle
+        allRecipes.clear();
+        allRecipes.addAll(RecipesData.getAll());
 
-        List<Recipe> initial = filterByCategory(all, category);
-        adapter = new RecipeAdapter(this, initial);
-        recycler.setAdapter(adapter);
+        // Gelen kategori
+        String category = getIntent().getStringExtra(EXTRA_CATEGORY);
 
-        // Arama
-        edtSearch.addTextChangedListener(new TextWatcher() {
+        // Başlangıç filtreli liste
+        List<Recipe> filtered = filterByCategory(allRecipes, category);
+
+        adapter = new RecipeAdapter(this, filtered);
+        recyclerView.setAdapter(adapter);
+
+        // 🔍 Arama kutusu filtreleme
+        searchBox.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Kategori filtresi + arama birlikte çalışsın:
-                List<Recipe> base = filterByCategory(all, category);
-                adapter.submit(base);
-                adapter.filter(s == null ? "" : s.toString());
+                String query = s == null ? "" : s.toString();
+                List<Recipe> baseList = filterByCategory(allRecipes, category);
+                adapter.submit(baseList);   // kategoriye göre yeniden yükle
+                adapter.filter(query);      // aramayı uygula
             }
             @Override public void afterTextChanged(Editable s) {}
         });
     }
 
     private List<Recipe> filterByCategory(List<Recipe> source, @Nullable String category) {
-        if (category == null || category.trim().isEmpty() || "Tüm Tarifler".equalsIgnoreCase(category)) {
+        if (category == null || category.trim().isEmpty() || category.equalsIgnoreCase("Tüm Tarifler")) {
             return new ArrayList<>(source);
         }
         List<Recipe> out = new ArrayList<>();
         for (Recipe r : source) {
-            if (category.equalsIgnoreCase(r.getCategory())) out.add(r);
+            if (category.equalsIgnoreCase(r.getCategory())) {
+                out.add(r);
+            }
         }
         return out;
     }
