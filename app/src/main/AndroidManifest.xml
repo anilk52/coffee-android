@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.coffee"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.coffee">
 
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ic_launcher_foreground"
         android:label="@string/app_name"
-        android:icon="@drawable/logo_bdino"
-        android:roundIcon="@drawable/logo_bdino"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        android:roundIcon="@drawable/ic_launcher_foreground"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BDINO">
         
-        <!-- LAUNCHER: Splash kök pakette -->
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        <activity android:name=".SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Main kök pakette -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar"/>
-        
-        <!-- Diğer ekranlar (sende zaten var) -->
-        <activity android:name=".ui.RecipeActivity" android:exported="false"/>
-        <activity android:name=".ui.RecipeDetailActivity" android:exported="false"/>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.RecipeActivity" />
+        <activity android:name=".ui.RecipeDetailActivity" />
     </application>
+
 </manifest>
