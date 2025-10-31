@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/coffee_cream_white"
     android:padding="16dp"
-    tools:context="MainActivity">
+    tools:context=".MainActivity">
 
     <!-- BDINO Coffee Logo -->
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_marginBottom="16dp"
         android:tint="@null" />
 
-    <!-- Selam Barista veya başlık -->
+    <!-- Başlık -->
     <TextView
         android:id="@+id/txtGreeting"
         android:layout_width="wrap_content"
@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:rowCount="3"
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false"
             android:useDefaultMargins="true">
@@ -71,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Espresso"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
@@ -97,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filtre"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
@@ -123,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Special"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
@@ -149,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Alkollü"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
@@ -175,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Iced"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
@@ -201,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Türk"
-                    android:textColor="@color/deep_green"
+                    android:textColor="@color/coffee_deep_green"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp" />
             </LinearLayout>
