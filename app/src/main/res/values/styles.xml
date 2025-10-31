@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Android 12+ SplashScreen temasıyla uyumlu ad -->
-    <style name="Theme_Coffee_Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/splash_bg</item>
-        <!-- Buraya PNG logonu ekleyince: @drawable/ic_logo -->
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-        <!-- Splash bittiğinde geçilecek ana tema -->
-        <item name="postSplashScreenTheme">@style/Theme.BdinoCoffee</item>
+    <!-- Kart stili -->
+    <style name="BdinoCard">
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_margin">6dp</item>
     </style>
 
+    <!-- Başlık yazı tipi -->
+    <style name="BdinoTitleText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/bd_text_primary</item>
+    </style>
+
+    <!-- Alt açıklama yazısı -->
+    <style name="BdinoSubtitleText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/bd_text_secondary</item>
+    </style>
 </resources>
