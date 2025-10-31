@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Ana palet -->
-    <color name="coffee_brown">#6F4E37</color>
-    <color name="coffee_brown_text">#5A3D2B</color>
-    <color name="deep_green">#2E7D32</color>
-    <color name="cream_beige">#F5EFE6</color>
+    <!-- BDINO Coffee Paleti -->
+    <color name="coffee_beige">#E8DCCF</color>
+    <color name="coffee_latte_brown">#B5835A</color>
+    <color name="coffee_deep_green">#2E5A47</color>
+    <color name="coffee_cream_white">#F5EFE6</color>
 
-    <!-- Nötrler -->
+    <!-- Temel renkler -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="soft_white">#FFFFFF</color>
-    <color name="soft_black">#121212</color>
 
-    <!-- Material eşlemesi -->
-    <color name="mdc_primary">#6F4E37</color>
-    <color name="mdc_on_primary">#FFFFFF</color>
-    <color name="mdc_secondary">#2E7D32</color>
-    <color name="mdc_on_secondary">#FFFFFF</color>
-    <color name="mdc_background">#F5EFE6</color>
-    <color name="mdc_on_background">#5A3D2B</color>
-    <color name="mdc_surface">#FFFFFF</color>
-    <color name="mdc_on_surface">#5A3D2B</color>
+    <!-- Material uyumlu isimler -->
+    <color name="colorPrimary">@color/coffee_deep_green</color>
+    <color name="colorPrimaryVariant">#214335</color>
+    <color name="colorOnPrimary">@color/white</color>
 
-    <!-- Splash -->
-    <color name="splash_bg">#F5EFE6</color>
+    <color name="colorSecondary">@color/coffee_latte_brown</color>
+    <color name="colorOnSecondary">@color/white</color>
 
-    <!-- Uyumluluk (temada bu adlar kullanılıyorsa kırılsın diye) -->
-    <color name="coffee_beige">#F5EFE6</color>
-    <color name="coffee_deep_green">#2E7D32</color>
-    <color name="coffee_latte_brown">#6F4E37</color>
+    <color name="colorBackground">@color/coffee_cream_white</color>
+    <color name="colorOnBackground">@color/black</color>
+
+    <color name="colorSurface">@color/white</color>
+    <color name="colorOnSurface">@color/black</color>
+
+    <!-- Kart arkaplan / stroke -->
+    <color name="card_bg">@color/white</color>
+    <color name="card_stroke">#1A000000</color>
+
+    <!-- Ripple -->
+    <color name="ripple_tint">#1F000000</color>
 </resources>
