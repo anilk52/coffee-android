@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- BDINO ana palet -->
-    <color name="coffee_beige">#F3E9DC</color>
-    <color name="coffee_latte_brown">#B68B65</color>
-    <color name="coffee_deep_green">#0B3D2E</color>
-    <color name="coffee_cream_white">#FFFDF8</color>
+    <!-- === Core Brand Palette (BDINO Coffee) === -->
+    <color name="coffee_beige">#F5EDE3</color>
+    <color name="coffee_cream_white">#FFFBF7</color>
+    <color name="coffee_latte_brown">#8B5E3C</color>
+    <color name="coffee_deep_green">#2E5E4E</color>
 
-    <!-- Nötrler -->
-    <color name="soft_white">#FAFAFA</color>
+    <!-- Support neutrals -->
     <color name="soft_black">#121212</color>
+    <color name="soft_white">#FFFFFF</color>
 
-    <!-- Splash arkaplanı -->
-    <color name="splash_bg">@color/coffee_cream_white</color>
+    <!-- === Legacy aliases (eski referansları kırmamak için) === -->
+    <color name="coffee_brown">@color/coffee_latte_brown</color>
+    <color name="deep_green">@color/coffee_deep_green</color>
 
-    <!-- Material alias (temalar/values.xml bunları bekliyor) -->
+    <!-- === Material tokens (projede referanslanan mdc_* eksikleri için) === -->
     <color name="mdc_primary">@color/coffee_deep_green</color>
     <color name="mdc_on_primary">@color/soft_white</color>
     <color name="mdc_secondary">@color/coffee_latte_brown</color>
@@ -22,5 +23,30 @@
     <color name="mdc_background">@color/coffee_cream_white</color>
     <color name="mdc_surface">@color/coffee_cream_white</color>
     <color name="mdc_on_surface">@color/soft_black</color>
+
+    <!-- === AppCompat (eski tema anahtarları) === -->
+    <color name="colorPrimary">@color/coffee_deep_green</color>
+    <color name="colorPrimaryVariant">#244B3F</color>
+    <color name="colorOnPrimary">@color/soft_white</color>
+
+    <color name="colorSecondary">@color/coffee_latte_brown</color>
+    <color name="colorSecondaryVariant">#734A30</color>
+    <color name="colorOnSecondary">@color/soft_white</color>
+
+    <color name="colorBackground">@color/coffee_cream_white</color>
+    <color name="colorOnBackground">@color/soft_black</color>
+
+    <color name="colorSurface">@color/coffee_cream_white</color>
+    <color name="colorOnSurface">@color/soft_black</color>
+
+    <color name="colorError">#B00020</color>
+    <color name="colorOnError">@color/soft_white</color>
+
+    <!-- === App-specific extras === -->
+    <color name="splash_bg">@color/coffee_beige</color>
+    <color name="chip_bg">@color/coffee_beige</color>
+    <color name="chip_text">@color/soft_black</color>
+    <color name="divider_tint">#1A000000</color>
+    <color name="card_shadow">#14000000</color>
 
 </resources>
