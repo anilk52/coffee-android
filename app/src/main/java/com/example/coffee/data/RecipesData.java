@@ -4,135 +4,76 @@ import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public final class RecipesData {
+public class RecipesData {
 
-    public static final String CAT_ESPRESSO  = "ESPRESSO";
-    public static final String CAT_FILTER    = "FILTER";
-    public static final String CAT_SPECIAL   = "SPECIAL";
-    public static final String CAT_ALCOHOLIC = "ALCOHOLIC";
-    public static final String CAT_ICED      = "ICED";
-    public static final String CAT_TURKISH   = "TURKISH";
-
-    private static List<Recipe> CACHE;
-
-    public static String categoryLabel(String cat) {
-        if (CAT_ESPRESSO.equals(cat))  return "Espresso";
-        if (CAT_FILTER.equals(cat))    return "Filtre";
-        if (CAT_SPECIAL.equals(cat))   return "Special";
-        if (CAT_ALCOHOLIC.equals(cat)) return "Alkollü";
-        if (CAT_ICED.equals(cat))      return "Soğuk";
-        if (CAT_TURKISH.equals(cat))   return "Türk";
-        return "";
-    }
+    // Kategori tanımları
+    public static final String CAT_ESPRESSO = "Espresso";
+    public static final String CAT_FILTER = "Filtre";
+    public static final String CAT_SPECIAL = "Special";
+    public static final String CAT_ALCOHOLIC = "Alkollü";
+    public static final String CAT_ICED = "Soğuk";
+    public static final String CAT_TURKISH = "Türk Kahvesi";
 
     public static List<Recipe> getAll() {
-        if (CACHE != null) return CACHE;
         List<Recipe> list = new ArrayList<>();
 
-        // ===== Espresso Bazlı =====
-        list.add(new Recipe("Espresso", "Tek shot, yoğun ve kısa içim.",
-                CAT_ESPRESSO, 0, "70 ml fincan"));
-        list.add(new Recipe("Doppio", "Çift shot espresso.",
-                CAT_ESPRESSO, 0, "120 ml fincan"));
-        list.add(new Recipe("Ristretto", "Kısa akış; daha konsantre.",
-                CAT_ESPRESSO, 0, "50 ml fincan"));
-        list.add(new Recipe("Lungo", "Uzun akış; hafif gövdeli.",
-                CAT_ESPRESSO, 0, "150 ml fincan"));
-        list.add(new Recipe("Macchiato", "Espresso üstüne az süt köpüğü.",
-                CAT_ESPRESSO, 0, "120 ml fincan"));
-        list.add(new Recipe("Cortado", "Espresso + eşit miktar süt.",
-                CAT_ESPRESSO, 0, "150 ml bardak"));
-        list.add(new Recipe("Flat White", "İnce mikrofoam ile yumuşak içim.",
-                CAT_ESPRESSO, 0, "240 ml kupa"));
-        list.add(new Recipe("Cappuccino", "1:1:1 espresso/süt/köpük.",
-                CAT_ESPRESSO, 0, "240 ml kupa"));
-        list.add(new Recipe("Latte", "Espresso üzerine bol süt.",
-                CAT_ESPRESSO, 0, "300 ml kupa"));
-        list.add(new Recipe("Mocha", "Çikolatalı latte.",
-                CAT_ESPRESSO, 0, "300 ml kupa"));
-        list.add(new Recipe("Breve", "Espresso + yarım yağlı krema.",
-                CAT_ESPRESSO, 0, "200 ml kupa"));
-        list.add(new Recipe("Piccolo Latte", "Küçük bardakta latte.",
-                CAT_ESPRESSO, 0, "120 ml bardak"));
-        list.add(new Recipe("Con Panna", "Espresso üstüne krem şanti.",
-                CAT_ESPRESSO, 0, "100 ml fincan"));
-        list.add(new Recipe("Romano", "Espresso + limon kabuğu.",
-                CAT_ESPRESSO, 0, "70 ml fincan"));
-        list.add(new Recipe("Americano", "Espresso üzerine sıcak su.",
-                CAT_ESPRESSO, 0, "350 ml kupa"));
-        // Dosya adı: cup_affogato_150ml (sen böyle koymuştun)
-        list.add(new Recipe("Affogato", "Espresso + vanilyalı dondurma.",
-                CAT_ESPRESSO, R.drawable.cup_affogato_150ml, "150 ml fincan"));
+        // ===== ESPRESSO BAZLI =====
+        list.add(new Recipe("Espresso", "Tek shot, yoğun ve kısa içim.", CAT_ESPRESSO, R.drawable.cup_espresso_70ml, "70 ml fincan", "Shot yaklaşık 25 saniye akmalı."));
+        list.add(new Recipe("Doppio", "Çift shot espresso, daha yoğun gövde.", CAT_ESPRESSO, R.drawable.cup_doppio_120ml, "120 ml fincan", "Kahve/su oranı 1:2 olmalı."));
+        list.add(new Recipe("Ristretto", "Kısa akış, yoğun aroma.", CAT_ESPRESSO, R.drawable.cup_ristretto_50ml, "50 ml fincan", "Kısa ekstraksiyonla tat dengesi korunur."));
+        list.add(new Recipe("Lungo", "Uzun akış, daha hafif gövde.", CAT_ESPRESSO, R.drawable.cup_lungo_150ml, "150 ml fincan", "Su oranı ristretto’nun 2 katı olmalı."));
+        list.add(new Recipe("Macchiato", "Espresso üstüne az süt köpüğü.", CAT_ESPRESSO, R.drawable.cup_macchiato_120ml, "120 ml fincan", "Köpük fazla olmamalı, yüzeyi kaplasın."));
+        list.add(new Recipe("Cortado", "Espresso + eşit miktar süt.", CAT_ESPRESSO, R.drawable.cup_cortado_150ml, "150 ml bardak", "Süt 60–65°C civarında olmalı."));
+        list.add(new Recipe("Flat White", "İnce mikrofoam ile dengeli içim.", CAT_ESPRESSO, R.drawable.cup_flatwhite_240ml, "240 ml bardak", "Shot süresi 30 sn civarında olmalı."));
+        list.add(new Recipe("Cappuccino", "1:1:1 oranında espresso, süt ve köpük.", CAT_ESPRESSO, R.drawable.cup_cappuccino_240ml, "240 ml kupa", "Köpüğü ince mikro yapıda olmalı."));
+        list.add(new Recipe("Latte", "Espresso üstüne bol süt.", CAT_ESPRESSO, R.drawable.cup_latte_300ml, "300 ml bardak", "Köpük yüzeyde ince tabaka olmalı."));
+        list.add(new Recipe("Piccolo Latte", "Küçük bardakta latte versiyonu.", CAT_ESPRESSO, R.drawable.cup_piccololatte_120ml, "120 ml bardak", "Yoğun espresso kullan."));
+        list.add(new Recipe("Con Panna", "Espresso üstüne krem şanti.", CAT_ESPRESSO, R.drawable.cup_conpanna_100ml, "100 ml fincan", "Soğuk şanti kullanma, sıcak krema tercih et."));
+        list.add(new Recipe("Romano", "Espresso + limon kabuğu.", CAT_ESPRESSO, R.drawable.cup_romano_70ml, "70 ml fincan", "Limon kabuğu espresso’yu dengelemek için."));
+        list.add(new Recipe("Americano", "Espresso üzerine sıcak su.", CAT_ESPRESSO, R.drawable.cup_americano_350ml, "350 ml kupa", "Önce espresso, sonra sıcak su ekle."));
+        list.add(new Recipe("Affogato", "Espresso + vanilyalı dondurma.", CAT_ESPRESSO, R.drawable.cup_affogato_150ml, "150 ml fincan", "Espressoyu dondurmanın üstüne dök."));
 
-        // ===== Filtre =====
-        list.add(new Recipe("V60 Pour Over", "Klasik filtre demleme yöntemi.",
-                CAT_FILTER, 0, "350 ml ekipman"));
-        list.add(new Recipe("Chemex", "Kalın filtreyle temiz tat.",
-                CAT_FILTER, 0, "600 ml ekipman"));
-        list.add(new Recipe("French Press", "Klasik yoğun filtre.",
-                CAT_FILTER, R.drawable.cup_frenchpress, "300 ml ekipman"));
-        list.add(new Recipe("AeroPress", "Basınçla kısa demleme.",
-                CAT_FILTER, 0, "200 ml ekipman"));
-        list.add(new Recipe("Syphon Brew", "Vakumla demleme.",
-                CAT_FILTER, 0, "400 ml ekipman"));
-        list.add(new Recipe("Moka Pot", "Klasik İtalyan cezvesi.",
-                CAT_FILTER, 0, "250 ml ekipman"));
-        list.add(new Recipe("Percolator", "Kaynama devridaimi.",
-                CAT_FILTER, 0, "500 ml ekipman"));
-        list.add(new Recipe("Kalita Wave", "Dengeli su akışı.",
-                CAT_FILTER, 0, "350 ml ekipman"));
-        list.add(new Recipe("Cold Drip", "Yavaş damıtma yöntemi.",
-                CAT_FILTER, R.drawable.cup_colddrip, "600 ml ekipman"));
+        // ===== FİLTRE =====
+        list.add(new Recipe("V60 Pour Over", "Klasik filtre demleme.", CAT_FILTER, R.drawable.cup_v60, "300 ml kupa", "Su 92–94°C olmalı, 2:30 dakikada demle."));
+        list.add(new Recipe("Chemex", "Kalın filtreyle temiz ve berrak tat.", CAT_FILTER, R.drawable.cup_chemex, "500 ml cam sürahi", "Orta kalın öğütme kullan."));
+        list.add(new Recipe("French Press", "Klasik yoğun filtre kahvesi.", CAT_FILTER, R.drawable.cup_frenchpress, "350 ml kupa", "4 dakika beklet, sonra bastır."));
+        list.add(new Recipe("Aeropress", "Basınçla kısa demleme.", CAT_FILTER, R.drawable.cup_aeropress, "250 ml kupa", "Ters demleme 2 dakikada en iyi sonuç."));
+        list.add(new Recipe("Syphon Brew", "Vakum yöntemiyle demleme.", CAT_FILTER, R.drawable.cup_syphonbrew, "400 ml cam demleme kabı", "Su 90°C civarında olmalı."));
+        list.add(new Recipe("Moka Pot", "Klasik İtalyan cezvesi.", CAT_FILTER, R.drawable.cup_mokapot, "200 ml kupa", "Orta öğütme, az sıkı bastır."));
+        list.add(new Recipe("Percolator", "Kaynama devridaimiyle demleme.", CAT_FILTER, R.drawable.cup_percolator, "400 ml metal pot", "Kaynatma süresi 5 dk’yı geçmesin."));
+        list.add(new Recipe("Kalita Wave", "Dengeli akış sağlayan özel filtre.", CAT_FILTER, R.drawable.cup_kalitawave, "300 ml kupa", "Sabit döküşle 2:30 dakikada demle."));
+        list.add(new Recipe("Cold Drip", "Yavaş damıtma yöntemi.", CAT_FILTER, R.drawable.cup_colddrip, "500 ml soğuk şişe", "6-8 saatlik soğuk demleme."));
 
-        // ===== Alkollü =====
-        list.add(new Recipe("Irish Coffee", "Kahve + viski + krema.",
-                CAT_ALCOHOLIC, 0, "240 ml bardak"));
-        list.add(new Recipe("Baileys Latte", "Baileys likörlü latte.",
-                CAT_ALCOHOLIC, 0, "300 ml bardak"));
-        list.add(new Recipe("Amaretto Mocha", "Badem likörlü mocha.",
-                CAT_ALCOHOLIC, 0, "300 ml bardak"));
-        list.add(new Recipe("Rum Mocha", "Rom aromalı mocha.",
-                CAT_ALCOHOLIC, 0, "300 ml bardak"));
-        list.add(new Recipe("Espresso Martini", "Vodka + kahve likörü + espresso.",
-                CAT_ALCOHOLIC, 0, "150 ml kadeh"));
+        // ===== SPECIAL =====
+        list.add(new Recipe("Caramel Brûlée Latte", "Espresso, süt ve karamel soslu tatlı latte.", CAT_SPECIAL, R.drawable.cup_caramel_brulee_latte, "240 ml bardak", "Üzerine karamel sos gezdir."));
+        list.add(new Recipe("Spanish Latte", "Yoğun süt ve şekerle dengelenmiş espresso.", CAT_SPECIAL, R.drawable.cup_spanish_mocha, "300 ml bardak", "Soğuk veya sıcak servis edilebilir."));
+        list.add(new Recipe("Rose Latte", "Gül aromalı latte.", CAT_SPECIAL, R.drawable.cup_rose_latte, "240 ml bardak", "Üzerine gül yaprağı serpiştir."));
+        list.add(new Recipe("Pistachio Latte", "Fıstık aromalı latte.", CAT_SPECIAL, R.drawable.cup_pistachio_latte, "240 ml bardak", "Antep fıstığı tozu ile süslenir."));
+        list.add(new Recipe("Spanish Mocha", "Çikolatalı süt + espresso karışımı.", CAT_SPECIAL, R.drawable.cup_spanish_mocha, "300 ml bardak", "Çikolata sosla fincan kenarını kapla."));
 
-        // ===== Iced =====
-        list.add(new Recipe("Iced Americano", "Espresso + soğuk su + buz.",
-                CAT_ICED, 0, "400 ml bardak"));
-        list.add(new Recipe("Iced Latte", "Soğuk süt + espresso.",
-                CAT_ICED, 0, "400 ml bardak"));
-        list.add(new Recipe("Iced Mocha", "Soğuk çikolatalı latte.",
-                CAT_ICED, 0, "400 ml bardak"));
-        list.add(new Recipe("Affogato Freddo", "Soğuk espresso + dondurma.",
-                CAT_ICED, 0, "300 ml bardak"));
-        list.add(new Recipe("Iced Pour Over", "Buz üstüne V60 dökümü.",
-                CAT_ICED, 0, "350 ml bardak"));
+        // ===== ALKOLLÜ =====
+        list.add(new Recipe("Irish Coffee", "Kahve + viski + krema.", CAT_ALCOHOLIC, R.drawable.cup_irish_coffee, "240 ml cam bardak", "Krema üstte kalacak şekilde dök."));
+        list.add(new Recipe("Baileys Latte", "Baileys likörlü latte.", CAT_ALCOHOLIC, R.drawable.cup_baileys_latte, "240 ml bardak", "Baileys’i sütle karıştır, espresso ekle."));
+        list.add(new Recipe("Amaretto Mocha", "Badem likörlü mocha.", CAT_ALCOHOLIC, R.drawable.cup_amaretto_mocha, "300 ml bardak", "Üzerine çikolata tozu serpiştir."));
+        list.add(new Recipe("Rum Mocha", "Rom aromalı mocha.", CAT_ALCOHOLIC, R.drawable.cup_rum_mocha, "300 ml bardak", "Romu son aşamada ekle."));
+        list.add(new Recipe("Espresso Martini", "Vodka + kahve likörü + espresso.", CAT_ALCOHOLIC, R.drawable.cup_espresso_martini, "150 ml kadeh", "Buzla çalkala, köpüklü dök."));
 
-        // ===== Türk =====
-        list.add(new Recipe("Türk Kahvesi", "Klasik cezvede pişirilmiş.",
-                CAT_TURKISH, 0, "70 ml fincan"));
-        list.add(new Recipe("Menengiç Kahvesi", "Kafeinsiz, aromatik.",
-                CAT_TURKISH, 0, "70 ml fincan"));
-        list.add(new Recipe("Dibek Kahvesi", "Yumuşak içim.",
-                CAT_TURKISH, 0, "80 ml fincan"));
-        list.add(new Recipe("Osmanlı Kahvesi", "Baharatlı karışım.",
-                CAT_TURKISH, 0, "75 ml fincan"));
-        list.add(new Recipe("Sütlü Türk", "Klasik tarifin sütlü versiyonu.",
-                CAT_TURKISH, 0, "100 ml fincan"));
+        // ===== SOĞUK =====
+        list.add(new Recipe("Iced Americano", "Espresso + soğuk su + buz.", CAT_ICED, R.drawable.cup_iced_americano, "350 ml bardak", "Espressoyu buz üstüne dök."));
+        list.add(new Recipe("Iced Latte", "Soğuk süt + espresso + buz.", CAT_ICED, R.drawable.cup_iced_latte, "350 ml bardak", "Espressoyu sütle karıştır, buz ekle."));
+        list.add(new Recipe("Iced Mocha", "Soğuk çikolatalı latte.", CAT_ICED, R.drawable.cup_iced_mocha, "350 ml bardak", "Çikolata sosu bardağa çizgi yaparak dök."));
+        list.add(new Recipe("Affogato Freddo", "Soğuk espresso + dondurma.", CAT_ICED, R.drawable.cup_affogato_freddo, "200 ml bardak", "Dondurma üstüne espresso ekle."));
+        list.add(new Recipe("Iced Pour Over", "Buz üstüne V60 dökümü.", CAT_ICED, R.drawable.cup_icedpour, "350 ml bardak", "Sıcak suyu buz üstüne dök."));
 
-        CACHE = Collections.unmodifiableList(list);
-        return CACHE;
-    }
+        // ===== TÜRK KAHVESİ =====
+        list.add(new Recipe("Türk Kahvesi", "Klasik cezvede pişirilmiş.", CAT_TURKISH, R.drawable.cup_t_70ml, "70 ml fincan", "Köpüğü bol olacak şekilde pişir."));
+        list.add(new Recipe("Menengiç Kahvesi", "Kafeinsiz, aromatik içim.", CAT_TURKISH, R.drawable.cup_t_70ml, "70 ml fincan", "Sütle pişir, hafif kaynat."));
+        list.add(new Recipe("Dibek Kahvesi", "Yumuşak içimli özel karışım.", CAT_TURKISH, R.drawable.cup_t_70ml, "70 ml fincan", "Kısık ateşte karıştırmadan pişir."));
+        list.add(new Recipe("Osmanlı Kahvesi", "Baharatlı karışım.", CAT_TURKISH, R.drawable.cup_t_70ml, "70 ml fincan", "Üzerine tarçın serpiştir."));
+        list.add(new Recipe("Sütlü Türk Kahvesi", "Klasik tarifin sütlü versiyonu.", CAT_TURKISH, R.drawable.cup_t_70ml, "70 ml fincan", "Sütle pişir, hafif köpüklü bırak."));
 
-    public static List<Recipe> forCategory(String category) {
-        if (category == null || category.trim().isEmpty()) return getAll();
-        List<Recipe> out = new ArrayList<>();
-        for (Recipe r : getAll()) {
-            if (category.equalsIgnoreCase(r.getCategory())) out.add(r);
-        }
-        return out;
+        return list;
     }
 }
