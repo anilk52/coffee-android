@@ -2,37 +2,48 @@ package com.example.coffee;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.RecipeActivity;
+import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
-        // HATAYI KESMEK İÇİN: activity_main kullanıyoruz
         setContentView(R.layout.activity_main);
 
-        bind(R.id.cardEspresso,  RecipesData.CAT_ESPRESSO);
-        bind(R.id.cardFilter,    RecipesData.CAT_FILTER);
-        bind(R.id.cardSpecial,   RecipesData.CAT_SPECIAL);
-        bind(R.id.cardAlcoholic, RecipesData.CAT_ALCOHOLIC);
-        bind(R.id.cardIced,      RecipesData.CAT_ICED);
-        bind(R.id.cardTurkish,   RecipesData.CAT_TURKISH);
+        setupCard(findViewById(R.id.cardEspresso));
+        setupCard(findViewById(R.id.cardFilter));
+        setupCard(findViewById(R.id.cardSpecial));
+        setupCard(findViewById(R.id.cardAlcoholic));
+        setupCard(findViewById(R.id.cardIced));
+        setupCard(findViewById(R.id.cardTurkish));
     }
 
-    private void bind(int viewId, String category) {
-        View v = findViewById(viewId);
-        if (v != null) {
-            v.setOnClickListener(x -> {
-                Intent i = new Intent(this, RecipeActivity.class);
-                i.putExtra("category", category);
-                startActivity(i);
-            });
+    private void setupCard(FrameLayout card) {
+        if (card == null) return;
+        card.setOnClickListener(v -> startActivity(new Intent(this, RecipeActivity.class)));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }
