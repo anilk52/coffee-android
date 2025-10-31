@@ -1,11 +1,8 @@
 package com.example.coffee.ui;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
+import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,57 +16,41 @@ import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    public static final String EXTRA_CATEGORY = "category"; // Örn: "Espresso"
-
-    private RecipeAdapter adapter;
     private final List<Recipe> allRecipes = new ArrayList<>();
+    private final List<Recipe> shown = new ArrayList<>();
+    private RecipeAdapter adapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe); // ✅ tekil dosya ismi
+    protected void onCreate(Bundle b) {
+        super.onCreate(b);
+        setContentView(R.layout.activityrecipe);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerRecipes);
-        EditText searchBox = findViewById(R.id.edtSearch);
+        RecyclerView rv = findViewById(R.id.recyclerRecipes);
+        rv.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecipeAdapter(shown);
+        rv.setAdapter(adapter);
 
-        // Tüm tarifleri yükle
+        // Tüm tarifleri al
         allRecipes.clear();
         allRecipes.addAll(RecipesData.getAll());
 
-        // Gelen kategori
-        String category = getIntent().getStringExtra(EXTRA_CATEGORY);
+        // Kategori filtresi
+        String category = getIntent().getStringExtra("category");
+        shown.clear();
 
-        // Başlangıç filtreli liste
-        List<Recipe> filtered = filterByCategory(allRecipes, category);
-
-        adapter = new RecipeAdapter(this, filtered);
-        recyclerView.setAdapter(adapter);
-
-        // 🔍 Arama kutusu filtreleme
-        searchBox.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String query = s == null ? "" : s.toString();
-                List<Recipe> baseList = filterByCategory(allRecipes, category);
-                adapter.submit(baseList);   // kategoriye göre yeniden yükle
-                adapter.filter(query);      // aramayı uygula
+        if (TextUtils.isEmpty(category)) {
+            shown.addAll(allRecipes);
+            setTitle(R.string.app_name);
+        } else {
+            for (Recipe r : allRecipes) {
+                if (category.equalsIgnoreCase(r.getCategory())) {
+                    shown.add(r);
+                }
             }
-            @Override public void afterTextChanged(Editable s) {}
-        });
-    }
+            setTitle(category);
+        }
 
-    private List<Recipe> filterByCategory(List<Recipe> source, @Nullable String category) {
-        if (category == null || category.trim().isEmpty() || category.equalsIgnoreCase("Tüm Tarifler")) {
-            return new ArrayList<>(source);
-        }
-        List<Recipe> out = new ArrayList<>();
-        for (Recipe r : source) {
-            if (category.equalsIgnoreCase(r.getCategory())) {
-                out.add(r);
-            }
-        }
-        return out;
+        adapter.notifyDataSetChanged();
     }
 }
