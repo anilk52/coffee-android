@@ -12,10 +12,8 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-        // Vector (minSdk 24 olsa da sorun çıkmaz)
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+
+        vectorDrawables { useSupportLibrary = true }
     }
 
     buildTypes {
@@ -26,16 +24,12 @@ android {
         debug { }
     }
 
-    buildFeatures {
-        viewBinding true
-    }
+    buildFeatures { viewBinding true }
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    // SplashScreen API (windowSplashScreen* öznitelikleri için şart)
     implementation 'androidx.core:core-splashscreen:1.0.1'
 }
