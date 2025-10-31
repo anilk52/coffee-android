@@ -8,27 +8,25 @@
     <color name="coffee_cream_white">#FAF7F2</color>
     <color name="coffee_brown">#5C4033</color>
 
-    <!-- Eski referanslar için alias -->
-    <color name="deep_green">@color/coffee_deep_green</color>
-    <color name="cream_beige">@color/coffee_beige</color>
-
     <!-- Arka plan ve kart -->
     <color name="white">#FFFFFFFF</color>
+    <color name="cream_beige">#F3E9DC</color>
+    <color name="deep_green">#1B4D3E</color>
     <color name="soft_white">#F9F9F9</color>
     <color name="soft_black">#222222</color>
-    <color name="splash_bg">@color/coffee_beige</color>
+    <color name="splash_bg">#F3E9DC</color>
 
     <!-- Yazı & ikon -->
     <color name="text_primary">#1B1B1B</color>
     <color name="text_secondary">#5A5A5A</color>
-    <color name="icon_tint">@color/coffee_deep_green</color>
+    <color name="icon_tint">#1B4D3E</color>
 
     <!-- Material Design uyumu -->
-    <color name="mdc_primary">@color/coffee_deep_green</color>
+    <color name="mdc_primary">#1B4D3E</color>
     <color name="mdc_on_primary">#FFFFFF</color>
-    <color name="mdc_secondary">@color/coffee_latte_brown</color>
+    <color name="mdc_secondary">#C9A27C</color>
     <color name="mdc_on_secondary">#FFFFFF</color>
-    <color name="mdc_background">@color/coffee_cream_white</color>
+    <color name="mdc_background">#FAF7F2</color>
     <color name="mdc_surface">#FFFFFF</color>
     <color name="mdc_on_surface">#1B1B1B</color>
 
