@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="16dp">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent" android:layout_height="56dp"
+        android:background="@color/coffee_cream_white"
+        android:paddingStart="16dp" android:paddingEnd="16dp" />
 
-        <ImageView
-            android:id="@+id/coffeeImage"
-            android:layout_width="match_parent" android:layout_height="200dp"
-            android:scaleType="centerCrop"/>
+    <ScrollView
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/coffeeName"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Tarif Adı" android:textSize="20sp"
-            android:paddingTop="12dp"/>
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
 
-        <TextView
-            android:id="@+id/coffeeDescription"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Tarif açıklaması burada" android:paddingTop="8dp"/>
+            <ImageView
+                android:id="@+id/coffeeImage"
+                android:layout_width="match_parent" android:layout_height="200dp"
+                android:scaleType="centerCrop"/>
 
-        <TextView
-            android:id="@+id/coffeeMeasure"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Ölçü" android:paddingTop="8dp"/>
+            <TextView
+                android:id="@+id/coffeeName"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Tarif Adı" android:textSize="20sp"
+                android:paddingTop="12dp"/>
 
-        <TextView
-            android:id="@+id/coffeeTip"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Barista ipucu" android:paddingTop="8dp"/>
+            <TextView
+                android:id="@+id/coffeeDescription"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Tarif açıklaması burada" android:paddingTop="8dp"/>
 
-        <TextView
-            android:id="@+id/coffeeNote"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Eğlenceli not" android:paddingTop="8dp"/>
+            <TextView
+                android:id="@+id/coffeeMeasure"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Ölçü" android:paddingTop="8dp"/>
 
-        <ImageView
-            android:id="@+id/shareButton"
-            android:layout_width="48dp" android:layout_height="48dp"
-            android:layout_marginTop="16dp" android:contentDescription="Paylaş"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/coffeeTip"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Barista ipucu" android:paddingTop="8dp"/>
+
+            <TextView
+                android:id="@+id/coffeeNote"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Eğlenceli not" android:paddingTop="8dp"/>
+
+            <ImageView
+                android:id="@+id/shareButton"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:layout_marginTop="16dp" android:contentDescription="Paylaş"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
