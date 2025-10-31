@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="12dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
 
     <EditText
         android:id="@+id/searchInput"
-        android:layout_width="match_parent" android:layout_height="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:background="@drawable/bg_card_glass"
         android:hint="Kahve ara..."
         android:drawableStart="@android:drawable/ic_menu_search"
@@ -13,4 +16,13 @@
         android:padding="12dp"
         android:textColor="@color/coffee_deep_green"
         android:textColorHint="@color/coffee_latte_brown"
-        android:text
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
