@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Gece modu için tonlar -->
+    <color name="coffee_deep_green">#173225</color>
+    <color name="coffee_beige">#2E2A25</color>
+    <color name="coffee_latte_brown">#A48563</color>
+    <color name="coffee_cream_white">#1B1A18</color>
 
-    <!-- Aynı isimler, gece tonları -->
-    <color name="coffee_beige">#2B2621</color>
-    <color name="coffee_latte_brown">#9C7A58</color>
-    <color name="coffee_deep_green">#0E2A23</color>
-    <color name="coffee_cream_white">#1A1A1A</color>
-    <color name="coffee_brown">#3A2920</color>
+    <color name="bd_text_primary">#FFFFFF</color>
+    <color name="bd_text_secondary">#CCCCCC</color>
+    <color name="bd_divider">#33FFFFFF</color>
 
-    <color name="white">#121212</color>
-    <color name="cream_beige">#2B2621</color>
-    <color name="deep_green">#0E2A23</color>
-    <color name="soft_white">#1E1E1E</color>
-    <color name="soft_black">#EEEEEE</color>
-    <color name="splash_bg">#2B2621</color>
-
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#C7C7C7</color>
-    <color name="icon_tint">#9C7A58</color>
-
-    <color name="mdc_primary">#0E2A23</color>
-    <color name="mdc_on_primary">#FFFFFF</color>
-    <color name="mdc_secondary">#9C7A58</color>
-    <color name="mdc_on_secondary">#000000</color>
-    <color name="mdc_background">#121212</color>
-    <color name="mdc_surface">#1E1E1E</color>
-    <color name="mdc_on_surface">#FFFFFF</color>
-
+    <color name="md3_colorPrimary">#A4C8B3</color>
+    <color name="md3_colorOnPrimary">#0E1B14</color>
+    <color name="md3_colorSecondary">#D8B896</color>
+    <color name="md3_colorOnSecondary">#1A1A1A</color>
+    <color name="md3_colorSurface">#1B1A18</color>
+    <color name="md3_colorOnSurface">#FFFFFF</color>
+    <color name="md3_colorBackground">#12110F</color>
+    <color name="md3_colorOnBackground">#FFFFFF</color>
+    <color name="md3_colorOutline">#33FFFFFF</color>
 </resources>
