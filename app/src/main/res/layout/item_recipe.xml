@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="horizontal" android:padding="12dp">
+    android:orientation="horizontal" android:padding="12dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_card_glass"
+    android:foreground="@drawable/ripple_glass"
+    android:elevation="6dp">
 
     <ImageView
         android:id="@+id/imgThumb"
@@ -16,11 +20,13 @@
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Kahve Adı" android:textSize="16sp" android:maxLines="1"/>
+            android:text="Kahve Adı" android:textSize="18sp" android:textStyle="bold"
+            android:textColor="@color/coffee_deep_green" android:maxLines="1"/>
 
         <TextView
             android:id="@+id/txtSub"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Açıklama • Boy" android:textSize="13sp" android:maxLines="2"/>
+            android:text="Açıklama • Boy" android:textSize="14sp"
+            android:textColor="@color/coffee_latte_brown" android:maxLines="2"/>
     </LinearLayout>
 </LinearLayout>
