@@ -11,7 +11,6 @@ public final class RecipesData {
 
     private RecipesData() {}
 
-    // Kategori sabitleri: String (UI ve filtreleme için)
     public static final String CAT_ESPRESSO  = "ESPRESSO";
     public static final String CAT_FILTER    = "FILTER";
     public static final String CAT_SPECIAL   = "SPECIAL";
@@ -19,35 +18,34 @@ public final class RecipesData {
     public static final String CAT_ICED      = "ICED";
     public static final String CAT_TURKISH   = "TURKISH";
 
-    // Basit statik liste (demo)
     private static final List<Recipe> ALL = new ArrayList<>();
 
     static {
-        // Örnek kayıtlar — elindeki görselleri uygun adla değiştir
+        // Görsel adlarının uyuşmama riskine karşı, garanti placeholder kullandım.
+        // İstersen cup görseller tam oturduğunda bunları tek tek değiştiririz.
         ALL.add(new Recipe(
-                R.drawable.cup_t_70,              // görsel
-                "Türk Kahvesi",                   // name
-                "Klasik, cezvede ince çekim",     // shortDesc
-                "İnce çekilmiş kahve, cezvede köpükle pişirilir.", // description
-                "1 fincan • 70 ml",               // measure
-                "Taze öğüt, soğuk su kullan.",    // tip
-                "Keyif notu: lokumla servis.",    // note
-                CAT_TURKISH,                      // category
-                "T – 70 ml"                       // cupSize
+                R.drawable.ic_placeholder_logo,
+                "Türk Kahvesi",
+                "Klasik, cezvede ince çekim",
+                "İnce çekilmiş kahve cezvede köpükle pişirilir.",
+                "1 fincan • 70 ml",
+                "Taze öğüt, soğuk su kullan.",
+                "Lokumla servis tavsiye.",
+                CAT_TURKISH,
+                "T – 70 ml"
         ));
 
         ALL.add(new Recipe(
-                R.drawable.cup_m_240,
+                R.drawable.ic_placeholder_logo,
                 "Caffè Latte",
                 "Espresso + süt, kalp latte art",
-                "1 shot espresso üzerine buharda ısıtılmış süt.",
+                "1 shot espresso üzerine buharda ısıtılmış süt eklenir.",
                 "M – 240 ml",
-                "Sütün sıcaklığı ~60–65°C.",
+                "Süt 60–65°C arası olsun.",
                 "Krema için mikrofoam şart.",
                 CAT_ESPRESSO,
                 "M – 240 ml"
         ));
-        // İstediğin kadar ekleyebilirsin...
     }
 
     public static List<Recipe> getAll() {
