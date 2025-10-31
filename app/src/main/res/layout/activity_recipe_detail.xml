@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3EBDD">
+    android:background="@color/coffee_cream_white"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,47 +13,49 @@
         <ImageView
             android:id="@+id/imgRecipe"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="220dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/logo_bdino"/>
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Başlık"
-            android:textColor="#7C7AA6"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/coffee_deep_green" />
+
+        <TextView
+            android:id="@+id/txtCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/coffee_latte_brown"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/txtCup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/coffee_latte_brown"
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:id="@+id/txtDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:textColor="#8F8F8F"
-            android:textSize="16sp" />
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:textColor="@color/coffee_latte_brown" />
 
         <TextView
-            android:id="@+id/txtCup"
+            android:id="@+id/txtSteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="12dp"
-            android:textColor="#4A3E2A"
-            android:textSize="16sp" />
+            android:layout_marginTop="16dp"
+            android:textSize="15sp"
+            android:textColor="@color/coffee_deep_green" />
 
-        <TextView
-            android:id="@+id/txtTip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="#2F7D32"
-            android:textStyle="italic"
-            android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>
