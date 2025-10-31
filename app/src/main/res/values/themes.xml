@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Açık tema (varsayılan) -->
-    <style name="Theme.BdinoCoffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Renkler -->
-        <item name="colorPrimary">@color/mdc_primary</item>
-        <item name="colorOnPrimary">@color/mdc_on_primary</item>
-        <item name="colorSecondary">@color/mdc_secondary</item>
-        <item name="colorOnSecondary">@color/mdc_on_secondary</item>
-        <item name="android:colorBackground">@color/mdc_background</item>
-        <item name="colorSurface">@color/mdc_surface</item>
-        <item name="colorOnSurface">@color/mdc_on_surface</item>
-
-        <!-- Varsayılan arka plan -->
-        <item name="android:windowBackground">@color/mdc_background</item>
+    <!-- Uygulama ana teması -->
+    <style name="Theme.BdinoCoffee" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- İstersen burada renk/öğe override edebilirsin -->
     </style>
 
-    <!-- Koyu tema (ileride Ayarlar’dan seçilecek) -->
-    <style name="Theme.BdinoCoffee.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/coffee_brown</item>
-        <item name="colorOnPrimary">@color/soft_white</item>
-        <item name="colorSecondary">@color/deep_green</item>
-        <item name="colorOnSecondary">@color/soft_white</item>
-        <item name="android:colorBackground">@color/soft_black</item>
-        <item name="colorSurface">@color/soft_black</item>
-        <item name="colorOnSurface">@color/soft_white</item>
+    <!-- Splash teması: core-splashscreen öznitelikleri -->
+    <style name="Theme.BdinoCoffee.Splash" parent="Theme.SplashScreen">
+        <!-- Arka plan rengi (sade ve güvenli) -->
+        <item name="windowSplashScreenBackground">#FFFFFFFF</item>
 
-        <item name="android:windowBackground">@color/soft_black</item>
+        <!-- Logo/anim ikon (elinde yoksa @mipmap/ic_launcher kullan) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_placeholder_logo</item>
+
+        <!-- Splash sonrası geçilecek tema -->
+        <item name="postSplashScreenTheme">@style/Theme.BdinoCoffee</item>
     </style>
 
 </resources>
