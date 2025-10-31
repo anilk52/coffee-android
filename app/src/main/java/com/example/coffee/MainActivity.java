@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("BDINO Coffee");
+
+        ImageView logo = findViewById(R.id.logo);
+        GridLayout grid = findViewById(R.id.gridCategories);
+
+        // Açılış animasyonları
+        logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        grid.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
         setupCard(findViewById(R.id.cardEspresso));
         setupCard(findViewById(R.id.cardFilter));
