@@ -15,19 +15,12 @@
         <item name="android:navigationBarColor">@color/md3_colorBackground</item>
         <item name="android:statusBarColor">@color/md3_colorBackground</item>
 
-        <!-- Yazı tipi (varsa) -->
-        <!-- <item name="fontFamily">@font/montserrat_semibold</item> -->
-
-        <!-- Bölücü & outline -->
-        <item name="android:listDivider">@color/bd_divider</item>
-        <item name="android:divider">@color/bd_divider</item>
-        <item name="outline">@color/md3_colorOutline</item>
+        <!-- NOT: outline / listDivider / divider KALDIRILDI -->
     </style>
 
-    <!-- Splash teması (core-splashscreen ile) -->
+    <!-- Splash teması -->
     <style name="Theme.BdinoCoffee.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/coffee_cream_white</item>
-        <!-- Vektör/PNG logon yoksa, geçici olarak ic_launcher -->
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.BdinoCoffee</item>
     </style>
