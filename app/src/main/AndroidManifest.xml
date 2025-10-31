@@ -9,7 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
 
-        <!-- LAUNCHER: SplashActivity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -20,10 +19,10 @@
             </intent-filter>
         </activity>
 
-        <!-- Diğer ekranlar -->
         <activity android:name=".MainActivity" android:exported="false"/>
         <activity android:name=".ui.RecipeActivity" android:exported="false"/>
         <activity android:name=".ui.RecipeDetailActivity" android:exported="false"/>
+        <activity android:name=".ui.SettingsActivity" android:exported="false"/>
 
     </application>
 </manifest>
