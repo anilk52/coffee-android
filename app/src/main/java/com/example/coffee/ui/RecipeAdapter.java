@@ -1,7 +1,6 @@
 package com.example.coffee.ui;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,45 +19,20 @@ import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.Holder> {
 
-    public interface OnItemClick { void onClick(Recipe item); }
+    private final Context context;
+    private final List<Recipe> list = new ArrayList<>();
+    private final List<Recipe> filtered = new ArrayList<>();
 
-    private final Context ctx;
-    private final OnItemClick onItemClick;
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
-
-    public RecipeAdapter(Context ctx, OnItemClick onItemClick) {
-        this.ctx = ctx;
-        this.onItemClick = onItemClick;
-    }
-
-    public void submit(List<Recipe> data) {
-        all.clear();
-        shown.clear();
-        if (data != null) {
-            all.addAll(data);
-            shown.addAll(data);
+    public RecipeAdapter(Context context, List<Recipe> recipes) {
+        this.context = context;
+        if (recipes != null) {
+            list.addAll(recipes);
+            filtered.addAll(recipes);
         }
-        notifyDataSetChanged();
     }
 
-    public void filter(String q) {
-        shown.clear();
-        if (TextUtils.isEmpty(q)) {
-            shown.addAll(all);
-        } else {
-            String needle = q.toLowerCase();
-            for (Recipe r : all) {
-                if (r.getName().toLowerCase().contains(needle) ||
-                        r.getShortDesc().toLowerCase().contains(needle)) {
-                    shown.add(r);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
-
-    @NonNull @Override
+    @NonNull
+    @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recipe, parent, false);
@@ -66,27 +40,55 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.Holder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder h, int pos) {
-        Recipe r = shown.get(pos);
+    public void onBindViewHolder(@NonNull Holder h, int position) {
+        Recipe r = filtered.get(position);
+
         h.txtTitle.setText(r.getName());
+        h.txtSub.setText(r.getShortDesc() + " • " + r.getCupSize());
 
-        String sub = r.getShortDesc() + " • " + r.getCupSize();
-        h.txtSub.setText(sub);
-
-        int res = r.getImageResId();             // Recipe.java’da ekledik
+        int res = r.getImageResId();
         if (res != 0) h.imgThumb.setImageResource(res);
-        else h.imgThumb.setImageResource(R.drawable.logo_bdino); // fallback
+        else h.imgThumb.setImageResource(R.drawable.logo_bdino);
 
-        h.card.setOnClickListener(v -> onItemClick.onClick(r));
+        h.card.setOnClickListener(v -> RecipeDetailActivity.start(context, r));
     }
 
     @Override
-    public int getItemCount() { return shown.size(); }
+    public int getItemCount() {
+        return filtered.size();
+    }
+
+    public void submit(List<Recipe> recipes) {
+        list.clear();
+        filtered.clear();
+        if (recipes != null) {
+            list.addAll(recipes);
+            filtered.addAll(recipes);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void filter(String query) {
+        filtered.clear();
+        if (query == null || query.trim().isEmpty()) {
+            filtered.addAll(list);
+        } else {
+            String q = query.toLowerCase();
+            for (Recipe r : list) {
+                if (r.getName().toLowerCase().contains(q) ||
+                    r.getShortDesc().toLowerCase().contains(q)) {
+                    filtered.add(r);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     static class Holder extends RecyclerView.ViewHolder {
         CardView card;
         ImageView imgThumb;
         TextView txtTitle, txtSub;
+
         Holder(@NonNull View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.cardRoot);
