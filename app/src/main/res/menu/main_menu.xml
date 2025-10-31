@@ -4,16 +4,13 @@
 
     <item
         android:id="@+id/action_search"
-        android:title="Ara"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_favorites"
-        android:title="Favoriler"
-        app:showAsAction="never" />
+        android:title="@string/search"
+        android:icon="@drawable/ic_placeholder_logo"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_settings"
-        android:title="Ayarlar"
-        app:showAsAction="never" />
+        android:title="@string/settings"
+        android:icon="@drawable/ic_placeholder_logo"
+        app:showAsAction="never"/>
 </menu>
