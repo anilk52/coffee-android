@@ -13,38 +13,46 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
+import com.example.coffee.util.FavoritesStore;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.Holder> {
 
-    private final List<Recipe> data;
-    private final List<Recipe> original; // basit arama için
+    private final Context ctx;
+    private final List<Recipe> items;
 
-    public RecipeAdapter(List<Recipe> data) {
-        this.data = data;
-        this.original = new ArrayList<>(data);
+    public RecipeAdapter(Context ctx, List<Recipe> items) {
+        this.ctx = ctx;
+        this.items = items;
     }
 
-    @NonNull
-    @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
-        return new VH(v);
+    @NonNull @Override
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
+        return new Holder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH h, int position) {
-        Recipe r = data.get(position);
-        Context ctx = h.itemView.getContext();
+    public void onBindViewHolder(@NonNull Holder h, int pos) {
+        Recipe r = items.get(pos);
 
-        h.imgThumb.setImageResource(r.getImageResId());
         h.txtTitle.setText(r.getName());
-        h.txtSub.setText(r.getShortDesc() + " • " + r.getCupSize());
+        String sub = (r.getDescription() != null ? r.getDescription() : "") +
+                (r.getSize() != null && !r.getSize().isEmpty() ? " • " + r.getSize() : "");
+        h.txtSub.setText(sub.trim());
 
+        if (r.getImageResId() != 0) h.imgThumb.setImageResource(r.getImageResId());
+        else h.imgThumb.setImageResource(R.drawable.ic_placeholder_logo);
+
+        // Favori yıldızı
+        setStar(h.btnFav, FavoritesStore.isFav(ctx, r.getName()));
+        h.btnFav.setOnClickListener(v -> {
+            FavoritesStore.toggle(ctx, r.getName());
+            setStar(h.btnFav, FavoritesStore.isFav(ctx, r.getName()));
+        });
+
+        // Detaya geçiş
         h.itemView.setOnClickListener(v -> {
             Intent i = new Intent(ctx, RecipeDetailActivity.class);
             i.putExtra("recipe", r);
@@ -52,37 +60,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
+    private void setStar(ImageView iv, boolean fav) {
+        iv.setImageResource(fav ? android.R.drawable.btn_star_big_on
+                                : android.R.drawable.btn_star_big_off);
     }
 
-    // Basit arama (opsiyonel)
-    public void filter(String query) {
-        data.clear();
-        if (query == null || query.trim().isEmpty()) {
-            data.addAll(original);
-        } else {
-            String q = query.toLowerCase(Locale.getDefault());
-            for (Recipe r : original) {
-                if ((r.getName() != null && r.getName().toLowerCase(Locale.getDefault()).contains(q)) ||
-                    (r.getShortDesc() != null && r.getShortDesc().toLowerCase(Locale.getDefault()).contains(q)) ||
-                    (r.getCategory() != null && r.getCategory().toLowerCase(Locale.getDefault()).contains(q))) {
-                    data.add(r);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
+    @Override public int getItemCount() { return items.size(); }
 
-    static class VH extends RecyclerView.ViewHolder {
-        ImageView imgThumb;
+    static class Holder extends RecyclerView.ViewHolder {
+        ImageView imgThumb, btnFav;
         TextView txtTitle, txtSub;
-        VH(@NonNull View itemView) {
-            super(itemView);
-            imgThumb = itemView.findViewById(R.id.imgThumb);
-            txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtSub   = itemView.findViewById(R.id.txtSub);
+        Holder(@NonNull View v) {
+            super(v);
+            imgThumb = v.findViewById(R.id.imgThumb);
+            btnFav   = v.findViewById(R.id.btnFav);
+            txtTitle = v.findViewById(R.id.txtTitle);
+            txtSub   = v.findViewById(R.id.txtSub);
         }
     }
 }
