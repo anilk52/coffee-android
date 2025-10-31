@@ -6,44 +6,148 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="BDINO Coffee — Kategoriler" android:textSize="20sp"
-            android:paddingBottom="12dp"/>
+        <ImageView
+            android:src="@drawable/logo_bdino"
+            android:layout_width="120dp" android:layout_height="120dp"
+            android:layout_gravity="center" android:contentDescription="BDINO"/>
 
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:dividerHeight="12dp">
+            android:columnCount="2" android:useDefaultMargins="true"
+            android:layout_marginTop="8dp">
 
-            <Button
+            <!-- KART 1 -->
+            <FrameLayout
                 android:id="@+id/cardEspresso"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Espresso"/>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Espresso" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
 
-            <Button
+            <!-- KART 2 -->
+            <FrameLayout
                 android:id="@+id/cardFilter"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Filter"/>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Filtre" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
 
-            <Button
+            <!-- KART 3 -->
+            <FrameLayout
                 android:id="@+id/cardSpecial"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Special"/>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Special" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
 
-            <Button
+            <!-- KART 4 -->
+            <FrameLayout
                 android:id="@+id/cardAlcoholic"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Alcoholic"/>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Alkollü" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
 
-            <Button
+            <!-- KART 5 -->
+            <FrameLayout
                 android:id="@+id/cardIced"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Iced"/>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Ice" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
 
-            <Button
+            <!-- KART 6 -->
+            <FrameLayout
                 android:id="@+id/cardTurkish"
-                android:layout_width="match_parent" android:layout_height="48dp"
-                android:text="Turkish"/>
-        </LinearLayout>
+                android:layout_width="0dp" android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/bg_card_glass"
+                android:foreground="@drawable/ripple_glass"
+                android:elevation="6dp" android:padding="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:orientation="vertical" android:gravity="center">
+                    <ImageView
+                        android:src="@drawable/logo_bdino"
+                        android:layout_width="40dp" android:layout_height="40dp"/>
+                    <TextView
+                        android:text="Türk" android:textStyle="bold" android:textSize="16sp"
+                        android:textColor="@color/coffee_deep_green"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </FrameLayout>
+
+        </GridLayout>
     </LinearLayout>
 </ScrollView>
