@@ -23,6 +23,7 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        // Senin dosya adın: res/layout/activityrecipe.xml
         setContentView(R.layout.activityrecipe);
 
         RecyclerView rv = findViewById(R.id.recyclerRecipes);
@@ -31,11 +32,9 @@ public class RecipeActivity extends AppCompatActivity {
         adapter = new RecipeAdapter(shown);
         rv.setAdapter(adapter);
 
-        // Tüm tarifleri al
         allRecipes.clear();
         allRecipes.addAll(RecipesData.getAll());
 
-        // Kategori filtresi
         String category = getIntent().getStringExtra("category");
         shown.clear();
 
