@@ -1,65 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/coffee_cream_white"
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/ic_bdino_logo"
+            android:contentDescription="BDINO Coffee"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Başlık -->
         <TextView
-            android:id="@+id/txtBrand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BDINO Coffee"
-            android:textStyle="bold"
+            android:text="BDINO Coffee Menu"
             android:textSize="22sp"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold"
+            android:textColor="@color/coffee_deep_green"
+            android:layout_marginBottom="24dp"/>
 
-        <Button
-            android:id="@+id/btnEspresso"
+        <!-- Kategoriler -->
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Espresso" />
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="3"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="true">
 
-        <Button
-            android:id="@+id/btnFilter"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:text="Filtre" />
+            <Button
+                android:id="@+id/btnEspresso"
+                style="?attr/borderlessButtonStyle"
+                android:text="Espresso Bazlı"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
 
-        <Button
-            android:id="@+id/btnSpecial"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:text="Special" />
+            <Button
+                android:id="@+id/btnFilter"
+                style="?attr/borderlessButtonStyle"
+                android:text="Filtre Kahve"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
 
-        <Button
-            android:id="@+id/btnAlcohol"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:text="Alkollü" />
+            <Button
+                android:id="@+id/btnSpecial"
+                style="?attr/borderlessButtonStyle"
+                android:text="Special"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
 
-        <Button
-            android:id="@+id/btnIced"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:text="Soğuk" />
+            <Button
+                android:id="@+id/btnAlcohol"
+                style="?attr/borderlessButtonStyle"
+                android:text="Alkollü"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
 
-        <Button
-            android:id="@+id/btnTurkish"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:text="Türk Kahvesi" />
+            <Button
+                android:id="@+id/btnIced"
+                style="?attr/borderlessButtonStyle"
+                android:text="Iced"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
 
+            <Button
+                android:id="@+id/btnTurkish"
+                style="?attr/borderlessButtonStyle"
+                android:text="Türk Kahvesi"
+                android:backgroundTint="@color/coffee_latte_brown"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"/>
+        </GridLayout>
     </LinearLayout>
 </ScrollView>
