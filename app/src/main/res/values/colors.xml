@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- BDINO Coffee paleti -->
-    <color name="coffee_beige">#F3E9DB</color>
-    <color name="coffee_latte_brown">#B07A4A</color>
-    <color name="coffee_deep_green">#0F3D2E</color>
-    <color name="coffee_cream_white">#FFF8F1</color>
+    <!-- BDINO ana palet -->
+    <color name="coffee_beige">#F3E9DC</color>
+    <color name="coffee_latte_brown">#B68B65</color>
+    <color name="coffee_deep_green">#0B3D2E</color>
+    <color name="coffee_cream_white">#FFFDF8</color>
 
-    <!-- Projede çağrılan kısa isimler (log hatası verdi) -->
-    <color name="coffee_brown">@color/coffee_latte_brown</color>
-    <color name="soft_white">@color/coffee_cream_white</color>
-    <color name="deep_green">@color/coffee_deep_green</color>
+    <!-- Nötrler -->
+    <color name="soft_white">#FAFAFA</color>
+    <color name="soft_black">#121212</color>
 
-    <!-- Material (mdc_*) alias'ları -->
+    <!-- Splash arkaplanı -->
+    <color name="splash_bg">@color/coffee_cream_white</color>
+
+    <!-- Material alias (temalar/values.xml bunları bekliyor) -->
     <color name="mdc_primary">@color/coffee_deep_green</color>
     <color name="mdc_on_primary">@color/soft_white</color>
-
     <color name="mdc_secondary">@color/coffee_latte_brown</color>
     <color name="mdc_on_secondary">@color/soft_white</color>
-
     <color name="mdc_background">@color/coffee_cream_white</color>
-    <color name="mdc_surface">@color/coffee_beige</color>
-    <color name="mdc_on_surface">@color/deep_green</color>
+    <color name="mdc_surface">@color/coffee_cream_white</color>
+    <color name="mdc_on_surface">@color/soft_black</color>
 
 </resources>
