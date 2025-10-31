@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:padding="16dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="BDINO Coffee — Ana Ekran" android:textSize="20sp"/>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="BDINO Coffee — Kategoriler" android:textSize="20sp"
+            android:paddingBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:dividerHeight="12dp">
+
+            <Button
+                android:id="@+id/cardEspresso"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Espresso"/>
+
+            <Button
+                android:id="@+id/cardFilter"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Filter"/>
+
+            <Button
+                android:id="@+id/cardSpecial"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Special"/>
+
+            <Button
+                android:id="@+id/cardAlcoholic"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Alcoholic"/>
+
+            <Button
+                android:id="@+id/cardIced"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Iced"/>
+
+            <Button
+                android:id="@+id/cardTurkish"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:text="Turkish"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
