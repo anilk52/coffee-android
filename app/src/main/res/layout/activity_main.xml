@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/coffee_beige">
 
-    <!-- Üst Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         app:titleTextColor="@color/coffee_deep_green"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!-- İçerik -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Logo -->
             <ImageView
                 android:id="@+id/logo"
                 android:src="@drawable/logo_bdino"
@@ -37,7 +34,6 @@
                 android:contentDescription="BDINO Logo"
                 android:layout_marginBottom="12dp" />
 
-            <!-- 2 sütun kategori grid -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +106,7 @@
                 android:id="@+id/credits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="by Anıl & GPT-5 ☕"
+                android:text="by Anıl &amp; GPT-5 ☕"
                 android:gravity="center"
                 android:textSize="14sp"
                 android:textStyle="italic"
