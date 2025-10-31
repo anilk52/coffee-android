@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BDINO Coffee Paleti -->
-    <color name="coffee_beige">#E8DCCF</color>
-    <color name="coffee_latte_brown">#B5835A</color>
-    <color name="coffee_deep_green">#2E5A47</color>
-    <color name="coffee_cream_white">#F5EFE6</color>
 
-    <!-- Temel renkler -->
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <!-- BDINO Coffee paleti -->
+    <color name="coffee_beige">#F3E9DB</color>
+    <color name="coffee_latte_brown">#B07A4A</color>
+    <color name="coffee_deep_green">#0F3D2E</color>
+    <color name="coffee_cream_white">#FFF8F1</color>
 
-    <!-- Material uyumlu isimler -->
-    <color name="colorPrimary">@color/coffee_deep_green</color>
-    <color name="colorPrimaryVariant">#214335</color>
-    <color name="colorOnPrimary">@color/white</color>
+    <!-- Projede çağrılan kısa isimler (log hatası verdi) -->
+    <color name="coffee_brown">@color/coffee_latte_brown</color>
+    <color name="soft_white">@color/coffee_cream_white</color>
+    <color name="deep_green">@color/coffee_deep_green</color>
 
-    <color name="colorSecondary">@color/coffee_latte_brown</color>
-    <color name="colorOnSecondary">@color/white</color>
+    <!-- Material (mdc_*) alias'ları -->
+    <color name="mdc_primary">@color/coffee_deep_green</color>
+    <color name="mdc_on_primary">@color/soft_white</color>
 
-    <color name="colorBackground">@color/coffee_cream_white</color>
-    <color name="colorOnBackground">@color/black</color>
+    <color name="mdc_secondary">@color/coffee_latte_brown</color>
+    <color name="mdc_on_secondary">@color/soft_white</color>
 
-    <color name="colorSurface">@color/white</color>
-    <color name="colorOnSurface">@color/black</color>
+    <color name="mdc_background">@color/coffee_cream_white</color>
+    <color name="mdc_surface">@color/coffee_beige</color>
+    <color name="mdc_on_surface">@color/deep_green</color>
 
-    <!-- Kart arkaplan / stroke -->
-    <color name="card_bg">@color/white</color>
-    <color name="card_stroke">#1A000000</color>
-
-    <!-- Ripple -->
-    <color name="ripple_tint">#1F000000</color>
 </resources>
