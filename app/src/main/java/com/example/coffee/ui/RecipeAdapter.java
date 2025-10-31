@@ -1,6 +1,7 @@
 package com.example.coffee.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
@@ -16,85 +16,73 @@ import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.Holder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
-    private final Context context;
-    private final List<Recipe> list = new ArrayList<>();
-    private final List<Recipe> filtered = new ArrayList<>();
+    private final List<Recipe> data;
+    private final List<Recipe> original; // basit arama için
 
-    public RecipeAdapter(Context context, List<Recipe> recipes) {
-        this.context = context;
-        if (recipes != null) {
-            list.addAll(recipes);
-            filtered.addAll(recipes);
-        }
+    public RecipeAdapter(List<Recipe> data) {
+        this.data = data;
+        this.original = new ArrayList<>(data);
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_recipe, parent, false);
-        return new Holder(v);
+        return new VH(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder h, int position) {
-        Recipe r = filtered.get(position);
+    public void onBindViewHolder(@NonNull VH h, int position) {
+        Recipe r = data.get(position);
+        Context ctx = h.itemView.getContext();
 
+        h.imgThumb.setImageResource(r.getImageResId());
         h.txtTitle.setText(r.getName());
         h.txtSub.setText(r.getShortDesc() + " • " + r.getCupSize());
 
-        int res = r.getImageResId();
-        if (res != 0) h.imgThumb.setImageResource(res);
-        else h.imgThumb.setImageResource(R.drawable.logo_bdino);
-
-        h.card.setOnClickListener(v -> RecipeDetailActivity.start(context, r));
+        h.itemView.setOnClickListener(v -> {
+            Intent i = new Intent(ctx, RecipeDetailActivity.class);
+            i.putExtra("recipe", r);
+            ctx.startActivity(i);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return filtered.size();
+        return data.size();
     }
 
-    public void submit(List<Recipe> recipes) {
-        list.clear();
-        filtered.clear();
-        if (recipes != null) {
-            list.addAll(recipes);
-            filtered.addAll(recipes);
-        }
-        notifyDataSetChanged();
-    }
-
+    // Basit arama (opsiyonel)
     public void filter(String query) {
-        filtered.clear();
+        data.clear();
         if (query == null || query.trim().isEmpty()) {
-            filtered.addAll(list);
+            data.addAll(original);
         } else {
-            String q = query.toLowerCase();
-            for (Recipe r : list) {
-                if (r.getName().toLowerCase().contains(q) ||
-                    r.getShortDesc().toLowerCase().contains(q)) {
-                    filtered.add(r);
+            String q = query.toLowerCase(Locale.getDefault());
+            for (Recipe r : original) {
+                if ((r.getName() != null && r.getName().toLowerCase(Locale.getDefault()).contains(q)) ||
+                    (r.getShortDesc() != null && r.getShortDesc().toLowerCase(Locale.getDefault()).contains(q)) ||
+                    (r.getCategory() != null && r.getCategory().toLowerCase(Locale.getDefault()).contains(q))) {
+                    data.add(r);
                 }
             }
         }
         notifyDataSetChanged();
     }
 
-    static class Holder extends RecyclerView.ViewHolder {
-        CardView card;
+    static class VH extends RecyclerView.ViewHolder {
         ImageView imgThumb;
         TextView txtTitle, txtSub;
-
-        Holder(@NonNull View itemView) {
+        VH(@NonNull View itemView) {
             super(itemView);
-            card = itemView.findViewById(R.id.cardRoot);
             imgThumb = itemView.findViewById(R.id.imgThumb);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtSub = itemView.findViewById(R.id.txtSub);
+            txtSub   = itemView.findViewById(R.id.txtSub);
         }
     }
 }
