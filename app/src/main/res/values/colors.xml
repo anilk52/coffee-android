@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- BDINO marka paleti -->
+    <color name="coffee_deep_green">#1C3B2B</color>
+    <color name="coffee_beige">#F4EDE4</color>
+    <color name="coffee_latte_brown">#C6A27A</color>
+    <color name="coffee_cream_white">#FFF9F1</color>
 
-    <!-- BDINO Coffee Ana Tema -->
-    <color name="coffee_beige">#F3E9DC</color>
-    <color name="coffee_latte_brown">#C9A27C</color>
-    <color name="coffee_deep_green">#1B4D3E</color>
-    <color name="coffee_cream_white">#FAF7F2</color>
-    <color name="coffee_brown">#5C4033</color>
+    <!-- Arayüz yardımcı renkleri -->
+    <color name="bd_text_primary">#111111</color>
+    <color name="bd_text_secondary">#6B6B6B</color>
+    <color name="bd_divider">#1F000000</color>
 
-    <!-- Arka plan ve kart -->
-    <color name="white">#FFFFFFFF</color>
-    <color name="cream_beige">#F3E9DC</color>
-    <color name="deep_green">#1B4D3E</color>
-    <color name="soft_white">#F9F9F9</color>
-    <color name="soft_black">#222222</color>
-    <color name="splash_bg">#F3E9DC</color>
-
-    <!-- Yazı & ikon -->
-    <color name="text_primary">#1B1B1B</color>
-    <color name="text_secondary">#5A5A5A</color>
-    <color name="icon_tint">#1B4D3E</color>
-
-    <!-- Material Design uyumu -->
-    <color name="mdc_primary">#1B4D3E</color>
-    <color name="mdc_on_primary">#FFFFFF</color>
-    <color name="mdc_secondary">#C9A27C</color>
-    <color name="mdc_on_secondary">#FFFFFF</color>
-    <color name="mdc_background">#FAF7F2</color>
-    <color name="mdc_surface">#FFFFFF</color>
-    <color name="mdc_on_surface">#1B1B1B</color>
-
+    <!-- Material 3 renkleri (açık tema) -->
+    <color name="md3_colorPrimary">#1C3B2B</color>
+    <color name="md3_colorOnPrimary">#FFFFFF</color>
+    <color name="md3_colorSecondary">#C6A27A</color>
+    <color name="md3_colorOnSecondary">#222222</color>
+    <color name="md3_colorSurface">#FFF9F1</color>
+    <color name="md3_colorOnSurface">#111111</color>
+    <color name="md3_colorBackground">#F4EDE4</color>
+    <color name="md3_colorOnBackground">#111111</color>
+    <color name="md3_colorOutline">#33000000</color>
 </resources>
