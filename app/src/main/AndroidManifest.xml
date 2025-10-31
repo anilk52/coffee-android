@@ -9,11 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
 
-        <!-- LAUNCHER -->
+        <!-- LAUNCHER: SplashActivity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.BdinoCoffee">
+            android:theme="@style/Theme.BdinoCoffee.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,17 +21,9 @@
         </activity>
 
         <!-- Diğer ekranlar -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.RecipeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.RecipeDetailActivity"
-            android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".ui.RecipeActivity" android:exported="false" />
+        <activity android:name=".ui.RecipeDetailActivity" android:exported="false" />
 
     </application>
 </manifest>
