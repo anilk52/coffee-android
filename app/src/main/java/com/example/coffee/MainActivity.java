@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
 import com.example.coffee.ui.SettingsActivity;
 
@@ -25,15 +26,21 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-        if (getSupportActionBar() != null) getSupportActionBar().setTitle("BDINO Coffee");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(""); // başlık yok
+        }
+        // Sol navigasyon: Favoriler
+        tb.setNavigationIcon(android.R.drawable.btn_star_big_on);
+        tb.setNavigationOnClickListener(v ->
+                startActivity(new Intent(this, FavoritesActivity.class)));
 
+        // animasyonlar
         ImageView logo = findViewById(R.id.logo);
         GridLayout grid = findViewById(R.id.gridCategories);
-
-        // Açılış animasyonları
         logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
         grid.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
+        // kart tıklamaları (şimdilik hepsi aynı liste ekranına götürüyor)
         setupCard(findViewById(R.id.cardEspresso));
         setupCard(findViewById(R.id.cardFilter));
         setupCard(findViewById(R.id.cardSpecial));
