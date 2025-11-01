@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BDINO marka paleti -->
-    <color name="coffee_deep_green">#1C3B2B</color>
-    <color name="coffee_beige">#F4EDE4</color>
-    <color name="coffee_latte_brown">#C6A27A</color>
-    <color name="coffee_cream_white">#FFF9F1</color>
+    <!-- BDINO v2 Dream Palette -->
+    <color name="coffee_milk_beige">#EFE8DD</color>
+    <color name="coffee_deep_emerald">#1E3C34</color>
+    <color name="coffee_crema_white">#FAF8F4</color>
+    <color name="coffee_warm_brown">#8B5E3C</color>
+    <color name="coffee_gold_accent">#C9A26B</color>
+    <color name="coffee_ripple_glass">#40FFFFFF</color>
 
-    <!-- Arayüz yardımcı renkleri -->
-    <color name="bd_text_primary">#111111</color>
-    <color name="bd_text_secondary">#6B6B6B</color>
-    <color name="bd_divider">#1F000000</color>
+    <!-- Eski isimlere uyum (alias) -->
+    <color name="coffee_beige">@color/coffee_milk_beige</color>
+    <color name="coffee_deep_green">@color/coffee_deep_emerald</color>
+    <color name="coffee_cream_white">@color/coffee_crema_white</color>
+    <color name="coffee_latte_brown">@color/coffee_warm_brown</color>
 
-    <!-- Material 3 renkleri (açık tema) -->
-    <color name="md3_colorPrimary">#1C3B2B</color>
+    <!-- Material 3 eşlemesi (açık tema) -->
+    <color name="md3_colorPrimary">@color/coffee_deep_emerald</color>
     <color name="md3_colorOnPrimary">#FFFFFF</color>
-    <color name="md3_colorSecondary">#C6A27A</color>
-    <color name="md3_colorOnSecondary">#222222</color>
-    <color name="md3_colorSurface">#FFF9F1</color>
-    <color name="md3_colorOnSurface">#111111</color>
-    <color name="md3_colorBackground">#F4EDE4</color>
-    <color name="md3_colorOnBackground">#111111</color>
+    <color name="md3_colorSecondary">@color/coffee_gold_accent</color>
+    <color name="md3_colorOnSecondary">@color/coffee_deep_emerald</color>
+    <color name="md3_colorSurface">@color/coffee_crema_white</color>
+    <color name="md3_colorOnSurface">#1B1B1B</color>
+    <color name="md3_colorBackground">@color/coffee_milk_beige</color>
+    <color name="md3_colorOnBackground">#1B1B1B</color>
     <color name="md3_colorOutline">#33000000</color>
+
+    <color name="white">#FFFFFF</color>
 </resources>
