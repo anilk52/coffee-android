@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Gece modu için tonlar -->
-    <color name="coffee_deep_green">#173225</color>
-    <color name="coffee_beige">#2E2A25</color>
-    <color name="coffee_latte_brown">#A48563</color>
-    <color name="coffee_cream_white">#1B1A18</color>
+    <!-- Gece modu alternatifleri -->
+    <color name="coffee_milk_beige">#2B2A27</color>
+    <color name="coffee_deep_emerald">#132821</color>
+    <color name="coffee_crema_white">#1A1A18</color>
+    <color name="coffee_warm_brown">#A0744F</color>
+    <color name="coffee_gold_accent">#D4B27A</color>
+    <color name="coffee_ripple_glass">#40FFFFFF</color>
 
-    <color name="bd_text_primary">#FFFFFF</color>
-    <color name="bd_text_secondary">#CCCCCC</color>
-    <color name="bd_divider">#33FFFFFF</color>
+    <!-- Alias'lar -->
+    <color name="coffee_beige">@color/coffee_milk_beige</color>
+    <color name="coffee_deep_green">@color/coffee_deep_emerald</color>
+    <color name="coffee_cream_white">@color/coffee_crema_white</color>
+    <color name="coffee_latte_brown">@color/coffee_warm_brown</color>
 
-    <color name="md3_colorPrimary">#A4C8B3</color>
-    <color name="md3_colorOnPrimary">#0E1B14</color>
-    <color name="md3_colorSecondary">#D8B896</color>
-    <color name="md3_colorOnSecondary">#1A1A1A</color>
-    <color name="md3_colorSurface">#1B1A18</color>
+    <!-- Material 3 eşlemesi (gece) -->
+    <color name="md3_colorPrimary">@color/coffee_gold_accent</color>
+    <color name="md3_colorOnPrimary">@color/coffee_deep_emerald</color>
+    <color name="md3_colorSecondary">@color/coffee_warm_brown</color>
+    <color name="md3_colorOnSecondary">#FFFFFF</color>
+    <color name="md3_colorSurface">@color/coffee_crema_white</color>
     <color name="md3_colorOnSurface">#FFFFFF</color>
-    <color name="md3_colorBackground">#12110F</color>
+    <color name="md3_colorBackground">@color/coffee_deep_emerald</color>
     <color name="md3_colorOnBackground">#FFFFFF</color>
     <color name="md3_colorOutline">#33FFFFFF</color>
 </resources>
