@@ -1,88 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/coffee_beige">
+    android:fillViewport="true"
+    android:background="@color/coffee_milk_beige">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/coffee_cream_white"
-        app:titleTextColor="@color/coffee_deep_green"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content">
 
-    <!-- İçerik -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        <!-- Üst görsel -->
+        <ImageView
+            android:id="@+id/imgHero"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name"
+            android:maxHeight="@dimen/hero_max_height"
+            android:minHeight="@dimen/hero_min_height"
+            android:layout_weight="0" />
 
+        <!-- İçerik bloğu -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/p16"
+            android:paddingEnd="@dimen/p16"
+            android:paddingTop="@dimen/p16"
+            android:paddingBottom="@dimen/p24">
 
-            <ImageView
-                android:id="@+id/coffeeImage"
+            <TextView
+                android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:contentDescription="Kahve Görseli" />
-
-            <TextView
-                android:id="@+id/coffeeName"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tarif Adı"
+                android:text="Title"
+                android:textSize="@dimen/f22"
                 android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/coffee_deep_green"
-                android:layout_marginTop="12dp" />
+                android:textColor="@color/coffee_deep_emerald"
+                android:lineSpacingExtra="2dp" />
 
             <TextView
-                android:id="@+id/coffeeDescription"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtDesc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tarif açıklaması burada..."
-                android:textColor="@color/coffee_latte_brown"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="@dimen/p8"
+                android:text="Short description"
+                android:textSize="@dimen/f15"
+                android:textColor="@color/bd_text_secondary"
+                android:lineSpacingExtra="1dp" />
 
             <TextView
-                android:id="@+id/coffeeMeasure"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtMeasure"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ölçü"
-                android:textColor="@color/coffee_deep_green"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="@dimen/p10"
+                android:text="300 ml"
+                android:textSize="@dimen/f14"
+                android:textColor="@color/bd_text_primary" />
 
             <TextView
-                android:id="@+id/coffeeTip"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtMethod"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/p12"
+                android:text="Method steps"
+                android:textSize="@dimen/f15"
+                android:textColor="@color/bd_text_primary"
+                android:lineSpacingExtra="2dp" />
+
+            <TextView
+                android:id="@+id/txtTip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/p12"
                 android:text="Barista ipucu"
-                android:textColor="@color/coffee_latte_brown"
-                android:layout_marginTop="8dp" />
+                android:textSize="@dimen/f15"
+                android:textColor="@color/coffee_warm_brown" />
 
             <TextView
-                android:id="@+id/coffeeNote"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtNote"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Eğlenceli not"
-                android:textColor="@color/coffee_latte_brown"
-                android:layout_marginTop="8dp" />
-
-            <ImageView
-                android:id="@+id/shareButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="Paylaş Butonu"
-                android:src="@android:drawable/ic_menu_share" />
-
+                android:layout_marginTop="@dimen/p8"
+                android:text="Not"
+                android:textSize="@dimen/f14"
+                android:textColor="@color/bd_text_secondary" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
