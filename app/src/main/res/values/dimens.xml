@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="p8">8dp</dimen>
+    <dimen name="p10">10dp</dimen>
+    <dimen name="p12">12dp</dimen>
+    <dimen name="p16">16dp</dimen>
+    <dimen name="p24">24dp</dimen>
+
+    <!-- Font sizes -->
+    <dimen name="f22">22sp</dimen>
+    <dimen name="f15">15sp</dimen>
+    <dimen name="f14">14sp</dimen>
+
+    <!-- Hero image heights -->
+    <dimen name="hero_min_height">180dp</dimen>
+    <dimen name="hero_max_height">240dp</dimen>
+</resources>
