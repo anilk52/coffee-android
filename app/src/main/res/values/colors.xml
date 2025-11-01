@@ -14,6 +14,10 @@
     <color name="coffee_cream_white">@color/coffee_crema_white</color>
     <color name="coffee_latte_brown">@color/coffee_warm_brown</color>
 
+    <!-- Metin renkleri (EKLENDİ) -->
+    <color name="bd_text_primary">@color/coffee_deep_emerald</color>
+    <color name="bd_text_secondary">@color/coffee_warm_brown</color>
+
     <!-- Material 3 eşlemesi (açık tema) -->
     <color name="md3_colorPrimary">@color/coffee_deep_emerald</color>
     <color name="md3_colorOnPrimary">#FFFFFF</color>
