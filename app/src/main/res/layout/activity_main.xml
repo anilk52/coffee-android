@@ -2,93 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/coffee_milk_beige">
 
+    <!-- Başlıksız Toolbar (sol: fav nav icon, sağ: ayarlar menüsü) -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent" android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         android:background="@color/coffee_crema_white"
-        app:title="BDINO Coffee"
+        app:title=""
         app:titleTextColor="@color/coffee_deep_emerald"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ScrollView
-        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="16dp">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <!-- Logo -->
             <ImageView
                 android:id="@+id/logo"
                 android:src="@drawable/logo_bdino"
-                android:layout_width="140dp" android:layout_height="140dp"
-                android:layout_gravity="center" android:layout_marginBottom="12dp"
-                android:contentDescription="BDINO Logo" />
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:contentDescription="BDINO Logo"
+                android:layout_marginBottom="12dp" />
 
+            <!-- 2 sütun kategori grid -->
             <GridLayout
                 android:id="@+id/gridCategories"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:columnCount="2" android:useDefaultMargins="true">
-
-                <FrameLayout
-                    android:id="@+id/cardEspresso"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-
-                <FrameLayout
-                    android:id="@+id/cardFilter"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-
-                <FrameLayout
-                    android:id="@+id/cardSpecial"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-
-                <FrameLayout
-                    android:id="@+id/cardAlcoholic"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-
-                <FrameLayout
-                    android:id="@+id/cardIced"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-
-                <FrameLayout
-                    android:id="@+id/cardTurkish"
-                    android:layout_width="0dp" android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp" android:padding="12dp"/>
-            </GridLayout>
-
-            <TextView
-                android:id="@+id/credits"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="by Anıl &amp; GPT-5 ☕"
-                android:gravity="center" android:textSize="14sp" android:textStyle="italic"
-                android:textColor="@color/coffee_warm_brown"
-                android:layout_marginTop="24dp" android:layout_marginBottom="12dp"/>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:
