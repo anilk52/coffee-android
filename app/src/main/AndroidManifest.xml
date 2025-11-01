@@ -9,6 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
 
+        <activity android:name=".ui.FavoritesActivity" android:exported="false"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
