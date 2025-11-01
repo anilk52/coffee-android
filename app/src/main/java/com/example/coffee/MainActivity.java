@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
 import com.example.coffee.ui.SettingsActivity;
@@ -26,32 +27,31 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(""); // başlık yok
-        }
-        // Sol navigasyon: Favoriler
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
         tb.setNavigationIcon(android.R.drawable.btn_star_big_on);
         tb.setNavigationOnClickListener(v ->
                 startActivity(new Intent(this, FavoritesActivity.class)));
 
-        // animasyonlar
         ImageView logo = findViewById(R.id.logo);
         GridLayout grid = findViewById(R.id.gridCategories);
         logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
         grid.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
 
-        // kart tıklamaları (şimdilik hepsi aynı liste ekranına götürüyor)
-        setupCard(findViewById(R.id.cardEspresso));
-        setupCard(findViewById(R.id.cardFilter));
-        setupCard(findViewById(R.id.cardSpecial));
-        setupCard(findViewById(R.id.cardAlcoholic));
-        setupCard(findViewById(R.id.cardIced));
-        setupCard(findViewById(R.id.cardTurkish));
+        setupCard(findViewById(R.id.cardEspresso),  RecipesData.CAT_ESPRESSO);
+        setupCard(findViewById(R.id.cardFilter),    RecipesData.CAT_FILTER);
+        setupCard(findViewById(R.id.cardSpecial),   RecipesData.CAT_SPECIAL);
+        setupCard(findViewById(R.id.cardAlcoholic), RecipesData.CAT_ALCOHOLIC);
+        setupCard(findViewById(R.id.cardIced),      RecipesData.CAT_ICED);
+        setupCard(findViewById(R.id.cardTurkish),   RecipesData.CAT_TURKISH);
     }
 
-    private void setupCard(FrameLayout card) {
+    private void setupCard(FrameLayout card, String category) {
         if (card == null) return;
-        card.setOnClickListener(v -> startActivity(new Intent(this, RecipeActivity.class)));
+        card.setOnClickListener(v -> {
+            Intent i = new Intent(this, RecipeActivity.class);
+            i.putExtra("category", category);
+            startActivity(i);
+        });
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
