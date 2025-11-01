@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Uygulama -->
     <string name="app_name">BDINO Coffee</string>
-    <string name="search">Ara</string>
+
+    <!-- Menüler / Aksiyonlar -->
     <string name="settings">Ayarlar</string>
+    <string name="favorites">Favoriler</string>
     <string name="share">Paylaş</string>
     <string name="favorite">Favori</string>
+    <string name="share_recipe">Tarifi Paylaş</string>
+    <string name="search">Ara</string>
+    <string name="search_hint">Kahve ara…</string>
+
+    <!-- UI Metinleri -->
+    <string name="byline">by Anıl &amp; GPT-5</string>
+    <string name="empty_list">Burada henüz bir şey yok.</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">İptal</string>
+
 </resources>
