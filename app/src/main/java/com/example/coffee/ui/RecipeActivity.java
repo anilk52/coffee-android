@@ -3,74 +3,108 @@ package com.example.coffee.ui;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coffee.MainActivity;
 import com.example.coffee.R;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerRecipes;
+    private RecyclerView recyclerView;
+    private TextView emptyView;
+    private EditText search;
     private RecipeAdapter adapter;
-    private EditText searchInput;
-    private final List<Recipe> allRecipes = new ArrayList<>();
+
+    private final List<Recipe> all = new ArrayList<>();
     private final List<Recipe> shown = new ArrayList<>();
-    private String selectedCategory; // null ise hepsi
+    private String category;
 
     @Override
-    protected void onCreate(@Nullable Bundle b) {
-        super.onCreate(b);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        recyclerRecipes = findViewById(R.id.recyclerRecipes);
-        searchInput = findViewById(R.id.searchInput);
-        recyclerRecipes.setLayoutManager(new LinearLayoutManager(this));
+        category = getIntent().getStringExtra(MainActivity.EXTRA_CATEGORY);
+        if (category == null) category = "";
 
-        allRecipes.addAll(RecipesData.getAll());
+        recyclerView = findViewById(R.id.recyclerView);
+        emptyView    = findViewById(R.id.emptyView);
+        search       = findViewById(R.id.inputSearch);
 
-        // Ana menüden gönderilen kategori
-        selectedCategory = getIntent().getStringExtra("category");
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new RecipeAdapter(shown);
+        recyclerView.setAdapter(adapter);
 
-        // Başlangıç listesi
-        filterAndShow("");
+        // TÜM tarifleri al, kategoriye göre filtrele
+        List<Recipe> fromData = RecipesData.getAll(this); // JSON/asset okuyan mevcut metod
+        all.clear();
+        if (fromData != null) all.addAll(fromData);
 
-        adapter = new RecipeAdapter(this, shown);
-        recyclerRecipes.setAdapter(adapter);
+        applyCategory();
+        applySearch("");
 
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        // Arama
+        search.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) { applySearch(s.toString()); }
             @Override public void afterTextChanged(Editable s) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterAndShow(s.toString());
-            }
         });
 
-        // (Varsa) başlıkta kategori etiketini göster
-        if (getSupportActionBar() != null) {
-            String title = selectedCategory == null ? "Tüm Tarifler" : RecipesData.categoryLabel(selectedCategory);
-            getSupportActionBar().setTitle(title);
-        }
+        setTitle(category.isEmpty() ? getString(R.string.app_name) : category);
     }
 
-    private void filterAndShow(String query) {
-        String q = query == null ? "" : query.toLowerCase();
+    private void applyCategory() {
         shown.clear();
-        for (Recipe r : allRecipes) {
-            boolean catOk = (selectedCategory == null) || selectedCategory.equals(r.getCategory());
-            boolean textOk = r.getName().toLowerCase().contains(q)
-                          || r.getDescription().toLowerCase().contains(q);
-            if (catOk && textOk) shown.add(r);
+        for (Recipe r : all) {
+            // Recipe.getCategory() içeriği: "Espresso", "Filtre", "Special", "Alkollü", "Iced", "Türk"
+            if (equalsIgnoreTrTr(r.getCategory(), category)) {
+                shown.add(r);
+            }
         }
-        if (adapter != null) adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
+        updateEmpty();
+    }
+
+    private void applySearch(String q) {
+        q = q == null ? "" : q.trim().toLowerCase(Locale.getDefault());
+        if (q.isEmpty()) { // sadece kategori filtresi kalsın
+            applyCategory();
+            return;
+        }
+        List<Recipe> base = new ArrayList<>();
+        for (Recipe r : all) if (equalsIgnoreTrTr(r.getCategory(), category)) base.add(r);
+
+        shown.clear();
+        for (Recipe r : base) {
+            String hay = (r.getName()+" "+r.getShortDesc()+" "+r.getMeasure()).toLowerCase(Locale.getDefault());
+            if (hay.contains(q)) shown.add(r);
+        }
+        adapter.notifyDataSetChanged();
+        updateEmpty();
+    }
+
+    private void updateEmpty() {
+        boolean isEmpty = shown.isEmpty();
+        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(isEmpty ? View.GONE   : View.VISIBLE);
+    }
+
+    // Türkçe/İngilizce küçük-büyük ve aksan içeren eşleşmelerde gevşek karşılaştırma
+    private boolean equalsIgnoreTrTr(String a, String b) {
+        if (a == null || b == null) return false;
+        return a.trim().equalsIgnoreCase(b.trim());
     }
 }
