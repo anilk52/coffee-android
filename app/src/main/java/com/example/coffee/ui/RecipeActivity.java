@@ -30,7 +30,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     private final List<Recipe> all = new ArrayList<>();
     private final List<Recipe> shown = new ArrayList<>();
-    private String category;
+    private String category = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,18 +45,20 @@ public class RecipeActivity extends AppCompatActivity {
         search       = findViewById(R.id.inputSearch);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecipeAdapter(shown);
+        // RecipeAdapter imzası: (Context, List<?>)
+        adapter = new RecipeAdapter(this, (List<?>) shown);
         recyclerView.setAdapter(adapter);
 
-        // TÜM tarifleri al, kategoriye göre filtrele
-        List<Recipe> fromData = RecipesData.getAll(this); // JSON/asset okuyan mevcut metod
-        all.clear();
-        if (fromData != null) all.addAll(fromData);
+        // RecipesData.getAll() imzası: parametresiz
+        List<Recipe> fromData = RecipesData.getAll();
+        if (fromData != null) {
+            all.clear();
+            all.addAll(fromData);
+        }
 
         applyCategory();
         applySearch("");
 
-        // Arama
         search.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
             @Override public void onTextChanged(CharSequence s, int st, int b, int c) { applySearch(s.toString()); }
@@ -68,10 +70,13 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void applyCategory() {
         shown.clear();
-        for (Recipe r : all) {
-            // Recipe.getCategory() içeriği: "Espresso", "Filtre", "Special", "Alkollü", "Iced", "Türk"
-            if (equalsIgnoreTrTr(r.getCategory(), category)) {
-                shown.add(r);
+        if (category.isEmpty()) {
+            shown.addAll(all);
+        } else {
+            for (Recipe r : all) {
+                if (equalsIgnoreTrTr(r.getCategory(), category)) {
+                    shown.add(r);
+                }
             }
         }
         adapter.notifyDataSetChanged();
@@ -80,16 +85,18 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void applySearch(String q) {
         q = q == null ? "" : q.trim().toLowerCase(Locale.getDefault());
-        if (q.isEmpty()) { // sadece kategori filtresi kalsın
+        if (q.isEmpty()) {
             applyCategory();
             return;
         }
+
         List<Recipe> base = new ArrayList<>();
         for (Recipe r : all) if (equalsIgnoreTrTr(r.getCategory(), category)) base.add(r);
 
         shown.clear();
         for (Recipe r : base) {
-            String hay = (r.getName()+" "+r.getShortDesc()+" "+r.getMeasure()).toLowerCase(Locale.getDefault());
+            String hay = (nz(r.getName()) + " " + nz(r.getShortDesc()) + " " + nz(r.getMeasure()))
+                    .toLowerCase(Locale.getDefault());
             if (hay.contains(q)) shown.add(r);
         }
         adapter.notifyDataSetChanged();
@@ -99,12 +106,13 @@ public class RecipeActivity extends AppCompatActivity {
     private void updateEmpty() {
         boolean isEmpty = shown.isEmpty();
         emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-        recyclerView.setVisibility(isEmpty ? View.GONE   : View.VISIBLE);
+        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
-    // Türkçe/İngilizce küçük-büyük ve aksan içeren eşleşmelerde gevşek karşılaştırma
     private boolean equalsIgnoreTrTr(String a, String b) {
         if (a == null || b == null) return false;
         return a.trim().equalsIgnoreCase(b.trim());
     }
+
+    private static String nz(String s) { return s == null ? "" : s; }
 }
