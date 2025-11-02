@@ -30,9 +30,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private ImageView imgHero;
     private TextView txtTitle, txtDesc, txtMeasure, txtMethod, txtTip, txtNote;
-    private TextView chipTime, chipDifficulty;
+    private TextView chipTime, chipDifficulty, chipTaste, chipGear;
 
-    // Yeni: Adım + Sayaç
     private View timerBox;
     private TextView txtTimer, txtStepsHeader, txtStepsList;
     private Button btnStartPause, btnReset;
@@ -45,11 +44,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        // View’lar
+        // Views
         imgHero     = findViewById(R.id.imgHero);
         txtTitle    = findViewById(R.id.txtTitle);
         chipTime    = findViewById(R.id.chipTime);
         chipDifficulty = findViewById(R.id.chipDifficulty);
+        chipTaste   = findViewById(R.id.chipTaste);
+        chipGear    = findViewById(R.id.chipGear);
+
         txtDesc     = findViewById(R.id.txtDesc);
         txtMeasure  = findViewById(R.id.txtMeasure);
         txtMethod   = findViewById(R.id.txtMethod);
@@ -72,10 +74,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         String method = it.getStringExtra(K_METHOD);
         String tip    = it.getStringExtra(K_TIP);
         String note   = it.getStringExtra(K_NOTE);
-        String extraTime = it.getStringExtra("total_time");
-        String extraDiff = it.getStringExtra("difficulty");
 
-        // Doldur
+        String extraTime  = it.getStringExtra("total_time");
+        String extraDiff  = it.getStringExtra("difficulty");
+        String taste      = it.getStringExtra("taste_profile");
+        String gear       = it.getStringExtra("equipment");
+
+        // Fill
         if (image != 0) imgHero.setImageResource(image);
         txtTitle.setText(nz(name));
         txtDesc.setText(nz(desc));
@@ -84,17 +89,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setOrHide(txtTip, tip);
         setOrHide(txtNote, note);
 
-        if (!TextUtils.isEmpty(extraTime)) {
-            chipTime.setText("⏱ " + extraTime);
-            chipTime.setVisibility(View.VISIBLE);
-        } else chipTime.setVisibility(View.GONE);
+        setChip(chipTime,     !TextUtils.isEmpty(extraTime) ? "⏱ " + extraTime : null);
+        setChip(chipDifficulty,!TextUtils.isEmpty(extraDiff) ? "🎯 " + extraDiff : null);
+        setChip(chipTaste,    !TextUtils.isEmpty(taste)     ? "🌿 " + taste : null);
+        setChip(chipGear,     !TextUtils.isEmpty(gear)      ? "🧰 " + gear : null);
 
-        if (!TextUtils.isEmpty(extraDiff)) {
-            chipDifficulty.setText("🎯 " + extraDiff);
-            chipDifficulty.setVisibility(View.VISIBLE);
-        } else chipDifficulty.setVisibility(View.GONE);
-
-        // Adımları çıkar + listele
+        // Steps
         String stepsList = buildStepsList(method);
         if (!TextUtils.isEmpty(stepsList)) {
             txtStepsHeader.setVisibility(View.VISIBLE);
@@ -105,7 +105,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             txtStepsList.setVisibility(View.GONE);
         }
 
-        // Süreleri topla → sayaç kur
+        // Timer
         totalMillis = parseTotalMillis(method);
         if (totalMillis > 0) {
             timerBox.setVisibility(View.VISIBLE);
@@ -116,13 +116,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setChip(TextView chip, String value) {
+        if (chip == null) return;
+        if (TextUtils.isEmpty(value)) chip.setVisibility(View.GONE);
+        else { chip.setText(value); chip.setVisibility(View.VISIBLE); }
+    }
+
     private void setOrHide(TextView tv, String s) {
         if (TextUtils.isEmpty(s)) tv.setVisibility(View.GONE);
         else { tv.setText(s); tv.setVisibility(View.VISIBLE); }
     }
     private static String nz(String s){ return s==null?"":s; }
 
-    // ——— Adım & Zaman Parsers ———
+    // —— Parsing ——
     private long parseTotalMillis(String methodText) {
         if (TextUtils.isEmpty(methodText)) return 0L;
         Pattern p = Pattern.compile("(\\d+)\\s*(s|sn|sec|second|seconds|m|min|minute|minutes)", Pattern.CASE_INSENSITIVE);
@@ -168,7 +174,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return String.format(Locale.getDefault(), "0:%02d", rem);
     }
 
-    // ——— Sayaç ———
+    // —— Timer ——
     private void setupTimer() {
         btnStartPause.setOnClickListener(v -> {
             if (!running) {
@@ -203,9 +209,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void pauseTimer() {
-        if (cdt != null) { cdt.cancel(); cdt = null; }
-    }
+    private void pauseTimer() { if (cdt != null) { cdt.cancel(); cdt = null; } }
 
     private long parseCurrentSeconds(String mmss) {
         try {
@@ -219,7 +223,5 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return 0;
     }
 
-    private int safeInt(String s) {
-        try { return Integer.parseInt(s.trim()); } catch (Exception e) { return 0; }
-    }
+    private int safeInt(String s) { try { return Integer.parseInt(s.trim()); } catch (Exception e) { return 0; } }
 }
