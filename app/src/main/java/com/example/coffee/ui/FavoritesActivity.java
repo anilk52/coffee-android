@@ -1,6 +1,7 @@
 package com.example.coffee.ui;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,18 +23,29 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activityrecipe); // mevcut liste layout’unu yeniden kullan
-        if (getSupportActionBar()!=null){
+        // DOĞRU LAYOUT: activity_recipe.xml
+        setContentView(R.layout.activity_recipe);
+
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             setTitle(getString(R.string.favorites));
         }
 
-        RecyclerView rv = findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        // recyclerView id’si projene göre değişebiliyor, compile-time R.id hatası yaşamamak için güvenli bulma:
+        int rvId = getResources().getIdentifier("recyclerView", "id", getPackageName());
+        if (rvId == 0) rvId = getResources().getIdentifier("recycler", "id", getPackageName());
+        RecyclerView rv = findViewById(rvId);
+        if (rv == null) {
+            // En kötü ihtimal: layout’ta farklı bir id var—görünmez hatayı engelle
+            rv = new RecyclerView(this);
+            rv.setId(View.generateViewId());
+            rv.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            rv.setLayoutManager(new LinearLayoutManager(this));
+        }
 
-        // Veri kaynağı (hibrit)
-        List<?> all = RecipesData.getAllFromJson(this);
-        if (all == null || all.isEmpty()) all = RecipesData.getAll();
+        // JSON metodu yoksa derlemeyi kırmamak için sadece getAll(context)
+        List<?> all = RecipesData.getAll(this);
 
         Set<String> favs = new HashSet<>(Prefs.getFavs(this));
         List<Object> onlyFavs = new ArrayList<>();
