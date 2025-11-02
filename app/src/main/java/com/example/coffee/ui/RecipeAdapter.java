@@ -9,22 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
+import com.example.coffee.utils.Prefs;
+import com.example.coffee.utils.RecipeIds;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Esnek Adapter:
- * - Model sınıfına bağımlı değil (Reflection ile okur)
- * - item_recipe.xml içinde şu ID’leri bekler: imgThumb, txtTitle, txtSub (opsiyonel: btnFav)
- * - Detay ekranına, sadece Intent extras ile veri gönderir
- */
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
 
     private final Context ctx;
@@ -45,16 +42,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
     public void onBindViewHolder(@NonNull VH h, int position) {
         Object r = data.get(position);
 
-        // Görsel
-        int imageRes = getIntProp(r, "getImageRes", "getImage", "getImageId", "imageRes", "getImg");
-        if (imageRes == 0) imageRes = R.drawable.ic_placeholder_logo;
-        h.imgThumb.setImageResource(imageRes);
-
-        // Başlık / Alt metin
+        String id   = RecipeIds.idOf(r);
         String name = getStringProp(r, "getName", "name");
         String desc = getStringProp(r, "getDescription", "getShortDesc", "description");
         String size = getStringProp(r, "getMeasure", "measure", "getCupSize", "cupSize", "size");
+        int imageRes = getIntProp(r, "getImageRes", "getImage", "getImageId", "imageRes", "getImg");
+        if (imageRes == 0) imageRes = R.drawable.ic_placeholder_logo;
 
+        // Görsel & metin
+        h.imgThumb.setImageResource(imageRes);
         h.txtTitle.setText(nz(name));
         if (h.txtSub != null) {
             String sub = buildSubtitle(desc, size);
@@ -62,38 +58,51 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
             h.txtSub.setVisibility(TextUtils.isEmpty(sub) ? View.GONE : View.VISIBLE);
         }
 
+        // Favori durumunu boya
+        applyFavState(h, Prefs.isFav(ctx, id));
+
         // Tık → Detay
         final int imgToSend = imageRes;
         h.itemView.setOnClickListener(v -> {
             Intent it = new Intent(ctx, RecipeDetailActivity.class);
             it.putExtra(RecipeDetailActivity.K_IMAGE,   imgToSend);
-            it.putExtra(RecipeDetailActivity.K_NAME,    nz(getStringProp(r, "getName", "name")));
-            it.putExtra(RecipeDetailActivity.K_DESC,    nz(getStringProp(r, "getDescription", "getShortDesc", "description")));
-            it.putExtra(RecipeDetailActivity.K_MEASURE, nz(getStringProp(r, "getMeasure", "measure", "getCupSize", "cupSize", "size")));
-
-            // method/steps alanı – hangisi varsa onu gönder
+            it.putExtra(RecipeDetailActivity.K_NAME,    nz(name));
+            it.putExtra(RecipeDetailActivity.K_DESC,    nz(desc));
+            it.putExtra(RecipeDetailActivity.K_MEASURE, nz(size));
             String method = getStringProp(r, "getMethod", "method", "getSteps", "steps", "getRecipe");
-            if (TextUtils.isEmpty(method)) method = desc; // yoksa desc yolla
+            if (TextUtils.isEmpty(method)) method = desc;
             it.putExtra(RecipeDetailActivity.K_METHOD,  nz(method));
-
             it.putExtra(RecipeDetailActivity.K_TIP,     nz(getStringProp(r, "getTip", "tip")));
             it.putExtra(RecipeDetailActivity.K_NOTE,    nz(getStringProp(r, "getNote", "note")));
             ctx.startActivity(it);
         });
 
-        // Favori butonu (varsa)
+        // Uzun bas → favori (layout’ta buton yoksa da çalışır)
+        h.itemView.setOnLongClickListener(v -> {
+            boolean nowFav = Prefs.toggleFav(ctx, id);
+            applyFavState(h, nowFav);
+            Toast.makeText(ctx, nowFav ? R.string.added_favorites : R.string.removed_favorites,
+                    Toast.LENGTH_SHORT).show();
+            return true;
+        });
+
+        // Buton varsa → favori toggle
         if (h.btnFav != null) {
             h.btnFav.setOnClickListener(v -> {
-                // Geçici: tıkta anim/feedback; kalıcı favori için sonra prefs ekleyeceğiz
-                v.setSelected(!v.isSelected());
-                v.animate().rotationBy(360f).setDuration(300).start();
+                boolean nowFav = Prefs.toggleFav(ctx, id);
+                applyFavState(h, nowFav);
+                v.animate().rotationBy(360f).setDuration(250).start();
+                Toast.makeText(ctx, nowFav ? R.string.added_favorites : R.string.removed_favorites,
+                        Toast.LENGTH_SHORT).show();
             });
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
+    @Override public int getItemCount() { return data.size(); }
+
+    private void applyFavState(VH h, boolean fav) {
+        if (h.btnFav != null) h.btnFav.setSelected(fav); // selector ile renk değiştir
+        if (h.txtTitle != null) h.txtTitle.setActivated(fav); // istersen style’la vurgu
     }
 
     // --- ViewHolder ---
@@ -102,7 +111,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         TextView txtTitle;
         TextView txtSub;      // opsiyonel
         ImageButton btnFav;   // opsiyonel
-
         VH(@NonNull View v) {
             super(v);
             imgThumb = v.findViewById(R.id.imgThumb);
@@ -112,7 +120,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.VH> {
         }
     }
 
-    // --- Yardımcılar ---
+    // --- yardımcılar ---
     private static String nz(String s) { return s == null ? "" : s; }
 
     private static String buildSubtitle(String desc, String size) {
