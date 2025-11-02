@@ -45,7 +45,7 @@ public class FavoritesActivity extends AppCompatActivity {
         }
 
         // JSON metodu yoksa derlemeyi kırmamak için sadece getAll(context)
-        List<?> all = RecipesData.getAll(this);
+        List<?> all = RecipesData.getAll();
 
         Set<String> favs = new HashSet<>(Prefs.getFavs(this));
         List<Object> onlyFavs = new ArrayList<>();
