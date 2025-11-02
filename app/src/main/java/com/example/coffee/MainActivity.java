@@ -20,11 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Toolbar ayarı
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // --- Kategori kartlarını dinle ---
         findViewById(R.id.cardEspresso).setOnClickListener(this);
         findViewById(R.id.cardFilter).setOnClickListener(this);
         findViewById(R.id.cardSpecial).setOnClickListener(this);
@@ -33,14 +31,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.cardTurkish).setOnClickListener(this);
     }
 
-    // --- Menü oluşturma ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    // --- Menü tıklamaları ---
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -48,45 +44,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, FavoritesActivity.class));
             return true;
         } else if (id == R.id.action_settings) {
-            // SettingsActivity daha sonra eklenecek
-            // startActivity(new Intent(this, SettingsActivity.class));
+            // SettingsActivity sonra
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // --- Kart tıklamaları ---
     @Override
     public void onClick(View v) {
         Intent i = new Intent(this, RecipeActivity.class);
-        switch (v.getId()) {
-            case R.id.cardEspresso:
-                i.putExtra("category", "Espresso");
-                break;
-            case R.id.cardFilter:
-                i.putExtra("category", "Filter");
-                break;
-            case R.id.cardSpecial:
-                i.putExtra("category", "Special");
-                break;
-            case R.id.cardAlcoholic:
-                i.putExtra("category", "Alcoholic");
-                break;
-            case R.id.cardIced:
-                i.putExtra("category", "Iced");
-                break;
-            case R.id.cardTurkish:
-                i.putExtra("category", "Turkish");
-                break;
-            default:
-                i.putExtra("category", "All");
+
+        // NOT: AGP 8+ 'da R.id non-final → switch yerine if/else kullan
+        int vid = v.getId();
+        if (vid == R.id.cardEspresso) {
+            i.putExtra("category", "Espresso");
+        } else if (vid == R.id.cardFilter) {
+            i.putExtra("category", "Filter");
+        } else if (vid == R.id.cardSpecial) {
+            i.putExtra("category", "Special");
+        } else if (vid == R.id.cardAlcoholic) {
+            i.putExtra("category", "Alcoholic");
+        } else if (vid == R.id.cardIced) {
+            i.putExtra("category", "Iced");
+        } else if (vid == R.id.cardTurkish) {
+            i.putExtra("category", "Turkish");
+        } else {
+            i.putExtra("category", "All");
         }
+
         startActivity(i);
     }
 
-    // --- Geri tuşu ile çıkış onayı ---
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
+    public void onBackPressed() { moveTaskToBack(true); }
 }
