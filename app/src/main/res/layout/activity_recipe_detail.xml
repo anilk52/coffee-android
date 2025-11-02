@@ -10,6 +10,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Görsel -->
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="match_parent"
@@ -18,6 +19,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_placeholder_logo" />
 
+        <!-- Başlık -->
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
@@ -65,6 +67,7 @@
                 android:text="🎯 Orta" />
         </LinearLayout>
 
+        <!-- Açıklama -->
         <TextView
             android:id="@+id/txtDesc"
             android:layout_width="match_parent"
@@ -72,6 +75,7 @@
             android:layout_marginTop="8dp"
             android:text="Açıklama" />
 
+        <!-- Ölçü -->
         <TextView
             android:id="@+id/txtMeasure"
             android:layout_width="match_parent"
@@ -79,13 +83,66 @@
             android:layout_marginTop="6dp"
             android:text="Ölçü" />
 
+        <!-- Yöntem -->
         <TextView
             android:id="@+id/txtMethod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Hazırlama yöntemi" />
+            android:text="Hazırlama yöntemi (satır satır adımlar)" />
 
+        <!-- Canlı Sayaç -->
+        <LinearLayout
+            android:id="@+id/timerBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtTimer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0:00"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnStartPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Başlat" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Sıfırla" />
+        </LinearLayout>
+
+        <!-- Adım Adım Başlık -->
+        <TextView
+            android:id="@+id/txtStepsHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Adımlar"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- Adım Adım Liste -->
+        <TextView
+            android:id="@+id/txtStepsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="2dp"
+            android:text=""
+            android:visibility="gone" />
+
+        <!-- İpucu -->
         <TextView
             android:id="@+id/txtTip"
             android:layout_width="match_parent"
@@ -93,6 +150,7 @@
             android:layout_marginTop="10dp"
             android:text="Barista ipucu" />
 
+        <!-- Not -->
         <TextView
             android:id="@+id/txtNote"
             android:layout_width="match_parent"
