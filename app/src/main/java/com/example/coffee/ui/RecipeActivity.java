@@ -46,7 +46,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // RecipeAdapter imzası: (Context, List<?>)
-        adapter = new RecipeAdapter(this, (List<?>) shown);
+        adapter = new RecipeAdapter(this, (java.util.List<?>) shown);
         recyclerView.setAdapter(adapter);
 
         // RecipesData.getAll() imzası: parametresiz
