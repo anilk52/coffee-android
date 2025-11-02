@@ -236,7 +236,7 @@
                 android:id="@+id/credits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="by Anıl &amp; GPT-5 ☕"
+                android:text="by Anıl K ☕"
                 android:gravity="center"
                 android:textSize="14sp"
                 android:textStyle="italic"
