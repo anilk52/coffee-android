@@ -29,7 +29,7 @@
             android:textSize="22sp"
             android:text="Kahve Adı" />
 
-        <!-- Süre & Zorluk Çipleri -->
+        <!-- Çipler: Süre / Zorluk / Tat / Ekipman -->
         <LinearLayout
             android:id="@+id/rowChips"
             android:layout_width="match_parent"
@@ -65,6 +65,36 @@
                 android:textSize="13sp"
                 android:visibility="gone"
                 android:text="🎯 Orta" />
+
+            <TextView
+                android:id="@+id/chipTaste"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/bg_chip_light"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:visibility="gone"
+                android:text="🌿 Dengeli" />
+
+            <TextView
+                android:id="@+id/chipGear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/bg_chip_light"
+                android:textStyle="bold"
+                android:textSize="13sp"
+                android:visibility="gone"
+                android:text="🧰 Ekipman" />
         </LinearLayout>
 
         <!-- Açıklama -->
@@ -123,7 +153,7 @@
                 android:text="Sıfırla" />
         </LinearLayout>
 
-        <!-- Adım Adım Başlık -->
+        <!-- Adım Adım -->
         <TextView
             android:id="@+id/txtStepsHeader"
             android:layout_width="wrap_content"
@@ -133,7 +163,6 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <!-- Adım Adım Liste -->
         <TextView
             android:id="@+id/txtStepsList"
             android:layout_width="match_parent"
