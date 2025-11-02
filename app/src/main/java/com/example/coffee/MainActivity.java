@@ -4,66 +4,89 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.GridLayout;
-import android.widget.ImageView;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
-import com.example.coffee.ui.SettingsActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle b) {
-        super.onCreate(b);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
-        tb.setNavigationIcon(android.R.drawable.btn_star_big_on);
-        tb.setNavigationOnClickListener(v ->
-                startActivity(new Intent(this, FavoritesActivity.class)));
+        // Toolbar ayarı
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        ImageView logo = findViewById(R.id.logo);
-        GridLayout grid = findViewById(R.id.gridCategories);
-        logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-        grid.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_up));
-
-        setupCard(findViewById(R.id.cardEspresso),  RecipesData.CAT_ESPRESSO);
-        setupCard(findViewById(R.id.cardFilter),    RecipesData.CAT_FILTER);
-        setupCard(findViewById(R.id.cardSpecial),   RecipesData.CAT_SPECIAL);
-        setupCard(findViewById(R.id.cardAlcoholic), RecipesData.CAT_ALCOHOLIC);
-        setupCard(findViewById(R.id.cardIced),      RecipesData.CAT_ICED);
-        setupCard(findViewById(R.id.cardTurkish),   RecipesData.CAT_TURKISH);
+        // --- Kategori kartlarını dinle ---
+        findViewById(R.id.cardEspresso).setOnClickListener(this);
+        findViewById(R.id.cardFilter).setOnClickListener(this);
+        findViewById(R.id.cardSpecial).setOnClickListener(this);
+        findViewById(R.id.cardAlcoholic).setOnClickListener(this);
+        findViewById(R.id.cardIced).setOnClickListener(this);
+        findViewById(R.id.cardTurkish).setOnClickListener(this);
     }
 
-    private void setupCard(FrameLayout card, String category) {
-        if (card == null) return;
-        card.setOnClickListener(v -> {
-            Intent i = new Intent(this, RecipeActivity.class);
-            i.putExtra("category", category);
-            startActivity(i);
-        });
-    }
-
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    // --- Menü oluşturma ---
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+    // --- Menü tıklamaları ---
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_favorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+            return true;
+        } else if (id == R.id.action_settings) {
+            // SettingsActivity daha sonra eklenecek
+            // startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // --- Kart tıklamaları ---
+    @Override
+    public void onClick(View v) {
+        Intent i = new Intent(this, RecipeActivity.class);
+        switch (v.getId()) {
+            case R.id.cardEspresso:
+                i.putExtra("category", "Espresso");
+                break;
+            case R.id.cardFilter:
+                i.putExtra("category", "Filter");
+                break;
+            case R.id.cardSpecial:
+                i.putExtra("category", "Special");
+                break;
+            case R.id.cardAlcoholic:
+                i.putExtra("category", "Alcoholic");
+                break;
+            case R.id.cardIced:
+                i.putExtra("category", "Iced");
+                break;
+            case R.id.cardTurkish:
+                i.putExtra("category", "Turkish");
+                break;
+            default:
+                i.putExtra("category", "All");
+        }
+        startActivity(i);
+    }
+
+    // --- Geri tuşu ile çıkış onayı ---
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
