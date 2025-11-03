@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Uygulama genelinde tema ve ev/kafe modlarını yönetir.
+ * Tüm aktiviteler buradan güncel durumu okur.
+ */
 public final class ModeManager {
 
     private static final String PREFS_NAME = "bdino_prefs";
@@ -16,7 +20,7 @@ public final class ModeManager {
     public static final String THEME_DARK = "dark";
 
     private ModeManager() {
-        // no instance
+        // Statik sınıf, örnek oluşturulmaz
     }
 
     private static SharedPreferences prefs(@NonNull Context context) {
@@ -26,15 +30,12 @@ public final class ModeManager {
     // --------- EV / KAFE MODU ---------
 
     public static boolean isHomeMode(@NonNull Context context) {
-        // Varsayılan: EV modu açık
+        // Varsayılan olarak EV modu aktif
         return prefs(context).getBoolean(KEY_HOME_MODE, true);
     }
 
     public static void setHomeMode(@NonNull Context context, boolean homeMode) {
-        prefs(context)
-                .edit()
-                .putBoolean(KEY_HOME_MODE, homeMode)
-                .apply();
+        prefs(context).edit().putBoolean(KEY_HOME_MODE, homeMode).apply();
     }
 
     // --------- TEMA MODU ---------
@@ -43,6 +44,7 @@ public final class ModeManager {
     public static String getThemeMode(@NonNull Context context) {
         String value = prefs(context).getString(KEY_THEME_MODE, THEME_LIGHT);
         if (value == null) return THEME_LIGHT;
+
         switch (value) {
             case THEME_SYSTEM:
             case THEME_DARK:
@@ -68,9 +70,6 @@ public final class ModeManager {
                 break;
         }
 
-        prefs(context)
-                .edit()
-                .putString(KEY_THEME_MODE, normalized)
-                .apply();
+        prefs(context).edit().putString(KEY_THEME_MODE, normalized).apply();
     }
 }
