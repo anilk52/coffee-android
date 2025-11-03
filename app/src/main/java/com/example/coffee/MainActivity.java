@@ -16,6 +16,9 @@ import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    // RecipeActivity ile ortak kullanılan kategori extra key’i
+    public static final String EXTRA_CATEGORY = "extra_category";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,21 +48,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (btnAiBarista != null) {
-            // Şimdilik sadece bilgi amaçlı; AI mantığını sonra ekleyeceğiz
+            // AI henüz yok; şimdilik sadece bilgi mesajı
             btnAiBarista.setOnClickListener(v ->
-                    Toast.makeText(MainActivity.this,
+                    Toast.makeText(
+                            MainActivity.this,
                             "AI Barista yakında burada ☕",
-                            Toast.LENGTH_SHORT).show());
+                            Toast.LENGTH_SHORT
+                    ).show()
+            );
         }
     }
 
     private void setupCategoryCards() {
-        setupCard(R.id.cardEspresso, RecipesData.CAT_ESPRESSO);
-        setupCard(R.id.cardFilter,   RecipesData.CAT_FILTER);
-        setupCard(R.id.cardSpecial,  RecipesData.CAT_SPECIAL);
-        setupCard(R.id.cardAlcoholic,RecipesData.CAT_ALCOHOLIC);
-        setupCard(R.id.cardIced,     RecipesData.CAT_ICED);
-        setupCard(R.id.cardTurkish,  RecipesData.CAT_TURKISH);
+        setupCard(R.id.cardEspresso,  RecipesData.CAT_ESPRESSO);
+        setupCard(R.id.cardFilter,    RecipesData.CAT_FILTER);
+        setupCard(R.id.cardSpecial,   RecipesData.CAT_SPECIAL);
+        setupCard(R.id.cardAlcoholic, RecipesData.CAT_ALCOHOLIC);
+        setupCard(R.id.cardIced,      RecipesData.CAT_ICED);
+        setupCard(R.id.cardTurkish,   RecipesData.CAT_TURKISH);
     }
 
     private void setupCard(int cardId, String category) {
@@ -68,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         card.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-            // RecipeActivity içinde hangi key kullanılıyorsa orada karşılanacak;
-            // genelde "category" veya benzeri bir EXTRA kullanılıyor.
-            intent.putExtra("category", category);
+            intent.putExtra(EXTRA_CATEGORY, category); // <-- sabiti kullan
             startActivity(intent);
         });
     }
