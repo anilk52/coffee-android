@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/black"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
+    android:background="#F5EEE3"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
-    <!-- ÜST AKSİYONLAR: Favori - AI - Ayarlar -->
+    <!-- ÜST AKSİYON ÇUBUĞU: Favoriler - AI - Ayarlar -->
     <LinearLayout
         android:id="@+id/layoutTopActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingBottom="8dp">
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
+        <!-- Favoriler -->
         <ImageButton
             android:id="@+id/btnFavorites"
             android:layout_width="40dp"
@@ -27,17 +29,29 @@
             android:contentDescription="@string/favorites"
             android:src="@android:drawable/btn_star_big_off" />
 
+        <!-- Ortadaki AI butonu için boşluk payı -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- AI Barista (simgeyi sonra değiştireceğiz) -->
         <ImageButton
             android:id="@+id/btnAiBarista"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@android:color/transparent"
             android:contentDescription="AI Barista"
             android:src="@android:drawable/ic_dialog_info"
-            android:scaleType="center"
             android:padding="4dp" />
 
+        <!-- Sağ taraftaki boşluk -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- Ayarlar -->
         <ImageButton
             android:id="@+id/btnSettings"
             android:layout_width="40dp"
@@ -45,7 +59,6 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/settings"
             android:src="@android:drawable/ic_menu_preferences" />
-
     </LinearLayout>
 
     <!-- LOGO -->
@@ -54,12 +67,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
         android:src="@drawable/logo_bdino"
         android:contentDescription="@string/app_name" />
 
-    <!-- KATEGORİ KARTLARI -->
+    <!-- KATEGORİ KARTLARI: 3 satır x 2 sütun -->
+    <!-- 1. Satır -->
     <LinearLayout
         android:id="@+id/row1"
         android:layout_width="match_parent"
@@ -106,6 +120,7 @@
         </FrameLayout>
     </LinearLayout>
 
+    <!-- 2. Satır -->
     <LinearLayout
         android:id="@+id/row2"
         android:layout_width="match_parent"
@@ -152,6 +167,7 @@
         </FrameLayout>
     </LinearLayout>
 
+    <!-- 3. Satır -->
     <LinearLayout
         android:id="@+id/row3"
         android:layout_width="match_parent"
@@ -206,7 +222,6 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/by_signature"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#B47B48"
         android:textSize="12sp" />
-
 </LinearLayout>
