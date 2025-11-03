@@ -4,27 +4,69 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
 
-        <activity android:name=".ui.FavoritesActivity" android:exported="false"/>
-
+        <!-- SplashActivity: Uygulama giriş noktası -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.BdinoCoffee.Splash">
+
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" android:exported="false"/>
-        <activity android:name=".ui.RecipeActivity" android:exported="false"/>
-        <activity android:name=".ui.RecipeDetailActivity" android:exported="false"/>
-        <activity android:name=".ui.SettingsActivity" android:exported="false"/>
+        <!-- Ana ekran -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Tarif listesi ekranı -->
+        <activity
+            android:name=".ui.RecipeActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <!-- Tarif detay ekranı -->
+        <activity
+            android:name=".ui.RecipeDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.RecipeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.RecipeActivity" />
+        </activity>
+
+        <!-- Favoriler ekranı -->
+        <activity
+            android:name=".ui.FavoritesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <!-- Ayarlar ekranı -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
     </application>
+
 </manifest>
