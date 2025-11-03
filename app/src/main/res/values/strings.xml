@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App -->
+
+    <!-- GENEL METİNLER -->
     <string name="app_name">BDINO Coffee</string>
-    <string name="byline">by Anıl &amp; GPT-5 ☕</string>
-
-    <!-- Genel -->
-    <string name="ok">Tamam</string>
-    <string name="cancel">İptal</string>
-    <string name="empty_list">Burada henüz bir şey yok.</string>
-
-    <!-- Arama -->
-    <string name="search">Ara</string>
-    <string name="search_hint">Kahve ara…</string>
-
-    <!-- Menü / Aksiyon -->
-    <string name="settings">Ayarlar</string>
+    <string name="by_signature">Fikir Anıl’dan • Kod GPT-5’ten ☕</string>
+    <string name="back">Geri</string>
+    <string name="search_hint">Kahve ara...</string>
+    <string name="no_results">Sonuç bulunamadı</string>
     <string name="favorites">Favoriler</string>
     <string name="share">Paylaş</string>
-    <string name="favorite">Favori</string>
-    <string name="share_recipe">Tarifi Paylaş</string>
+    <string name="settings">Ayarlar</string>
 
-    <!-- Favori bildirimleri -->
-    <string name="added_favorites">Favorilere eklendi</string>
-    <string name="removed_favorites">Favorilerden çıkarıldı</string>
+    <!-- KATEGORİLER -->
+    <string name="category_espresso">Espresso Bazlı</string>
+    <string name="category_filter">Filtre Kahveler</string>
+    <string name="category_special">Özel Tarifler</string>
+    <string name="category_alcoholic">Alkollü Kahveler</string>
+    <string name="category_iced">Soğuk Kahveler</string>
+    <string name="category_turkish">Türk Kahvesi</string>
+
+    <!-- AYARLAR EKRANI -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_section_general">Genel</string>
+
+    <!-- Tema -->
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_subtitle">Gündüz, Gece veya Sisteme göre</string>
+    <string name="settings_theme_system">Sisteme göre</string>
+    <string name="settings_theme_light">Her zaman Gündüz</string>
+    <string name="settings_theme_dark">Her zaman Gece</string>
+
+    <!-- Ev / Kafe Modu -->
+    <string name="settings_home_mode_title">Ev Modu</string>
+    <string name="settings_home_mode_subtitle">Ev ekipmanına uygun tarifler ve süreler</string>
+    <string name="settings_home_mode_on_toast">Ev Modu aktif ☕</string>
+    <string name="settings_home_mode_off_toast">Kafe Modu aktif ☕</string>
+
+    <!-- HATALAR / BİLGİLER -->
+    <string name="error_generic">Bir hata oluştu</string>
+    <string name="loading">Yükleniyor...</string>
+    <string name="coming_soon">Yakında eklenecek</string>
+
 </resources>
