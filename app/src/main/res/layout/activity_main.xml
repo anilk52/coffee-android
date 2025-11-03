@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5EEE3"
     android:padding="16dp">
 
+    <!-- ÜST ÇUBUK: Favoriler - AI Barista - Ayarlar -->
     <LinearLayout
+        android:id="@+id/layoutTopActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical|space_between">
+        android:gravity="center_vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
+        <!-- Favoriler -->
         <ImageButton
             android:id="@+id/btnFavorites"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:src="@android:drawable/btn_star_big_off"
-            android:contentDescription="Favoriler" />
+            android:contentDescription="@string/favorites" />
 
+        <!-- Sol boşluk -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- AI Barista -->
         <ImageButton
             android:id="@+id/btnAiBarista"
             android:layout_width="48dp"
@@ -31,13 +44,20 @@
             android:adjustViewBounds="true"
             android:padding="4dp" />
 
+        <!-- Sağ boşluk -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- Ayarlar -->
         <ImageButton
             android:id="@+id/btnSettings"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_preferences"
-            android:contentDescription="Ayarlar" />
+            android:contentDescription="@string/settings" />
     </LinearLayout>
 
 </LinearLayout>
