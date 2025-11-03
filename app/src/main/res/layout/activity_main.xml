@@ -1,248 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/rootMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/coffee_milk_beige">
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
-    <!-- Başlıksız Toolbar (sol: fav nav icon, sağ: ayarlar menüsü) -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- ÜST AKSİYONLAR: Favori - AI - Ayarlar -->
+    <LinearLayout
+        android:id="@+id/layoutTopActions"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/coffee_crema_white"
-        app:title=""
-        app:titleTextColor="@color/coffee_deep_emerald"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp">
 
-    <ScrollView
+        <ImageButton
+            android:id="@+id/btnFavorites"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/favorites"
+            android:src="@android:drawable/btn_star_big_off" />
+
+        <ImageButton
+            android:id="@+id/btnAiBarista"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="AI Barista"
+            android:src="@android:drawable/ic_dialog_info"
+            android:scaleType="center"
+            android:padding="4dp" />
+
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/settings"
+            android:src="@android:drawable/ic_menu_preferences" />
+
+    </LinearLayout>
+
+    <!-- LOGO -->
+    <ImageView
+        android:id="@+id/imgLogoBdino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/logo_bdino"
+        android:contentDescription="@string/app_name" />
+
+    <!-- KATEGORİ KARTLARI -->
+    <LinearLayout
+        android:id="@+id/row1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <FrameLayout
+            android:id="@+id/cardEspresso"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
 
-            <!-- Logo -->
-            <ImageView
-                android:id="@+id/logo"
-                android:src="@drawable/logo_bdino"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_gravity="center"
-                android:contentDescription="BDINO Logo"
-                android:layout_marginBottom="12dp" />
-
-            <!-- 2 sütun kategori grid -->
-            <GridLayout
-                android:id="@+id/gridCategories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:useDefaultMargins="true">
-
-                <!-- ESPRESSO -->
-                <FrameLayout
-                    android:id="@+id/cardEspresso"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/cup_espresso_70ml"
-                            android:contentDescription="Espresso" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Espresso"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- FİLTRE -->
-                <FrameLayout
-                    android:id="@+id/cardFilter"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/cup_v60"
-                            android:contentDescription="Filtre" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Filtre"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- SPECIAL -->
-                <FrameLayout
-                    android:id="@+id/cardSpecial"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/logo_bdino"
-                            android:contentDescription="Special" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Special"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- ALKOLLÜ -->
-                <FrameLayout
-                    android:id="@+id/cardAlcoholic"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/cup_espresso_martini"
-                            android:contentDescription="Alkollü" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Alkollü"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- ICE -->
-                <FrameLayout
-                    android:id="@+id/cardIced"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/cup_iced_latte"
-                            android:contentDescription="Ice" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ice"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-
-                <!-- TÜRK -->
-                <FrameLayout
-                    android:id="@+id/cardTurkish"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_columnWeight="1"
-                    android:background="@drawable/bg_card_glass"
-                    android:foreground="@drawable/ripple_glass"
-                    android:elevation="6dp"
-                    android:padding="12dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/cup_t_70ml"
-                            android:contentDescription="Türk" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Türk"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:textColor="@color/bd_text_primary"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </FrameLayout>
-            </GridLayout>
-
-            <!-- İmza -->
             <TextView
-                android:id="@+id/credits"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="by Anıl K ☕"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                android:textColor="@color/coffee_warm_brown"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_gravity="center"
+                android:text="Espresso"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Filtre"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2">
+
+        <FrameLayout
+            android:id="@+id/cardSpecial"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Special"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardAlcoholic"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Alkollü"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2">
+
+        <FrameLayout
+            android:id="@+id/cardIced"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ice"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardTurkish"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_card">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Türk"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- İMZA -->
+    <TextView
+        android:id="@+id/txtSignature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/by_signature"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp" />
+
 </LinearLayout>
