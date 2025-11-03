@@ -8,7 +8,9 @@
     <string name="search_hint">Kahve ara...</string>
     <string name="no_results">Sonuç bulunamadı</string>
     <string name="favorites">Favoriler</string>
+    <string name="favorite">Favori</string>
     <string name="share">Paylaş</string>
+    <string name="share_recipe">Tarifi paylaş</string>
     <string name="settings">Ayarlar</string>
 
     <!-- KATEGORİLER -->
