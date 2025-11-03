@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.ui.FavoritesActivity;
@@ -16,12 +17,16 @@ import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    // RecipeActivity ile ortak kullanılan kategori extra key’i
+    // Kategori bilgisini RecipeActivity'ye taşımak için ortak key
     public static final String EXTRA_CATEGORY = "extra_category";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Uygulama HER ZAMAN aydınlık / bej tonda çalışsın
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_main);
 
         setupTopActions();
@@ -48,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (btnAiBarista != null) {
-            // AI henüz yok; şimdilik sadece bilgi mesajı
+            // Şimdilik placeholder – AI ekranını sonra bağlayacağız
             btnAiBarista.setOnClickListener(v ->
                     Toast.makeText(
                             MainActivity.this,
@@ -74,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         card.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-            intent.putExtra(EXTRA_CATEGORY, category); // <-- sabiti kullan
+            intent.putExtra(EXTRA_CATEGORY, category);
             startActivity(intent);
         });
     }
