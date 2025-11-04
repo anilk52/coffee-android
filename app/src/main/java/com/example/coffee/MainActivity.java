@@ -4,60 +4,68 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coffee.ui.AiBaristaActivity;
+import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
+import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Tarif listesine kategori göndermek için kullanılacak anahtar
     public static final String EXTRA_CATEGORY = "extra_category";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ÜST İKONLAR
-        ImageView btnFavorites = findViewById(R.id.btnFavorites);
-        ImageView btnAiBarista = findViewById(R.id.btnAiBarista);
-        ImageView btnSettings  = findViewById(R.id.btnSettings);
+        // Üst menü ikonları
+        ImageView btnFavorite = findViewById(R.id.btnFavorite);
+        ImageView btnAi       = findViewById(R.id.btnAi);
+        ImageView btnSettings = findViewById(R.id.btnSettings);
 
-        if (btnFavorites != null) {
-            btnFavorites.setOnClickListener(v ->
-                    Toast.makeText(this, "Favoriler yakında gelecek ✨", Toast.LENGTH_SHORT).show()
-            );
+        if (btnFavorite != null) {
+            btnFavorite.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+                startActivity(intent);
+            });
         }
 
-        if (btnAiBarista != null) {
-            btnAiBarista.setOnClickListener(v ->
-                    Toast.makeText(this, "AI Barista modu yakında 💡", Toast.LENGTH_SHORT).show()
-            );
+        if (btnAi != null) {
+            btnAi.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
+                startActivity(intent);
+            });
         }
 
         if (btnSettings != null) {
-            btnSettings.setOnClickListener(v ->
-                    Toast.makeText(this, "Ayarlar yakında ⚙️", Toast.LENGTH_SHORT).show()
-            );
+            btnSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            });
         }
 
-        // KATEGORİ KARTLARI
-        initCategoryClick(R.id.cardEspresso, "Espresso");
-        initCategoryClick(R.id.cardFilter,   "Filter");
-        initCategoryClick(R.id.cardSpecial,  "Special");
-        initCategoryClick(R.id.cardAlcoholic,"Alcoholic");
-        initCategoryClick(R.id.cardIced,     "Iced");
-        initCategoryClick(R.id.cardTurkish,  "Turkish");
+        // Ana kategori kartları
+        initCategoryClick(R.id.cardEspresso, "espresso");
+        initCategoryClick(R.id.cardFilter,   "filter");
+        initCategoryClick(R.id.cardSpecial,  "special");
+        initCategoryClick(R.id.cardAlcoholic,"alcoholic");
+        initCategoryClick(R.id.cardIced,     "iced");
+        initCategoryClick(R.id.cardTurkish,  "turkish");
     }
 
-    private void initCategoryClick(int viewId, final String category) {
-        View card = findViewById(viewId);
+    /**
+     * Belirli bir kart ID’sine tıklanınca ilgili kategoriyle RecipeActivity’yi açar.
+     */
+    private void initCategoryClick(int cardId, String categoryKey) {
+        View card = findViewById(cardId);
         if (card != null) {
             card.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                intent.putExtra(EXTRA_CATEGORY, category);
+                intent.putExtra(EXTRA_CATEGORY, categoryKey);
                 startActivity(intent);
             });
         }
