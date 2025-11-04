@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.coffee">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BdinoCoffee">
 
-        <!-- SplashActivity: Uygulama giriş noktası -->
+        <!-- Splash Ekranı -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -21,55 +22,65 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.SettingsActivity" />
-        </activity>
-
-        <!-- Ana ekran -->
+        <!-- Ana Ekran -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
 
-        <!-- Tarif listesi ekranı -->
+        <!-- Tarif Listesi Ekranı -->
         <activity
             android:name=".ui.RecipeActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- Tarif detay ekranı -->
+        <!-- Tarif Detay Ekranı -->
         <activity
             android:name=".ui.RecipeDetailActivity"
             android:exported="false"
             android:parentActivityName=".ui.RecipeActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.RecipeActivity" />
         </activity>
 
-        <!-- Favoriler ekranı -->
+        <!-- Favoriler Ekranı -->
         <activity
             android:name=".ui.FavoritesActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
-        <!-- Ayarlar ekranı -->
+        <!-- Ayarlar Ekranı -->
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false"
-            android:label="@string/settings_title"
             android:parentActivityName=".MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <!-- AI Barista Ekranı -->
+        <activity
+            android:name=".ui.AiBaristaActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
     </application>
-
 </manifest>
