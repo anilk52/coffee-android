@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.SettingsActivity" />
+        </activity>
+
         <!-- Ana ekran -->
         <activity
             android:name=".MainActivity"
