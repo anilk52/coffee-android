@@ -1,55 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutTopActions"
+    android:id="@+id/rootMain"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5EEE3"
+    android:padding="16dp">
 
-    <!-- FAVORİLER -->
+    <!-- ÜST ÇUBUK: Favoriler - AI Barista - Ayarlar -->
+    <LinearLayout
+        android:id="@+id/layoutTopActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <!-- FAVORİLER -->
+        <ImageView
+            android:id="@+id/btnFavorites"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_favorite"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/favorites" />
+
+        <!-- SOL BOŞLUK -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- AI BARISTA -->
+        <ImageView
+            android:id="@+id/btnAiBarista"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_ai_barista"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/ai_barista" />
+
+        <!-- SAĞ BOŞLUK -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- AYARLAR -->
+        <ImageView
+            android:id="@+id/btnSettings"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_settings"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/settings" />
+    </LinearLayout>
+
+    <!-- LOGO -->
     <ImageView
-        android:id="@+id/btnFavorites"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_favorite"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/favorites" />
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/logo_bdino"
+        android:adjustViewBounds="true" />
 
-    <!-- SOL BOŞLUK -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1" />
+    <!-- 2x3 KATEGORİ GRID -->
+    <GridLayout
+        android:id="@+id/gridCategories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:rowCount="3"
+        android:columnCount="2"
+        android:rowOrderPreserved="false"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true">
 
-    <!-- AI BARISTA -->
-    <ImageView
-        android:id="@+id/btnAiBarista"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_ai_barista"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/ai_barista" />
+        <!-- Espresso -->
+        <FrameLayout
+            android:id="@+id/cardEspresso"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card">
 
-    <!-- SAĞ BOŞLUK -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1" />
+            <!-- İçeriğini sonra 5. set ikonlarla şekillendiririz -->
+        </FrameLayout>
 
-    <!-- AYARLAR -->
-    <ImageView
-        android:id="@+id/btnSettings"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_settings"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/settings" />
+        <!-- Filtre -->
+        <FrameLayout
+            android:id="@+id/cardFilter"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card" />
+
+        <!-- Special -->
+        <FrameLayout
+            android:id="@+id/cardSpecial"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card" />
+
+        <!-- Alkollü -->
+        <FrameLayout
+            android:id="@+id/cardAlcoholic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card" />
+
+        <!-- Ice -->
+        <FrameLayout
+            android:id="@+id/cardIced"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card" />
+
+        <!-- Türk -->
+        <FrameLayout
+            android:id="@+id/cardTurkish"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/bg_card" />
+    </GridLayout>
+
+    <!-- FOOTER -->
+    <TextView
+        android:id="@+id/txtFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:text="Hazırlayan: Anıl & GPT-5 ☕"
+        android:textColor="#C08B52"
+        android:textSize="12sp" />
 
 </LinearLayout>
