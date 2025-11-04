@@ -157,7 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
-        android:text="Hazırlayan: Anıl & GPT-5 ☕"
+        android:text="Hazırlayan: Anıl K ☕"
         android:textColor="#C08B52"
         android:textSize="12sp" />
 
