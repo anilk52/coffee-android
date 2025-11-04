@@ -1,63 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootMain"
+    android:id="@+id/layoutTopActions"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5EEE3"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
-    <!-- ÜST ÇUBUK: Favoriler - AI Barista - Ayarlar -->
-    <LinearLayout
-        android:id="@+id/layoutTopActions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+    <!-- FAVORİLER -->
+    <ImageView
+        android:id="@+id/btnFavorites"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_favorite"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/favorites" />
 
-        <!-- Favoriler -->
-        <ImageButton
-            android:id="@+id/btnFavorites"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_favorite"
-            android:contentDescription="@string/favorites" />
+    <!-- SOL BOŞLUK -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
 
-        <!-- Sol boşluk -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+    <!-- AI BARISTA -->
+    <ImageView
+        android:id="@+id/btnAiBarista"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_ai_barista"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/ai_barista" />
 
-        <!-- AI Barista -->
-        <ImageButton
-            android:id="@+id/btnAiBarista"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_ai_barista"
-            android:contentDescription="@string/ai_barista"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:padding="4dp" />
+    <!-- SAĞ BOŞLUK -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
 
-        <!-- Sağ boşluk -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <!-- Ayarlar -->
-        <ImageButton
-            android:id="@+id/btnSettings"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_settings"
-            android:contentDescription="@string/settings" />
-    </LinearLayout>
+    <!-- AYARLAR -->
+    <ImageView
+        android:id="@+id/btnSettings"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_settings"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/settings" />
 
 </LinearLayout>
