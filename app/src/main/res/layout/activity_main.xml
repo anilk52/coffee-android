@@ -1,153 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5EEE3"
-    android:padding="16dp">
+    android:background="#F5EDDF">
 
-    <!-- ÜST ÇUBUK: Favori - AI - Ayarlar -->
-    <LinearLayout
-        android:id="@+id/layoutTopActions"
+    <!-- ÜST TOOLBAR ALANI -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="72dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:gravity="center_vertical"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:background="#F5EDDF">
 
-        <!-- FAVORİLER -->
+        <!-- Favoriler -->
         <ImageView
             android:id="@+id/btnFavorite"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
             android:src="@drawable/ic_favorite"
-            android:background="@android:color/transparent"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/favorites" />
+            android:contentDescription="@string/favorites"
+            android:background="@android:color/transparent" />
 
-        <!-- SOL BOŞLUK -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <!-- AI BARISTA -->
+        <!-- AI Barista -->
         <ImageView
             android:id="@+id/btnAi"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:padding="8dp"
             android:src="@drawable/ic_ai_barista"
-            android:background="@android:color/transparent"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/ai_barista" />
+            android:contentDescription="@string/ai_barista"
+            android:background="@android:color/transparent" />
 
-        <!-- SAĞ BOŞLUK -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <!-- AYARLAR -->
+        <!-- Ayarlar -->
         <ImageView
             android:id="@+id/btnSettings"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
             android:src="@drawable/ic_settings"
-            android:background="@android:color/transparent"
-            android:scaleType="centerInside"
+            android:contentDescription="@string/settings"
+            android:background="@android:color/transparent" />
+    </RelativeLayout>
+
+    <!-- LOGO + TAGLINE ALANI -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/settings" />
+            android:src="@drawable/bdino_logo"   <!-- logo dosyanın adı neyse onu kullan -->
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/txtTagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Premium kahve reçeteleri ☕"
+            android:textColor="#1F5131"
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- LOGO -->
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
+    <!-- KATEGORİ BAŞLIĞI -->
+    <TextView
+        android:id="@+id/txtChooseCoffee"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/logo_bdino"
-        android:adjustViewBounds="true" />
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:text="Kahveni seç"
+        android:textColor="#1F5131"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-    <!-- 2x3 KATEGORİ GRID (BASİT VERSİYON) -->
+    <!-- KATEGORİ KARTLARI (2x3 GRID) -->
     <GridLayout
         android:id="@+id/gridCategories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:rowCount="3"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:columnCount="2"
-        android:useDefaultMargins="true">
+        android:rowCount="3">
 
         <!-- ESPRESSO -->
         <FrameLayout
             android:id="@+id/cardEspresso"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Espresso"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <!-- FİLTRE -->
         <FrameLayout
             android:id="@+id/cardFilter"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Filtre"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <!-- SPECIAL -->
         <FrameLayout
             android:id="@+id/cardSpecial"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Special"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <!-- ALKOLLÜ -->
         <FrameLayout
             android:id="@+id/cardAlcoholic"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Alkollü"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <!-- ICE -->
         <FrameLayout
             android:id="@+id/cardIced"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Ice"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
 
         <!-- TÜRK -->
         <FrameLayout
             android:id="@+id/cardTurkish"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:background="@drawable/bg_card" />
+            android:layout_rowWeight="1"
+            android:layout_margin="8dp"
+            android:background="#262626"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:text="Türk"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
     </GridLayout>
 
-    <!-- FOOTER -->
+    <!-- FOOTER İMZA -->
     <TextView
         android:id="@+id/txtFooter"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        android:text="Hazırlayan: Anıl &amp; GPT-5 ☕"
-        android:textColor="#C08B52"
-        android:textSize="12sp" />
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        android:text="Hazırlayan: Anıl & GPT-5 ☕"
+        android:textColor="#A6784A"
+        android:textSize="12sp"
+        android:alpha="0.7" />
 
 </LinearLayout>
