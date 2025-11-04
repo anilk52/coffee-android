@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Ana kategori kartları
-        initCategoryClick(R.id.cardEspresso, "espresso");
-        initCategoryClick(R.id.cardFilter,   "filter");
-        initCategoryClick(R.id.cardSpecial,  "special");
-        initCategoryClick(R.id.cardAlcoholic,"alcoholic");
-        initCategoryClick(R.id.cardIced,     "iced");
-        initCategoryClick(R.id.cardTurkish,  "turkish");
+        initCategoryClick(R.id.cardEspresso,  "espresso");
+        initCategoryClick(R.id.cardFilter,    "filter");
+        initCategoryClick(R.id.cardSpecial,   "special");
+        initCategoryClick(R.id.cardAlcoholic, "alcoholic");
+        initCategoryClick(R.id.cardIced,      "iced");
+        initCategoryClick(R.id.cardTurkish,   "turkish");
     }
 
     /**
