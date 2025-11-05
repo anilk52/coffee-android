@@ -8,8 +8,6 @@
     android:background="#F5EBDD"
     tools:context=".MainActivity">
 
-    <!-- ÜST MENÜ BUTONLARI ---------------------------------------------------->
-
     <ImageView
         android:id="@+id/btnFavorite"
         android:layout_width="44dp"
@@ -43,8 +41,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- LOGO ------------------------------------------------------------------>
-
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="220dp"
@@ -57,8 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnAi" />
-
-    <!-- KATEGORİ KARTLARI GRID ----------------------------------------------->
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridCategories"
@@ -76,7 +70,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Espresso ---------------------------------------------------------->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardEspresso"
             android:layout_width="0dp"
@@ -115,7 +108,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Filter ------------------------------------------------------------>
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFilter"
             android:layout_width="0dp"
@@ -154,7 +146,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Special ----------------------------------------------------------->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSpecial"
             android:layout_width="0dp"
@@ -193,7 +184,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Alcoholic --------------------------------------------------------->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAlcoholic"
             android:layout_width="0dp"
@@ -232,7 +222,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Iced -------------------------------------------------------------->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardIced"
             android:layout_width="0dp"
@@ -271,7 +260,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Turkish ----------------------------------------------------------->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardTurkish"
             android:layout_width="0dp"
@@ -311,8 +299,6 @@
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.gridlayout.widget.GridLayout>
-
-    <!-- FOOTER --------------------------------------------------------------->
 
     <TextView
         android:id="@+id/txtFooter"
