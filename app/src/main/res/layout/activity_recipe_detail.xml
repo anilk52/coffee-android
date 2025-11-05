@@ -1,90 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F5EBDD"
-    android:padding="16dp"
-    tools:context=".ui.RecipeDetailActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <!-- Şimdilik data-binding kullanmıyoruz, boş bırakıyoruz -->
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/bg_main"
+        tools:context=".ui.RecipeDetailActivity">
 
+        <!-- Üstte kahve görseli -->
         <ImageView
-    android:id="@+id/imgHero"
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:scaleType="centerCrop"
-    android:background="@drawable/ripple_glass"
-    android:adjustViewBounds="true"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" 
+            android:id="@+id/imgHero"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ripple_glass"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/desc_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/ic_espresso" />
 
-android:contentDescription="@string/desc_logo" />
-
+        <!-- Tarif adı -->
         <TextView
             android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Espresso"
-            android:textSize="22sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#222222" />
+            android:textColor="@color/text_primary"
+            app:layout_constraintTop_toBottomOf="@id/imgHero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Espresso Macchiato" />
 
+        <!-- Boy / hacim satırı (ör: S – 120 ml) -->
         <TextView
             android:id="@+id/txtSize"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="4dp"
-            android:text="S – 30 ml"
             android:textSize="14sp"
-            android:textColor="#555555" />
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="S – 120 ml" />
 
+        <!-- Kısa ölçü satırı (kalın): 1 shot espresso + ... -->
         <TextView
             android:id="@+id/txtMeasure"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Ölçü / reçete"
-            android:textSize="15sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#222222" />
+            android:textColor="@color/text_primary"
+            app:layout_constraintTop_toBottomOf="@id/txtSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="1 shot espresso • 1–2 yemek kaşığı süt köpüğü" />
 
+        <!-- Ana açıklama metni -->
         <TextView
             android:id="@+id/txtDescription"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Detaylı demleme açıklaması burada."
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"
             android:textSize="15sp"
-            android:textColor="#333333" />
+            android:lineSpacingExtra="2dp"
+            android:textColor="@color/text_primary"
+            app:layout_constraintTop_toBottomOf="@id/txtMeasure"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Macchiato, tek shot espresso üzerine az miktarda süt köpüğü eklenerek hazırlanır..." />
 
+        <!-- İpucu satırı -->
         <TextView
             android:id="@+id/txtTip"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Barista ipucu"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#222222" />
+            android:textColor="@color/text_primary"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Sütü fazla kaçırma; espresso hâlâ başrolde olmalı." />
 
+        <!-- Eğlenceli not / alternatif -->
         <TextView
             android:id="@+id/txtNote"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
-            android:text="Eğlenceli not / hikâye"
+            android:layout_marginBottom="24dp"
             android:textSize="14sp"
-            android:textColor="#444444" />
+            android:textColor="@color/text_secondary"
+            app:layout_constraintTop_toBottomOf="@id/txtTip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Sade espressoya geçmek isteyenler için yumuşak bir ara duraktır." />
 
-    </LinearLayout>
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
