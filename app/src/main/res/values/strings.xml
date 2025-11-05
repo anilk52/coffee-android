@@ -3,11 +3,22 @@
 
     <!-- Genel -->
     <string name="app_name">BDINO Coffee</string>
+
+    <!-- Üst menü / Navigasyon -->
     <string name="ai_barista">AI Barista</string>
     <string name="favorites">Favoriler</string>
+    <string name="favorite">Favori</string>
     <string name="settings">Ayarlar</string>
 
-    <!-- Kategoriler -->
+    <!-- Content Descriptions (erişilebilirlik) -->
+    <string name="desc_ai_barista">AI Barista’yı aç</string>
+    <string name="desc_favorites">Favori kahvelerini gör</string>
+    <string name="desc_settings">Ayarları aç</string>
+    <string name="desc_logo">BDINO Coffee logosu</string>
+    <string name="desc_favorite_button">Bu tarifi favorilere ekle</string>
+    <string name="desc_share_button">Bu kahve tarifini paylaş</string>
+
+    <!-- Kategoriler (ana menü) -->
     <string name="category_espresso">Espresso</string>
     <string name="category_filter">Filtre</string>
     <string name="category_special">Special</string>
@@ -15,7 +26,14 @@
     <string name="category_iced">Iced</string>
     <string name="category_turkish">Türk</string>
 
-    <!-- Modlar -->
+    <!-- Arama / Liste ekranı -->
+    <string name="search_hint">Kahve ara…</string>
+
+    <!-- Detay / Menü aksiyonları -->
+    <string name="share">Paylaş</string>
+    <string name="share_recipe">Tarifi paylaş</string>
+
+    <!-- Modlar (Ev / Kafe) -->
     <string name="mode_title">Demleme Modu</string>
     <string name="mode_home">Ev Modu</string>
     <string name="mode_cafe">Kafe Modu</string>
