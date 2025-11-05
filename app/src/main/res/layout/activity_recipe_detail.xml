@@ -25,8 +25,9 @@
     android:layout_marginBottom="8dp"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
-            android:contentDescription="@string/desc_logo" />
+    app:layout_constraintEnd_toEndOf="parent" 
+
+android:contentDescription="@string/desc_logo" />
 
         <TextView
             android:id="@+id/txtTitle"
