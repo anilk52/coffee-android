@@ -61,13 +61,12 @@ public class MainActivity extends AppCompatActivity {
      * Belirli bir kart ID’sine tıklanınca ilgili kategoriyle RecipeActivity’yi açar.
      */
     private void initCategoryClick(int cardId, String categoryKey) {
-        View card = findViewById(cardId);
-        if (card != null) {
-            card.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-                intent.putExtra(EXTRA_CATEGORY, categoryKey);
-                startActivity(intent);
-            });
-        }
+    View card = findViewById(cardId);
+    if (card != null) {
+        card.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, com.example.coffee.ui.RecipeActivity.class);
+            intent.putExtra("category", categoryKey); // RecipesData.getByCategory ile aynı key
+            startActivity(intent);
+        });
     }
 }
