@@ -3,101 +3,164 @@ package com.example.coffee.data;
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public final class RecipesData {
+public class RecipesData {
 
-    private RecipesData() {}
+    public static List<Recipe> getRecipesByCategory(String category) {
+        List<Recipe> recipes = new ArrayList<>();
 
-    // KATEGORİLER
-    public static final String CAT_ESPRESSO   = "ESPRESSO";
-    public static final String CAT_FILTER     = "FILTER";
-    public static final String CAT_SPECIAL    = "SPECIAL";
-    public static final String CAT_ALCOHOLIC  = "ALCOHOLIC";
-    public static final String CAT_ICED       = "ICED";
-    public static final String CAT_TURKISH    = "TURKISH";
+        switch (category.toLowerCase()) {
 
-    public static String categoryLabel(String cat) {
-        if (cat == null) return "";
-        switch (cat) {
-            case CAT_ESPRESSO:  return "Espresso";
-            case CAT_FILTER:    return "Filtre";
-            case CAT_SPECIAL:   return "Special";
-            case CAT_ALCOHOLIC: return "Alkollü";
-            case CAT_ICED:      return "Ice";
-            case CAT_TURKISH:   return "Türk";
-            default:            return cat;
+            // ------------------------------------------------------
+            // ☕ ESPRESSO KATEGORİSİ
+            // ------------------------------------------------------
+            case "espresso":
+                recipes.add(new Recipe(
+                        R.drawable.espresso,
+                        "Espresso",
+                        "Kısa, yoğun ve dengeli kahve shot’ı.",
+                        "Espresso, 18 g taze çekilmiş kahveden 36 g çıkışla hazırlanır. "
+                        + "Makine 9 bar basınçta, 92–94 °C su sıcaklığıyla 25–30 saniye çalışmalıdır. "
+                        + "Kahve medium roast olmalı, öğütme tuzdan biraz daha ince olmalıdır. "
+                        + "Doğru akış 3 saniyede başlamalı ve altın rengi kalın bir krema oluşmalıdır. "
+                        + "İdeal espresso yaklaşık 30 ml’dir.",
+                        "1:2 oran (18 g kahve → 36 g espresso)",
+                        "Krema soluksa öğütmeyi incelt; çok koyuysa kahve yanmıştır.",
+                        "Evde moka pot veya espresso makinesiyle deneyebilirsin.",
+                        "espresso",
+                        "S – 30 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.doppio,
+                        "Doppio",
+                        "İki shot’lık güçlü espresso.",
+                        "Doppio, iki espresso shot’ının birleşimidir. "
+                        + "36 g kahveyle yaklaşık 60 ml espresso elde edilir. "
+                        + "9 bar basınçta, 93 °C sıcak suyla 25–30 saniyede hazırlanır. "
+                        + "Yoğun gövde ve belirgin kafein etkisi sunar.",
+                        "1:2 oran (36 g kahve → 72 g shot)",
+                        "Kahve fazla acıysa öğütmeyi kalınlaştır.",
+                        "Evde moka potta kahve miktarını iki katına çıkararak deneyebilirsin.",
+                        "espresso",
+                        "M – 60 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.americano,
+                        "Americano",
+                        "Espresso’nun sıcak suyla yumuşatılmış hali.",
+                        "Americano, 30 ml espresso üzerine 90 ml sıcak su eklenerek yapılır. "
+                        + "Tat profili filtre kahveye yaklaşır ama daha yumuşak içimlidir. "
+                        + "Kafe miktarını artırmak için Doppio da kullanılabilir.",
+                        "1 shot espresso + 90 ml su",
+                        "Önce suyu ekle, ardından espressoyu dök — kremayı korur.",
+                        "Evde kettle ve espresso/moka pot yeterli.",
+                        "espresso",
+                        "M – 120 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.cappuccino,
+                        "Cappuccino",
+                        "Köpüklü sütle klasik İtalyan kahvesi.",
+                        "1 shot espresso (30 ml) üzerine 90 ml sıcak süt ve 60 ml süt köpüğü eklenir. "
+                        + "Köpük kalın olmalı, yüzeyi ipeksi görünmelidir. "
+                        + "İdeal sıcaklık 65 °C civarındadır.",
+                        "1:3 oran (1 espresso, 3 süt)",
+                        "Sütü fazla ısıtırsan tat yanar — 70 °C’yi geçme.",
+                        "Evde süt köpürtücüyle mükemmel doku yakalanabilir.",
+                        "espresso",
+                        "M – 180 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.latte,
+                        "Caffè Latte",
+                        "Daha fazla süt, yumuşak içim.",
+                        "Espresso üzerine 180 ml sıcak süt eklenir ve 10–15 ml mikroköpükle tamamlanır. "
+                        + "Tatlı, dengeli ve süt ağırlıklıdır. "
+                        + "Yüzeyine latte art desen yapılabilir.",
+                        "1:6 oran (30 ml espresso, 180 ml süt)",
+                        "Köpüklemeden önce sütü havalandır, ipeksi kıvam oluştur.",
+                        "Evde french press’le sütü köpürterek benzer doku elde edebilirsin.",
+                        "espresso",
+                        "L – 210 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.flatwhite,
+                        "Flat White",
+                        "Yoğun espresso ve ince süt kreması dengesi.",
+                        "Doppio (60 ml) espresso üzerine 120 ml mikro köpüklü süt eklenir. "
+                        + "Köpük neredeyse yoktur, süt ipeksi bir tabaka oluşturur. "
+                        + "Tat profili latte’den daha kahve yoğundur.",
+                        "1:2 oran (espresso : süt)",
+                        "Köpük çok olursa cappuccino’ya dönüşür, dikkat et.",
+                        "Evde french press sütü iki kez bastırarak mikro köpük elde et.",
+                        "espresso",
+                        "M – 180 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.macchiato,
+                        "Macchiato",
+                        "Espresso üzerine nokta kadar süt köpüğü.",
+                        "Espresso üzerine sadece 1 tatlı kaşığı süt köpüğü eklenir. "
+                        + "Kahve yoğun kalır, süt aroması hafifçe hissedilir. "
+                        + "İtalyanca 'lekeli' anlamına gelir.",
+                        "1 shot espresso + 1 tatlı kaşığı süt köpüğü",
+                        "Köpüğü fazla koyarsan mini cappuccino olur.",
+                        "Evde espresso shot’ına süt köpüğü ekleyebilirsin.",
+                        "espresso",
+                        "S – 40 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.cortado,
+                        "Cortado",
+                        "Espresso ve süt eşit miktarda, dengeli tat.",
+                        "1 shot espresso (30 ml) + 30 ml sıcak süt. "
+                        + "Asidite yumuşar, kahve tadı belirgin kalır. "
+                        + "İspanyol kökenlidir.",
+                        "1:1 oran",
+                        "Latte’ye göre daha güçlü, cappuccino’ya göre daha az köpüklü.",
+                        "Evde moka shot + sıcak süt karışımıyla benzer tat yakalanır.",
+                        "espresso",
+                        "S – 60 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.mocha,
+                        "Caffè Mocha",
+                        "Çikolatalı, tatlı ve kremalı kahve.",
+                        "Espresso üzerine 20 g kakao şurubu veya eritilmiş çikolata eklenir, "
+                        + "ardından 150 ml sıcak süt dökülür ve hafif süt köpüğüyle tamamlanır. "
+                        + "Üzerine kakao veya çikolata rendesi serpilir.",
+                        "1 espresso + 150 ml süt + 20 g çikolata",
+                        "Kakao tozunu doğrudan espressoya karıştırarak acılık dengele.",
+                        "Evde Nutella + süt + moka shot mükemmel olur.",
+                        "espresso",
+                        "L – 200 ml"
+                ));
+
+                recipes.add(new Recipe(
+                        R.drawable.ristretto,
+                        "Ristretto",
+                        "Kısa ekstraksiyonlu yoğun espresso.",
+                        "Aynı kahve miktarıyla ama yarı süre ve hacimde (yaklaşık 15–20 ml) yapılır. "
+                        + "Tat olarak daha tatlı ve kremalıdır. "
+                        + "Basınç 9 bar, süre 15–18 saniye civarındadır.",
+                        "18 g kahve → 18–20 ml shot",
+                        "Tatlı ama yoğun — espressoya göre daha az acı.",
+                        "Evde espresso makinesinde erken shot keserek deneyebilirsin.",
+                        "espresso",
+                        "XS – 20 ml"
+                ));
+                break;
         }
-    }
 
-    // TÜM TARİFLER (46 toplam)
-    private static final List<Recipe> ALL = buildAll();
-    private static List<Recipe> buildAll() {
-        List<Recipe> list = new ArrayList<>();
-
-        // ---------- ESPRESSO ----------
-        list.add(new Recipe(R.drawable.cup_espresso_70ml, "Espresso", "Kısa, yoğun shot.", "18–20 g kahve, 25 sn akış", "30 ml", "Taze çekim kullan.", "Fincanı ısıt.", CAT_ESPRESSO, "T – 70 ml"));
-        list.add(new Recipe(R.drawable.cup_ristretto_50ml, "Ristretto", "Kısa akışlı espresso.", "Aynı doz, daha az su", "20–25 ml", "Daha tatlı gövde.", "İnce öğütüm uygundur.", CAT_ESPRESSO, "50 ml"));
-        list.add(new Recipe(R.drawable.cup_lungo_150ml, "Lungo", "Uzun espresso.", "Daha uzun akış, 60–90 ml", "60–90 ml", "Acılığı dengele.", "Orta öğütüm.", CAT_ESPRESSO, "150 ml"));
-        list.add(new Recipe(R.drawable.cup_doppio_120ml, "Doppio", "Çift shot espresso.", "Çift basket, 60 ml", "60 ml", "Tamping sabit olmalı.", "Çekim dengeli olsun.", CAT_ESPRESSO, "120 ml"));
-        list.add(new Recipe(R.drawable.cup_macchiato_120ml, "Macchiato", "Espresso + süt köpüğü.", "1 shot + az süt köpüğü", "120 ml", "Süt 60°C civarı.", "Köpüğü ince tut.", CAT_ESPRESSO, "120 ml"));
-        list.add(new Recipe(R.drawable.cup_conpanna_100ml, "Con Panna", "Espresso üstü krema.", "1 shot + çırpılmış krema", "100 ml", "Tatlı krema uygundur.", "Soğuk servis.", CAT_ESPRESSO, "100 ml"));
-        list.add(new Recipe(R.drawable.cup_cortado_150ml, "Cortado", "Espresso + eşit süt.", "1:1 oran", "150 ml", "Süt az köpüklü olsun.", "Asidite dengeler.", CAT_ESPRESSO, "150 ml"));
-        list.add(new Recipe(R.drawable.cup_flatwhite_240ml, "Flat White", "Yoğun kahve, ince köpük.", "Doppio + 150 ml süt", "240 ml", "Microfoam ipeksi olsun.", "Yoğun tat.", CAT_ESPRESSO, "240 ml"));
-        list.add(new Recipe(R.drawable.cup_piccolalatte_120ml, "Piccolo Latte", "Mini latte.", "Espresso + az süt", "120 ml", "Küçük bardak.", "Sıcaklığı koru.", CAT_ESPRESSO, "120 ml"));
-        list.add(new Recipe(R.drawable.cup_americano_350ml, "Americano", "Espresso + su.", "1 shot + sıcak su", "350 ml", "Önce su, sonra shot.", "Hafif gövde.", CAT_ESPRESSO, "350 ml"));
-        list.add(new Recipe(R.drawable.cup_romano_70ml, "Romano", "Espresso + limon.", "Limon kabuğu aromalı shot", "70 ml", "Limon kabuğu ekle.", "Asidite artar.", CAT_ESPRESSO, "70 ml"));
-
-        // ---------- FİLTRE ----------
-        list.add(new Recipe(R.drawable.cup_v60, "V60", "Temiz ve parlak kahve.", "1:15 oran, 3 dk", "300 ml", "Dairesel döküş.", "Bloom 30 sn.", CAT_FILTER, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_kalitawave, "Kalita Wave", "Gövdeli ve dengeli.", "1:16 oran", "240 ml", "Akış sabit olmalı.", "Orta öğütüm.", CAT_FILTER, "240 ml"));
-        list.add(new Recipe(R.drawable.cup_frenchpress, "French Press", "Klasik pres demleme.", "1:12 oran, 4 dk", "300 ml", "Kalın öğütüm.", "Karıştır sonra presle.", CAT_FILTER, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_chemex, "Chemex", "Çok temiz tat.", "1:15 oran, 4 dk", "450 ml", "Kalın filtre.", "Yüksek ısıda.", CAT_FILTER, "450 ml"));
-        list.add(new Recipe(R.drawable.cup_aeropress, "AeroPress", "Pratik, temiz, taşınabilir.", "1:12 oran", "200 ml", "Ters yöntem önerilir.", "Yavaş pres.", CAT_FILTER, "200 ml"));
-        list.add(new Recipe(R.drawable.cup_colddrip, "Cold Drip", "Soğuk damla demleme.", "3–5 saatlik süreç.", "Soğuk", "Buzlu suyla.", "Düşük asidite.", CAT_FILTER, "Soğuk"));
-        list.add(new Recipe(R.drawable.cup_syphonbrew, "Syphon Brew", "Gösterişli vakum demleme.", "1:15 oran", "300 ml", "Filtreyi ıslat.", "Dikkatli karıştır.", CAT_FILTER, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_percolator, "Percolator", "Ocakta demleme.", "Tekrar dolaşım sistemi.", "Kupa", "Orta öğütüm.", "Kaynamadan demle.", CAT_FILTER, "Kup"));
-        list.add(new Recipe(R.drawable.cup_mokapot, "Moka Pot", "Yoğun kahve.", "Alt su, üst kahve", "2–4 cup", "Orta ince öğütüm.", "Kaynatmadan çıkar.", CAT_FILTER, "Kup"));
-
-        // ---------- SPECIAL ----------
-        list.add(new Recipe(R.drawable.cup_latte_300ml, "Latte", "Sütlü ve yumuşak.", "1 shot + süt", "300 ml", "Süt 65°C.", "Latte art yap.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_cappucino_240ml, "Cappuccino", "Köpüklü klasik.", "1 shot + süt + köpük", "240 ml", "Köpüğü yoğun yap.", "Üstüne kakao serpiştir.", CAT_SPECIAL, "240 ml"));
-        list.add(new Recipe(R.drawable.cup_mochacino_300ml, "Mochaccino", "Kakao + süt + espresso.", "Kakao şurubu + süt + shot", "300 ml", "Tatlı dengeyi koru.", "Krema eklenebilir.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_breve_200ml, "Breve", "Half&Half ile latte.", "1 shot + half&half", "200 ml", "Kremamsı doku.", "Yoğun kıvam.", CAT_SPECIAL, "200 ml"));
-        list.add(new Recipe(R.drawable.cup_affogato_150ml, "Affogato", "Dondurma üstü espresso.", "1 top + sıcak shot", "150 ml", "Sıcakken dök.", "Erimeden servis.", CAT_SPECIAL, "150 ml"));
-        list.add(new Recipe(R.drawable.cup_affogato_freddo, "Affogato Freddo", "Soğuk affogato.", "Soğuk shot + dondurma", "150 ml", "Bardağı soğut.", "Fındık serpilebilir.", CAT_SPECIAL, "150 ml"));
-        list.add(new Recipe(R.drawable.cup_pistachio_latte, "Pistachio Latte", "Fıstık aromalı latte.", "Fıstık şurubu + süt + shot", "300 ml", "Şurup az olsun.", "Üstüne toz fıstık.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_honey_latte, "Honey Latte", "Bal ile tatlandırılmış.", "Bal + süt + shot", "300 ml", "Balı sütte çöz.", "Tarçın yakışır.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_rose_latte, "Rose Latte", "Gül aromalı latte.", "Gül şurubu + süt + shot", "300 ml", "Şurup 15 ml.", "Üstüne kuru gül.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_caramel_brulee_latte, "Caramel Brûlée Latte", "Karamel brulee latte.", "Karamel + süt + shot", "300 ml", "Üstüne karamel kırığı.", "Süt 65°C.", CAT_SPECIAL, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_spanish_mocha, "Spanish Mocha", "Yoğun sütlü mocha.", "Kondanse süt + kakao + shot", "300 ml", "Yoğunluğu ayarla.", "Tatlılık dikkat.", CAT_SPECIAL, "300 ml"));
-
-        // ---------- ALKOLLÜ ----------
-        list.add(new Recipe(R.drawable.cup_espresso_martini, "Espresso Martini", "Votka + espresso + likör.", "Şeker + kahve likörü + shot", "Kokteyl", "İyi çalkala.", "Soğuk servis.", CAT_ALCOHOLIC, "Kokteyl"));
-        list.add(new Recipe(R.drawable.cup_irish_coffee, "Irish Coffee", "Viski + kahve + krema.", "Sıcak kahve + viski + krema", "Kup", "Kremayı yavaş dök.", "Sıcak servis.", CAT_ALCOHOLIC, "Kup"));
-        list.add(new Recipe(R.drawable.cup_baileys_latte, "Baileys Latte", "Baileys aromalı latte.", "Baileys + süt + shot", "300 ml", "Baileys 30 ml.", "Tatlı içim.", CAT_ALCOHOLIC, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_rum_mocha, "Rum Mocha", "Rom + çikolata + espresso.", "Rom + kakao + süt + shot", "300 ml", "Romu ölçülü kullan.", "Krema ekle.", CAT_ALCOHOLIC, "300 ml"));
-        list.add(new Recipe(R.drawable.cup_amaretto_mocha, "Amaretto Mocha", "Badem likörlü mocha.", "Amaretto + süt + shot", "300 ml", "Amaretto 20 ml.", "Tatlı notalar.", CAT_ALCOHOLIC, "300 ml"));
-
-        // ---------- ICED ----------
-        list.add(new Recipe(R.drawable.cup_iced_americano, "Iced Americano", "Buz + su + shot.", "Shot + su + buz", "350 ml", "Shot soğusun.", "Suyu sonra ekle.", CAT_ICED, "350 ml"));
-        list.add(new Recipe(R.drawable.cup_iced_latte, "Iced Latte", "Soğuk latte.", "Buz + süt + shot", "350 ml", "Tatlandırma opsiyonel.", "Bardağı soğut.", CAT_ICED, "350 ml"));
-        list.add(new Recipe(R.drawable.cup_iced_mocha, "Iced Mocha", "Soğuk çikolatalı latte.", "Kakao + süt + shot + buz", "350 ml", "Şurubu çöz.", "Krema ekle.", CAT_ICED, "350 ml"));
-        list.add(new Recipe(R.drawable.cup_iced_breve, "Iced Breve", "Soğuk half&half.", "Buz + half&half + shot", "350 ml", "Yoğun ve kremamsı.", "Tatlılık düşük.", CAT_ICED, "350 ml"));
-        list.add(new Recipe(R.drawable.cup_icedpour, "Iced Pour", "Buz üzerine sıcak demleme.", "Demleme buz üstüne", "350 ml", "Demleme konsantre olmalı.", "Buz oranını iyi ayarla.", CAT_ICED, "350 ml"));
-
-        // ---------- TÜRK KAHVESİ ----------
-        list.add(new Recipe(R.drawable.cup_t_70ml, "Türk Kahvesi (Sade)", "Geleneksel, sade aroma.", "Soğuk su + ince öğütüm", "1 fincan", "Köpüğü taşırma.", "Şekersiz.", CAT_TURKISH, "T – 70 ml"));
-        list.add(new Recipe(R.drawable.cup_t_70ml, "Türk Kahvesi (Orta)", "Hafif şekerli klasik.", "1 tatlı kaşığı şeker", "1 fincan", "Yavaş pişir.", "Köpüğü koru.", CAT_TURKISH, "T – 70 ml"));
-        list.add(new Recipe(R.drawable.cup_t_70ml, "Türk Kahvesi (Şekerli)", "Tatlı içim.", "2 tatlı kaşığı şeker", "1 fincan", "Taşırmadan pişir.", "Köpüğü bol olsun.", CAT_TURKISH, "T – 70 ml"));
-        list.add(new Recipe(R.drawable.cup_t_70ml, "Dibek Kahvesi", "Yumuşak, iri öğütüm.", "Sütle veya suyla hazırlanır.", "1 fincan", "Kaynatmadan ısıt.", "Köpüğü az olur.", CAT_TURKISH, "T – 70 ml"));
-        list.add(new Recipe(R.drawable.cup_t_70ml, "Menengiç Kahvesi", "Kafeinsiz, fıstık aromalı.", "Menengiç tohumu + süt", "1 fincan", "Süt taşırma.", "Tatlımsı aroma.", CAT_TURKISH, "T – 70 ml"));
-
-        return Collections.unmodifiableList(list);
-    }
-
-    public static List<Recipe> getAll() {
-        return ALL;
+        return recipes;
     }
 }
