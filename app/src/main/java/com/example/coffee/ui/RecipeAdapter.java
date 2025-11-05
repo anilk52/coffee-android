@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
+import com.example.coffee.util.FavoriteStore;
 import com.example.coffee.model.Recipe;
 import com.example.coffee.ui.RecipeDetailActivity;
 
@@ -56,11 +57,28 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             holder.imgRecipe.setImageResource(R.drawable.ic_placeholder_logo);
         }
 
+        // Favori iconu
+        updateFavoriteIcon(holder.btnFavorite, FavoriteStore.isFavorite(context, recipe.getName()));
+
+        holder.btnFavorite.setOnClickListener(v -> {
+            FavoriteStore.toggleFavorite(context, recipe.getName());
+            boolean nowFav = FavoriteStore.isFavorite(context, recipe.getName());
+            updateFavoriteIcon(holder.btnFavorite, nowFav);
+        });
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RecipeDetailActivity.class);
             intent.putExtra(EXTRA_RECIPE, recipe);
             context.startActivity(intent);
         });
+    }
+
+    private void updateFavoriteIcon(ImageView iv, boolean isFav) {
+        if (isFav) {
+            iv.setImageResource(R.drawable.ic_favorite_on);
+        } else {
+            iv.setImageResource(R.drawable.ic_favorite_off);
+        }
     }
 
     @Override
@@ -72,12 +90,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         ImageView imgRecipe;
         TextView txtName;
         TextView txtShortDesc;
+        ImageView btnFavorite;
 
         RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgRecipe = itemView.findViewById(R.id.imgRecipe);
-            txtName = itemView.findViewById(R.id.txtName);
-            txtShortDesc = itemView.findViewById(R.id.txtShortDesc);
+            imgRecipe   = itemView.findViewById(R.id.imgRecipe);
+            txtName     = itemView.findViewById(R.id.txtName);
+            txtShortDesc= itemView.findViewById(R.id.txtShortDesc);
+            btnFavorite = itemView.findViewById(R.id.btnFavorite);
         }
     }
 }
