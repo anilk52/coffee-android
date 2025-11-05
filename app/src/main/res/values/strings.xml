@@ -56,7 +56,7 @@
     <string name="footer_made_by">Hazırlayan: Anıl &amp; GPT-5 ☕</string>
     <string name="splash_message">Selam Barista!</string>
 
-<!-- Eski referanslara uyum için -->
+    <!-- Eski referanslarla uyum için alias stringler -->
     <string name="main_footer">@string/footer_made_by</string>
     <string name="espresso">@string/category_espresso</string>
     <string name="filter">@string/category_filter</string>
