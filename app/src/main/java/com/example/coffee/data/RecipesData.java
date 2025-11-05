@@ -4,211 +4,176 @@ import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class RecipesData {
+/**
+ * Uygulamadaki tüm tariflerin basit veri kaynağı.
+ * Şimdilik kod içine gömülü; ileride JSON/SQLite'e taşınabilir.
+ */
+public final class RecipesData {
 
-    /**
-     * Tek bir kategoriye ait tarifleri döner.
-     * category: "espresso", "filter", "special", "alcoholic", "iced", "turkish"
-     */
-    public static List<Recipe> getRecipesByCategory(String category) {
-        List<Recipe> recipes = new ArrayList<>();
-        if (category == null) return recipes;
+    private static final List<Recipe> ALL_RECIPES;
 
-        switch (category.toLowerCase()) {
+    static {
+        List<Recipe> list = new ArrayList<>();
 
-            // ------------------------------------------------------
-            // ☕ ESPRESSO KATEGORİSİ
-            // ------------------------------------------------------
-            case "espresso":
-                // Espresso
-                recipes.add(new Recipe(
-                        R.drawable.cup_espresso_70ml,
-                        "Espresso",
-                        "Kısa, yoğun ve dengeli kahve shot’ı.",
-                        "Espresso, 18 g taze çekilmiş kahveden yaklaşık 36 g çıkışla hazırlanır. "
-                                + "Makine 9 bar basınçta, 92–94 °C su sıcaklığıyla 25–30 saniye çalışmalıdır. "
-                                + "Kahve medium roast olmalı, öğütme tuzdan biraz daha ince seçilmelidir. "
-                                + "Doğru akış 3–5. saniyede başlamalı ve fincanda altın rengi, kalın bir krema tabakası oluşmalıdır. "
-                                + "İyi çekilmiş bir espresso, dengeli asidite, gövde ve tatlılığı bir arada sunar ve yaklaşık 30 ml hacmindedir.",
-                        "1:2 oran (18 g kahve → 36 g espresso)",
-                        "Akış çok hızlıysa öğütmeyi incelt; çok yavaşsa biraz kalınlaştır. "
-                                + "Kreması soluksa kahve çok taze olmayabilir.",
-                        "Evde moka pot kullanarak espressoya yakın yoğunlukta kahve elde edebilirsin. "
-                                + "Önemli olan taze çekirdek ve tutarlı ısı.",
-                        "espresso",
-                        "S – 30 ml"
-                ));
+        // =============== ESPRESSO ===============
+        list.add(new Recipe(
+                R.drawable.ic_espresso,
+                "Single Espresso",
+                "Yoğun, kısa ve net espresso shot.",
+                "18–19 g taze çekilmiş kahveyi portafiltreye düzgünce dağıtıp tamp et. "
+                        + "92–94°C suyla 25–30 saniyede yaklaşık 36–40 g espresso al. "
+                        + "Akış başta koyu ve yoğun, sonunda hafif incelmiş olmalı. "
+                        + "Kreması altın kahverengi ve bütün yüzeyi kaplamalı.",
+                "1:2 oran — 18 g kahveden 36 g içecek, 25–30 sn.",
+                "Akışı ilk 5–6 saniye izle; çok hızlıysa öğütümü incelt, çok yavaşsa kalınlaştır.",
+                "Espressoyu fincanda 10–15 saniyeden fazla bekletme; aroma hızla bozulur.",
+                "espresso",
+                "30–40 ml"
+        ));
 
-                // Doppio
-                recipes.add(new Recipe(
-                        R.drawable.cup_doppio_120ml,
-                        "Doppio",
-                        "İki shot’lık güçlü espresso.",
-                        "Doppio, iki espresso shot’ının birleşimidir. "
-                                + "Genellikle 36 g kahveden 60–70 g arası çıkış alınır. "
-                                + "Aynı şekilde 9 bar basınç ve 92–94 °C su sıcaklığı kullanılır, süre yine 25–30 saniye civarındadır. "
-                                + "Daha yüksek kafein ve daha yoğun gövde sunar; uzun içim sevenler için idealdir.",
-                        "1:2 oran (36 g kahve → 70 g shot civarı)",
-                        "Fincan hacmini ona göre seç; çok küçük fincanda çift shot taşabilir.",
-                        "Evde iki kez moka pot demleyerek benzer yoğunlukta bir doppio yaratabilirsin.",
-                        "espresso",
-                        "M – 60 ml"
-                ));
+        list.add(new Recipe(
+                R.drawable.ic_espresso,
+                "Double Espresso",
+                "Standart kafe shot’ı, daha gövdeli ve dengeli.",
+                "18–20 g kahve kullanıp çift shot çıkart. 90–94°C arası su ile 25–30 sn demleme süresini koru. "
+                        + "Akış ince bir bal sütunu gibi olmalı. "
+                        + "Daha tatlı bir profil için 1–2 saniye erken kesebilirsin.",
+                "1:2 oran — 18–20 g kahveden 36–40 g espresso.",
+                "Aynı kahveyle üst üste iki shot çekiyorsan öğütümü ve dozu sık sık kontrol et; kahve ısındıkça akış hızlanır.",
+                "Menşei tek bölgeli kahvelerde demleme süresi ve oranla oynamak tadı dramatik değiştirir; küçük adımlarla ilerle.",
+                "espresso",
+                "40–50 ml"
+        ));
 
-                // Americano
-                recipes.add(new Recipe(
-                        R.drawable.cup_americano_350ml,
-                        "Americano",
-                        "Espresso’nun sıcak suyla yumuşatılmış hali.",
-                        "Americano, bir shot espresso (30 ml) üzerine yaklaşık 90 ml sıcak su eklenerek hazırlanır. "
-                                + "Tat profili filtre kahveye yaklaşır ancak gövdesi biraz daha dolgun kalır. "
-                                + "Daha hafif içim için su miktarını artırabilir, daha yoğun tat için doppio kullanabilirsin.",
-                        "1 shot espresso + 90 ml sıcak su",
-                        "Kremayı korumak için önce sıcak suyu ekle, sonra espressoyu üzerine dök.",
-                        "Evde kettle + moka pot ile çok benzer bir Americano elde edebilirsin.",
-                        "espresso",
-                        "M – 120 ml"
-                ));
+        list.add(new Recipe(
+                R.drawable.ic_espresso,
+                "Americano",
+                "Espresso üzerine sıcak su eklenmiş hafif içimli kahve.",
+                "Önce fincana 120–150 ml sıcak su koy. Üzerine 1 shot espresso ekle. "
+                        + "Bu sıra, kremanın daha uzun süre korunmasını sağlar. "
+                        + "Su miktarını damak zevkine göre artırıp azaltabilirsin.",
+                "1 shot espresso + 120–150 ml sıcak su.",
+                "Su çok kaynar olmasın; 90–92°C civarı hem içimi hem aromayı korur.",
+                "İstersen buz ekleyip soğuk Americano yapabilir, üstüne limon kabuğu ile ferahlık katabilirsin.",
+                "espresso",
+                "150–180 ml"
+        ));
 
-                // Cappuccino
-                recipes.add(new Recipe(
-                        R.drawable.cup_cappucino_240ml, // dosya ismi cappucino
-                        "Cappuccino",
-                        "Köpüklü sütle klasik İtalyan kahvesi.",
-                        "Cappuccino, 1 shot espresso (30 ml), yaklaşık 60 ml sıcak süt ve 60 ml yoğun süt köpüğüyle hazırlanır. "
-                                + "Toplam hacim 150–180 ml civarındadır. "
-                                + "Köpük kalın ve kremamsı olmalı, yüzeyde kadifemsi bir doku hissedilmelidir. "
-                                + "İdeal süt sıcaklığı 60–65 °C aralığındadır; daha yüksek sıcaklıkta süt yanık bir tat bırakır.",
-                        "1 espresso + 1 birim süt + 1 birim süt köpüğü",
-                        "Sütü ısıtırken sürahiyi elinle tutup çok yakıcı olmamasına dikkat et; "
-                                + "elini 3–4 saniyeden fazla üzerinde tutamıyorsan süt fazla ısınmıştır.",
-                        "Evde french press veya elde çırpıcı kullanarak da güzel bir köpük elde edebilirsin.",
-                        "espresso",
-                        "M – 180 ml"
-                ));
+        // =============== FİLTRE / DEMLEME ===============
+        list.add(new Recipe(
+                R.drawable.ic_filter,
+                "Chemex – Temel Tarif",
+                "Temiz, parlak ve tatlı gövdeli filtre kahve.",
+                "600 ml chemex için 36 g kahveyi orta-ince öğüt. Filtreyi ıslat, kağıdı ısıtıcı suyla durula. "
+                        + "Bloom için 60–70 g su ekleyip 30–40 sn bekle. Ardından dairesel hareketlerle "
+                        + "toplam 600 g suya 3–4 döküşte tamamla. Toplam süre 4–4,5 dakika civarı.",
+                "1:16 oran — 36 g kahve / 600 g su, 94°C.",
+                "Akış çok hızlıysa öğütümü incelt; çok yavaşsa daha kalın öğüt. Ama her seferinde tek parametreyi değiştir.",
+                "Chemex camı önceden ısıtmak, kahvenin son fincanda daha dengeli kalmasını sağlar.",
+                "filter",
+                "2 büyük kupa (~600 ml)"
+        ));
 
-                // Latte
-                recipes.add(new Recipe(
-                        R.drawable.cup_latte_300ml,
-                        "Caffè Latte",
-                        "Bol sütlü, yumuşak içimli kahve.",
-                        "Caffè Latte, 1 shot espresso (30 ml) üzerine yaklaşık 180–210 ml sıcak süt eklenerek hazırlanır. "
-                                + "Üstünde ince bir mikroköpük tabakası bulunur. "
-                                + "Tatlı, süt ağırlıklı ve oldukça yumuşak bir profili vardır. "
-                                + "Latte art yapmak için ideal zemindir.",
-                        "1:6 oran (30 ml espresso → ~180 ml süt)",
-                        "Sütü köpürtürken çok fazla kabartma; latte’de ince ve ipeksi bir tabaka yeterlidir.",
-                        "Evde french press ile sütü hafifçe köpürtüp latte hissiyatını yakalayabilirsin.",
-                        "espresso",
-                        "L – 240–300 ml"
-                ));
+        list.add(new Recipe(
+                R.drawable.ic_filter,
+                "V60 – Dengeli Profil",
+                "Asidite, gövde ve tatlılık arasında dengeli bir V60.",
+                "15 g kahveyi orta ince öğüt. 250 g suyu 93–94°C’ye getir. "
+                        + "Önce 40 g suyla 30 sn bloom yap. Sonra dairesel hareketle 100 g’a tamamla. "
+                        + "1:10’a gelince kısa bir ara ver, ardından 250 g’a kadar dök. "
+                        + "Toplam süre 2:30–3:00 arası idealdir.",
+                "1:16–1:17 oran — 15 g kahve / 250 g su.",
+                "Kahve tanelerinin yatağı demlenme sonunda düz ve sakin görünmeli; çukur veya duvara yapışma kanallanmaya işaret eder.",
+                "Farklı kahveler için önce su sıcaklığıyla, sonra öğütümle oynayarak favori noktanı bul.",
+                "filter",
+                "1 kupa (~250 ml)"
+        ));
 
-                // Flat White
-                recipes.add(new Recipe(
-                        R.drawable.cup_flatwhite_240ml,
-                        "Flat White",
-                        "Yoğun espresso, ince mikroköpüklü süt dengesi.",
-                        "Flat White genelde 2 shot espresso (doppio) ve 120–140 ml civarında mikroköpüklü süt ile yapılır. "
-                                + "Köpük katmanı çok ince olmalı; latte’ye göre daha kahve yoğun, cappuccino’ya göre daha az köpüklüdür.",
-                        "2 shot espresso + ~130 ml süt",
-                        "Süt köpüğünü cappuccino kadar kalın yapma; yüzeyde ince ve parlak bir tabaka yeterli.",
-                        "Evde iki moka shot + süt ile benzer bir yoğunluk yakalanabilir.",
-                        "espresso",
-                        "M – 180 ml"
-                ));
+        // =============== SPECIAL (sütlü / aromalı) ===============
+        list.add(new Recipe(
+                R.drawable.ic_special,
+                "Flat White",
+                "Yoğun espresso + ince dokulu sütlü içim.",
+                "Çift shot espresso hazırla. 130–140 ml soğuk sütü 60–65°C’ye kadar köpürt; "
+                        + "süt yüzeyinde ayna gibi hafif parlak, kabarcıksız olmalı. "
+                        + "Espressoya merkezi bir akışla sütü dök; fincanı çok doldurmadan, kahve aromasını baskılamadan bitir.",
+                "2 shot espresso + ~130 ml süt.",
+                "Sütü fazla ısıtırsan tatlılık kaybolur ve yanık tat gelir; termometre yoksa cezveyi tutamayacak kadar sıcak olmamalı.",
+                "Evdeysen mikrodalga + el köpürtücü ile de fena olmayan bir doku yakalayabilirsin; önemli olan büyük kabarcıkları dağıtmak.",
+                "special",
+                "180–200 ml"
+        ));
 
-                // Macchiato
-                recipes.add(new Recipe(
-                        R.drawable.cup_macchiato_120ml,
-                        "Macchiato",
-                        "Espresso üzerine nokta kadar süt köpüğü.",
-                        "Macchiato, 1 shot espresso üzerine sadece 1–2 tatlı kaşığı süt köpüğü eklenerek hazırlanır. "
-                                + "Kahve baskın kalır, süt sadece aromayı yuvarlar. "
-                                + "Kelime anlamı İtalyanca ‘lekeli’ veya ‘işaretlenmiş’tir.",
-                        "1 espresso + 1–2 tatlı kaşığı süt köpüğü",
-                        "Köpük miktarını abartma; yoksa küçük bir cappuccino’ya dönüşür.",
-                        "Evde espresso veya moka shot üzerine az miktar köpüklü süt eklemek yeterli.",
-                        "espresso",
-                        "S – 40–50 ml"
-                ));
+        list.add(new Recipe(
+                R.drawable.ic_special,
+                "Rose Latte",
+                "Gül şurubu ile hafif floral, tatlı latte.",
+                "Büyük bir fincana 1–2 yemek kaşığı gül şurubu koy. Üzerine 1 shot espresso ekle ve karıştır. "
+                        + "150 ml sütü 60–65°C’ye kadar köpürtüp fincana dök. "
+                        + "Üste çok az tarçın veya kurutulmuş gül yaprağı serpebilirsin.",
+                "1 shot espresso + 150 ml süt + 20–30 ml gül şurubu.",
+                "Şurubu azdan başlat; yoğun gül aroması kahvenin tüm profilini bastırabilir.",
+                "Şurubun yoksa, az bal + birkaç damla gül suyu ile benzer, daha hafif bir versiyon yapabilirsin.",
+                "special",
+                "220–240 ml"
+        ));
 
-                // Cortado
-                recipes.add(new Recipe(
-                        R.drawable.cup_cortado_150ml,
-                        "Cortado",
-                        "Espresso ve süt 1:1 oranında, dengeli içim.",
-                        "Cortado, 1 shot espresso (30 ml) ile aynı miktarda (30 ml) sıcak süt karıştırılarak yapılır. "
-                                + "Asidite yumuşar ancak kahve tadı belirgin kalır. "
-                                + "İspanyol kökenli bu içecek, latte’nin daha küçük ve daha yoğun bir versiyonu gibidir.",
-                        "1:1 oran (30 ml espresso + 30 ml süt)",
-                        "Sıcak sütü fazla köpürtme; cortado’nun olayı, kremamsı ama ince bir süt tabakasıdır.",
-                        "Evde küçük bir cam bardakta moka shot + az süt ile kolayca hazırlanabilir.",
-                        "espresso",
-                        "S – 60 ml"
-                ));
+        // =============== ALKOLLÜ ===============
+        list.add(new Recipe(
+                R.drawable.ic_alcoholic,
+                "Espresso Martini",
+                "Yoğun kahve aromalı, dengeli kokteyl.",
+                "Shaker’a bol buz, 1 shot espresso, 40 ml votka ve 20 ml kahve likörü ekle. "
+                        + "Güçlü şekilde 10–15 sn çalkala. Soğutulmuş martini bardağına süz. "
+                        + "Üstüne birkaç kahve çekirdeği bırakabilirsin.",
+                "40 ml votka + 20 ml kahve likörü + 1 shot espresso.",
+                "Espressoyu sıcak sıcak değil, ılığa yakın kullan; yoksa shaker içindeki buz çok hızlı erir ve içki sulanır.",
+                "Şeker oranını artırmak için biraz basit şurup ekleyebilirsin; ama önce likörün tatlılığını mutlaka tat.",
+                "alcoholic",
+                "90–120 ml"
+        ));
 
-                // Mocha
-                recipes.add(new Recipe(
-                        R.drawable.cup_mochacino_300ml, // mocha için en yakın görsel
-                        "Caffè Mocha",
-                        "Çikolatalı, tatlı ve kremalı kahve.",
-                        "Caffè Mocha, 1 shot espresso, 20–25 g çikolata sosu veya kakao karışımı "
-                                + "ve 150–180 ml sıcak sütle hazırlanır. "
-                                + "Espresso ile çikolata önce karıştırılır, ardından süt eklenir ve hafif köpükle tamamlanır. "
-                                + "Üzerine kakao serpiştirilebilir veya çikolata rendesi eklenebilir.",
-                        "1 espresso + 20–25 g çikolata + 150–180 ml süt",
-                        "Çikolata sosu çok yoğun ise süt miktarını artırarak dengele.",
-                        "Evde hazır çikolata tozu veya sürülebilir çikolata (ör. Nutella) ile nefis mocha yapabilirsin.",
-                        "espresso",
-                        "L – 220–260 ml"
-                ));
+        // =============== ICED ===============
+        list.add(new Recipe(
+                R.drawable.ic_iced,
+                "Iced Latte",
+                "Buz üzerinde hafif sütlü kahve.",
+                "Bardağı buzla doldur. 1 shot espressoyu ayrı bir kapta hazırlayıp 1–2 küp buzla hafif soğut. "
+                        + "Buzlu bardağa önce 150–170 ml soğuk süt dök, sonra üstten yavaşça espressoyu ekle "
+                        + "ve katmanları izleyerek hafifçe karıştır.",
+                "1 shot espresso + 150–170 ml soğuk süt + bol buz.",
+                "Sütü daha kremamsı istersen yarı süt yarı krema (half&half) karışımı kullanabilirsin.",
+                "Şekerli seviyorsan, espresso sıcak halindeyken şurup ekle; soğukken şeker zor çözünür.",
+                "iced",
+                "250–300 ml"
+        ));
 
-                // Ristretto
-                recipes.add(new Recipe(
-                        R.drawable.cup_ristretto_50ml,
-                        "Ristretto",
-                        "Kısa ekstraksiyonlu, süper yoğun espresso.",
-                        "Ristretto, aynı miktarda kahve kullanılıp daha kısa sürede ve daha az hacimde alınan bir shot’tır. "
-                                + "Genellikle 18 g kahveden 15–20 ml arası çıkış alınır. "
-                                + "Süre 15–18 saniye civarındadır. "
-                                + "Sonuç; tatlı, yoğun ve düşük acılı, güçlü bir kahve deneyimidir.",
-                        "18 g kahve → 15–20 ml shot",
-                        "Ristretto’da akışı erken kesersin; çok uzatırsan normal espressoya döner.",
-                        "Evde espresso makinesinde shot’ı zamanından biraz önce durdurarak kolayca deneyebilirsin.",
-                        "espresso",
-                        "XS – 20 ml"
-                ));
+        // =============== TÜRK ===============
+        list.add(new Recipe(
+                R.drawable.ic_turkish,
+                "Klasik Türk Kahvesi",
+                "Köpüklü, geleneksel Türk kahvesi.",
+                "Cezveye her fincan için 1 silme tatlı kaşığı kahve ve arzuya göre şeker koy. "
+                        + "Üzerine soğuk su ekle (her fincan için ~60–70 ml). "
+                        + "Kısık ateşte karıştırarak ısıtmaya başla, köpüklenmeye başladığında üstten köpüğü fincanlara paylaştır. "
+                        + "Kahve kaynamaya yaklaşınca taşırtmadan cezveyi ocaktan al ve fincanlara yavaşça dök.",
+                "1 tatlı kaşığı kahve / 60–70 ml su, kısık ateş.",
+                "Karıştırmayı sadece başta yap; köpük oluşmaya başladıktan sonra cezveyi sarsmamaya çalış.",
+                "Kahveyi içmeden önce fincanda telvenin çökmesi için 1–2 dakika beklemek, hem ağızda tortu bırakmaz hem de aromayı toparlar.",
+                "turkish",
+                "60–70 ml"
+        ));
 
-                break;
-
-            // Diğer kategoriler: şimdilik boş, sonra dolduracağız
-            case "filter":
-            case "special":
-            case "alcoholic":
-            case "iced":
-            case "turkish":
-            default:
-                // ileride eklenecek
-                break;
-        }
-
-        return recipes;
+        ALL_RECIPES = Collections.unmodifiableList(list);
     }
 
-    /**
-     * Uygulamadaki TÜM tarifleri döner.
-     * Şu anda sadece espresso kategorisi dolu; diğerleri eklendikçe genişleyecek.
-     */
+    private RecipesData() { }
+
+    /** Uygulamadaki tüm tarifler (immutable liste). */
     public static List<Recipe> getAll() {
-        List<Recipe> all = new ArrayList<>();
-        all.addAll(getRecipesByCategory("espresso"));
-        all.addAll(getRecipesByCategory("filter"));
-        all.addAll(getRecipesByCategory("special"));
-        all.addAll(getRecipesByCategory("alcoholic"));
-        all.addAll(getRecipesByCategory("iced"));
-        all.addAll(getRecipesByCategory("turkish"));
-        return all;
+        return ALL_RECIPES;
     }
 }
