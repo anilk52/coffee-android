@@ -2,13 +2,19 @@ package com.example.coffee.data;
 
 import com.example.coffee.R;
 import com.example.coffee.model.Recipe;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesData {
 
+    /**
+     * Tek bir kategoriye ait tarifleri döner.
+     * category: "espresso", "filter", "special", "alcoholic", "iced", "turkish"
+     */
     public static List<Recipe> getRecipesByCategory(String category) {
         List<Recipe> recipes = new ArrayList<>();
+        if (category == null) return recipes;
 
         switch (category.toLowerCase()) {
 
@@ -176,8 +182,33 @@ public class RecipesData {
                 ));
 
                 break;
+
+            // Diğer kategoriler: şimdilik boş, sonra dolduracağız
+            case "filter":
+            case "special":
+            case "alcoholic":
+            case "iced":
+            case "turkish":
+            default:
+                // ileride eklenecek
+                break;
         }
 
         return recipes;
+    }
+
+    /**
+     * Uygulamadaki TÜM tarifleri döner.
+     * Şu anda sadece espresso kategorisi dolu; diğerleri eklendikçe genişleyecek.
+     */
+    public static List<Recipe> getAll() {
+        List<Recipe> all = new ArrayList<>();
+        all.addAll(getRecipesByCategory("espresso"));
+        all.addAll(getRecipesByCategory("filter"));
+        all.addAll(getRecipesByCategory("special"));
+        all.addAll(getRecipesByCategory("alcoholic"));
+        all.addAll(getRecipesByCategory("iced"));
+        all.addAll(getRecipesByCategory("turkish"));
+        return all;
     }
 }
