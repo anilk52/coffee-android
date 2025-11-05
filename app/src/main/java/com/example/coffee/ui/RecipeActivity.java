@@ -1,118 +1,63 @@
 package com.example.coffee.ui;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.SearchView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coffee.MainActivity;
 import com.example.coffee.R;
+import com.example.coffee.adapter.RecipeAdapter;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private TextView emptyView;
-    private EditText search;
+    private RecyclerView recyclerRecipes;
+    private SearchView searchView;
     private RecipeAdapter adapter;
-
-    private final List<Recipe> all = new ArrayList<>();
-    private final List<Recipe> shown = new ArrayList<>();
-    private String category = "";
+    private List<Recipe> allRecipes;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        category = getIntent().getStringExtra(MainActivity.EXTRA_CATEGORY);
-        if (category == null) category = "";
+        recyclerRecipes = findViewById(R.id.recyclerRecipes);
+        searchView = findViewById(R.id.searchView);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        emptyView    = findViewById(R.id.emptyView);
-        search       = findViewById(R.id.inputSearch);
+        String category = getIntent().getStringExtra("category");
+        allRecipes = RecipesData.getByCategory(category);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // RecipeAdapter imzası: (Context, List<?>)
-        adapter = new RecipeAdapter(this, (java.util.List<?>) shown);
-        recyclerView.setAdapter(adapter);
+        adapter = new RecipeAdapter(this, allRecipes);
+        recyclerRecipes.setLayoutManager(new LinearLayoutManager(this));
+        recyclerRecipes.setAdapter(adapter);
 
-        // RecipesData.getAll() imzası: parametresiz
-        List<Recipe> fromData = RecipesData.getAll();
-        if (fromData != null) {
-            all.clear();
-            all.addAll(fromData);
-        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-        applyCategory();
-        applySearch("");
-
-        search.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
-            @Override public void onTextChanged(CharSequence s, int st, int b, int c) { applySearch(s.toString()); }
-            @Override public void afterTextChanged(Editable s) {}
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
         });
-
-        setTitle(category.isEmpty() ? getString(R.string.app_name) : category);
     }
 
-    private void applyCategory() {
-        shown.clear();
-        if (category.isEmpty()) {
-            shown.addAll(all);
-        } else {
-            for (Recipe r : all) {
-                if (equalsIgnoreTrTr(r.getCategory(), category)) {
-                    shown.add(r);
-                }
+    private void filterList(String text) {
+        List<Recipe> filtered = new ArrayList<>();
+        for (Recipe recipe : allRecipes) {
+            if (recipe.getName().toLowerCase().contains(text.toLowerCase())) {
+                filtered.add(recipe);
             }
         }
-        adapter.notifyDataSetChanged();
-        updateEmpty();
+        adapter.updateList(filtered);
     }
-
-    private void applySearch(String q) {
-        q = q == null ? "" : q.trim().toLowerCase(Locale.getDefault());
-        if (q.isEmpty()) {
-            applyCategory();
-            return;
-        }
-
-        List<Recipe> base = new ArrayList<>();
-        for (Recipe r : all) if (equalsIgnoreTrTr(r.getCategory(), category)) base.add(r);
-
-        shown.clear();
-        for (Recipe r : base) {
-            String hay = (nz(r.getName()) + " " + nz(r.getShortDesc()) + " " + nz(r.getMeasure()))
-                    .toLowerCase(Locale.getDefault());
-            if (hay.contains(q)) shown.add(r);
-        }
-        adapter.notifyDataSetChanged();
-        updateEmpty();
-    }
-
-    private void updateEmpty() {
-        boolean isEmpty = shown.isEmpty();
-        emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-        recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-    }
-
-    private boolean equalsIgnoreTrTr(String a, String b) {
-        if (a == null || b == null) return false;
-        return a.trim().equalsIgnoreCase(b.trim());
-    }
-
-    private static String nz(String s) { return s == null ? "" : s; }
 }
