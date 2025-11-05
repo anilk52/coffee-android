@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/btnFavorite"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/ic_favorite"
             android:contentDescription="@string/favorites" />
 
@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/btnAi"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/ic_ai_barista"
             android:contentDescription="@string/ai_barista" />
 
@@ -49,8 +49,8 @@
 
         <ImageView
             android:id="@+id/btnSettings"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/ic_settings"
             android:contentDescription="@string/settings" />
     </LinearLayout>
