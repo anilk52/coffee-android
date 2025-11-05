@@ -10,38 +10,59 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
 import com.example.coffee.adapter.RecipeAdapter;
+import com.example.coffee.util.FavoriteStore;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerFavorites;
     private RecipeAdapter adapter;
-    private List<Recipe> favoriteList = new ArrayList<>();
+    private final List<Recipe> favoriteList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Aynı liste ekranı layout’unu kullanıyoruz
-        setContentView(R.layout.activity_recipe);
+        setContentView(R.layout.activity_recipe); // Aynı layout
 
         recyclerFavorites = findViewById(R.id.recyclerRecipes);
         SearchView searchView = findViewById(R.id.searchView);
 
-        // Favoriler ekranında aramayı şimdilik gizleyelim
+        // Favoriler ekranında aramayı şimdilik gizleyebiliriz
         if (searchView != null) {
             searchView.setVisibility(View.GONE);
         }
 
-        // Şimdilik: tüm tarifleri göster
-        favoriteList.clear();
-        favoriteList.addAll(RecipesData.getAll());
+        loadFavorites();
 
         adapter = new RecipeAdapter(this, favoriteList);
         recyclerFavorites.setLayoutManager(new LinearLayoutManager(this));
         recyclerFavorites.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Ekrana geri dönüldüğünde, favoriler değişmiş olabilir
+        loadFavorites();
+        if (adapter != null) {
+            adapter.updateList(new ArrayList<>(favoriteList));
+        }
+    }
+
+    private void loadFavorites() {
+        favoriteList.clear();
+        Set<String> favNames = FavoriteStore.getFavorites(this);
+        if (favNames.isEmpty()) return;
+
+        for (Recipe r : RecipesData.getAll()) {
+            if (favNames.contains(r.getName())) {
+                favoriteList.add(r);
+            }
+        }
     }
 }
