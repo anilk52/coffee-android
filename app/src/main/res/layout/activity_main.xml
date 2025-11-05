@@ -140,7 +140,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_espresso"
+                        android:src="@drawable/ic_espresso"
                         android:contentDescription="@string/espresso" />
 
                     <TextView
@@ -177,7 +177,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_filter"
+                        android:src="@drawable/ic_filter"
                         android:contentDescription="@string/filter" />
 
                     <TextView
@@ -222,7 +222,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_special"
+                        android:src="@drawable/ic_special"
                         android:contentDescription="@string/special" />
 
                     <TextView
@@ -259,7 +259,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_alcoholic"
+                        android:src="@drawable/ic_alcoholic"
                         android:contentDescription="@string/alcoholic" />
 
                     <TextView
@@ -304,7 +304,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_iced"
+                        android:src="@drawable/ic_iced"
                         android:contentDescription="@string/iced" />
 
                     <TextView
@@ -341,7 +341,7 @@
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cat_turkish"
+                        android:src="@drawable/ic_turkish"
                         android:contentDescription="@string/turkish" />
 
                     <TextView
