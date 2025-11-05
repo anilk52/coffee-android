@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F5EBDD"
+    android:padding="12dp"
+    tools:context=".ui.RecipeActivity">
 
-    <!-- Arama kutusu (istersen görünmez yapabilirsin) -->
-    <EditText
-        android:id="@+id/inputSearch"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/bg_rounded_input"
-        android:hint="@string/search_hint"
-        android:paddingStart="14dp"
-        android:paddingEnd="14dp"
-        android:drawableStart="@drawable/ic_search_24"
-        android:drawablePadding="8dp"
-        android:layout_marginBottom="12dp"/>
-
-    <TextView
-        android:id="@+id/emptyView"
+    <SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bu kategoride henüz tarif bulunamadı."
-        android:visibility="gone"
-        android:padding="8dp"/>
+        android:queryHint="@string/search_hint"
+        android:iconifiedByDefault="false"
+        android:background="@drawable/ripple_glass"
+        android:layout_marginBottom="12dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerRecipes"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp" />
+
 </LinearLayout>
