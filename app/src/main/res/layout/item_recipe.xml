@@ -1,61 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="96dp"
-    android:padding="12dp"
-    android:layout_margin="8dp"
-    android:background="@drawable/bg_card">
-
-    <ImageView
-        android:id="@+id/imgThumb"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_placeholder_logo" />
-
-    <ImageButton
-        android:id="@+id/btnFav"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/favorite"
-        android:src="@android:drawable/btn_star_big_off" />
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="#222222">
 
     <LinearLayout
-        android:id="@+id/texts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imgThumb"
-        android:layout_toStartOf="@id/btnFav"
-        android:layout_marginStart="12dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="Title" />
+        <ImageView
+            android:id="@+id/imgRecipe"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/desc_logo"
+            android:background="@drawable/ripple_glass"
+            android:padding="4dp" />
 
-        <TextView
-            android:id="@+id/txtSub"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textSize="14sp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="Subtitle" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="12dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Espresso"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/txtShortDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yoğun, aromatik kısa kahve"
+                android:textColor="#DDDDDD"
+                android:textSize="13sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
     </LinearLayout>
-
-</RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
