@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Kart stili -->
-    <style name="BdinoCard">
-        <item name="android:background">@drawable/bg_card</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:layout_margin">6dp</item>
+
+    <!-- Uygulamanın ana teması -->
+    <style name="Theme.BdinoCoffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Arka plan -->
+        <item name="android:windowBackground">#F5EBDD</item>
+        <item name="android:statusBarColor">#000000</item>
+
+        <!-- Ana renkler (hex verdim ki ekstra color resource gerektirmesin) -->
+        <item name="colorPrimary">#5D4037</item>
+        <item name="colorPrimaryVariant">#3E2723</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">#C89A4B</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
     </style>
 
-    <!-- Başlık yazı tipi -->
-    <style name="BdinoTitleText">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/bd_text_primary</item>
-    </style>
-
-    <!-- Alt açıklama yazısı -->
-    <style name="BdinoSubtitleText">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/bd_text_secondary</item>
-    </style>
 </resources>
