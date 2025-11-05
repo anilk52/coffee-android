@@ -3,32 +3,39 @@ package com.example.coffee.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class FavoritesStore {
-    private static final String PREF = "bdino_prefs";
-    private static final String KEY = "fav_names";
+public class FavoriteStore {
 
-    private FavoritesStore(){}
+    private static final String PREFS_NAME = "bdino_prefs";
+    private static final String KEY_FAVORITES = "favorite_recipes";
 
-    public static Set<String> get(Context c){
-        SharedPreferences sp = c.getSharedPreferences(PREF, Context.MODE_PRIVATE);
-        Set<String> def = new HashSet<>();
-        return new HashSet<>(sp.getStringSet(KEY, def));
+    private static SharedPreferences prefs(Context ctx) {
+        return ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public static boolean isFav(Context c, String name){
-        if (name == null) return false;
-        return get(c).contains(name);
+    public static Set<String> getFavorites(Context ctx) {
+        SharedPreferences sp = prefs(ctx);
+        Set<String> stored = sp.getStringSet(KEY_FAVORITES, null);
+        if (stored == null) return new HashSet<>();
+        return new HashSet<>(stored); // kopya
     }
 
-    public static void toggle(Context c, String name){
-        if (name == null) return;
-        SharedPreferences sp = c.getSharedPreferences(PREF, Context.MODE_PRIVATE);
-        Set<String> cur = new HashSet<>(get(c));
-        if (cur.contains(name)) cur.remove(name); else cur.add(name);
-        sp.edit().putStringSet(KEY, cur).apply();
+    public static boolean isFavorite(Context ctx, String recipeName) {
+        if (recipeName == null) return false;
+        return getFavorites(ctx).contains(recipeName);
+    }
+
+    public static void toggleFavorite(Context ctx, String recipeName) {
+        if (recipeName == null) return;
+        SharedPreferences sp = prefs(ctx);
+        Set<String> set = getFavorites(ctx);
+        if (set.contains(recipeName)) {
+            set.remove(recipeName);
+        } else {
+            set.add(recipeName);
+        }
+        sp.edit().putStringSet(KEY_FAVORITES, set).apply();
     }
 }
