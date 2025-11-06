@@ -13,7 +13,7 @@
 
         <!-- Tarif görseli / bardak -->
         <ImageView
-            android:id="@+id/imgRecipe"
+            android:id="@+id/imgHero"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
