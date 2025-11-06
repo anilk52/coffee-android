@@ -1,102 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RecipeDetailActivity">
+    android:fillViewport="true">
 
-    <!-- Üstte kahve görseli -->
-    <ImageView
-        android:id="@+id/imgHero"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/ripple_glass"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/desc_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/cup_espresso_70ml" />
-
-    <!-- Tarif adı -->
-    <TextView
-        android:id="@+id/coffeeName"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/imgHero"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Espresso" />
+        android:padding="16dp">
 
-    <!-- Boyut / hacim, örn: 70 ml -->
-    <TextView
-        android:id="@+id/coffeeMeasure"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="4dp"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/coffeeName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="70 ml • Tek shot" />
+        <!-- Tarif görseli / bardak -->
+        <ImageView
+            android:id="@+id/imgRecipe"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Kısa açıklama / giriş -->
-    <TextView
-        android:id="@+id/coffeeDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="12dp"
-        android:textSize="15sp"
-        android:lineSpacingExtra="2dp"
-        app:layout_constraintTop_toBottomOf="@id/coffeeMeasure"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Yoğun, kısa ve net bir espresso deneyimi." />
+        <!-- Başlık -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Tarif Başlığı"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@id/imgRecipe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Ölçü / barista ipucu -->
-    <TextView
-        android:id="@+id/coffeeTip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="12dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/coffeeDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="1:2 oranı hedefle, 18 g kahveden ~36 g espresso al." />
+        <!-- Açıklama -->
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Tarif açıklaması buraya gelecek..."
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Eğlenceli not / alternatif -->
-    <TextView
-        android:id="@+id/coffeeNote"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="24dp"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/coffeeTip"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Krema rengi fıstık kabuğu tonuna döndüğünde tam yerinde demektir." />
+        <!-- Ölçü label -->
+        <TextView
+            android:id="@+id/txtMeasureLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Ölçü:"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription"
+            app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Ölçü değeri -->
+        <TextView
+            android:id="@+id/txtMeasure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="18 g kahve, 36 g shot"
+            app:layout_constraintTop_toTopOf="@id/txtMeasureLabel"
+            app:layout_constraintStart_toEndOf="@id/txtMeasureLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Boyut label -->
+        <TextView
+            android:id="@+id/txtSizeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Bardak boyutu:"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtMeasureLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Boyut değeri (T / S / M / L / XL) -->
+        <TextView
+            android:id="@+id/txtSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="M – 240 ml"
+            app:layout_constraintTop_toTopOf="@id/txtSizeLabel"
+            app:layout_constraintStart_toEndOf="@id/txtSizeLabel" />
+
+        <!-- Barista ipucu label -->
+        <TextView
+            android:id="@+id/txtTipLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Barista ipucu:"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtSizeLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Barista ipucu -->
+        <TextView
+            android:id="@+id/txtTip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Shot alırken toplam süreyi 25–30 sn aralığında tut."
+            app:layout_constraintTop_toBottomOf="@id/txtTipLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Eğlenceli not -->
+        <TextView
+            android:id="@+id/txtNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Not: Bu tarif Bdino Coffee baristaları tarafından test edilmiştir 🙂"
+            app:layout_constraintTop_toBottomOf="@id/txtTip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Paylaş butonu -->
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="Tarifi Paylaş"
+            app:layout_constraintTop_toBottomOf="@id/txtNote"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
