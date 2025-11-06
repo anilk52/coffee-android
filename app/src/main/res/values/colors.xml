@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- BDINO v2 Dream Palette -->
-    <color name="coffee_milk_beige">#EFE8DD</color>
-    <color name="coffee_deep_emerald">#1E3C34</color>
-    <color name="coffee_crema_white">#FAF8F4</color>
-    <color name="coffee_warm_brown">#8B5E3C</color>
-    <color name="coffee_gold_accent">#C9A26B</color>
-    <color name="coffee_ripple_glass">#40FFFFFF</color>
 
-    <!-- Eski isimlere uyum (alias) -->
-    <color name="coffee_beige">@color/coffee_milk_beige</color>
-    <color name="coffee_deep_green">@color/coffee_deep_emerald</color>
-    <color name="coffee_cream_white">@color/coffee_crema_white</color>
-    <color name="coffee_latte_brown">@color/coffee_warm_brown</color>
+    <!-- 🌿 BDINO COFFEE ANA RENK PALETİ -->
 
-    <!-- Metin renkleri (EKLENDİ) -->
-    <color name="bd_text_primary">@color/coffee_deep_emerald</color>
-    <color name="bd_text_secondary">@color/coffee_warm_brown</color>
+    <!-- Arka plan renkleri -->
+    <color name="coffee_beige">#FFF8F2</color>         <!-- Açık bej, genel arka plan -->
+    <color name="coffee_cream_white">#FFFFFF</color>   <!-- Beyaz ton, kartlar için -->
+    <color name="coffee_latte_brown">#D9B18E</color>   <!-- Latte kahvesi tonu -->
+    <color name="coffee_deep_green">#1E3932</color>    <!-- Marka yeşili (logo rengi) -->
+    <color name="coffee_dark_brown">#5A3E2B</color>    <!-- Espresso kahverengisi -->
 
-    <!-- Material 3 eşlemesi (açık tema) -->
-    <color name="md3_colorPrimary">@color/coffee_deep_emerald</color>
-    <color name="md3_colorOnPrimary">#FFFFFF</color>
-    <color name="md3_colorSecondary">@color/coffee_gold_accent</color>
-    <color name="md3_colorOnSecondary">@color/coffee_deep_emerald</color>
-    <color name="md3_colorSurface">@color/coffee_crema_white</color>
-    <color name="md3_colorOnSurface">#1B1B1B</color>
-    <color name="md3_colorBackground">@color/coffee_milk_beige</color>
-    <color name="md3_colorOnBackground">#1B1B1B</color>
-    <color name="md3_colorOutline">#33000000</color>
+    <!-- Yazı renkleri -->
+    <color name="text_primary">#222222</color>         <!-- Ana metin rengi -->
+    <color name="text_secondary">#7A6B5C</color>       <!-- İkincil metin (açıklama) -->
+    <color name="text_accent">#1E3932</color>          <!-- Yeşil vurgulu başlıklar -->
 
-    <color name="white">#FFFFFF</color>
+    <!-- Butonlar ve ikon renkleri -->
+    <color name="icon_active">#1E3932</color>          <!-- Aktif ikon -->
+    <color name="icon_inactive">#B8B8B8</color>        <!-- Pasif ikon -->
+    <color name="btn_accent">#D9B18E</color>           <!-- Latte kahve buton rengi -->
+
+    <!-- Arama çubuğu, kart arka planı, vb. -->
+    <color name="card_bg">#FFFFFF</color>
+    <color name="card_shadow">#26000000</color>
+
+    <!-- Yeni eklenen, XML'de hata veren tanımlar -->
+    <color name="bg_main">@color/coffee_beige</color>
+    <color name="text_primary_alias">@color/text_primary</color>
+    <color name="text_secondary_alias">@color/text_secondary</color>
+
+    <!-- Splash ve geçiş efektleri -->
+    <color name="splash_bg">@color/coffee_cream_white</color>
+    <color name="splash_text">@color/coffee_deep_green</color>
+
+    <!-- Şeffaflıklar -->
+    <color name="transparent">#00000000</color>
+
 </resources>
