@@ -5,14 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main"
     tools:context=".ui.RecipeDetailActivity">
 
     <!-- Üstte kahve görseli -->
     <ImageView
         android:id="@+id/imgHero"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -35,7 +34,6 @@
         android:layout_marginEnd="16dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/text_primary"
         app:layout_constraintTop_toBottomOf="@id/imgHero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +48,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="4dp"
         android:textSize="14sp"
-        android:textColor="@color/text_secondary"
         app:layout_constraintTop_toBottomOf="@id/coffeeName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,13 +63,12 @@
         android:layout_marginTop="12dp"
         android:textSize="15sp"
         android:lineSpacingExtra="2dp"
-        android:textColor="@color/text_primary"
         app:layout_constraintTop_toBottomOf="@id/coffeeMeasure"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Yoğun, kısa ve net bir espresso deneyimi." />
 
-    <!-- Ölçü satırı (kalın, tarifin özet ölçüsü) -->
+    <!-- Ölçü / barista ipucu -->
     <TextView
         android:id="@+id/coffeeTip"
         android:layout_width="0dp"
@@ -82,7 +78,6 @@
         android:layout_marginTop="12dp"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@color/text_primary"
         app:layout_constraintTop_toBottomOf="@id/coffeeDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +93,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
         android:textSize="14sp"
-        android:textColor="@color/text_secondary"
         app:layout_constraintTop_toBottomOf="@id/coffeeTip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
