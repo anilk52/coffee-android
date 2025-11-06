@@ -1,15 +1,15 @@
 package com.example.coffee.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
-import com.example.coffee.adapter.RecipeAdapter;
-import com.example.coffee.model.Recipe;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
@@ -17,44 +17,95 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView txtTitle;
     private TextView txtDescription;
     private TextView txtMeasure;
+    private TextView txtSize;
     private TextView txtTip;
     private TextView txtNote;
-    private TextView txtSize;
+    private Button btnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
 
-        imgHero      = findViewById(R.id.imgHero);
-        txtTitle     = findViewById(R.id.txtTitle);
-        txtDescription = findViewById(R.id.txtDescription);
-        txtMeasure   = findViewById(R.id.txtMeasure);
-        txtTip       = findViewById(R.id.txtTip);
-        txtNote      = findViewById(R.id.txtNote);
-        txtSize      = findViewById(R.id.txtSize);
+        // View bağlama
+        imgHero       = findViewById(R.id.imgHero);
+        txtTitle      = findViewById(R.id.txtTitle);
+        txtDescription= findViewById(R.id.txtDescription);
+        txtMeasure    = findViewById(R.id.txtMeasure);
+        txtSize       = findViewById(R.id.txtSize);
+        txtTip        = findViewById(R.id.txtTip);
+        txtNote       = findViewById(R.id.txtNote);
+        btnShare      = findViewById(R.id.btnShare);
 
-        Recipe recipe = (Recipe) getIntent()
-                .getSerializableExtra(RecipeAdapter.EXTRA_RECIPE);
+        // Intent’ten verileri al
+        Intent intent = getIntent();
 
-        if (recipe == null) {
-            finish();
-            return;
+        // Bunların key'leri RecipeActivity'de ne kullanıyorsan onunla aynı olmalı
+        int imageResId    = intent.getIntExtra("imageResId", 0);
+        String title      = intent.getStringExtra("title");
+        String description= intent.getStringExtra("description");
+        String measure    = intent.getStringExtra("measure");
+        String size       = intent.getStringExtra("size");   // Örn: "M – 150 ml"
+        String tip        = intent.getStringExtra("tip");
+        String note       = intent.getStringExtra("note");
+
+        // Görsel
+        if (imageResId != 0) {
+            imgHero.setImageResource(imageResId);
         }
 
-        if (recipe.getImageResId() != 0) {
-            imgHero.setImageResource(recipe.getImageResId());
-        }
+        // Metinleri doldur
+        if (title != null)       txtTitle.setText(title);
+        if (description != null) txtDescription.setText(description);
+        if (measure != null)     txtMeasure.setText(measure);
+        if (size != null)        txtSize.setText(size);      // HAZIR METİNİ direkt yazıyoruz
+        if (tip != null)         txtTip.setText(tip);
+        if (note != null)        txtNote.setText(note);
 
-        txtTitle.setText(recipe.getName());
-        txtDescription.setText(emptySafe(recipe.getDescription()));
-        txtMeasure.setText(emptySafe(recipe.getMeasure()));
-        txtTip.setText(emptySafe(recipe.getTip()));
-        txtNote.setText(emptySafe(recipe.getNote()));
-        txtSize.setText(emptySafe(recipe.getSize()));
+        // Paylaş butonu
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareRecipe(title, description, measure, size, tip, note);
+            }
+        });
     }
 
-    private String emptySafe(String s) {
-        return TextUtils.isEmpty(s) ? "-" : s;
+    /**
+     * Tarifi metin olarak paylaş
+     */
+    private void shareRecipe(String title,
+                             String description,
+                             String measure,
+                             String size,
+                             String tip,
+                             String note) {
+
+        StringBuilder builder = new StringBuilder();
+
+        if (title != null) {
+            builder.append(title).append("\n\n");
+        }
+        if (description != null) {
+            builder.append(description).append("\n\n");
+        }
+        if (measure != null) {
+            builder.append("Ölçü: ").append(measure).append("\n");
+        }
+        if (size != null) {
+            builder.append("Bardak boyutu: ").append(size).append("\n");
+        }
+        if (tip != null) {
+            builder.append("\nBarista ipucu: ").append(tip);
+        }
+        if (note != null) {
+            builder.append("\n\nNot: ").append(note);
+        }
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
+
+        startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
     }
 }
