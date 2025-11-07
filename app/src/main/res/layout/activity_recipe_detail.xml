@@ -11,19 +11,19 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Üstte kahve bardağı görseli -->
+        <!-- Üstte kahve kupası görseli -->
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="0dp"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_launcher_foreground"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Altında tüm metinleri taşıyan kart -->
+        <!-- Altında detayları taşıyan kart -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetail"
             android:layout_width="0dp"
@@ -32,6 +32,7 @@
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
+            app:cardBackgroundColor="#333333"
             app:layout_constraintTop_toBottomOf="@id/imgHero"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -50,7 +51,7 @@
                     android:text="Tarif Başlığı"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:layout_marginBottom="8dp" />
 
                 <!-- Açıklama -->
@@ -60,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="Tarif açıklaması buraya gelecek..."
                     android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@android:color/white"
                     android:layout_marginBottom="12dp" />
 
                 <!-- Ölçü satırı -->
@@ -75,15 +76,16 @@
                         android:layout_height="wrap_content"
                         android:text="Ölçü: "
                         android:textStyle="bold"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white" />
 
                     <TextView
                         android:id="@+id/txtMeasure"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="18 g kahve · 50–60 sn shot · 35–40 sn"
-                        android:textSize="14sp" />
+                        android:text="18 g kahve • 50–60 sn shot • 35–40 sn"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <!-- Bardak boyutu satırı -->
@@ -98,14 +100,15 @@
                         android:layout_height="wrap_content"
                         android:text="Bardak boyutu: "
                         android:textStyle="bold"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white" />
 
                     <TextView
                         android:id="@+id/txtSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="M – 240 ml"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <!-- Barista ipucu -->
@@ -114,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:text="Barista ipucu:"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/txtTip"
@@ -123,6 +126,7 @@
                     android:layout_marginTop="4dp"
                     android:text="Lungo yaparken öğütümü çok inceltme; yoksa fazla acılık çıkar."
                     android:textSize="14sp"
+                    android:textColor="@android:color/white"
                     android:layout_marginBottom="12dp" />
 
                 <!-- Eğlenceli not -->
@@ -131,15 +135,16 @@
                     android:layout_height="wrap_content"
                     android:text="Not:"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/txtNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Sade siyah kahve seven ama filtreye göre daha yoğun tat isteyenler için idealdir."
-                    android:textSize="14sp" />
+                    android:text="Sade siyah kahve seven ama filtre kahveye göre daha yoğun tat isteyenler için idealdir."
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
