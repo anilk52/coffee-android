@@ -40,88 +40,42 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // Intent’ten verileri al
         Intent intent = getIntent();
 
-        // Görsel id'si – iki farklı key'i de destekle (build bozulmasın diye esnek)
+        // Görsel id'si
         int imageResId = intent.getIntExtra("imageResId", 0);
-        if (imageResId == 0) {
-            imageResId = intent.getIntExtra("EXTRA_RECIPE_IMAGE", 0);
-        }
         if (imageResId != 0) {
             imgHero.setImageResource(imageResId);
         }
 
-        // Metinler – hem kısa hem eski key isimlerini destekle
-        String title = pickFirst(
-                intent.getStringExtra("title"),
-                intent.getStringExtra("EXTRA_RECIPE_TITLE")
-        );
+        // Metinler
+        String title       = intent.getStringExtra("title");
+        String description = intent.getStringExtra("description");
+        String measure     = intent.getStringExtra("measure");
+        String size        = intent.getStringExtra("size");
+        String tip         = intent.getStringExtra("tip");
+        String note        = intent.getStringExtra("note");
 
-        String description = pickFirst(
-                intent.getStringExtra("description"),
-                intent.getStringExtra("EXTRA_RECIPE_DESCRIPTION"),
-                intent.getStringExtra("longDescription")
-        );
-
-        String measure = pickFirst(
-                intent.getStringExtra("measure"),
-                intent.getStringExtra("EXTRA_RECIPE_MEASURE")
-        );
-
-        String size = pickFirst(
-                intent.getStringExtra("size"),
-                intent.getStringExtra("EXTRA_RECIPE_SIZE")
-        );
-
-        String tip = pickFirst(
-                intent.getStringExtra("tip"),
-                intent.getStringExtra("EXTRA_RECIPE_TIP")
-        );
-
-        String note = pickFirst(
-                intent.getStringExtra("note"),
-                intent.getStringExtra("EXTRA_RECIPE_NOTE")
-        );
-
-        // Ekrana bas
         if (title != null)       txtTitle.setText(title);
         if (description != null) txtDescription.setText(description);
         if (measure != null)     txtMeasure.setText(measure);
-        if (size != null)        txtSize.setText(size);      // "M – 150 ml" gibi direkt metin
+        if (size != null)        txtSize.setText(size); // "M – 150 ml" gibi direkt metin
         if (tip != null)         txtTip.setText(tip);
         if (note != null)        txtNote.setText(note);
 
         // Paylaş butonu
-        final int finalImageResId = imageResId;
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareRecipe(title, description, measure, size, tip, note, finalImageResId);
+                shareRecipe(title, description, measure, size, tip, note);
             }
         });
     }
 
-    /**
-     * İlk dolu (null olmayan ve boş olmayan) değeri seç
-     */
-    private String pickFirst(String... values) {
-        if (values == null) return null;
-        for (String v : values) {
-            if (v != null && !v.isEmpty()) {
-                return v;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Tarifi metin olarak paylaş
-     */
     private void shareRecipe(String title,
                              String description,
                              String measure,
                              String size,
                              String tip,
-                             String note,
-                             int imageResId) {
+                             String note) {
 
         StringBuilder builder = new StringBuilder();
 
