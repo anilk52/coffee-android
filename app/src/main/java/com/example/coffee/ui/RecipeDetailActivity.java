@@ -2,6 +2,7 @@ package com.example.coffee.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
+
+import java.util.Locale;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
@@ -21,6 +24,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView txtTip;
     private TextView txtNote;
     private Button btnShare;
+    private Button btnSpeak;
+
+    // TTS için
+    private TextToSpeech tts;
+    private String fullTextToRead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +44,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txtTip         = findViewById(R.id.txtTip);
         txtNote        = findViewById(R.id.txtNote);
         btnShare       = findViewById(R.id.btnShare);
+        btnSpeak       = findViewById(R.id.btnSpeak);
 
         // Intent’ten verileri al
         Intent intent = getIntent();
 
-        // Görsel id'si
         int imageResId = intent.getIntExtra("imageResId", 0);
         if (imageResId != 0) {
             imgHero.setImageResource(imageResId);
         }
 
-        // Metinler
         String title       = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
         String measure     = intent.getStringExtra("measure");
@@ -57,17 +64,55 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (title != null)       txtTitle.setText(title);
         if (description != null) txtDescription.setText(description);
         if (measure != null)     txtMeasure.setText(measure);
-        if (size != null)        txtSize.setText(size); // "M – 150 ml" gibi direkt metin
+        if (size != null)        txtSize.setText(size);
         if (tip != null)         txtTip.setText(tip);
         if (note != null)        txtNote.setText(note);
 
-        // Paylaş butonu
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareRecipe(title, description, measure, size, tip, note);
+        // 🔊 Okunacak metni birleştir
+        StringBuilder sb = new StringBuilder();
+        if (title != null && !title.isEmpty()) {
+            sb.append(title).append(". ");
+        }
+        if (description != null && !description.isEmpty()) {
+            sb.append(description).append(" ");
+        }
+        if (measure != null && !measure.isEmpty()) {
+            sb.append("Ölçü: ").append(measure).append(". ");
+        }
+        if (size != null && !size.isEmpty()) {
+            sb.append("Bardak boyutu: ").append(size).append(". ");
+        }
+        if (tip != null && !tip.isEmpty()) {
+            sb.append("Barista ipucu: ").append(tip).append(". ");
+        }
+        if (note != null && !note.isEmpty()) {
+            sb.append("Not: ").append(note).append(". ");
+        }
+        fullTextToRead = sb.toString();
+
+        // 🔊 OFFLINE TTS başlatma
+        tts = new TextToSpeech(this, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                // Türkçe dil paketi yüklüyse offline çalışır
+                int result = tts.setLanguage(new Locale("tr", "TR"));
+                tts.setPitch(1.0f);      // ses tonu
+                tts.setSpeechRate(0.95f); // konuşma hızı (hafif yavaş)
             }
         });
+
+        // Paylaş butonu
+        btnShare.setOnClickListener(v -> shareRecipe(title, description, measure, size, tip, note));
+
+        // 🔊 Oku butonu
+        btnSpeak.setOnClickListener(v -> speakRecipe());
+    }
+
+    private void speakRecipe() {
+        if (tts == null) return;
+        if (fullTextToRead == null || fullTextToRead.trim().isEmpty()) return;
+
+        tts.stop(); // önce varsa eskiyi kes
+        tts.speak(fullTextToRead, TextToSpeech.QUEUE_FLUSH, null, "BDINO_TTS");
     }
 
     private void shareRecipe(String title,
@@ -103,5 +148,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
 
         startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
     }
 }
