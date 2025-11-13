@@ -149,77 +149,72 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Hız ikonları -->
+        <!-- Hız butonları -->
         <LinearLayout
             android:id="@+id/layoutSpeedControls"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardDetail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageButton
+            <Button
                 android:id="@+id/btnSlow"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@android:drawable/ic_media_rew"
-                android:background="@android:color/transparent"
-                android:contentDescription="Yavaş oku" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🐌 YAVAŞ"
+                android:textAllCaps="false" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/btnNormal"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
-                android:src="@android:drawable/ic_media_play"
-                android:background="@android:color/transparent"
-                android:contentDescription="Normal hızda oku" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="▶ NORMAL"
+                android:textAllCaps="false" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/btnFast"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
-                android:src="@android:drawable/ic_media_ff"
-                android:background="@android:color/transparent"
-                android:contentDescription="Hızlı oku" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="⚡ HIZLI"
+                android:textAllCaps="false" />
         </LinearLayout>
 
-        <!-- Tarifi sesli oku ikon -->
-        <ImageButton
+        <!-- Tarifi sesli oku -->
+        <Button
             android:id="@+id/btnSpeak"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:src="@android:drawable/ic_btn_speak_now"
-            android:background="@android:color/transparent"
-            android:contentDescription="Tarifi sesli oku"
+            android:text="🔊 Tarifi Sesli Oku"
+            android:textAllCaps="false"
             app:layout_constraintTop_toBottomOf="@id/layoutSpeedControls"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Durdur ikon -->
-        <ImageButton
+        <!-- Durdur -->
+        <Button
             android:id="@+id/btnStop"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:src="@android:drawable/ic_media_pause"
-            android:background="@android:color/transparent"
-            android:contentDescription="Durdur"
+            android:text="⏹ Durdur"
+            android:textAllCaps="false"
             app:layout_constraintTop_toBottomOf="@id/btnSpeak"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Paylaş (yazılı kalsın) -->
+        <!-- Paylaş -->
         <Button
             android:id="@+id/btnShare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="24dp"
             android:text="TARİFİ PAYLAŞ"
             app:layout_constraintTop_toBottomOf="@id/btnStop"
