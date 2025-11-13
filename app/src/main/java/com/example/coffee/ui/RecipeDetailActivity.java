@@ -3,7 +3,6 @@ package com.example.coffee.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,10 +24,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView txtNote;
     private Button btnShare;
     private Button btnSpeak;
+    private Button btnSlow;
+    private Button btnNormal;
+    private Button btnFast;
+    private Button btnStop;
 
-    // TTS için
+    // TTS
     private TextToSpeech tts;
-    private String fullTextToRead;
+    private String fullTextToRead = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txtNote        = findViewById(R.id.txtNote);
         btnShare       = findViewById(R.id.btnShare);
         btnSpeak       = findViewById(R.id.btnSpeak);
+        btnSlow        = findViewById(R.id.btnSlow);
+        btnNormal      = findViewById(R.id.btnNormal);
+        btnFast        = findViewById(R.id.btnFast);
+        btnStop        = findViewById(R.id.btnStop);
 
         // Intent’ten verileri al
         Intent intent = getIntent();
@@ -68,7 +75,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (tip != null)         txtTip.setText(tip);
         if (note != null)        txtNote.setText(note);
 
-        // 🔊 Okunacak metni birleştir
+        // 🔊 Okunacak metni derle
         StringBuilder sb = new StringBuilder();
         if (title != null && !title.isEmpty()) {
             sb.append(title).append(". ");
@@ -93,18 +100,51 @@ public class RecipeDetailActivity extends AppCompatActivity {
         // 🔊 OFFLINE TTS başlatma
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                // Türkçe dil paketi yüklüyse offline çalışır
+                // Cihazda Türkçe ses paketi varsa offline çalışır
                 int result = tts.setLanguage(new Locale("tr", "TR"));
-                tts.setPitch(1.0f);      // ses tonu
-                tts.setSpeechRate(0.95f); // konuşma hızı (hafif yavaş)
+                tts.setPitch(1.0f);       // Ses tonu (1.0 = normal)
+                tts.setSpeechRate(0.95f); // Konuşma hızı (hafif yavaş)
             }
         });
 
         // Paylaş butonu
-        btnShare.setOnClickListener(v -> shareRecipe(title, description, measure, size, tip, note));
+        btnShare.setOnClickListener(v ->
+                shareRecipe(title, description, measure, size, tip, note)
+        );
 
-        // 🔊 Oku butonu
+        // 🔊 Standart "Oku" butonu (mevcut hızla)
         btnSpeak.setOnClickListener(v -> speakRecipe());
+
+        // 🐌 Yavaş okuma
+        btnSlow.setOnClickListener(v -> {
+            if (tts != null) {
+                tts.setSpeechRate(0.8f);
+                speakRecipe();
+            }
+        });
+
+        // ▶ Normal hız
+        btnNormal.setOnClickListener(v -> {
+            if (tts != null) {
+                tts.setSpeechRate(1.0f);
+                speakRecipe();
+            }
+        });
+
+        // ⚡ Hızlı okuma
+        btnFast.setOnClickListener(v -> {
+            if (tts != null) {
+                tts.setSpeechRate(1.2f);
+                speakRecipe();
+            }
+        });
+
+        // ⏹ Durdur
+        btnStop.setOnClickListener(v -> {
+            if (tts != null) {
+                tts.stop();
+            }
+        });
     }
 
     private void speakRecipe() {
