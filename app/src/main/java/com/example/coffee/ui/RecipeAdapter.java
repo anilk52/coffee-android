@@ -1,4 +1,4 @@
-package com.example.coffee.adapter;
+package com.example.coffee.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,95 +9,83 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.util.FavoriteStore;
-import com.example.coffee.model.Recipe;
-import com.example.coffee.ui.RecipeDetailActivity;
+import com.example.coffee.data.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    public static final String EXTRA_RECIPE = "extra_recipe";
-
     private final Context context;
-    private List<Recipe> items;
+    private final List<Recipe> recipeList;
 
-    public RecipeAdapter(Context context, List<Recipe> items) {
+    public RecipeAdapter(Context context, List<Recipe> recipeList) {
         this.context = context;
-        this.items = (items != null) ? items : new ArrayList<>();
-    }
-
-    public void updateList(List<Recipe> newList) {
-        this.items = (newList != null) ? newList : new ArrayList<>();
-        notifyDataSetChanged();
+        this.recipeList = recipeList;
     }
 
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
-        return new RecipeViewHolder(v);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_recipe, parent, false);
+        return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        Recipe recipe = items.get(position);
+        Recipe recipe = recipeList.get(position);
 
-        holder.txtName.setText(recipe.getName());
-        holder.txtShortDesc.setText(recipe.getShortDesc());
+        // Kart içeriğini doldur
+        holder.txtTitle.setText(recipe.getTitle());
+        holder.txtSubtitle.setText(recipe.getShortDescription());
+        holder.imgThumb.setImageResource(recipe.getImageResId());
 
-        if (recipe.getImageResId() != 0) {
-            holder.imgRecipe.setImageResource(recipe.getImageResId());
-        } else {
-            holder.imgRecipe.setImageResource(R.drawable.ic_placeholder_logo);
-        }
+        // Kart tıklanınca doğru tarife git
+        holder.cardContainer.setOnClickListener(v -> {
+            int adapterPos = holder.getAdapterPosition();
+            if (adapterPos == RecyclerView.NO_POSITION) return;
 
-        // Favori iconu
-        updateFavoriteIcon(holder.btnFavorite, FavoriteStore.isFavorite(context, recipe.getName()));
+            Recipe clicked = recipeList.get(adapterPos);
 
-        holder.btnFavorite.setOnClickListener(v -> {
-            FavoriteStore.toggleFavorite(context, recipe.getName());
-            boolean nowFav = FavoriteStore.isFavorite(context, recipe.getName());
-            updateFavoriteIcon(holder.btnFavorite, nowFav);
-        });
-
-        holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RecipeDetailActivity.class);
-            intent.putExtra(EXTRA_RECIPE, recipe);
+
+            // Görsel
+            intent.putExtra("imageResId", clicked.getImageResId());
+
+            // Metinler
+            intent.putExtra("title", clicked.getTitle());
+            intent.putExtra("description", clicked.getDescription());
+            intent.putExtra("measure", clicked.getMeasure());
+            intent.putExtra("size", clicked.getSize());
+            intent.putExtra("tip", clicked.getTip());
+            intent.putExtra("note", clicked.getNote());
+
             context.startActivity(intent);
         });
     }
 
-    private void updateFavoriteIcon(ImageView iv, boolean isFav) {
-        if (isFav) {
-            iv.setImageResource(R.drawable.ic_favorite_on);
-        } else {
-            iv.setImageResource(R.drawable.ic_favorite_off);
-        }
-    }
-
     @Override
     public int getItemCount() {
-        return items.size();
+        return recipeList != null ? recipeList.size() : 0;
     }
 
     static class RecipeViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgRecipe;
-        TextView txtName;
-        TextView txtShortDesc;
-        ImageView btnFavorite;
 
-        RecipeViewHolder(@NonNull View itemView) {
+        CardView cardContainer;
+        ImageView imgThumb;
+        TextView txtTitle;
+        TextView txtSubtitle;
+
+        public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgRecipe   = itemView.findViewById(R.id.imgRecipe);
-            txtName     = itemView.findViewById(R.id.txtName);
-            txtShortDesc= itemView.findViewById(R.id.txtShortDesc);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
+
+            cardContainer = itemView.findViewById(R.id.cardContainer);
+            imgThumb      = itemView.findViewById(R.id.imgThumb);
+            txtTitle      = itemView.findViewById(R.id.txtTitle);
+            txtSubtitle   = itemView.findViewById(R.id.txtSubtitle);
         }
     }
 }
