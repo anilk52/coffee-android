@@ -13,9 +13,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.data.RecipesData;
+import com.example.coffee.ui.RecipeDetailActivity;
 
 import java.util.List;
+
+// 🔴 ÖNEMLİ: BURAYI KENDİ PROJENE GÖRE KONTROL ET
+// Recipe.java dosyanı aç, en üst satırına bak:
+//  - Eğer "package com.example.coffee.data;" yazıyorsa, bu satır DOĞRU:
+//        import com.example.coffee.data.Recipe;
+//  - Eğer "package com.example.coffee;" yazıyorsa, bunu:
+//        import com.example.coffee.Recipe;
+//    yapacaksın.
+//  - Eğer "package com.example.coffee.model;" yazıyorsa:
+//        import com.example.coffee.model.Recipe;
+//  gibi.
+//
+// Şu anda en mantıklı ve sık görülen ihtimal:
+import com.example.coffee.data.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
@@ -56,12 +70,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             intent.putExtra("imageResId", clicked.getImageResId());
 
             // Metinler
-            intent.putExtra("title", clicked.getTitle());
+            intent.putExtra("title",       clicked.getTitle());
             intent.putExtra("description", clicked.getDescription());
-            intent.putExtra("measure", clicked.getMeasure());
-            intent.putExtra("size", clicked.getSize());
-            intent.putExtra("tip", clicked.getTip());
-            intent.putExtra("note", clicked.getNote());
+            intent.putExtra("measure",     clicked.getMeasure());
+            intent.putExtra("size",        clicked.getSize());
+            intent.putExtra("tip",         clicked.getTip());
+            intent.putExtra("note",        clicked.getNote());
 
             context.startActivity(intent);
         });
@@ -70,6 +84,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public int getItemCount() {
         return recipeList != null ? recipeList.size() : 0;
+    }
+
+    // 🔥 RecipeActivity ve FavoritesActivity'nin çağırdığı metod
+    public void updateList(List<Recipe> newList) {
+        recipeList.clear();
+        recipeList.addAll(newList);
+        notifyDataSetChanged();
     }
 
     static class RecipeViewHolder extends RecyclerView.ViewHolder {
