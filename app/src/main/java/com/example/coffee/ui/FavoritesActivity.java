@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.adapter.RecipeAdapter;
+import com.example.coffee.ui.RecipeAdapter;
 import com.example.coffee.util.FavoriteStore;
 import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
