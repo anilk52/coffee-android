@@ -29,7 +29,8 @@ import java.util.List;
 //  gibi.
 //
 // Şu anda en mantıklı ve sık görülen ihtimal:
-import com.example.coffee.data.Recipe;
+import com.example.coffee.data.RecipesData;
+import com.example.coffee.model.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
