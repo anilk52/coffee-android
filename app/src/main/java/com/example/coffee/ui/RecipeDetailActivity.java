@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,16 +23,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView txtSize;
     private TextView txtTip;
     private TextView txtNote;
-    private Button btnShare;
-    private Button btnSpeak;
-    private Button btnSlow;
-    private Button btnNormal;
-    private Button btnFast;
-    private Button btnStop;
 
-    // TTS
+    // Hız / oynatma kontrolleri artık ImageButton
+    private ImageButton btnSlow;
+    private ImageButton btnNormal;
+    private ImageButton btnFast;
+    private ImageButton btnSpeak;
+    private ImageButton btnStop;
+
+    // Paylaş normal Button kalsın
+    private Button btnShare;
+
     private TextToSpeech tts;
-    private String fullTextToRead = "";
+    private String fullTextToRead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +50,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txtSize        = findViewById(R.id.txtSize);
         txtTip         = findViewById(R.id.txtTip);
         txtNote        = findViewById(R.id.txtNote);
-        btnShare       = findViewById(R.id.btnShare);
-        btnSpeak       = findViewById(R.id.btnSpeak);
-        btnSlow        = findViewById(R.id.btnSlow);
-        btnNormal      = findViewById(R.id.btnNormal);
-        btnFast        = findViewById(R.id.btnFast);
-        btnStop        = findViewById(R.id.btnStop);
 
-        // Intent’ten verileri al
+        btnSlow   = findViewById(R.id.btnSlow);
+        btnNormal = findViewById(R.id.btnNormal);
+        btnFast   = findViewById(R.id.btnFast);
+        btnSpeak  = findViewById(R.id.btnSpeak);
+        btnStop   = findViewById(R.id.btnStop);
+        btnShare  = findViewById(R.id.btnShare);
+
+        // Intent verilerini al
         Intent intent = getIntent();
 
         int imageResId = intent.getIntExtra("imageResId", 0);
@@ -75,7 +80,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (tip != null)         txtTip.setText(tip);
         if (note != null)        txtNote.setText(note);
 
-        // 🔊 Okunacak metni derle
+        // 🔊 Okunacak metni oluştur
         StringBuilder sb = new StringBuilder();
         if (title != null && !title.isEmpty()) {
             sb.append(title).append(". ");
@@ -97,25 +102,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         fullTextToRead = sb.toString();
 
-        // 🔊 OFFLINE TTS başlatma
+        // 🔊 OFFLINE TTS
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                // Cihazda Türkçe ses paketi varsa offline çalışır
-                int result = tts.setLanguage(new Locale("tr", "TR"));
-                tts.setPitch(1.0f);       // Ses tonu (1.0 = normal)
-                tts.setSpeechRate(0.95f); // Konuşma hızı (hafif yavaş)
+                tts.setLanguage(new Locale("tr", "TR"));
+                tts.setPitch(1.0f);
+                tts.setSpeechRate(1.0f);
             }
         });
 
-        // Paylaş butonu
+        // Paylaş
         btnShare.setOnClickListener(v ->
                 shareRecipe(title, description, measure, size, tip, note)
         );
 
-        // 🔊 Standart "Oku" butonu (mevcut hızla)
-        btnSpeak.setOnClickListener(v -> speakRecipe());
-
-        // 🐌 Yavaş okuma
+        // 🐌 Yavaş
         btnSlow.setOnClickListener(v -> {
             if (tts != null) {
                 tts.setSpeechRate(0.8f);
@@ -123,7 +124,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        // ▶ Normal hız
+        // ▶ Normal
         btnNormal.setOnClickListener(v -> {
             if (tts != null) {
                 tts.setSpeechRate(1.0f);
@@ -131,10 +132,17 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        // ⚡ Hızlı okuma
+        // ⚡ Hızlı
         btnFast.setOnClickListener(v -> {
             if (tts != null) {
                 tts.setSpeechRate(1.2f);
+                speakRecipe();
+            }
+        });
+
+        // 🔊 Tarifi oku (mevcut hızla)
+        btnSpeak.setOnClickListener(v -> {
+            if (tts != null) {
                 speakRecipe();
             }
         });
@@ -151,7 +159,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (tts == null) return;
         if (fullTextToRead == null || fullTextToRead.trim().isEmpty()) return;
 
-        tts.stop(); // önce varsa eskiyi kes
+        tts.stop();
         tts.speak(fullTextToRead, TextToSpeech.QUEUE_FLUSH, null, "BDINO_TTS");
     }
 
@@ -186,7 +194,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
-
         startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
     }
 
