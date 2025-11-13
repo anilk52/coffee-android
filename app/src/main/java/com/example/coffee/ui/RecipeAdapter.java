@@ -54,8 +54,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Recipe recipe = recipeList.get(position);
 
         // Kart içeriğini doldur
-        holder.txtTitle.setText(recipe.getTitle());
-        holder.txtSubtitle.setText(recipe.getShortDescription());
+        holder.txtTitle.setText(recipe.getName());
+holder.txtSubtitle.setText(recipe.getDescription());
         holder.imgThumb.setImageResource(recipe.getImageResId());
 
         // Kart tıklanınca doğru tarife git
@@ -71,7 +71,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             intent.putExtra("imageResId", clicked.getImageResId());
 
             // Metinler
-            intent.putExtra("title",       clicked.getTitle());
+            intent.putExtra("title",       clicked.getName());
             intent.putExtra("description", clicked.getDescription());
             intent.putExtra("measure",     clicked.getMeasure());
             intent.putExtra("size",        clicked.getSize());
