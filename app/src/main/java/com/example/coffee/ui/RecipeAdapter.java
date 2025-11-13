@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.data.Recipes;
+import com.example.coffee.data.RecipesData;
 
 import java.util.List;
 
