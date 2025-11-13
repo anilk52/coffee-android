@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,14 +23,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView txtTip;
     private TextView txtNote;
 
-    // Hız / oynatma kontrolleri artık ImageButton
-    private ImageButton btnSlow;
-    private ImageButton btnNormal;
-    private ImageButton btnFast;
-    private ImageButton btnSpeak;
-    private ImageButton btnStop;
-
-    // Paylaş normal Button kalsın
+    private Button btnSlow;
+    private Button btnNormal;
+    private Button btnFast;
+    private Button btnSpeak;
+    private Button btnStop;
     private Button btnShare;
 
     private TextToSpeech tts;
@@ -58,7 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnStop   = findViewById(R.id.btnStop);
         btnShare  = findViewById(R.id.btnShare);
 
-        // Intent verilerini al
+        // Intent verileri
         Intent intent = getIntent();
 
         int imageResId = intent.getIntExtra("imageResId", 0);
@@ -80,7 +76,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (tip != null)         txtTip.setText(tip);
         if (note != null)        txtNote.setText(note);
 
-        // 🔊 Okunacak metni oluştur
+        // 🔊 Okunacak metni hazırla
         StringBuilder sb = new StringBuilder();
         if (title != null && !title.isEmpty()) {
             sb.append(title).append(". ");
@@ -102,12 +98,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         fullTextToRead = sb.toString();
 
-        // 🔊 OFFLINE TTS
+        // 🔊 Offline TTS
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(new Locale("tr", "TR"));
                 tts.setPitch(1.0f);
-                tts.setSpeechRate(1.0f);
+                tts.setSpeechRate(1.0f);   // default hız
             }
         });
 
@@ -140,7 +136,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        // 🔊 Tarifi oku (mevcut hızla)
+        // 🔊 Tarifi sesli oku (mevcut hızla)
         btnSpeak.setOnClickListener(v -> {
             if (tts != null) {
                 speakRecipe();
