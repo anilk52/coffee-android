@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Altında detayları taşıyan kart -->
+        <!-- Tarif detay kartı -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetail"
             android:layout_width="0dp"
@@ -83,7 +83,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="18 g kahve • 50–60 sn shot • 35–40 sn"
+                        android:text="18 g kahve • 50–60 g shot • 35–40 sn"
                         android:textSize="14sp"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
@@ -149,15 +149,28 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- En altta paylaş butonu -->
+        <!-- Tarifi sesli oku butonu -->
+        <Button
+            android:id="@+id/btnSpeak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="🔊 Tarifi Sesli Oku"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@id/cardDetail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Paylaş butonu -->
         <Button
             android:id="@+id/btnShare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:text="TARİFİ PAYLAŞ"
-            app:layout_constraintTop_toBottomOf="@id/cardDetail"
+            app:layout_constraintTop_toBottomOf="@id/btnSpeak"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
