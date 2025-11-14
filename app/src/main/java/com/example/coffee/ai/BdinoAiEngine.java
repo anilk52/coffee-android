@@ -11,13 +11,8 @@ import java.util.Random;
  * MİLO – BDINO Coffee'nin yerel kahve yapay zekası.
  *
  * Özellikler:
- *  - Kullanıcının sorusuna göre iki mod:
- *      1) Problem çözme modu (kahve acı, hafif, köpüksüz, süre vs.)
- *      2) Kahve öneri modu ("ne içsem", "bana kahve öner", "hava sıcak" vb.)
- *  - Basit duygu algılama (mood)
- *  - Saat dilimine göre (sabah/öğlen/akşam/gece) tavır
- *  - Kahve adına göre kategori tahmini (espresso / filter / turkish / iced)
- *  - Barista tüyoları ve insan gibi giriş/kapanış cümleleri
+ *  - generateAdvice(...)  → tek seferlik "uzun barista cevabı" (mevcut kullanım)
+ *  - generateTurn(...)    → sohbet modu (MİLO soru sorup cevap bekler)
  *
  * Tamamen offline ve ücretsiz çalışır.
  */
@@ -38,15 +33,13 @@ public class BdinoAiEngine {
         return instance;
     }
 
-    /**
-     * Şimdilik gerçek model yok, ama ileride burada model başlatılabilir.
-     * Uygulama tarafı rahat etsin diye placeholder bırakıyoruz.
-     */
     public void initOfflineModelIfNeeded() {
-        // Şimdilik hiçbir şey yapmıyor.
+        // Şimdilik gerçek model yok, ama API sabit kalsın diye bırakıyoruz.
     }
 
-    /* ---------------- MİLO'nun ana giriş noktası ---------------- */
+    /* =========================================================
+       1) MİLO – TEK SEFERLİK CEVAP (MEVCUT AI BARISTA)
+       ========================================================= */
 
     public String generateAdvice(
             String question,
@@ -65,22 +58,19 @@ public class BdinoAiEngine {
         TimeSlot timeSlot = detectTimeSlot();
         CoffeeFamily coffeeFamily = detectCoffeeFamily(coffeeName);
 
-        // Cevap burada inşa edilecek
         StringBuilder sb = new StringBuilder();
 
-        // 1) Giriş cümlesi (mood + mod)
+        // 1) Giriş
         sb.append(buildIntro(mood, queryType, timeSlot)).append("\n\n");
 
-        // 2) Mod: Öneri mi, problem çözme mi?
+        // 2) Mod seçimi
         if (queryType == QueryType.RECOMMENDATION) {
-            // Kahve öneri modu
             sb.append(buildRecommendationAnswer(
                     qLower,
                     timeSlot,
                     mood
             ));
         } else {
-            // Problem çözme / genel barista tavsiyesi modu
             sb.append(buildTroubleshootingAnswer(
                     qLower,
                     coffeeName,
@@ -91,7 +81,7 @@ public class BdinoAiEngine {
             ));
         }
 
-        // 3) Son kısım: küçük tüyo + kapanış
+        // 3) Küçük tüyo + kapanış
         String tinyTip = getTinyTip(qLower, coffeeName);
         if (!TextUtils.isEmpty(tinyTip)) {
             sb.append("\n").append(tinyTip).append("\n");
@@ -102,16 +92,303 @@ public class BdinoAiEngine {
         return sb.toString();
     }
 
-    /* ---------------- Mood / Soru Tipi / Saat / Kahve Türü ---------------- */
+    /* =========================================================
+       2) MİLO – SOHBET MODU (KARŞILIKLI SORU/CEVAP)
+       ========================================================= */
+
+    /**
+     * Sohbet eden MİLO.
+     *
+     * @param userMessage   Kullanıcının yazdığı son mesaj.
+     * @param state         Mevcut sohbet durumu (null ise yeni başlar).
+     * @param coffeeName    (İsteğe bağlı) seçili kahve adı.
+     * @param coffeeDesc    (İsteğe bağlı) açıklama.
+     * @param coffeeMeasure Ölçü bilgisi.
+     * @param coffeeSize    Bardak boyutu.
+     * @param coffeeTip     Barista ipucu.
+     * @param coffeeNote    Ek not.
+     */
+    public MiloReply generateTurn(
+            String userMessage,
+            MiloConversationState state,
+            String coffeeName,
+            String coffeeDesc,
+            String coffeeMeasure,
+            String coffeeSize,
+            String coffeeTip,
+            String coffeeNote
+    ) {
+        if (userMessage == null) userMessage = "";
+        String qLower = userMessage.toLowerCase(Locale.ROOT);
+
+        if (state == null) {
+            state = new MiloConversationState();
+        }
+        MiloConversationState newState = state.copy();
+
+        // Mood & saat yine işimize yarayacak
+        Mood mood = detectMood(qLower);
+        TimeSlot timeSlot = detectTimeSlot();
+
+        // Eğer hiç mod seçilmemişse, önce ne isteniyor onu algıla
+        if (newState.mode == MiloConversationState.Mode.NONE) {
+            QueryType type = detectQueryType(qLower);
+
+            if (type == QueryType.RECOMMENDATION) {
+                // "Ne içsem?" senaryosu → öneri modu
+                newState.mode = MiloConversationState.Mode.RECOMMENDATION;
+                newState.step = 1;
+                String answer = buildIntro(mood, type, timeSlot)
+                        + "\n\nÖnce basitten başlayalım: Daha çok **sütlü** kahveleri mi seversin, yoksa **sade / siyah** kahve mi?";
+                return new MiloReply(answer, true, newState);
+            } else {
+                // Sorun modu → şimdilik tek seferlik cevap verelim
+                String answer = generateAdvice(
+                        userMessage,
+                        coffeeName,
+                        coffeeDesc,
+                        coffeeMeasure,
+                        coffeeSize,
+                        coffeeTip,
+                        coffeeNote
+                );
+                // Sohbeti kapat, tekrar soru sorarsa yeni state ile başlar
+                newState.mode = MiloConversationState.Mode.NONE;
+                newState.step = 0;
+                return new MiloReply(answer, false, newState);
+            }
+        }
+
+        // Eğer öneri modundaysak adım adım ilerleyelim
+        if (newState.mode == MiloConversationState.Mode.RECOMMENDATION) {
+            return handleRecommendationTurn(
+                    userMessage,
+                    qLower,
+                    newState,
+                    mood,
+                    timeSlot
+            );
+        }
+
+        // Diğer modlar için şimdilik tek seferlik davran
+        String answer = generateAdvice(
+                userMessage,
+                coffeeName,
+                coffeeDesc,
+                coffeeMeasure,
+                coffeeSize,
+                coffeeTip,
+                coffeeNote
+        );
+        newState.mode = MiloConversationState.Mode.NONE;
+        newState.step = 0;
+        return new MiloReply(answer, false, newState);
+    }
+
+    /**
+     * "Bugün ne içsem?" gibi durumlarda MİLO'nun adım adım soru sorup
+     * kullanıcının tercihlerini toplaması.
+     */
+    private MiloReply handleRecommendationTurn(
+            String userMessage,
+            String qLower,
+            MiloConversationState state,
+            Mood mood,
+            TimeSlot timeSlot
+    ) {
+        MiloConversationState newState = state.copy();
+        StringBuilder answer = new StringBuilder();
+
+        // ADIM 1: Sütlü mü / sade mi?
+        if (newState.step == 1) {
+            if (qLower.contains("sütlü") || qLower.contains("latte") || qLower.contains("flat white")) {
+                newState.milkPref = MiloConversationState.PrefMilk.MILKY;
+            } else if (qLower.contains("sade") || qLower.contains("siyah") ||
+                       qLower.contains("filter") || qLower.contains("filtre") ||
+                       qLower.contains("espresso") || qLower.contains("americano")) {
+                newState.milkPref = MiloConversationState.PrefMilk.BLACK;
+            }
+
+            if (newState.milkPref == MiloConversationState.PrefMilk.UNKNOWN) {
+                answer.append("Seni daha iyi tanıyayım diye soruyorum: Daha çok sütlü kahveler mi, yoksa sade kahve mi içersin?");
+                return new MiloReply(answer.toString(), true, newState);
+            }
+
+            // Bir sonraki adıma geç
+            newState.step = 2;
+            answer.append("Tamamdır, bunu öğrendim.\n\n");
+            answer.append("Peki kahven **hafif ve sakin** mi olsun, yoksa biraz daha **yoğun / sert** mi seversin?");
+            return new MiloReply(answer.toString(), true, newState);
+        }
+
+        // ADIM 2: Hafif mi / sert mi?
+        if (newState.step == 2) {
+            if (qLower.contains("hafif") || qLower.contains("yumuşak") || qLower.contains("light")) {
+                newState.strengthPref = MiloConversationState.PrefStrength.LIGHT;
+            } else if (qLower.contains("sert") || qLower.contains("güçlü") ||
+                       qLower.contains("yoğun") || qLower.contains("kafa açılsın")) {
+                newState.strengthPref = MiloConversationState.PrefStrength.STRONG;
+            }
+
+            if (newState.strengthPref == MiloConversationState.PrefStrength.UNKNOWN) {
+                answer.append("Yoğunluk önemli: Daha **hafif / yumuşak** fincanları mı, yoksa **sert / güçlü** kahveleri mi tercih edersin?");
+                return new MiloReply(answer.toString(), true, newState);
+            }
+
+            newState.step = 3;
+            answer.append("Güzel, bunu da kaydettim.\n\n");
+            answer.append("Şimdi de sıcaklık: Bugün **sıcak** bir şey mi istersin, yoksa **buzlu / soğuk** bir kahve mi daha iyi gider?");
+            return new MiloReply(answer.toString(), true, newState);
+        }
+
+        // ADIM 3: Sıcak mı / buzlu mu?
+        if (newState.step == 3) {
+            if (qLower.contains("soğuk") || qLower.contains("buzlu") ||
+                qLower.contains("ice") || qLower.contains("iced")) {
+                newState.tempPref = MiloConversationState.PrefTemp.COLD;
+            } else if (qLower.contains("sıcak") || qLower.contains("ılık") || qLower.contains("normal")) {
+                newState.tempPref = MiloConversationState.PrefTemp.HOT;
+            }
+
+            if (newState.tempPref == MiloConversationState.PrefTemp.UNKNOWN) {
+                answer.append("Sıcaklık kısmını netleştirelim: **Sıcak** mı içmek istersin yoksa **buzlu / soğuk** mu?");
+                return new MiloReply(answer.toString(), true, newState);
+            }
+
+            newState.step = 4;
+            answer.append("Tamam, tablo netleşiyor.\n\n");
+            answer.append("Son bir şey: Uğraşmak senin için problem mi? Yani **pratik / çabuk** bir şey mi olsun, yoksa **uğraşması da keyifli** olabilir mi?");
+            return new MiloReply(answer.toString(), true, newState);
+        }
+
+        // ADIM 4: Pratik mi / uğraşlı mı?
+        if (newState.step == 4) {
+            if (qLower.contains("pratik") || qLower.contains("uğraşamam") ||
+                qLower.contains("kolay") || qLower.contains("çabuk") ||
+                qLower.contains("hemen")) {
+                newState.effortPref = MiloConversationState.PrefEffort.EASY;
+            } else {
+                // Kullanıcı özellikle pratik demediyse "fark etmez" sayalım
+                newState.effortPref = MiloConversationState.PrefEffort.DONT_CARE;
+            }
+
+            // Artık öneri üretebiliriz
+            String suggestion = buildSuggestionFromPrefs(newState, timeSlot, mood);
+
+            // Sohbeti kapatıyoruz, tekrar "ne içsem" derse sıfırdan başlar
+            newState.mode = MiloConversationState.Mode.NONE;
+            newState.step = 0;
+
+            return new MiloReply(suggestion, false, newState);
+        }
+
+        // Beklenmedik durum: sıfırla
+        newState.mode = MiloConversationState.Mode.NONE;
+        newState.step = 0;
+        answer.append("Sohbet adımlarında biraz karıştık gibi, istersen tekrar \"Bugün ne içsem?\" diyerek başlayabiliriz.");
+        return new MiloReply(answer.toString(), false, newState);
+    }
+
+    /**
+     * Toplanan tercihlere göre kahve önerileri üretir.
+     */
+    private String buildSuggestionFromPrefs(
+            MiloConversationState prefs,
+            TimeSlot timeSlot,
+            Mood mood
+    ) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Tamam, seni biraz daha tanıdım. Özetleyeyim:\n");
+
+        // Süt
+        if (prefs.milkPref == MiloConversationState.PrefMilk.MILKY) {
+            sb.append("  • Sütlü kahveleri seviyorsun.\n");
+        } else if (prefs.milkPref == MiloConversationState.PrefMilk.BLACK) {
+            sb.append("  • Sade / siyah kahve seviyorsun.\n");
+        }
+
+        // Yoğunluk
+        if (prefs.strengthPref == MiloConversationState.PrefStrength.LIGHT) {
+            sb.append("  • Fincanın hafif / yumuşak olmasını tercih ediyorsun.\n");
+        } else if (prefs.strengthPref == MiloConversationState.PrefStrength.STRONG) {
+            sb.append("  • Bir tık daha yoğun / güçlü fincanları tercih ediyorsun.\n");
+        }
+
+        // Sıcaklık
+        if (prefs.tempPref == MiloConversationState.PrefTemp.COLD) {
+            sb.append("  • Soğuk / buzlu bir şey istiyorsun.\n");
+        } else if (prefs.tempPref == MiloConversationState.PrefTemp.HOT) {
+            sb.append("  • Sıcak kahve tarafındasın.\n");
+        }
+
+        // Effort
+        if (prefs.effortPref == MiloConversationState.PrefEffort.EASY) {
+            sb.append("  • Çok uğraşmak istemiyorsun, pratik bir şey olsun istiyorsun.\n");
+        } else if (prefs.effortPref == MiloConversationState.PrefEffort.DONT_CARE) {
+            sb.append("  • Uğraşması da keyifli olabilir, problem değil.\n");
+        }
+
+        sb.append("\nBuna göre sana en çok yakışan BDINO fincanları şöyle:\n\n");
+
+        // Öneri listesi
+        if (prefs.tempPref == MiloConversationState.PrefTemp.COLD) {
+            // Soğuk kahve
+            if (prefs.milkPref == MiloConversationState.PrefMilk.MILKY) {
+                sb.append("  • Iced Latte: Sütlü, yumuşak ve buzla birlikte iyi giden bir fincan.\n");
+            } else {
+                sb.append("  • Cold Brew: Düşük asiditeli, ferah ve sade içimli bir kahve.\n");
+            }
+            if (prefs.strengthPref == MiloConversationState.PrefStrength.STRONG) {
+                sb.append("  • Iced Americano: Güçlü kahve karakterinden vazgeçmeden serinlemek için.\n");
+            }
+        } else {
+            // Sıcak kahve
+            if (prefs.milkPref == MiloConversationState.PrefMilk.MILKY) {
+                if (prefs.strengthPref == MiloConversationState.PrefStrength.LIGHT) {
+                    sb.append("  • Latte: Sütlü, hafif ve sakinleştirici bir fincan.\n");
+                } else {
+                    sb.append("  • Flat White: Latte'den biraz daha yoğun ama hâlâ kremamsı.\n");
+                    sb.append("  • Cappuccino: Köpüklü, dengeli ve sohbetlik bir fincan.\n");
+                }
+            } else {
+                // Sade kahve
+                if (prefs.strengthPref == MiloConversationState.PrefStrength.LIGHT) {
+                    sb.append("  • Filtre Kahve: Temiz, net ve uzun içimli bir fincan.\n");
+                    sb.append("  • Americano: Espresso karakterini koruyan daha uzun bir fincan.\n");
+                } else {
+                    sb.append("  • Espresso: Kısa, güçlü ve direkt bir fincan.\n");
+                    sb.append("  • Lungo: Espresso kadar kısa değil, ama hâlâ yoğun ve canlı.\n");
+                    if (timeSlot == TimeSlot.NIGHT) {
+                        sb.append("  • Küçük bir Türk Kahvesi: Geceye karakterli ama dozajı kontrollü bir kapanış yapar.\n");
+                    }
+                }
+            }
+        }
+
+        if (prefs.effortPref == MiloConversationState.PrefEffort.EASY) {
+            sb.append("\nPratik olması için:\n");
+            sb.append("  - Makinen varsa düz espresso veya Americano'ya yönelebilirsin.\n");
+            sb.append("  - Evde basit bir filtre makinesi varsa tek düğmeyle filtre kahve demlemek iyi bir çözüm.\n");
+        }
+
+        sb.append("\nİlk önerdiğim fincanlardan biriyle başla; sevmezsen diğerini denersin. Birkaç gün içinde kendi BDINO imza kahveni bulursun. ☕");
+
+        return sb.toString();
+    }
+
+    /* =========================================================
+       3) Ortak yardımcılar (Mood, QueryType, TimeSlot, vb)
+       ========================================================= */
 
     private enum Mood {
         NEUTRAL, FRUSTRATED, HAPPY, CURIOUS, SAD
     }
 
     private enum QueryType {
-        TROUBLE,       // Kahve ile ilgili sorun
-        RECOMMENDATION,// "Ne içsem?", "bana kahve öner" vb.
-        GENERIC        // Genel soru
+        TROUBLE,
+        RECOMMENDATION,
+        GENERIC
     }
 
     private enum TimeSlot {
@@ -150,7 +427,6 @@ public class BdinoAiEngine {
     }
 
     private QueryType detectQueryType(String q) {
-        // Öneri modu tetikleyen kalıplar
         if (q.contains("ne içsem") || q.contains("bana kahve öner") ||
             q.contains("kahve öner") || q.contains("hangi kahve") ||
             q.contains("kahve tavsiye") || q.contains("bir kahve söyle") ||
@@ -158,7 +434,6 @@ public class BdinoAiEngine {
             return QueryType.RECOMMENDATION;
         }
 
-        // Sorun modu tetikleyen kelimeler
         if (q.contains("acı") || q.contains("ekşi") || q.contains("hafif") ||
             q.contains("zayıf") || q.contains("çok sert") || q.contains("çok yoğun") ||
             q.contains("köpük") || q.contains("süre") || q.contains("kaç saniye") ||
@@ -166,7 +441,6 @@ public class BdinoAiEngine {
             return QueryType.TROUBLE;
         }
 
-        // Varsayılan: sorun modu gibi davranmak daha faydalı
         return QueryType.TROUBLE;
     }
 
@@ -215,7 +489,7 @@ public class BdinoAiEngine {
         return CoffeeFamily.OTHER;
     }
 
-    /* ---------------- Giriş ve Kapanış Cümleleri ---------------- */
+    /* ---------------- Giriş & Kapanış ---------------- */
 
     private String buildIntro(Mood mood, QueryType type, TimeSlot timeSlot) {
         String[] neutralTrouble = {
@@ -247,10 +521,10 @@ public class BdinoAiEngine {
         };
 
         String[] sad = {
-            "Moralin çok da yüksek değil gibi, o zaman işi zorlaştırmayalım.",
-            "Duygu tarafı karışıkken bari kahve kısmını rahatlatıcı yapalım.",
-            "Kendini yormadan içini ısıtacak bir fincan seçelim.",
-            "Bazen bir fincan kahve, günü baştan yazmaz ama tonu yumuşatır."
+                "Moralin çok da yüksek değil gibi, o zaman işi zorlaştırmayalım.",
+                "Duygu tarafı karışıkken bari kahve kısmını rahatlatan bir fincan yapalım.",
+                "Kendini yormadan içini ısıtacak bir fincan seçelim.",
+                "Bazen bir fincan kahve, tonu tamamen değiştirmese de yumuşatır."
         };
 
         String base;
@@ -276,7 +550,6 @@ public class BdinoAiEngine {
                 }
         }
 
-        // Saat bilgisini hafifçe cümleye ekleyebiliriz.
         switch (timeSlot) {
             case MORNING:
                 return base + " Sabah saatleri, kahve için en kritik zamanlardandır.";
@@ -294,7 +567,7 @@ public class BdinoAiEngine {
         String[] neutral = {
                 "Birkaç denemede kendi BDINO rutinini bulursun.",
                 "Önemli olan her fincanda küçük bir şey öğrenmek.",
-                "Damak tadını sen en iyi sen tanıyorsun, ben sadece yol işaretlerini koyuyorum.",
+                "Damak tadını en iyi sen tanıyorsun, ben sadece yol işaretlerini koyuyorum.",
                 "Bir sonraki fincanda ne değiştiğini gözlemlemeyi unutma."
         };
 
@@ -329,7 +602,6 @@ public class BdinoAiEngine {
             sb.append("Şu an özellikle **").append(coffeeName).append("** için konuşalım.\n\n");
         }
 
-        // Tat profili: acı / ekşi / hafif / zayıf
         boolean mentionedSomething = false;
 
         if (qLower.contains("acı") || qLower.contains("yanık")) {
@@ -369,7 +641,6 @@ public class BdinoAiEngine {
             sb.append("\n");
         }
 
-        // Köpük / süt sorunları
         if (qLower.contains("köpük") || qLower.contains("foam") || qLower.contains("süt")) {
             mentionedSomething = true;
             sb.append("• Süt ve köpük tarafında sorun yaşıyorsan:\n");
@@ -378,7 +649,6 @@ public class BdinoAiEngine {
             sb.append("  - 60–65°C bandı, süt tatlılığını öne çıkaran güvenli bölgedir.\n\n");
         }
 
-        // Süre / kaç saniye
         if (qLower.contains("süre") || qLower.contains("kaç saniye") ||
             qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
             mentionedSomething = true;
@@ -389,7 +659,6 @@ public class BdinoAiEngine {
             sb.append("  - Türk kahvesi: kaynatmadan önceki ilk kabarmayı yakalamak kritik.\n\n");
         }
 
-        // Eğer spesifik bir şey yakalayamadıysa genel troubleshoot
         if (!mentionedSomething) {
             sb.append("Kahveyi iyileştirmek için genel bir çerçeve vereyim:\n");
             sb.append("  1. Her seferinde sadece tek parametreyi değiştir (öğütüm, süre, oran veya sıcaklık).\n");
@@ -413,7 +682,7 @@ public class BdinoAiEngine {
         return sb.toString();
     }
 
-    /* ---------------- Kahve Öneri Modu ---------------- */
+    /* ---------------- Öneri Modu (tek seferlik) ---------------- */
 
     private String buildRecommendationAnswer(
             String qLower,
@@ -431,7 +700,6 @@ public class BdinoAiEngine {
         boolean wantsEasy = qLower.contains("pratik") || qLower.contains("uğraşamam") ||
                             qLower.contains("uğraşmak istemiyorum") || qLower.contains("kolay olsun");
 
-        // Saatin etkisi
         if (wantsIced) {
             sb.append("Hava veya ruh hali seni daha ferah bir fincana çağırıyor gibi duruyor.\n\n");
             sb.append("Şu seçenekler sana iyi gelebilir:\n");
@@ -494,7 +762,7 @@ public class BdinoAiEngine {
             sb.append("  - Varsa basit bir filtre makinesiyle tek düğmeyle demleme yapmak çok işini görebilir.\n");
         }
 
-        sb.append("\nİlk önerdiğim fincanlardan biriyle başla; sevmezsen diğerine geçersin. Böyle böyle kendi BDINO imza kahveni bulursun.");
+        sb.append("\nİlk önerdiğim fincanlardan biriyle başla; sevmezsen diğerine geç. Böyle böyle kendi BDINO rutinini bulursun. ☕");
 
         return sb.toString();
     }
