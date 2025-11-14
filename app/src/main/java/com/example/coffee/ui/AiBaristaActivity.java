@@ -2,7 +2,6 @@ package com.example.coffee.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,16 +13,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
 import com.example.coffee.ai.BdinoAiEngine;
+import com.example.coffee.ai.MiloConversationState;
+import com.example.coffee.ai.MiloReply;
 
-import java.util.Locale;
-
+/**
+ * MİLO – Sohbet eden AI Barista ekranı.
+ *
+ * Not:
+ *  - Alt kısımda soru yazdığın alan (edtQuestion)
+ *  - Gönder butonu (btnSend)
+ *  - Ortadaki büyük metin alanı sohbeti gösteriyor (txtAnswerBody)
+ *  - txtAnswerTitle sadece başlık gibi kullanılıyor
+ *
+ * Şimdilik RecyclerView yerine tek bir TextView içinde "Sen:" / "MİLO:" satırlarıyla
+ * sohbeti gösteriyoruz. İleride istersek baloncuklu chat'e çevirebiliriz.
+ */
 public class AiBaristaActivity extends AppCompatActivity {
 
     private ImageView imgHero;
     private TextView txtCoffeeName;
     private EditText edtQuestion;
     private Button btnSend;
-    private Button btnVoice;
     private TextView txtAnswerTitle;
     private TextView txtAnswerBody;
 
@@ -34,10 +44,11 @@ public class AiBaristaActivity extends AppCompatActivity {
     private String coffeeTip = "";
     private String coffeeNote = "";
 
-    // MİLO ses için
-    private TextToSpeech tts;
-    private boolean isTtsReady = false;
-    private boolean isSpeaking = false;
+    // MİLO sohbet durumu
+    private MiloConversationState conversationState;
+
+    // MİLO beyni
+    private BdinoAiEngine ai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +60,6 @@ public class AiBaristaActivity extends AppCompatActivity {
         txtCoffeeName  = findViewById(R.id.txtCoffeeName);
         edtQuestion    = findViewById(R.id.edtQuestion);
         btnSend        = findViewById(R.id.btnSend);
-        btnVoice       = findViewById(R.id.btnVoice);
         txtAnswerTitle = findViewById(R.id.txtAnswerTitle);
         txtAnswerBody  = findViewById(R.id.txtAnswerBody);
 
@@ -73,23 +83,40 @@ public class AiBaristaActivity extends AppCompatActivity {
             txtCoffeeName.setText("BDINO Coffee");
         }
 
+        // Başlık / label
+        txtAnswerTitle.setText("MİLO – BDINO AI Barista");
+        txtAnswerTitle.setVisibility(TextView.VISIBLE);
+
+        // Sohbet alanını temizle & hoş geldin mesajı
+        txtAnswerBody.setText("");
+        appendSystemMessage("MİLO hazır. Ona örneğin şöyle yazabilirsin:\n" +
+                "• \"Bugün ne içsem?\"\n" +
+                "• \"Latte çok hafif oluyor, ne yapmalıyım?\"\n" +
+                "• \"Filtre kahvem hep acı çıkıyor\"");
+
         // MİLO beyni
-        BdinoAiEngine ai = BdinoAiEngine.getInstance(getApplicationContext());
-        ai.initOfflineModelIfNeeded(); // Şimdilik no-op
+        ai = BdinoAiEngine.getInstance(getApplicationContext());
+        ai.initOfflineModelIfNeeded();
 
-        // MİLO sesi (TextToSpeech) başlat
-        initTextToSpeech();
+        // Başlangıçta state yok
+        conversationState = null;
 
-        // Gönder butonu → MİLO cevabı üret + istersek otomatik konuştur
+        // Gönder butonu → sohbet turu
         btnSend.setOnClickListener(v -> {
-            String question = edtQuestion.getText().toString().trim();
-            if (question.isEmpty()) {
-                edtQuestion.setError("Önce MİLO'ya bir şey sor 😊");
+            String userMessage = edtQuestion.getText().toString().trim();
+            if (userMessage.isEmpty()) {
+                edtQuestion.setError("Önce MİLO'ya bir şey yaz 😊");
                 return;
             }
 
-            String answer = ai.generateAdvice(
-                    question,
+            // Kullanıcı mesajını sohbet ekranına ekle
+            appendUserMessage(userMessage);
+            edtQuestion.setText("");
+
+            // MİLO'dan cevap al
+            MiloReply reply = ai.generateTurn(
+                    userMessage,
+                    conversationState,
                     coffeeName,
                     coffeeDescription,
                     coffeeMeasure,
@@ -98,29 +125,22 @@ public class AiBaristaActivity extends AppCompatActivity {
                     coffeeNote
             );
 
-            txtAnswerTitle.setVisibility(TextView.VISIBLE);
-            txtAnswerBody.setVisibility(TextView.VISIBLE);
-            txtAnswerBody.setText(answer);
+            // State'i güncelle
+            conversationState = reply.getState();
 
-            // İstersen otomatik konuşturmak için aşağıyı açık bırak
-            speakAnswer(false);
-        });
-
-        // 🔊 MİLO konuş / durdur butonu
-        btnVoice.setOnClickListener(v -> {
-            if (!isTtsReady) {
-                Toast.makeText(
-                        AiBaristaActivity.this,
-                        "Ses motoru hazır değil. Telefonun metin okuma dilini (Türkçe) kontrol et.",
-                        Toast.LENGTH_LONG
-                ).show();
-                return;
+            // MİLO'nun cevabını ekle
+            String miloText = reply.getAnswer();
+            if (!TextUtils.isEmpty(miloText)) {
+                appendMiloMessage(miloText);
+            } else {
+                appendMiloMessage("Şu an söyleyecek pek bir şey bulamadım, istersen farklı bir şekilde sorabilirsin. ☕");
             }
 
-            if (isSpeaking) {
-                stopSpeaking();
-            } else {
-                speakAnswer(true);
+            // Eğer MİLO artık cevap beklemiyorsa (sohbet turu bitti), state'i resetleyebiliriz
+            if (!reply.isExpectsReply()) {
+                // İstersen burada tamamen sıfırlarsın, ben hafif bir uyarı mesajı da gösteriyorum
+                appendSystemMessage("MİLO bu turu tamamladı. Yeni bir öneri veya soru için tekrar yazabilirsin.");
+                // conversationState = null; // tamamen sıfırlamak istersen yorum satırını aç
             }
         });
     }
@@ -130,76 +150,52 @@ public class AiBaristaActivity extends AppCompatActivity {
         return s != null ? s : "";
     }
 
-    /* ------------------- MİLO Ses (TextToSpeech) ------------------- */
+    /* -------------------- Sohbet Metodu Yardımcıları -------------------- */
 
-    private void initTextToSpeech() {
-        tts = new TextToSpeech(this, status -> {
-            if (status == TextToSpeech.SUCCESS) {
-                int res = tts.setLanguage(new Locale("tr", "TR"));
-                if (res == TextToSpeech.LANG_MISSING_DATA ||
-                        res == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    // Türkçe yoksa yine de en azından varsayılan dili denesin
-                    tts.setLanguage(Locale.getDefault());
-                    isTtsReady = false;
-                    Toast.makeText(
-                            AiBaristaActivity.this,
-                            "Türkçe ses paketi eksik olabilir. Telefonun dil ayarlarından yükleyebilirsin.",
-                            Toast.LENGTH_LONG
-                    ).show();
-                } else {
-                    isTtsReady = true;
-                }
+    private void appendUserMessage(String text) {
+        String current = txtAnswerBody.getText().toString();
+        StringBuilder sb = new StringBuilder();
+        if (!current.isEmpty()) {
+            sb.append(current).append("\n\n");
+        }
+        sb.append("Sen: ").append(text);
+        txtAnswerBody.setText(sb.toString());
+        scrollToBottom();
+    }
+
+    private void appendMiloMessage(String text) {
+        String current = txtAnswerBody.getText().toString();
+        StringBuilder sb = new StringBuilder();
+        if (!current.isEmpty()) {
+            sb.append(current).append("\n\n");
+        }
+        sb.append("MİLO: ").append(text);
+        txtAnswerBody.setText(sb.toString());
+        scrollToBottom();
+    }
+
+    private void appendSystemMessage(String text) {
+        String current = txtAnswerBody.getText().toString();
+        StringBuilder sb = new StringBuilder();
+        if (!current.isEmpty()) {
+            sb.append(current).append("\n\n");
+        }
+        sb.append("• ").append(text);
+        txtAnswerBody.setText(sb.toString());
+        scrollToBottom();
+    }
+
+    private void scrollToBottom() {
+        // TextView içinde basit bir aşağı kaydırma
+        txtAnswerBody.post(() -> {
+            int scrollAmount = txtAnswerBody.getLayout() != null
+                    ? txtAnswerBody.getLayout().getLineTop(txtAnswerBody.getLineCount()) - txtAnswerBody.getHeight()
+                    : 0;
+            if (scrollAmount > 0) {
+                txtAnswerBody.scrollTo(0, scrollAmount);
             } else {
-                isTtsReady = false;
-                Toast.makeText(
-                        AiBaristaActivity.this,
-                        "Ses motoru başlatılamadı.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                txtAnswerBody.scrollTo(0, 0);
             }
         });
-    }
-
-    /**
-     * Mevcut cevabı MİLO sesiyle okur.
-     * fromButton = true ise buton ikonunu da günceller.
-     */
-    private void speakAnswer(boolean fromButton) {
-        if (!isTtsReady || tts == null) return;
-
-        String text = txtAnswerBody.getText().toString().trim();
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Önce MİLO'dan bir cevap alalım ☕", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Daha doğal hız
-        tts.stop();
-        tts.setSpeechRate(1.0f);   // İleride x1 / x1.5 / x2 yapabiliriz
-        tts.setPitch(1.0f);
-
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "MILO_ANSWER");
-        isSpeaking = true;
-        if (fromButton) {
-            btnVoice.setText("⏹"); // durdur simgesi gibi
-        }
-    }
-
-    private void stopSpeaking() {
-        if (tts != null) {
-            tts.stop();
-        }
-        isSpeaking = false;
-        btnVoice.setText("🔊"); // tekrar konuş simgesi
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-            tts = null;
-        }
     }
 }
