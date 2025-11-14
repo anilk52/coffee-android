@@ -11,27 +11,25 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Üstte kahve görseli -->
+        <!-- ÜST GÖRSEL -->
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:background="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Tarif kartı -->
+        <!-- TARİF KARTI -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
+            app:cardCornerRadius="16dp"
             app:cardBackgroundColor="#333333"
             app:layout_constraintTop_toBottomOf="@id/imgHero"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,184 +41,107 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Başlık -->
                 <TextView
                     android:id="@+id/txtTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tarif Başlığı"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:layout_marginBottom="8dp" />
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
 
-                <!-- Açıklama -->
                 <TextView
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tarif açıklaması buraya gelecek..."
-                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
                     android:textColor="@android:color/white"
-                    android:layout_marginBottom="12dp" />
+                    android:textSize="14sp" />
 
-                <!-- Ölçü -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ölçü: "
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:id="@+id/txtMeasure"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="18 g kahve • 50–60 g shot • 35–40 sn"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-
-                <!-- Bardak boyutu -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bardak boyutu: "
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:id="@+id/txtSize"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="M – 240 ml"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-
-                <!-- Barista ipucu -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtMeasure"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Barista ipucu:"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginTop="12dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtTip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Lungo yaparken öğütümü çok inceltme; yoksa fazla acılık çıkar."
-                    android:textSize="14sp"
+                    android:layout_marginTop="12dp"
                     android:textColor="@android:color/white"
-                    android:layout_marginBottom="12dp" />
-
-                <!-- Not -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Not:"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txtNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Sade siyah kahve seven ama filtre kahveye göre daha yoğun tat isteyenler için idealdir."
-                    android:textSize="14sp"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginTop="12dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Hız butonları -->
+        <!-- SES KONTROLÜ ALANI -->
         <LinearLayout
-            android:id="@+id/layoutSpeedControls"
+            android:id="@+id/controlsLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginTop="16dp"
+            android:spacing="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardDetail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
+            <!-- Hız butonu -->
             <Button
-                android:id="@+id/btnSlow"
+                android:id="@+id/btnSpeed"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🐌 YAVAŞ"
+                android:layout_height="45dp"
+                android:layout_weight="2"
+                android:text="1x"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/btnNormal"
+            <!-- ▶ Oynat -->
+            <ImageButton
+                android:id="@+id/btnPlay"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:text="▶ NORMAL"
-                android:textAllCaps="false" />
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_media_play" />
 
-            <Button
-                android:id="@+id/btnFast"
+            <!-- ⏹ Durdur -->
+            <ImageButton
+                android:id="@+id/btnStop"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:text="⚡ HIZLI"
-                android:textAllCaps="false" />
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_media_pause" />
+
+            <!-- 📤 Paylaş -->
+            <ImageButton
+                android:id="@+id/btnShare"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_share" />
         </LinearLayout>
 
-        <!-- Tarifi sesli oku -->
-        <Button
-            android:id="@+id/btnSpeak"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="🔊 Tarifi Sesli Oku"
-            android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@id/layoutSpeedControls"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Durdur -->
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="⏹ Durdur"
-            android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@id/btnSpeak"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Paylaş -->
-        <Button
-            android:id="@+id/btnShare"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"
-            android:text="TARİFİ PAYLAŞ"
-            app:layout_constraintTop_toBottomOf="@id/btnStop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
