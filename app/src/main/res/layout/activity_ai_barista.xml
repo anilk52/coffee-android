@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#1C1C1C">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootContainer"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- ÜST BAŞLIK -->
+        <!-- ÜST BAŞLIK SATIRI -->
         <TextView
             android:id="@+id/txtTitleBar"
             android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- SORU ALANI BAŞLIK -->
+        <!-- SORU BAŞLIĞI -->
         <TextView
             android:id="@+id/txtAskLabel"
             android:layout_width="wrap_content"
@@ -86,7 +87,7 @@
             app:layout_constraintTop_toBottomOf="@id/cardHero"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- SORU KUTUSU -->
+        <!-- SORU KARTI -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardQuestion"
             android:layout_width="0dp"
@@ -114,7 +115,7 @@
                 android:inputType="textMultiLine" />
         </androidx.cardview.widget.CardView>
 
-        <!-- BUTONLAR -->
+        <!-- BUTON SATIRI -->
         <LinearLayout
             android:id="@+id/layoutButtons"
             android:layout_width="0dp"
@@ -147,7 +148,7 @@
                 android:textAllCaps="false" />
         </LinearLayout>
 
-        <!-- CEVAP BAŞLIK -->
+        <!-- CEVAP BAŞLIĞI -->
         <TextView
             android:id="@+id/txtAnswerTitle"
             android:layout_width="wrap_content"
