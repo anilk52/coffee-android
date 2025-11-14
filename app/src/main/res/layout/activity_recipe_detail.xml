@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- ÜST GÖRSEL -->
+        <!-- Üstte kahve görseli -->
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="0dp"
@@ -22,14 +22,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- TARİF KARTI -->
+        <!-- Tarif kartı -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
             app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
             app:cardBackgroundColor="#333333"
             app:layout_constraintTop_toBottomOf="@id/imgHero"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,67 +42,90 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+                <!-- Başlık -->
                 <TextView
                     android:id="@+id/txtTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="8dp" />
 
+                <!-- Açıklama -->
                 <TextView
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="12dp" />
 
+                <!-- Ölçü -->
                 <TextView
                     android:id="@+id/txtMeasure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="8dp" />
 
+                <!-- Bardak boyutu -->
                 <TextView
                     android:id="@+id/txtSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="12dp" />
 
+                <!-- Barista ipucu -->
                 <TextView
                     android:id="@+id/txtTip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:text="Barista ipucu:"
+                    android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:layout_marginBottom="12dp" />
 
+                <!-- Not -->
                 <TextView
                     android:id="@+id/txtNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- SES KONTROLÜ ALANI -->
+        <!-- TIMER CHIP -->
+        <TextView
+            android:id="@+id/txtTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="⏱ 00:00"
+            android:textColor="@android:color/white"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/cardDetail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- SES KONTROL + PAYLAŞ SATIRI -->
         <LinearLayout
             android:id="@+id/controlsLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_marginTop="16dp"
-            android:spacing="16dp"
-            app:layout_constraintTop_toBottomOf="@id/cardDetail"
+            app:layout_constraintTop_toBottomOf="@id/txtTimer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -109,7 +133,7 @@
             <Button
                 android:id="@+id/btnSpeed"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:layout_weight="2"
                 android:text="1x"
                 android:textAllCaps="false" />
@@ -118,7 +142,7 @@
             <ImageButton
                 android:id="@+id/btnPlay"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_media_play" />
@@ -127,7 +151,7 @@
             <ImageButton
                 android:id="@+id/btnStop"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_media_pause" />
@@ -136,12 +160,11 @@
             <ImageButton
                 android:id="@+id/btnShare"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_menu_share" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
