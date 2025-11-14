@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +20,7 @@ public class AiBaristaActivity extends AppCompatActivity {
     private TextView txtCoffeeName;
     private EditText edtQuestion;
     private Button btnSend;
-    private Button btnVoice;   // Şimdilik placeholder
+    private Button btnVoice;
     private TextView txtAnswerTitle;
     private TextView txtAnswerBody;
 
@@ -36,15 +37,15 @@ public class AiBaristaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ai_barista);
 
         // View binding
-        imgHero         = findViewById(R.id.imgHero);
-        txtCoffeeName   = findViewById(R.id.txtCoffeeName);
-        edtQuestion     = findViewById(R.id.edtQuestion);
-        btnSend         = findViewById(R.id.btnSend);
-        btnVoice        = findViewById(R.id.btnVoice);
-        txtAnswerTitle  = findViewById(R.id.txtAnswerTitle);
-        txtAnswerBody   = findViewById(R.id.txtAnswerBody);
+        imgHero        = findViewById(R.id.imgHero);
+        txtCoffeeName  = findViewById(R.id.txtCoffeeName);
+        edtQuestion    = findViewById(R.id.edtQuestion);
+        btnSend        = findViewById(R.id.btnSend);
+        btnVoice       = findViewById(R.id.btnVoice);
+        txtAnswerTitle = findViewById(R.id.txtAnswerTitle);
+        txtAnswerBody  = findViewById(R.id.txtAnswerBody);
 
-        // Intent'ten tarif bilgilerini al (RecipeDetailActivity'den geleceğini varsayıyoruz)
+        // Intent ile gelen tarif bilgileri (RecipeDetailActivity'den veya boş)
         Intent intent = getIntent();
         int imageResId = intent.getIntExtra("imageResId", 0);
         if (imageResId != 0) {
@@ -60,6 +61,8 @@ public class AiBaristaActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(coffeeName)) {
             txtCoffeeName.setText(coffeeName);
+        } else {
+            txtCoffeeName.setText("BDINO Coffee");
         }
 
         // Gönder butonu
@@ -70,8 +73,6 @@ public class AiBaristaActivity extends AppCompatActivity {
                 return;
             }
 
-            // Şimdilik sahte (rule-based) cevap.
-            // İleride burada Gemma / gerçek LLM entegrasyonu yapacağız.
             String answer = generateOfflineAdvice(question);
 
             txtAnswerTitle.setVisibility(View.VISIBLE);
@@ -79,10 +80,13 @@ public class AiBaristaActivity extends AppCompatActivity {
             txtAnswerBody.setText(answer);
         });
 
-        // Sesle sor butonu (şimdilik pasif / TODO)
+        // Sesle sor (şimdilik placeholder)
         btnVoice.setOnClickListener(v ->
-                // Buraya ileride ses tanıma eklenecek
-                edtQuestion.setError("Sesle soru özelliği yakında 😊")
+                Toast.makeText(
+                        AiBaristaActivity.this,
+                        "Sesle soru özelliği yakında 😊",
+                        Toast.LENGTH_SHORT
+                ).show()
         );
     }
 
@@ -92,71 +96,76 @@ public class AiBaristaActivity extends AppCompatActivity {
     }
 
     /**
-     * İlk sürüm için basit, "akıllıymış gibi" duran kural tabanlı cevap.
-     * Sonraki aşamada burayı gerçek offline LLM (Gemma) ile değiştireceğiz.
+     * Stage 1 için "akıllıymış gibi" duran kural tabanlı cevap.
+     * Stage 2'de burası Gemma / offline model çağrısına dönecek.
      */
     private String generateOfflineAdvice(String question) {
         StringBuilder sb = new StringBuilder();
 
-        // Başlık
         if (!TextUtils.isEmpty(coffeeName)) {
-            sb.append("Şu an ")
-              .append(coffeeName)
-              .append(" üzerine konuşuyoruz.\n\n");
+            sb.append("Şu an ").append(coffeeName).append(" üzerine konuşuyoruz.\n\n");
         } else {
             sb.append("Seçili kahve için bazı önerilerim var.\n\n");
         }
 
         String qLower = question.toLowerCase();
 
-        // Yoğunluk / güçlü tat
+        // Yoğun kahve / sert tat
         if (qLower.contains("yoğun") || qLower.contains("güçlü") || qLower.contains("sert")) {
             sb.append("• Daha yoğun bir fincan için:\n");
             sb.append("  - Öğütümü bir tık incelt.\n");
             sb.append("  - Demleme / akış süresini 3–5 saniye uzat.\n");
-            sb.append("  - Aynı bardak boyutunda daha az su / süt kullanmayı dene.\n\n");
+            sb.append("  - Aynı bardak boyutunda daha az su / süt kullan.\n\n");
         }
 
         // Hafif / yumuşak
         if (qLower.contains("hafif") || qLower.contains("yumuşak")) {
             sb.append("• Daha hafif bir fincan için:\n");
             sb.append("  - Öğütümü bir tık kalınlaştır.\n");
-            sb.append("  - Demleme süresini biraz kısalt.\n");
+            sb.append("  - Demleme süresini bir miktar kısalt.\n");
             sb.append("  - Bardak hacmini büyütüp süt/su miktarını arttırabilirsin.\n\n");
         }
 
+        // Asidite / ekşilik / yanık tat
+        if (qLower.contains("ekşi") || qLower.contains("asid") || qLower.contains("yanık") || qLower.contains("acı")) {
+            sb.append("• Asidite veya yanık tat için:\n");
+            sb.append("  - Çok ince öğütmüş olabilirsin; bir tık kalınlaştır.\n");
+            sb.append("  - Demleme süresini kısalt.\n");
+            sb.append("  - Su sıcaklığını 1–2°C düşürmeyi dene.\n\n");
+        }
+
         // Sıcaklık
-        if (qLower.contains("sıcak") || qLower.contains("yanık") || qLower.contains("acı")) {
-            sb.append("• Kahve fazla sıcak veya yanık geliyorsa:\n");
-            sb.append("  - Su sıcaklığını 1–2°C düşür.\n");
-            sb.append("  - Espresso için çok uzun akış sürelerinden kaçın (özellikle 35–40 sn üzeri).\n");
-            sb.append("  - Sütü buharlarken 60–65°C bandını geçmemeye çalış.\n\n");
+        if (qLower.contains("sıcak") || qLower.contains("ılı") || qLower.contains("soğuk")) {
+            sb.append("• Sıcaklık ayarı için:\n");
+            sb.append("  - Espresso için makinenin önerdiği sıcaklıkta kalmaya çalış.\n");
+            sb.append("  - Sütü buharlarken 60–65°C bandı, hem tatlılık hem doku için ideal.\n\n");
         }
 
         // Krema / köpük
         if (qLower.contains("krema") || qLower.contains("köpük") || qLower.contains("foam")) {
             sb.append("• Krema / süt köpüğü için:\n");
-            sb.append("  - Sütü 55–60°C arasında bitir, bu aralık en tatlı hissi verir.\n");
-            sb.append("  - Buhar ucunu sütün yüzeyine yakın tut, büyük baloncukları en sona doğru yok et.\n");
-            sb.append("  - Tamamen homojen, ıslak boya kıvamı hedefle.\n\n");
+            sb.append("  - Buhar ucunu sütün yüzeyine yakın tutup küçük baloncuklarla başla.\n");
+            sb.append("  - Sonra daha derine inerek sütün tamamını döndür.\n");
+            sb.append("  - Hedef: ıslak boya kıvamında, parlak ve pürüzsüz bir doku.\n\n");
         }
 
-        // Süre / timer
-        if (qLower.contains("süre") || qLower.contains("kaç saniye") || qLower.contains("kaç dk")) {
-            sb.append("• Süreyi ayarlarken:\n");
-            sb.append("  - Espresso için genellikle 25–35 saniye aralığı iyi bir başlangıç noktasıdır.\n");
-            sb.append("  - Filtre kahvede toplam demleme süresi çoğu reçetede 2:30–4:00 dakikadır.\n\n");
+        // Süre / kaç saniye
+        if (qLower.contains("süre") || qLower.contains("kaç saniye") || qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
+            sb.append("• Süre için genel başlangıç noktaları:\n");
+            sb.append("  - Espresso: 25–35 saniye arası.\n");
+            sb.append("  - Lungo: 35–45 saniye civarı.\n");
+            sb.append("  - Filtre kahve: çoğu reçetede 2:30–4:00 dakika.\n\n");
         }
 
-        // Eğer yukarıdaki bloklardan hiçbiri tetiklenmezse genel tavsiye
-        if (sb.toString().trim().isEmpty() ||
-                sb.toString().trim().equals("Şu an " + coffeeName + " üzerine konuşuyoruz.")) {
-            sb.append("Genel bir tavsiye istersen:\n");
-            sb.append("• Her denemede sadece tek bir parametreyi değiştir (süre, öğütüm, gramaj veya süt miktarı).\n");
-            sb.append("• Böylece fincandaki değişimin nereden kaynaklandığını çok daha rahat anlarsın.\n\n");
+        // Hiçbiri tetiklenmediyse genel tavsiye
+        if (sb.toString().trim().equals("") ||
+                sb.toString().trim().startsWith("Şu an ") && sb.toString().trim().split("\n").length <= 2) {
+            sb.append("Genel bir barista tavsiyesi istersen:\n");
+            sb.append("• Her denemede sadece TEK parametreyi değiştir (süre, öğütüm, gramaj veya süt miktarı).\n");
+            sb.append("• Böylece fincandaki farkın nereden geldiğini çok daha net görürsün.\n\n");
         }
 
-        // Tariften gelen ölçü / ipucu bilgilerini ekle
+        // Tariften gelen ekstra bilgiler
         if (!TextUtils.isEmpty(coffeeMeasure)) {
             sb.append("Tarif ölçün: ").append(coffeeMeasure).append("\n");
         }
@@ -168,7 +177,7 @@ public class AiBaristaActivity extends AppCompatActivity {
             sb.append("“").append(coffeeTip).append("”\n");
         }
 
-        sb.append("\nUnutma, damak zevki kişisel; küçük dokunuşlarla kendi Bdino reçeteni oluşturabilirsin. ☕");
+        sb.append("\nKüçük dokunuşlarla kendi BDINO reçeteni oluşturabilirsin. ☕");
 
         return sb.toString();
     }
