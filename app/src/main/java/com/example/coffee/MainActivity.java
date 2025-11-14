@@ -3,10 +3,9 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CardView;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.coffee.ui.AiBaristaActivity;
 import com.example.coffee.ui.FavoritesActivity;
@@ -17,61 +16,75 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_CATEGORY = "category";
 
-    private CardView cardEspresso;
-    private CardView cardFilter;
-    private CardView cardSpecial;
-    private CardView cardAlcohol;
-    private CardView cardIced;
-    private CardView cardTurkish;
-
-    private ImageButton btnFavorites;
-    private ImageButton btnSettings;
-    private ImageButton btnAI;   // Ana ekrandaki AI tuşu
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kategori kartları
-        cardEspresso = findViewById(R.id.cardEspresso);
-        cardFilter   = findViewById(R.id.cardFilter);
-        cardSpecial  = findViewById(R.id.cardSpecial);
-        cardAlcohol  = findViewById(R.id.cardAlcohol);
-        cardIced     = findViewById(R.id.cardIced);
-        cardTurkish  = findViewById(R.id.cardTurkish);
+        // 🔸 KATEGORİ KARTLARI
+        // Burada id'ler varsa tıklama verir, yoksa sessizce geçer.
+        bindCategoryCard("cardEspresso", "espresso");
+        bindCategoryCard("cardFilter",   "filter");
+        bindCategoryCard("cardSpecial",  "special");
+        bindCategoryCard("cardAlcohol",  "alcohol");  // layout'ta yoksa sorun olmaz
+        bindCategoryCard("cardIced",     "iced");
+        bindCategoryCard("cardTurkish",  "turkish");
 
-        // Üst butonlar
-        btnFavorites = findViewById(R.id.btnFavorites);
-        btnSettings  = findViewById(R.id.btnSettings);
-        btnAI        = findViewById(R.id.btnAI);   // XML’deki AI ikonun id'si
-
-        // Kategori tıklamaları → RecipeActivity
-        cardEspresso.setOnClickListener(v -> openRecipeActivity("espresso"));
-        cardFilter.setOnClickListener(v -> openRecipeActivity("filter"));
-        cardSpecial.setOnClickListener(v -> openRecipeActivity("special"));
-        cardAlcohol.setOnClickListener(v -> openRecipeActivity("alcohol"));
-        cardIced.setOnClickListener(v -> openRecipeActivity("iced"));
-        cardTurkish.setOnClickListener(v -> openRecipeActivity("turkish"));
-
-        // Favoriler
-        btnFavorites.setOnClickListener(v -> {
+        // 🔸 FAVORİLER TUŞU
+        // Farklı isim ihtimaline karşı 2 deneme yapıyoruz (btnFavorites / btnFav)
+        bindClickIfExists("btnFavorites", v -> {
+            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+        });
+        bindClickIfExists("btnFav", v -> {
             Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
             startActivity(intent);
         });
 
-        // Ayarlar
-        btnSettings.setOnClickListener(v -> {
+        // 🔸 AYARLAR TUŞU
+        bindClickIfExists("btnSettings", v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 
-        // 🔮 ANA EKRAN AI BUTONU → GENEL MİLO SOHBETİ
-        btnAI.setOnClickListener(v -> {
+        // 🔸 ANA EKRAN AI TUŞU → GENEL MİLO SOHBETİ
+        // Id farklı olabilir diye iki isim deniyorum: btnAI ve btnAi
+        View.OnClickListener aiClick = v -> {
             Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
-            // Burada tarif bilgisi göndermiyoruz → MİLO genel kahve modu
+            // Tarif göndermiyoruz → MİLO genel kahve modu
             startActivity(intent);
-        });
+        };
+        bindClickIfExists("btnAI", aiClick);
+        bindClickIfExists("btnAi", aiClick);
+    }
+
+    // ----------------------------------------------------------
+    // Yardımcı: Kategori kartını id adına göre bul & tıklamayı bağla
+    // ----------------------------------------------------------
+    private void bindCategoryCard(String idName, String category) {
+        int resId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (resId != 0) {
+            View v = findViewById(resId);
+            if (v instanceof CardView) {
+                v.setOnClickListener(view -> openRecipeActivity(category));
+            } else if (v != null) {
+                // CardView değilse bile tıklama ver
+                v.setOnClickListener(view -> openRecipeActivity(category));
+            }
+        }
+    }
+
+    // ----------------------------------------------------------
+    // Yardımcı: Varsa bu id'ye sahip view'e tıklama bağla
+    // ----------------------------------------------------------
+    private void bindClickIfExists(String idName, View.OnClickListener listener) {
+        int resId = getResources().getIdentifier(idName, "id", getPackageName());
+        if (resId != 0) {
+            View v = findViewById(resId);
+            if (v != null) {
+                v.setOnClickListener(listener);
+            }
+        }
     }
 
     private void openRecipeActivity(String category) {
