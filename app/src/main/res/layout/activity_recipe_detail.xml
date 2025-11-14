@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Üstte kahve görseli -->
+        <!-- ÜST GÖRSEL -->
         <ImageView
             android:id="@+id/imgHero"
             android:layout_width="0dp"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Tarif kartı -->
+        <!-- TARİF KARTI -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetail"
             android:layout_width="0dp"
@@ -42,7 +42,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Başlık -->
                 <TextView
                     android:id="@+id/txtTitle"
                     android:layout_width="match_parent"
@@ -52,7 +51,6 @@
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Açıklama -->
                 <TextView
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
@@ -61,7 +59,6 @@
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="12dp" />
 
-                <!-- Ölçü -->
                 <TextView
                     android:id="@+id/txtMeasure"
                     android:layout_width="match_parent"
@@ -70,7 +67,6 @@
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Bardak boyutu -->
                 <TextView
                     android:id="@+id/txtSize"
                     android:layout_width="match_parent"
@@ -79,17 +75,14 @@
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="12dp" />
 
-                <!-- Barista ipucu -->
                 <TextView
                     android:id="@+id/txtTip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Barista ipucu:"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="12dp" />
 
-                <!-- Not -->
                 <TextView
                     android:id="@+id/txtNote"
                     android:layout_width="match_parent"
@@ -129,7 +122,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Hız butonu -->
             <Button
                 android:id="@+id/btnSpeed"
                 android:layout_width="0dp"
@@ -138,7 +130,6 @@
                 android:text="1x"
                 android:textAllCaps="false" />
 
-            <!-- ▶ Oynat -->
             <ImageButton
                 android:id="@+id/btnPlay"
                 android:layout_width="0dp"
@@ -147,7 +138,6 @@
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_media_play" />
 
-            <!-- ⏹ Durdur -->
             <ImageButton
                 android:id="@+id/btnStop"
                 android:layout_width="0dp"
@@ -156,7 +146,6 @@
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_media_pause" />
 
-            <!-- 📤 Paylaş -->
             <ImageButton
                 android:id="@+id/btnShare"
                 android:layout_width="0dp"
@@ -165,6 +154,20 @@
                 android:background="@android:color/transparent"
                 android:src="@android:drawable/ic_menu_share" />
         </LinearLayout>
+
+        <!-- AI BARISTA BUTONU (full width, sade) -->
+        <Button
+            android:id="@+id/btnAiBarista"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="24dp"
+            android:text="AI BARISTA"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@id/controlsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
