@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private long timeLeftInMillis = 0L;
     private long initialTimeInMillis = 0L;
 
+    // AI Barista
+    private Button btnAiBarista;
+
     // TTS
     private TextToSpeech tts;
     private String fullTextToRead = "";
@@ -60,7 +64,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnStop  = findViewById(R.id.btnStop);
         btnShare = findViewById(R.id.btnShare);
 
-        txtTimer = findViewById(R.id.txtTimer);
+        txtTimer    = findViewById(R.id.txtTimer);
+        btnAiBarista = findViewById(R.id.btnAiBarista);
 
         // Intent verileri
         Intent intent = getIntent();
@@ -86,12 +91,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         // 🔊 Sesli okunacak metni hazırla
         StringBuilder sb = new StringBuilder();
-        if (title != null && !title.isEmpty())       sb.append(title).append(". ");
+        if (title != null && !title.isEmpty())             sb.append(title).append(". ");
         if (description != null && !description.isEmpty()) sb.append(description).append(" ");
-        if (measure != null && !measure.isEmpty())   sb.append("Ölçü: ").append(measure).append(". ");
-        if (size != null && !size.isEmpty())         sb.append("Bardak boyutu: ").append(size).append(". ");
-        if (tip != null && !tip.isEmpty())           sb.append("Barista ipucu: ").append(tip).append(". ");
-        if (note != null && !note.isEmpty())         sb.append("Not: ").append(note).append(". ");
+        if (measure != null && !measure.isEmpty())         sb.append("Ölçü: ").append(measure).append(". ");
+        if (size != null && !size.isEmpty())               sb.append("Bardak boyutu: ").append(size).append(". ");
+        if (tip != null && !tip.isEmpty())                 sb.append("Barista ipucu: ").append(tip).append(". ");
+        if (note != null && !note.isEmpty())               sb.append("Not: ").append(note).append(". ");
 
         fullTextToRead = sb.toString();
 
@@ -127,14 +132,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
         });
 
-        // ⏱ TIMER: ölçü bilgisinden süre tahmini yap
+        // ⏱ TIMER: ölçü bilgisinden yaklaşık süre çıkar
         initialTimeInMillis = estimateTimerFromMeasure(measure);
         if (initialTimeInMillis > 0) {
             timeLeftInMillis = initialTimeInMillis;
             txtTimer.setVisibility(View.VISIBLE);
             updateTimerUI();
         } else {
-            // Ölçüde süre yoksa timer’ı gizle
             txtTimer.setVisibility(View.GONE);
         }
 
@@ -148,11 +152,29 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Timer uzun bas: sıfırla
+        // Uzun bas: sıfırla
         txtTimer.setOnLongClickListener(v -> {
             if (initialTimeInMillis == 0) return true;
             resetTimer();
             return true;
+        });
+
+        // 🤖 AI BARISTA (offline v1)
+        btnAiBarista.setOnClickListener(v -> {
+            String aiText = generateAiAdvice(
+                    title,
+                    description,
+                    measure,
+                    size,
+                    tip,
+                    note
+            );
+
+            new AlertDialog.Builder(RecipeDetailActivity.this)
+                    .setTitle("AI Barista")
+                    .setMessage(aiText)
+                    .setPositiveButton("Tamam", null)
+                    .show();
         });
     }
 
@@ -188,7 +210,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         tts.speak(fullTextToRead, TextToSpeech.QUEUE_FLUSH, null, "BDINO_TTS");
     }
 
-    /* ======================  TIMER LOGİĞİ  ====================== */
+    /* ======================  TIMER LOJİĞİ  ====================== */
 
     // Ölçü string’inden tahmini süre (sn/dk) çıkarır
     private long estimateTimerFromMeasure(String measure) {
@@ -207,10 +229,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         long seconds;
         if (lower.contains("dk")) {
-            // örn: "4 dk demleme"
             seconds = lastNumber * 60L;
         } else {
-            // örn: "35–40 sn" -> 40 almış oluruz
             seconds = lastNumber;
         }
         return seconds * 1000L;
@@ -263,7 +283,80 @@ public class RecipeDetailActivity extends AppCompatActivity {
         txtTimer.setText(timeText);
     }
 
-    /* ======================  LİFECYCLE  ====================== */
+    /* ======================  AI BARISTA LOJİĞİ  ====================== */
+
+    private String generateAiAdvice(String title,
+                                    String description,
+                                    String measure,
+                                    String size,
+                                    String tip,
+                                    String note) {
+
+        StringBuilder advice = new StringBuilder();
+
+        String lowerTitle = title != null ? title.toLowerCase(Locale.ROOT) : "";
+        String lowerDesc  = description != null ? description.toLowerCase(Locale.ROOT) : "";
+
+        // Baz: tarif özeti
+        if (title != null) {
+            advice.append("Şu an ").append(title).append(" hazırlıyorsun.\n\n");
+        }
+
+        // Espresso türevi mi?
+        boolean isEspressoBased =
+                lowerTitle.contains("espresso") ||
+                lowerTitle.contains("ristretto") ||
+                lowerTitle.contains("lungo") ||
+                lowerTitle.contains("latte") ||
+                lowerTitle.contains("cappuccino") ||
+                lowerTitle.contains("flat white") ||
+                lowerDesc.contains("espresso");
+
+        if (isEspressoBased) {
+            advice.append("• Daha yoğun bir fincan için, aynı gramaj kahveyle akış süresini 3–5 saniye kısaltmayı deneyebilirsin.\n");
+            advice.append("• Daha yumuşak bir içim için ise akışı 3–5 saniye uzatabilir veya toplam içeceği sütle biraz daha tamamlayabilirsin.\n\n");
+        }
+
+        // Filter / V60 / Chemex?
+        boolean isFilter =
+                lowerTitle.contains("v60") ||
+                lowerTitle.contains("chemex") ||
+                lowerTitle.contains("kalita") ||
+                lowerDesc.contains("filtre") ||
+                lowerDesc.contains("filter");
+
+        if (isFilter) {
+            advice.append("• Filtre kahvede tadı dengelemek için en hızlı oynayabileceğin şey öğütüm kalınlığı ve su sıcaklığı.\n");
+            advice.append("  Biraz daha gövdeli istersen öğütümü hafif incelt, asidite fazlaysa suyu 1–2°C düşür.\n\n");
+        }
+
+        // Bardak boyutu
+        if (size != null && !size.isEmpty()) {
+            advice.append("Bardak boyutun: ").append(size).append(". ");
+            advice.append("Daha yoğun bir içim için aynı tarifi bir küçük bardakta, daha hafif içim için bir büyük bardakta deneyebilirsin.\n\n");
+        }
+
+        // Measure üzerinden basit oran yorumu
+        if (measure != null && measure.contains("g")) {
+            advice.append("Ölçülerinle oynayarak tadı ayarlamak istersen:\n");
+            advice.append("• Kahve gramajını +1–2 g artırmak gövdeyi ve yoğunluğu hissettirecek kadar değiştirir.\n");
+            advice.append("• Şekeri değil, demleme süresini ve oranı değiştirerek tadı yönetmeye çalış; bu seni barista seviyesine yaklaştırır.\n\n");
+        }
+
+        // Orijinal barista ipucunu göm
+        if (tip != null && !tip.isEmpty()) {
+            advice.append("Tarifin kendi barista ipucu:\n");
+            advice.append("“").append(tip).append("”\n\n");
+        }
+
+        // Genel kapanış
+        advice.append("Deneme yaparken her seferinde sadece tek bir parametreyi değiştir ");
+        advice.append("(süre, gramaj veya süt miktarı gibi). Böylece neyin fincanı nasıl etkilediğini çok daha hızlı öğrenirsin.");
+
+        return advice.toString();
+    }
+
+    /* ======================  LIFECYCLE  ====================== */
 
     @Override
     protected void onDestroy() {
