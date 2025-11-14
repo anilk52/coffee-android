@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,22 +17,16 @@ import java.util.Locale;
 public class RecipeDetailActivity extends AppCompatActivity {
 
     private ImageView imgHero;
-    private TextView txtTitle;
-    private TextView txtDescription;
-    private TextView txtMeasure;
-    private TextView txtSize;
-    private TextView txtTip;
-    private TextView txtNote;
+    private TextView txtTitle, txtDescription, txtMeasure, txtSize, txtTip, txtNote;
 
-    private Button btnSlow;
-    private Button btnNormal;
-    private Button btnFast;
-    private Button btnSpeak;
-    private Button btnStop;
-    private Button btnShare;
+    private Button btnSpeed;
+    private ImageButton btnPlay, btnStop, btnShare;
 
     private TextToSpeech tts;
-    private String fullTextToRead;
+    private String fullTextToRead = "";
+
+    // Hız döngüsü: 0 → 1x, 1 → 1.5x, 2 → 2x
+    private int speedState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,28 +34,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
 
         // View bağlama
-        imgHero        = findViewById(R.id.imgHero);
-        txtTitle       = findViewById(R.id.txtTitle);
+        imgHero = findViewById(R.id.imgHero);
+        txtTitle = findViewById(R.id.txtTitle);
         txtDescription = findViewById(R.id.txtDescription);
-        txtMeasure     = findViewById(R.id.txtMeasure);
-        txtSize        = findViewById(R.id.txtSize);
-        txtTip         = findViewById(R.id.txtTip);
-        txtNote        = findViewById(R.id.txtNote);
+        txtMeasure = findViewById(R.id.txtMeasure);
+        txtSize = findViewById(R.id.txtSize);
+        txtTip = findViewById(R.id.txtTip);
+        txtNote = findViewById(R.id.txtNote);
 
-        btnSlow   = findViewById(R.id.btnSlow);
-        btnNormal = findViewById(R.id.btnNormal);
-        btnFast   = findViewById(R.id.btnFast);
-        btnSpeak  = findViewById(R.id.btnSpeak);
-        btnStop   = findViewById(R.id.btnStop);
-        btnShare  = findViewById(R.id.btnShare);
+        btnSpeed = findViewById(R.id.btnSpeed);
+        btnPlay  = findViewById(R.id.btnPlay);
+        btnStop  = findViewById(R.id.btnStop);
+        btnShare = findViewById(R.id.btnShare);
 
-        // Intent verileri
+        // Intent verilerini al
         Intent intent = getIntent();
 
         int imageResId = intent.getIntExtra("imageResId", 0);
-        if (imageResId != 0) {
-            imgHero.setImageResource(imageResId);
-        }
+        if (imageResId != 0) imgHero.setImageResource(imageResId);
 
         String title       = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
@@ -69,128 +60,80 @@ public class RecipeDetailActivity extends AppCompatActivity {
         String tip         = intent.getStringExtra("tip");
         String note        = intent.getStringExtra("note");
 
-        if (title != null)       txtTitle.setText(title);
+        if (title != null) txtTitle.setText(title);
         if (description != null) txtDescription.setText(description);
-        if (measure != null)     txtMeasure.setText(measure);
-        if (size != null)        txtSize.setText(size);
-        if (tip != null)         txtTip.setText(tip);
-        if (note != null)        txtNote.setText(note);
+        if (measure != null) txtMeasure.setText(measure);
+        if (size != null) txtSize.setText(size);
+        if (tip != null) txtTip.setText(tip);
+        if (note != null) txtNote.setText(note);
 
-        // 🔊 Okunacak metni hazırla
-        StringBuilder sb = new StringBuilder();
-        if (title != null && !title.isEmpty()) {
-            sb.append(title).append(". ");
-        }
-        if (description != null && !description.isEmpty()) {
-            sb.append(description).append(" ");
-        }
-        if (measure != null && !measure.isEmpty()) {
-            sb.append("Ölçü: ").append(measure).append(". ");
-        }
-        if (size != null && !size.isEmpty()) {
-            sb.append("Bardak boyutu: ").append(size).append(". ");
-        }
-        if (tip != null && !tip.isEmpty()) {
-            sb.append("Barista ipucu: ").append(tip).append(". ");
-        }
-        if (note != null && !note.isEmpty()) {
-            sb.append("Not: ").append(note).append(". ");
-        }
-        fullTextToRead = sb.toString();
+        // Okunacak metni oluştur
+        fullTextToRead =
+                (title != null ? title + ". " : "") +
+                (description != null ? description + " " : "") +
+                (measure != null ? "Ölçü: " + measure + ". " : "") +
+                (size != null ? "Bardak boyutu: " + size + ". " : "") +
+                (tip != null ? "Barista ipucu: " + tip + ". " : "") +
+                (note != null ? "Not: " + note + ". " : "");
 
-        // 🔊 Offline TTS
+        // TTS hazırlığı
         tts = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 tts.setLanguage(new Locale("tr", "TR"));
-                tts.setPitch(1.0f);
-                tts.setSpeechRate(1.0f);   // default hız
+                applySpeed();
             }
         });
 
-        // Paylaş
-        btnShare.setOnClickListener(v ->
-                shareRecipe(title, description, measure, size, tip, note)
-        );
-
-        // 🐌 Yavaş
-        btnSlow.setOnClickListener(v -> {
-            if (tts != null) {
-                tts.setSpeechRate(0.8f);
-                speakRecipe();
-            }
+        // Hız butonu
+        btnSpeed.setOnClickListener(v -> {
+            speedState = (speedState + 1) % 3;
+            applySpeed();
         });
 
-        // ▶ Normal
-        btnNormal.setOnClickListener(v -> {
-            if (tts != null) {
-                tts.setSpeechRate(1.0f);
-                speakRecipe();
-            }
-        });
-
-        // ⚡ Hızlı
-        btnFast.setOnClickListener(v -> {
-            if (tts != null) {
-                tts.setSpeechRate(1.2f);
-                speakRecipe();
-            }
-        });
-
-        // 🔊 Tarifi sesli oku (mevcut hızla)
-        btnSpeak.setOnClickListener(v -> {
-            if (tts != null) {
-                speakRecipe();
-            }
-        });
+        // ▶ Oynat
+        btnPlay.setOnClickListener(v -> speakRecipe());
 
         // ⏹ Durdur
         btnStop.setOnClickListener(v -> {
-            if (tts != null) {
-                tts.stop();
-            }
+            if (tts != null) tts.stop();
+        });
+
+        // 📤 Paylaş
+        btnShare.setOnClickListener(v -> {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+
+            shareIntent.putExtra(Intent.EXTRA_TEXT, fullTextToRead);
+            startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
         });
     }
 
-    private void speakRecipe() {
-        if (tts == null) return;
-        if (fullTextToRead == null || fullTextToRead.trim().isEmpty()) return;
+    private void applySpeed() {
+        float rate;
 
-        tts.stop();
-        tts.speak(fullTextToRead, TextToSpeech.QUEUE_FLUSH, null, "BDINO_TTS");
+        switch (speedState) {
+            case 1:
+                rate = 1.5f;
+                btnSpeed.setText("1.5x");
+                break;
+            case 2:
+                rate = 2.0f;
+                btnSpeed.setText("2x");
+                break;
+            default:
+                rate = 1.0f;
+                btnSpeed.setText("1x");
+                break;
+        }
+
+        if (tts != null) tts.setSpeechRate(rate);
     }
 
-    private void shareRecipe(String title,
-                             String description,
-                             String measure,
-                             String size,
-                             String tip,
-                             String note) {
-
-        StringBuilder builder = new StringBuilder();
-
-        if (title != null) {
-            builder.append(title).append("\n\n");
+    private void speakRecipe() {
+        if (tts != null && fullTextToRead.trim().length() > 0) {
+            tts.stop();
+            tts.speak(fullTextToRead, TextToSpeech.QUEUE_FLUSH, null, "BDINO_TTS");
         }
-        if (description != null) {
-            builder.append(description).append("\n\n");
-        }
-        if (measure != null) {
-            builder.append("Ölçü: ").append(measure).append("\n");
-        }
-        if (size != null) {
-            builder.append("Bardak boyutu: ").append(size).append("\n");
-        }
-        if (tip != null) {
-            builder.append("\nBarista ipucu: ").append(tip);
-        }
-        if (note != null) {
-            builder.append("\n\nNot: ").append(note);
-        }
-
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
-        startActivity(Intent.createChooser(shareIntent, "Bdino Coffee tarifini paylaş"));
     }
 
     @Override
