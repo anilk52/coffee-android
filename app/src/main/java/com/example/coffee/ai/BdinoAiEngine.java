@@ -3,27 +3,29 @@ package com.example.coffee.ai;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Random;
+
 /**
- * BDINO Coffee için AI katmanı.
+ * MİLO – BDINO Coffee'nin yerel kahve yapay zekası.
  *
- * Şu an:
- *  - Prompt üretir (LLM'e verilecek metin).
- *  - Kural tabanlı (rule-based) "fake AI" cevap oluşturur.
+ * Özellikler:
+ *  - Kullanıcının sorusuna göre iki mod:
+ *      1) Problem çözme modu (kahve acı, hafif, köpüksüz, süre vs.)
+ *      2) Kahve öneri modu ("ne içsem", "bana kahve öner", "hava sıcak" vb.)
+ *  - Basit duygu algılama (mood)
+ *  - Saat dilimine göre (sabah/öğlen/akşam/gece) tavır
+ *  - Kahve adına göre kategori tahmini (espresso / filter / turkish / iced)
+ *  - Barista tüyoları ve insan gibi giriş/kapanış cümleleri
  *
- * Gelecekte (Gemma 2B vb.):
- *  - isOfflineModelReady() true dönecek şekilde güncellenecek.
- *  - generateWithModel(prompt) içinde gerçek offline LLM çağrılacak.
- *
- * AiBaristaActivity tarafını değiştirmeden sadece bu sınıf güncellenecek.
+ * Tamamen offline ve ücretsiz çalışır.
  */
 public class BdinoAiEngine {
 
-    // Gelecekte model durumu için kullanılacak context
     private static BdinoAiEngine instance;
     private final Context appContext;
-
-    // Şimdilik offline LLM devre dışı (ileride burayı model durumuna bağlayacağız)
-    private boolean offlineModelReady = false;
+    private final Random random = new Random();
 
     private BdinoAiEngine(Context context) {
         this.appContext = context.getApplicationContext();
@@ -37,93 +39,15 @@ public class BdinoAiEngine {
     }
 
     /**
-     * İleride: Gemma model dosyasını yüklemek, path ayarlamak vs için kullanılabilir.
-     * Şimdilik placeholder.
+     * Şimdilik gerçek model yok, ama ileride burada model başlatılabilir.
+     * Uygulama tarafı rahat etsin diye placeholder bırakıyoruz.
      */
     public void initOfflineModelIfNeeded() {
-        // TODO: Gemma 2B modelini buradan başlatacağız (nativeInit vs).
-        // Şimdilik hiçbir şey yapmıyoruz.
-        offlineModelReady = false;
+        // Şimdilik hiçbir şey yapmıyor.
     }
 
-    /**
-     * Offline LLM hazır mı?
-     * Şimdilik her zaman false. Gemma entegre edilince bu logic değişecek.
-     */
-    public boolean isOfflineModelReady() {
-        return offlineModelReady;
-    }
+    /* ---------------- MİLO'nun ana giriş noktası ---------------- */
 
-    /**
-     * LLM'e verilecek prompt'u üretir.
-     */
-    private String buildPromptForModel(
-            String question,
-            String coffeeName,
-            String coffeeDescription,
-            String coffeeMeasure,
-            String coffeeSize,
-            String coffeeTip,
-            String coffeeNote
-    ) {
-        StringBuilder p = new StringBuilder();
-
-        p.append("Sen BDINO Coffee mobil uygulamasında çalışan uzman bir kahve baristası yapay zekâsın. ");
-        p.append("Kullanıcıya her zaman sakin, net ve öğretici bir dille cevap ver. ");
-        p.append("Özellikle espresso bazlı içecekler, filtre kahve, demleme süreleri, öğütüm kalınlığı ve süt köpürtme konusunda uzmansın.\n\n");
-
-        if (!TextUtils.isEmpty(coffeeName)) {
-            p.append("Kahve adı: ").append(coffeeName).append("\n");
-        }
-        if (!TextUtils.isEmpty(coffeeDescription)) {
-            p.append("Kısa açıklama: ").append(coffeeDescription).append("\n");
-        }
-        if (!TextUtils.isEmpty(coffeeMeasure)) {
-            p.append("Ölçü bilgisi: ").append(coffeeMeasure).append("\n");
-        }
-        if (!TextUtils.isEmpty(coffeeSize)) {
-            p.append("Bardak boyutu: ").append(coffeeSize).append("\n");
-        }
-        if (!TextUtils.isEmpty(coffeeTip)) {
-            p.append("Tarifin barista ipucu: ").append(coffeeTip).append("\n");
-        }
-        if (!TextUtils.isEmpty(coffeeNote)) {
-            p.append("Ek not: ").append(coffeeNote).append("\n");
-        }
-
-        p.append("\n");
-        p.append("Kullanıcının sorusu:\n");
-        p.append(question).append("\n\n");
-
-        p.append("Cevap verirken:\n");
-        p.append("- Gerekirse madde madde yaz.\n");
-        p.append("- Gereksiz teknik detaylarla boğma.\n");
-        p.append("- Tad profili, yoğunluk, ağızda kalan his gibi konularda da yorum yap.\n");
-        p.append("- Mümkünse her cevabı 3–6 satır arasında tut.\n");
-
-        return p.toString();
-    }
-
-    /**
-     * Gelecekte gerçek offline LLM'in çağrılacağı yer.
-     * Şimdilik sadece placeholder olarak bırakıyoruz.
-     */
-    private String generateWithModel(String promptForModel) {
-        // TODO: Gemma 2B / Phi-3 Mini entegrasyonu burada olacak.
-        // promptForModel -> native LLM -> cevap string
-        // Şimdilik kullanıcıya açıklayıcı bir demo mesajı dönelim:
-        return "Şu an BDINO'nun kural tabanlı barista modu aktif. " +
-               "Offline gerçek AI (Gemma 2B) entegrasyonu hazırlandığında, bu mesaj yerine " +
-               "model tarafından üretilen cevaplar gelecek.\n\n" +
-               "Şimdilik temel barista tavsiyelerini aşağıda paylaşıyorum:\n";
-    }
-
-    /**
-     * Dışarıdan çağrılan tek ana fonksiyon:
-     * - Gerekli prompt'u üretir.
-     * - Eğer offline LLM hazırsa modeli kullanır,
-     *   değilse kural tabanlı cevaba düşer.
-     */
     public String generateAdvice(
             String question,
             String coffeeName,
@@ -133,93 +57,348 @@ public class BdinoAiEngine {
             String coffeeTip,
             String coffeeNote
     ) {
-        // 1) LLM için prompt oluştur
-        String promptForModel = buildPromptForModel(
-                question,
-                coffeeName,
-                coffeeDescription,
-                coffeeMeasure,
-                coffeeSize,
-                coffeeTip,
-                coffeeNote
-        );
+        if (question == null) question = "";
+        String qLower = question.toLowerCase(Locale.ROOT);
 
+        Mood mood = detectMood(qLower);
+        QueryType queryType = detectQueryType(qLower);
+        TimeSlot timeSlot = detectTimeSlot();
+        CoffeeFamily coffeeFamily = detectCoffeeFamily(coffeeName);
+
+        // Cevap burada inşa edilecek
         StringBuilder sb = new StringBuilder();
 
-        // 2) Eğer offline model hazırsa, önce model cevabını yaz (ileride gerçek olacak)
-        if (isOfflineModelReady()) {
-            String llmAnswer = generateWithModel(promptForModel);
-            sb.append(llmAnswer).append("\n");
-        }
+        // 1) Giriş cümlesi (mood + mod)
+        sb.append(buildIntro(mood, queryType, timeSlot)).append("\n\n");
 
-        // 3) Ardından veya model yoksa tamamen kural tabanlı cevap ekle
-        if (!TextUtils.isEmpty(coffeeName)) {
-            sb.append("Şu an ").append(coffeeName).append(" üzerine konuşuyoruz.\n\n");
+        // 2) Mod: Öneri mi, problem çözme mi?
+        if (queryType == QueryType.RECOMMENDATION) {
+            // Kahve öneri modu
+            sb.append(buildRecommendationAnswer(
+                    qLower,
+                    timeSlot,
+                    mood
+            ));
         } else {
-            sb.append("Seçili kahve için bazı önerilerim var.\n\n");
+            // Problem çözme / genel barista tavsiyesi modu
+            sb.append(buildTroubleshootingAnswer(
+                    qLower,
+                    coffeeName,
+                    coffeeFamily,
+                    coffeeMeasure,
+                    coffeeSize,
+                    coffeeTip
+            ));
         }
 
-        String qLower = question.toLowerCase();
-
-        // Yoğun kahve / sert tat
-        if (qLower.contains("yoğun") || qLower.contains("güçlü") || qLower.contains("sert")) {
-            sb.append("• Daha yoğun bir fincan için:\n");
-            sb.append("  - Öğütümü bir tık incelt.\n");
-            sb.append("  - Demleme / akış süresini 3–5 saniye uzat.\n");
-            sb.append("  - Aynı bardak boyutunda daha az su / süt kullan.\n\n");
+        // 3) Son kısım: küçük tüyo + kapanış
+        String tinyTip = getTinyTip(qLower, coffeeName);
+        if (!TextUtils.isEmpty(tinyTip)) {
+            sb.append("\n").append(tinyTip).append("\n");
         }
 
-        // Hafif / yumuşak
-        if (qLower.contains("hafif") || qLower.contains("yumuşak")) {
-            sb.append("• Daha hafif bir fincan için:\n");
-            sb.append("  - Öğütümü bir tık kalınlaştır.\n");
-            sb.append("  - Demleme süresini bir miktar kısalt.\n");
-            sb.append("  - Bardak hacmini büyütüp süt/su miktarını arttırabilirsin.\n\n");
+        sb.append("\n").append(buildOutro(mood));
+
+        return sb.toString();
+    }
+
+    /* ---------------- Mood / Soru Tipi / Saat / Kahve Türü ---------------- */
+
+    private enum Mood {
+        NEUTRAL, FRUSTRATED, HAPPY, CURIOUS, SAD
+    }
+
+    private enum QueryType {
+        TROUBLE,       // Kahve ile ilgili sorun
+        RECOMMENDATION,// "Ne içsem?", "bana kahve öner" vb.
+        GENERIC        // Genel soru
+    }
+
+    private enum TimeSlot {
+        MORNING,
+        AFTERNOON,
+        EVENING,
+        NIGHT
+    }
+
+    private enum CoffeeFamily {
+        ESPRESSO,
+        FILTER,
+        TURKISH,
+        ICED,
+        OTHER
+    }
+
+    private Mood detectMood(String q) {
+        if (q.contains("bıktım") || q.contains("sinir") || q.contains("olmuyor") ||
+            q.contains("hep böyle") || q.contains("delir") || q.contains("çıldır")) {
+            return Mood.FRUSTRATED;
+        }
+        if (q.contains("moralim") || q.contains("canım sıkkın") || q.contains("üzgün") ||
+            q.contains("yorgun") || q.contains("çok yoruldum")) {
+            return Mood.SAD;
+        }
+        if (q.contains("harika") || q.contains("bayıldım") || q.contains("çok güzel") ||
+            q.contains("süper") || q.contains("efsane")) {
+            return Mood.HAPPY;
+        }
+        if (q.contains("nasıl") || q.contains("neden") || q.contains("acaba") ||
+            q.contains("merak ediyorum") || q.contains("anlamıyorum")) {
+            return Mood.CURIOUS;
+        }
+        return Mood.NEUTRAL;
+    }
+
+    private QueryType detectQueryType(String q) {
+        // Öneri modu tetikleyen kalıplar
+        if (q.contains("ne içsem") || q.contains("bana kahve öner") ||
+            q.contains("kahve öner") || q.contains("hangi kahve") ||
+            q.contains("kahve tavsiye") || q.contains("bir kahve söyle") ||
+            q.contains("şu an ne içilir") || q.contains("şu an ne içsem iyi gider")) {
+            return QueryType.RECOMMENDATION;
         }
 
-        // Asidite / ekşilik / yanık tat
-        if (qLower.contains("ekşi") || qLower.contains("asid") ||
-                qLower.contains("yanık") || qLower.contains("acı")) {
-            sb.append("• Asidite veya yanık tat için:\n");
-            sb.append("  - Çok ince öğütmüş olabilirsin; bir tık kalınlaştır.\n");
-            sb.append("  - Demleme süresini kısalt.\n");
-            sb.append("  - Su sıcaklığını 1–2°C düşürmeyi dene.\n\n");
+        // Sorun modu tetikleyen kelimeler
+        if (q.contains("acı") || q.contains("ekşi") || q.contains("hafif") ||
+            q.contains("zayıf") || q.contains("çok sert") || q.contains("çok yoğun") ||
+            q.contains("köpük") || q.contains("süre") || q.contains("kaç saniye") ||
+            q.contains("yanık tat") || q.contains("yanık")) {
+            return QueryType.TROUBLE;
         }
 
-        // Sıcaklık
-        if (qLower.contains("sıcak") || qLower.contains("ılı") || qLower.contains("soğuk")) {
-            sb.append("• Sıcaklık ayarı için:\n");
-            sb.append("  - Espresso için makinenin önerdiği sıcaklıkta kalmaya çalış.\n");
-            sb.append("  - Sütü buharlarken 60–65°C bandı, hem tatlılık hem doku için ideal.\n\n");
+        // Varsayılan: sorun modu gibi davranmak daha faydalı
+        return QueryType.TROUBLE;
+    }
+
+    private TimeSlot detectTimeSlot() {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 5 && hour < 11) {
+            return TimeSlot.MORNING;
+        } else if (hour >= 11 && hour < 17) {
+            return TimeSlot.AFTERNOON;
+        } else if (hour >= 17 && hour < 22) {
+            return TimeSlot.EVENING;
+        } else {
+            return TimeSlot.NIGHT;
+        }
+    }
+
+    private CoffeeFamily detectCoffeeFamily(String coffeeName) {
+        if (coffeeName == null) return CoffeeFamily.OTHER;
+        String n = coffeeName.toLowerCase(Locale.ROOT);
+
+        if (n.contains("espresso") || n.contains("ristretto") ||
+            n.contains("lungo") || n.contains("americano") ||
+            n.contains("latte") || n.contains("cappuccino") ||
+            n.contains("flat white") || n.contains("macchiato") ||
+            n.contains("mocha")) {
+            return CoffeeFamily.ESPRESSO;
         }
 
-        // Krema / köpük
-        if (qLower.contains("krema") || qLower.contains("köpük") || qLower.contains("foam")) {
-            sb.append("• Krema / süt köpüğü için:\n");
-            sb.append("  - Buhar ucunu sütün yüzeyine yakın tutup küçük baloncuklarla başla.\n");
-            sb.append("  - Sonra daha derine inerek sütün tamamını döndür.\n");
-            sb.append("  - Hedef: ıslak boya kıvamında, parlak ve pürüzsüz bir doku.\n\n");
+        if (n.contains("filter") || n.contains("filtre") ||
+            n.contains("v60") || n.contains("chemex") ||
+            n.contains("kalita")) {
+            return CoffeeFamily.FILTER;
+        }
+
+        if (n.contains("türk") || n.contains("turk") || n.contains("cezve")) {
+            return CoffeeFamily.TURKISH;
+        }
+
+        if (n.contains("iced") || n.contains("soğuk") || n.contains("cold brew") ||
+            n.contains("freddo")) {
+            return CoffeeFamily.ICED;
+        }
+
+        return CoffeeFamily.OTHER;
+    }
+
+    /* ---------------- Giriş ve Kapanış Cümleleri ---------------- */
+
+    private String buildIntro(Mood mood, QueryType type, TimeSlot timeSlot) {
+        String[] neutralTrouble = {
+                "Bu tarz kahve dertlerini çoğu kişi yaşıyor, beraber çözebiliriz.",
+                "Fincandaki küçük detayları düzeltmek için buradayım.",
+                "Gel, fincanın arkasındaki sebebi birlikte okuyalım.",
+                "Bu soruyu sorman bile kahveye ne kadar önem verdiğini gösteriyor."
+        };
+
+        String[] neutralRecommend = {
+                "Tam zamanında sordun, sana birkaç kahve fikri vereyim.",
+                "Bugünkü ruh haline göre bir iki fincan önerebilirim.",
+                "Hadi BDINO tarzı bir kahve seçelim sana.",
+                "Bir fincanla günü biraz daha iyi hale getirebiliriz."
+        };
+
+        String[] frustrated = {
+                "Üst üste olmayınca insanı gerçekten yoruyor, haklısın.",
+                "Bu his çok normal, çoğu barista adayının geçtiği yollardasın.",
+                "Sinir bozucu olabiliyor ama ufak dokunuşlarla çözülebilir.",
+                "Merak etme, birkaç denemede bu sorunu aşarız."
+        };
+
+        String[] happy = {
+                "Zaten iyi gidiyorsun, biraz daha ince ayar yapalım.",
+                "Bu enerjiyle fincanını bambaşka seviyeye taşıyabiliriz.",
+                "Harika, sadece birkaç küçük dokunuş kaldı.",
+                "Keyfin yerinde, fincanını da ona yakışır hale getirelim."
+        };
+
+        String[] sad = {
+            "Moralin çok da yüksek değil gibi, o zaman işi zorlaştırmayalım.",
+            "Duygu tarafı karışıkken bari kahve kısmını rahatlatıcı yapalım.",
+            "Kendini yormadan içini ısıtacak bir fincan seçelim.",
+            "Bazen bir fincan kahve, günü baştan yazmaz ama tonu yumuşatır."
+        };
+
+        String base;
+
+        switch (mood) {
+            case FRUSTRATED:
+                base = frustrated[random.nextInt(frustrated.length)];
+                break;
+            case HAPPY:
+                base = happy[random.nextInt(happy.length)];
+                break;
+            case SAD:
+                base = sad[random.nextInt(sad.length)];
+                break;
+            case CURIOUS:
+                base = "Güzel soru, detaylı cevap hak ediyor.";
+                break;
+            default:
+                if (type == QueryType.RECOMMENDATION) {
+                    base = neutralRecommend[random.nextInt(neutralRecommend.length)];
+                } else {
+                    base = neutralTrouble[random.nextInt(neutralTrouble.length)];
+                }
+        }
+
+        // Saat bilgisini hafifçe cümleye ekleyebiliriz.
+        switch (timeSlot) {
+            case MORNING:
+                return base + " Sabah saatleri, kahve için en kritik zamanlardandır.";
+            case AFTERNOON:
+                return base + " Öğlen sonrası fincanı günün geri kalanının ritmini belirler.";
+            case EVENING:
+                return base + " Akşam fincanı genelde ritüel gibidir, onu güzelleştirelim.";
+            case NIGHT:
+            default:
+                return base + " Gece kahvesi ayrı bir dünya, dikkatli ayarlayalım.";
+        }
+    }
+
+    private String buildOutro(Mood mood) {
+        String[] neutral = {
+                "Birkaç denemede kendi BDINO rutinini bulursun.",
+                "Önemli olan her fincanda küçük bir şey öğrenmek.",
+                "Damak tadını sen en iyi sen tanıyorsun, ben sadece yol işaretlerini koyuyorum.",
+                "Bir sonraki fincanda ne değiştiğini gözlemlemeyi unutma."
+        };
+
+        String[] soft = {
+                "Kendine de fincanına da sabırlı davran, ikisi de zamanla oturur.",
+                "Kahve küçük bir ritüel, kendine nefes alanı açmak için güzel bir bahane.",
+                "Küçük ayarlarla fincanın karakterini birlikte kurarız."
+        };
+
+        switch (mood) {
+            case FRUSTRATED:
+            case SAD:
+                return soft[random.nextInt(soft.length)];
+            default:
+                return neutral[random.nextInt(neutral.length)];
+        }
+    }
+
+    /* ---------------- Problem Çözme Modu ---------------- */
+
+    private String buildTroubleshootingAnswer(
+            String qLower,
+            String coffeeName,
+            CoffeeFamily family,
+            String coffeeMeasure,
+            String coffeeSize,
+            String coffeeTip
+    ) {
+        StringBuilder sb = new StringBuilder();
+
+        if (!TextUtils.isEmpty(coffeeName)) {
+            sb.append("Şu an özellikle **").append(coffeeName).append("** için konuşalım.\n\n");
+        }
+
+        // Tat profili: acı / ekşi / hafif / zayıf
+        boolean mentionedSomething = false;
+
+        if (qLower.contains("acı") || qLower.contains("yanık")) {
+            mentionedSomething = true;
+            sb.append("• Kahven acı veya yanık tat veriyorsa genelde şu sebepler olur:\n");
+            if (family == CoffeeFamily.ESPRESSO) {
+                sb.append("  - Öğütüm çok ince ve akış süresi fazla uzun olabilir.\n");
+                sb.append("  - 25–35 saniye bandına yaklaşmaya çalış, puck'ı çok sıkıştırma.\n");
+            } else if (family == CoffeeFamily.FILTER) {
+                sb.append("  - Demleme süresi çok uzamış veya su sıcaklığı fazla yüksek olabilir.\n");
+                sb.append("  - Toplam demleme süresini 2:30–4:00 aralığında tutmaya çalış.\n");
+            } else if (family == CoffeeFamily.TURKISH) {
+                sb.append("  - Kahveyi kaynattıysan yanık tat kaçınılmaz olur.\n");
+                sb.append("  - İlk kabarmayı görür görmez cezveyi ocaktan almayı dene.\n");
+            } else {
+                sb.append("  - Genel olarak daha kalın öğütüm ve biraz daha kısa süre dene.\n");
+            }
+            sb.append("\n");
+        }
+
+        if (qLower.contains("ekşi")) {
+            mentionedSomething = true;
+            sb.append("• Ekşi tat genelde 'under-extraction' işaretidir:\n");
+            sb.append("  - Öğütümü biraz incelt.\n");
+            sb.append("  - Demleme süresini ufak bir miktar uzat.\n");
+            sb.append("  - Su sıcaklığın çok düşükse 1–2°C arttırmayı dene.\n\n");
+        }
+
+        if (qLower.contains("zayıf") || qLower.contains("hafif") || qLower.contains("su gibi")) {
+            mentionedSomething = true;
+            sb.append("• Kahve çok hafif veya zayıf geliyorsa:\n");
+            sb.append("  - Oranını gözden geçir: daha fazla kahve veya biraz daha az su kullan.\n");
+            sb.append("  - Öğütümü biraz incelt, böylece ekstraksiyon artar.\n");
+            if (family == CoffeeFamily.ESPRESSO) {
+                sb.append("  - Espresso tarafında 1:2 oranı (örneğin 18 g kahve → 36 g shot) iyi bir başlangıçtır.\n");
+            }
+            sb.append("\n");
+        }
+
+        // Köpük / süt sorunları
+        if (qLower.contains("köpük") || qLower.contains("foam") || qLower.contains("süt")) {
+            mentionedSomething = true;
+            sb.append("• Süt ve köpük tarafında sorun yaşıyorsan:\n");
+            sb.append("  - Buhar çubuğunu sütün yüzeyine çok yakın başlat, küçük baloncuklar duyduğunda iyi yoldasın.\n");
+            sb.append("  - Sonra çubuğu biraz daha derine indirip sütün kendi etrafında dönmesini sağla.\n");
+            sb.append("  - 60–65°C bandı, süt tatlılığını öne çıkaran güvenli bölgedir.\n\n");
         }
 
         // Süre / kaç saniye
         if (qLower.contains("süre") || qLower.contains("kaç saniye") ||
-                qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
+            qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
+            mentionedSomething = true;
             sb.append("• Süre için genel başlangıç noktaları:\n");
             sb.append("  - Espresso: 25–35 saniye arası.\n");
             sb.append("  - Lungo: 35–45 saniye civarı.\n");
-            sb.append("  - Filtre kahve: çoğu reçetede 2:30–4:00 dakika.\n\n");
+            sb.append("  - Filtre kahve: çoğu reçetede 2:30–4:00 dakika.\n");
+            sb.append("  - Türk kahvesi: kaynatmadan önceki ilk kabarmayı yakalamak kritik.\n\n");
         }
 
-        // Eğer yukarıdakiler hiç tetiklenmediyse
-        String current = sb.toString().trim();
-        if (current.equals("") ||
-                (current.startsWith("Şu an ") && current.split("\n").length <= 2)) {
-            sb.append("Genel bir barista tavsiyesi istersen:\n");
-            sb.append("• Her denemede sadece TEK parametreyi değiştir (süre, öğütüm, gramaj veya süt miktarı).\n");
-            sb.append("• Böylece fincandaki farkın nereden geldiğini çok daha net görürsün.\n\n");
+        // Eğer spesifik bir şey yakalayamadıysa genel troubleshoot
+        if (!mentionedSomething) {
+            sb.append("Kahveyi iyileştirmek için genel bir çerçeve vereyim:\n");
+            sb.append("  1. Her seferinde sadece tek parametreyi değiştir (öğütüm, süre, oran veya sıcaklık).\n");
+            sb.append("  2. Tadın yönüne göre hareket et:\n");
+            sb.append("     - Çok hafifse: daha ince öğütüm veya daha uzun süre.\n");
+            sb.append("     - Çok sert/acıysa: daha kalın öğütüm veya daha kısa süre.\n");
+            sb.append("  3. Aynı çekirdekle en az 3–4 fincan deneme yap, karakterini çözersin.\n\n");
         }
 
-        // Tariften gelen ekstra bilgiler
         if (!TextUtils.isEmpty(coffeeMeasure)) {
             sb.append("Tarif ölçün: ").append(coffeeMeasure).append("\n");
         }
@@ -231,8 +410,121 @@ public class BdinoAiEngine {
             sb.append("“").append(coffeeTip).append("”\n");
         }
 
-        sb.append("\nKüçük dokunuşlarla kendi BDINO reçeteni oluşturabilirsin. ☕");
+        return sb.toString();
+    }
+
+    /* ---------------- Kahve Öneri Modu ---------------- */
+
+    private String buildRecommendationAnswer(
+            String qLower,
+            TimeSlot timeSlot,
+            Mood mood
+    ) {
+        StringBuilder sb = new StringBuilder();
+
+        boolean wantsIced = qLower.contains("buzlu") || qLower.contains("soğuk") ||
+                            qLower.contains("serinlemek") || qLower.contains("ferah");
+        boolean wantsStrong = qLower.contains("çok güçlü") || qLower.contains("sert") ||
+                              qLower.contains("uyku kaçsın") || qLower.contains("kafa açılsın");
+        boolean wantsSoft = qLower.contains("hafif") || qLower.contains("yumuşak") ||
+                            qLower.contains("sütlü");
+        boolean wantsEasy = qLower.contains("pratik") || qLower.contains("uğraşamam") ||
+                            qLower.contains("uğraşmak istemiyorum") || qLower.contains("kolay olsun");
+
+        // Saatin etkisi
+        if (wantsIced) {
+            sb.append("Hava veya ruh hali seni daha ferah bir fincana çağırıyor gibi duruyor.\n\n");
+            sb.append("Şu seçenekler sana iyi gelebilir:\n");
+            sb.append("  • Iced Latte: Sütlü, yumuşak ve buzla beraber ferahlatıcı.\n");
+            sb.append("  • Cold Brew: Daha uzun sürede demlenen, düşük asiditeli ve çok ferah bir seçenek.\n");
+            if (wantsStrong) {
+                sb.append("  • Iced Americano: Espresso yoğunluğunu kaybetmeden serinlemek istersen iyi gider.\n");
+            }
+        } else {
+            switch (timeSlot) {
+                case MORNING:
+                    sb.append("Sabah fincanı için hem uyandıran hem de dengeli birkaç öneri:\n\n");
+                    if (wantsStrong) {
+                        sb.append("  • Double Espresso: Direkt ve net bir uyanma modu.\n");
+                        sb.append("  • Lungo: Biraz daha uzun içim ama hâlâ canlı ve yoğun.\n");
+                    } else if (wantsSoft || mood == Mood.SAD) {
+                        sb.append("  • Latte: Sütlü, yumuşak ve güne daha sakin başlatan bir fincan.\n");
+                        sb.append("  • Flat White: Latte'den biraz daha yoğun ama hâlâ kremamsı.\n");
+                    } else {
+                        sb.append("  • Filtre Kahve: Net, temiz tatlı klasik bir başlangıç.\n");
+                        sb.append("  • Americano: Espresso karakterini koruyan, daha uzun içimli bir alternatif.\n");
+                    }
+                    break;
+                case AFTERNOON:
+                    sb.append("Öğlen sonrası için enerjiyi toparlayan ama çok da yormayan öneriler:\n\n");
+                    if (wantsSoft || mood == Mood.SAD) {
+                        sb.append("  • Latte veya Cappuccino: Sütlü, sohbetlik fincanlar.\n");
+                    } else if (wantsStrong) {
+                        sb.append("  • Espresso veya Cortado: Kısa ama etkili bir mola.\n");
+                    } else {
+                        sb.append("  • Filtre Kahve: Hem çalışırken hem dinlenirken eşlik eder.\n");
+                    }
+                    break;
+                case EVENING:
+                    sb.append("Akşam fincanı biraz ritüel gibidir, o yüzden birkaç sakin öneri:\n\n");
+                    if (wantsStrong && mood != Mood.SAD) {
+                        sb.append("  • Cappuccino: Köpüklü, dengeli ve sohbetlik bir fincan.\n");
+                    } else {
+                        sb.append("  • Latte: Akşamları yumuşak bir kapanış gibi.\n");
+                        sb.append("  • Türk Kahvesi: Küçük ama karakterli bir fincanla günü toparlayabilirsin.\n");
+                    }
+                    break;
+                case NIGHT:
+                default:
+                    sb.append("Gece kahvesi biraz dikkat ister, uykuyu da göz önünde bulundurman iyi olur.\n\n");
+                    if (wantsStrong) {
+                        sb.append("  • Küçük bir Türk Kahvesi veya tek shot Espresso: dozajı çok kaçırmadan.\n");
+                    } else if (wantsSoft || mood == Mood.SAD) {
+                        sb.append("  • Latte tarzı sütlü bir fincan, geceye daha yumuşak eşlik eder.\n");
+                    } else {
+                        sb.append("  • Hafif bir filtre kahve veya uzun bir Americano tercih edebilirsin.\n");
+                    }
+                    break;
+            }
+        }
+
+        if (wantsEasy) {
+            sb.append("\nPratik olması önemliyse:\n");
+            sb.append("  - Makineden düz bir espresso veya Americano almak,\n");
+            sb.append("  - Varsa basit bir filtre makinesiyle tek düğmeyle demleme yapmak çok işini görebilir.\n");
+        }
+
+        sb.append("\nİlk önerdiğim fincanlardan biriyle başla; sevmezsen diğerine geçersin. Böyle böyle kendi BDINO imza kahveni bulursun.");
 
         return sb.toString();
+    }
+
+    /* ---------------- Küçük Barista Tüyoları ---------------- */
+
+    private String getTinyTip(String qLower, String coffeeName) {
+        if (qLower.contains("öğüt") || qLower.contains("grind") || qLower.contains("çekirdek")) {
+            return "MİLO tüyosu: Öğütüm ayarını değiştirirken her seferinde sadece küçük adımlar at. İki–üç klik birden değiştirmek tadı takip etmeyi zorlaştırır.";
+        }
+
+        if (qLower.contains("süt") || qLower.contains("köpük") || qLower.contains("foam")) {
+            return "MİLO tüyosu: Sütü köpürtürken sürahiyi hafif yana eğip sütün kendi etrafında dönmesini sağla; bu, parlak ve ipeksi bir doku verir.";
+        }
+
+        if (qLower.contains("filtre") || qLower.contains("v60") || qLower.contains("chemex") ||
+            qLower.contains("filter")) {
+            return "MİLO tüyosu: Demleme bittikten sonra sürahiyi hafifçe çevirerek kahveyi karıştırmak, fincanlar arasında tat dengesini eşitler.";
+        }
+
+        if (coffeeName != null) {
+            String n = coffeeName.toLowerCase(Locale.ROOT);
+            if (n.contains("türk")) {
+                return "MİLO tüyosu: Türk kahvesinde cezveyi ocaktan almadan hemen önceki ilk kabarma anı, hem köpük hem tat için en kritik saniyedir.";
+            }
+            if (n.contains("espresso")) {
+                return "MİLO tüyosu: Espresso için puck yüzeyini düz ve çatlak bırakmamaya çalış, suyu nereden geçeceğini şaşırtmamış olursun.";
+            }
+        }
+
+        return "MİLO tüyosu: Aynı kahveyi birkaç gün boyunca, her seferinde tek bir parametreyi değiştirerek denersen, damak tadına en yakın reçeteyi çok hızlı bulursun.";
     }
 }
