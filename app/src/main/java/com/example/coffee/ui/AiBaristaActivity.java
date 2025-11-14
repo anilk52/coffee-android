@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,24 +17,13 @@ import com.example.coffee.ai.BdinoAiEngine;
 import com.example.coffee.ai.MiloConversationState;
 import com.example.coffee.ai.MiloReply;
 
-/**
- * MİLO – Sohbet eden AI Barista ekranı.
- *
- * Not:
- *  - Alt kısımda soru yazdığın alan (edtQuestion)
- *  - Gönder butonu (btnSend)
- *  - Ortadaki büyük metin alanı sohbeti gösteriyor (txtAnswerBody)
- *  - txtAnswerTitle sadece başlık gibi kullanılıyor
- *
- * Şimdilik RecyclerView yerine tek bir TextView içinde "Sen:" / "MİLO:" satırlarıyla
- * sohbeti gösteriyoruz. İleride istersek baloncuklu chat'e çevirebiliriz.
- */
 public class AiBaristaActivity extends AppCompatActivity {
 
     private ImageView imgHero;
     private TextView txtCoffeeName;
     private EditText edtQuestion;
     private Button btnSend;
+    private ImageButton btnMic;
     private TextView txtAnswerTitle;
     private TextView txtAnswerBody;
 
@@ -44,10 +34,7 @@ public class AiBaristaActivity extends AppCompatActivity {
     private String coffeeTip = "";
     private String coffeeNote = "";
 
-    // MİLO sohbet durumu
     private MiloConversationState conversationState;
-
-    // MİLO beyni
     private BdinoAiEngine ai;
 
     @Override
@@ -55,18 +42,19 @@ public class AiBaristaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ai_barista);
 
-        // View binding
-        imgHero        = findViewById(R.id.imgHero);
-        txtCoffeeName  = findViewById(R.id.txtCoffeeName);
-        edtQuestion    = findViewById(R.id.edtQuestion);
-        btnSend        = findViewById(R.id.btnSend);
-        txtAnswerTitle = findViewById(R.id.txtAnswerTitle);
-        txtAnswerBody  = findViewById(R.id.txtAnswerBody);
+        // ---- View bağlama ----
+        imgHero        = findViewSafe(R.id.imgHero);
+        txtCoffeeName  = findViewSafe(R.id.txtCoffeeName);
+        edtQuestion    = findViewSafe(R.id.edtQuestion);
+        btnSend        = findViewSafe(R.id.btnSend);
+        btnMic         = findViewSafe(R.id.btnMic);
+        txtAnswerTitle = findViewSafe(R.id.txtAnswerTitle);
+        txtAnswerBody  = findViewSafe(R.id.txtAnswerBody);
 
-        // Intent ile gelen tarif bilgileri
+        // Intent ile tarif bilgisi geldiyse al
         Intent intent = getIntent();
         int imageResId = intent.getIntExtra("imageResId", 0);
-        if (imageResId != 0) {
+        if (imageResId != 0 && imgHero != null) {
             imgHero.setImageResource(imageResId);
         }
 
@@ -77,82 +65,110 @@ public class AiBaristaActivity extends AppCompatActivity {
         coffeeTip         = safeGetString(intent, "tip");
         coffeeNote        = safeGetString(intent, "note");
 
-        if (!TextUtils.isEmpty(coffeeName)) {
-            txtCoffeeName.setText(coffeeName);
-        } else {
-            txtCoffeeName.setText("BDINO Coffee");
+        if (txtCoffeeName != null) {
+            if (!TextUtils.isEmpty(coffeeName)) {
+                txtCoffeeName.setText(coffeeName);
+            } else {
+                txtCoffeeName.setText("BDINO Coffee");
+            }
         }
 
-        // Başlık / label
-        txtAnswerTitle.setText("MİLO – BDINO AI Barista");
-        txtAnswerTitle.setVisibility(TextView.VISIBLE);
+        if (txtAnswerTitle != null) {
+            txtAnswerTitle.setText("MİLO – BDINO AI Barista");
+        }
 
-        // Sohbet alanını temizle & hoş geldin mesajı
-        txtAnswerBody.setText("");
-        appendSystemMessage("MİLO hazır. Ona örneğin şöyle yazabilirsin:\n" +
-                "• \"Bugün ne içsem?\"\n" +
-                "• \"Latte çok hafif oluyor, ne yapmalıyım?\"\n" +
-                "• \"Filtre kahvem hep acı çıkıyor\"");
+        if (txtAnswerBody != null) {
+            txtAnswerBody.setText("");
+            appendSystemMessage(
+                    "MİLO hazır. Ona şunları sorabilirsin:\n" +
+                    "• \"Bugün ne içsem?\"\n" +
+                    "• \"Latte çok hafif oldu, nasıl daha yoğun yaparım?\"\n" +
+                    "• \"Filtre kahvem hep acı çıkıyor.\""
+            );
+        }
 
-        // MİLO beyni
+        // ---- AI motoru ----
         ai = BdinoAiEngine.getInstance(getApplicationContext());
-        ai.initOfflineModelIfNeeded();
-
-        // Başlangıçta state yok
+        if (ai != null) {
+            ai.initOfflineModelIfNeeded();
+        } else {
+            Toast.makeText(this, "AI motoru yüklenemedi (deneme modu).", Toast.LENGTH_SHORT).show();
+        }
         conversationState = null;
 
-        // Gönder butonu → sohbet turu
-        btnSend.setOnClickListener(v -> {
-            String userMessage = edtQuestion.getText().toString().trim();
-            if (userMessage.isEmpty()) {
-                edtQuestion.setError("Önce MİLO'ya bir şey yaz 😊");
-                return;
-            }
+        // ---- Gönder butonu ----
+        if (btnSend != null && edtQuestion != null) {
+            btnSend.setOnClickListener(v -> {
+                String userMessage = edtQuestion.getText().toString().trim();
+                if (userMessage.isEmpty()) {
+                    edtQuestion.setError("Önce MİLO'ya bir şey yaz 😊");
+                    return;
+                }
 
-            // Kullanıcı mesajını sohbet ekranına ekle
-            appendUserMessage(userMessage);
-            edtQuestion.setText("");
+                appendUserMessage(userMessage);
+                edtQuestion.setText("");
 
-            // MİLO'dan cevap al
-            MiloReply reply = ai.generateTurn(
-                    userMessage,
-                    conversationState,
-                    coffeeName,
-                    coffeeDescription,
-                    coffeeMeasure,
-                    coffeeSize,
-                    coffeeTip,
-                    coffeeNote
-            );
+                String miloText = null;
+                MiloReply reply = null;
 
-            // State'i güncelle
-            conversationState = reply.getState();
+                try {
+                    if (ai != null) {
+                        reply = ai.generateTurn(
+                                userMessage,
+                                conversationState,
+                                coffeeName,
+                                coffeeDescription,
+                                coffeeMeasure,
+                                coffeeSize,
+                                coffeeTip,
+                                coffeeNote
+                        );
+                    }
+                } catch (Exception e) {
+                    // AI tarafında hata olursa uygulama çökmesin
+                    e.printStackTrace();
+                }
 
-            // MİLO'nun cevabını ekle
-            String miloText = reply.getAnswer();
-            if (!TextUtils.isEmpty(miloText)) {
+                if (reply != null) {
+                    conversationState = reply.getState();
+                    miloText = reply.getAnswer();
+                }
+
+                // Hiçbir şey gelmediyse fallback cevap
+                if (TextUtils.isEmpty(miloText)) {
+                    miloText = "Mesajını aldım: \"" + userMessage +
+                            "\"\nŞu an deneme modundayım, ama kahveyle ilgili her sorunu bana yazabilirsin. ☕";
+                }
+
                 appendMiloMessage(miloText);
-            } else {
-                appendMiloMessage("Şu an söyleyecek pek bir şey bulamadım, istersen farklı bir şekilde sorabilirsin. ☕");
-            }
 
-            // Eğer MİLO artık cevap beklemiyorsa (sohbet turu bitti), state'i resetleyebiliriz
-            if (!reply.isExpectsReply()) {
-                // İstersen burada tamamen sıfırlarsın, ben hafif bir uyarı mesajı da gösteriyorum
-                appendSystemMessage("MİLO bu turu tamamladı. Yeni bir öneri veya soru için tekrar yazabilirsin.");
-                // conversationState = null; // tamamen sıfırlamak istersen yorum satırını aç
-            }
-        });
+                // Tur bitti uyarısı
+                if (reply != null && !reply.isExpectsReply()) {
+                    appendSystemMessage("MİLO bu turu tamamladı. Yeni bir soru için tekrar yazabilirsin.");
+                }
+            });
+        }
+    }
+
+    // ---------- Yardımcı fonksiyonlar ----------
+
+    private <T> T findViewSafe(int id) {
+        try {
+            //noinspection unchecked
+            return (T) findViewById(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private String safeGetString(Intent intent, String key) {
+        if (intent == null) return "";
         String s = intent.getStringExtra(key);
         return s != null ? s : "";
     }
 
-    /* -------------------- Sohbet Metodu Yardımcıları -------------------- */
-
     private void appendUserMessage(String text) {
+        if (txtAnswerBody == null) return;
         String current = txtAnswerBody.getText().toString();
         StringBuilder sb = new StringBuilder();
         if (!current.isEmpty()) {
@@ -164,6 +180,7 @@ public class AiBaristaActivity extends AppCompatActivity {
     }
 
     private void appendMiloMessage(String text) {
+        if (txtAnswerBody == null) return;
         String current = txtAnswerBody.getText().toString();
         StringBuilder sb = new StringBuilder();
         if (!current.isEmpty()) {
@@ -175,6 +192,7 @@ public class AiBaristaActivity extends AppCompatActivity {
     }
 
     private void appendSystemMessage(String text) {
+        if (txtAnswerBody == null) return;
         String current = txtAnswerBody.getText().toString();
         StringBuilder sb = new StringBuilder();
         if (!current.isEmpty()) {
@@ -186,11 +204,11 @@ public class AiBaristaActivity extends AppCompatActivity {
     }
 
     private void scrollToBottom() {
-        // TextView içinde basit bir aşağı kaydırma
+        if (txtAnswerBody == null) return;
         txtAnswerBody.post(() -> {
-            int scrollAmount = txtAnswerBody.getLayout() != null
-                    ? txtAnswerBody.getLayout().getLineTop(txtAnswerBody.getLineCount()) - txtAnswerBody.getHeight()
-                    : 0;
+            if (txtAnswerBody.getLayout() == null) return;
+            int scrollAmount = txtAnswerBody.getLayout()
+                    .getLineTop(txtAnswerBody.getLineCount()) - txtAnswerBody.getHeight();
             if (scrollAmount > 0) {
                 txtAnswerBody.scrollTo(0, scrollAmount);
             } else {
