@@ -8,22 +8,24 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.ui.AiBaristaActivity;
-import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
 import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Kategori kartları (CardView / LinearLayout vs olabilir, o yüzden View tuttuk)
+    // RecipeActivity için kategori anahtarı
+    public static final String EXTRA_CATEGORY = "extra_category";
+
+    // Kategori kartları
     private View cardEspresso;
     private View cardFilter;
     private View cardSpecial;
-    private View cardAlcohol;
     private View cardIced;
     private View cardTurkish;
+    // Alkollü kartı için ID'yi bilmediğimiz için şimdilik çıkardım (cardAlcohol vs.)
 
     // Üst ikonlar
-    private ImageView btnFavorites;
+    // Favoriler ID'si de net olmadığı için şimdilik yok
     private ImageView btnAiBarista;
     private ImageView btnSettings;
 
@@ -32,18 +34,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kategori kartları
+        // Kategori kartlarını bağla
         cardEspresso = findViewById(R.id.cardEspresso);
         cardFilter   = findViewById(R.id.cardFilter);
         cardSpecial  = findViewById(R.id.cardSpecial);
-        cardAlcohol  = findViewById(R.id.cardAlcohol);
         cardIced     = findViewById(R.id.cardIced);
         cardTurkish  = findViewById(R.id.cardTurkish);
+        // cardAlcohol / cardAlcoholic gibi bir ID varsa, layout'u görünce ekleriz
 
         // Üst ikonlar
-        btnFavorites = findViewById(R.id.btnFavorites);
         btnAiBarista = findViewById(R.id.btnAiBarista);
         btnSettings  = findViewById(R.id.btnSettings);
+        // btnFavorites = findViewById(R.id.btnFavorites); // ID hatalı olduğu için şimdilik kullanmıyoruz
 
         // Kategori tıklamaları
         if (cardEspresso != null) {
@@ -55,25 +57,15 @@ public class MainActivity extends AppCompatActivity {
         if (cardSpecial != null) {
             cardSpecial.setOnClickListener(v -> openCategory("special"));
         }
-        if (cardAlcohol != null) {
-            cardAlcohol.setOnClickListener(v -> openCategory("alcohol"));
-        }
         if (cardIced != null) {
             cardIced.setOnClickListener(v -> openCategory("iced"));
         }
         if (cardTurkish != null) {
             cardTurkish.setOnClickListener(v -> openCategory("turkish"));
         }
+        // Alkollü kategori: ID'yi bildiğimizde buraya ekleriz
 
-        // Favoriler
-        if (btnFavorites != null) {
-            btnFavorites.setOnClickListener(v -> {
-                Intent favIntent = new Intent(MainActivity.this, FavoritesActivity.class);
-                startActivity(favIntent);
-            });
-        }
-
-        // AI Barista (genel, tarif seçmeden)
+        // AI Barista (genel ekran)
         if (btnAiBarista != null) {
             btnAiBarista.setOnClickListener(v -> {
                 Intent aiIntent = new Intent(MainActivity.this, AiBaristaActivity.class);
@@ -92,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openCategory(String categoryKey) {
         Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-        intent.putExtra("category", categoryKey);
+        intent.putExtra(EXTRA_CATEGORY, categoryKey);
         startActivity(intent);
     }
 }
