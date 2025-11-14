@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +35,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private long timeLeftInMillis = 0L;
     private long initialTimeInMillis = 0L;
 
-    // AI Barista
+    // AI Barista butonu (detay ekranından açmak için)
     private Button btnAiBarista;
 
     // TTS
@@ -44,6 +43,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String fullTextToRead = "";
     // 0 -> 1x, 1 -> 1.5x, 2 -> 2x
     private int speedState = 0;
+
+    // Bu alanları AI Barista'ya intent ile göndereceğiz
+    private int imageResId = 0;
+    private String title;
+    private String description;
+    private String measure;
+    private String size;
+    private String tip;
+    private String note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,23 +72,23 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnStop  = findViewById(R.id.btnStop);
         btnShare = findViewById(R.id.btnShare);
 
-        txtTimer    = findViewById(R.id.txtTimer);
+        txtTimer     = findViewById(R.id.txtTimer);
         btnAiBarista = findViewById(R.id.btnAiBarista);
 
         // Intent verileri
         Intent intent = getIntent();
 
-        int imageResId = intent.getIntExtra("imageResId", 0);
+        imageResId  = intent.getIntExtra("imageResId", 0);
+        title       = intent.getStringExtra("title");
+        description = intent.getStringExtra("description");
+        measure     = intent.getStringExtra("measure");
+        size        = intent.getStringExtra("size");
+        tip         = intent.getStringExtra("tip");
+        note        = intent.getStringExtra("note");
+
         if (imageResId != 0) {
             imgHero.setImageResource(imageResId);
         }
-
-        String title       = intent.getStringExtra("title");
-        String description = intent.getStringExtra("description");
-        String measure     = intent.getStringExtra("measure");
-        String size        = intent.getStringExtra("size");
-        String tip         = intent.getStringExtra("tip");
-        String note        = intent.getStringExtra("note");
 
         if (title != null)       txtTitle.setText(title);
         if (description != null) txtDescription.setText(description);
@@ -159,23 +167,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
             return true;
         });
 
-        // 🤖 AI BARISTA (offline v1)
-        btnAiBarista.setOnClickListener(v -> {
-            String aiText = generateAiAdvice(
-                    title,
-                    description,
-                    measure,
-                    size,
-                    tip,
-                    note
-            );
-
-            new AlertDialog.Builder(RecipeDetailActivity.this)
-                    .setTitle("AI Barista")
-                    .setMessage(aiText)
-                    .setPositiveButton("Tamam", null)
-                    .show();
-        });
+        // 🤖 AI BARISTA EKRANINA GEÇİŞ
+        if (btnAiBarista != null) {
+            btnAiBarista.setOnClickListener(v -> {
+                Intent aiIntent = new Intent(RecipeDetailActivity.this, AiBaristaActivity.class);
+                aiIntent.putExtra("imageResId", imageResId);
+                aiIntent.putExtra("title", title);
+                aiIntent.putExtra("description", description);
+                aiIntent.putExtra("measure", measure);
+                aiIntent.putExtra("size", size);
+                aiIntent.putExtra("tip", tip);
+                aiIntent.putExtra("note", note);
+                startActivity(aiIntent);
+            });
+        }
     }
 
     /* ======================  TTS HIZ  ====================== */
@@ -281,79 +286,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         String timeText = String.format(Locale.getDefault(), "⏱ %02d:%02d", minutes, seconds);
         txtTimer.setText(timeText);
-    }
-
-    /* ======================  AI BARISTA LOJİĞİ  ====================== */
-
-    private String generateAiAdvice(String title,
-                                    String description,
-                                    String measure,
-                                    String size,
-                                    String tip,
-                                    String note) {
-
-        StringBuilder advice = new StringBuilder();
-
-        String lowerTitle = title != null ? title.toLowerCase(Locale.ROOT) : "";
-        String lowerDesc  = description != null ? description.toLowerCase(Locale.ROOT) : "";
-
-        // Baz: tarif özeti
-        if (title != null) {
-            advice.append("Şu an ").append(title).append(" hazırlıyorsun.\n\n");
-        }
-
-        // Espresso türevi mi?
-        boolean isEspressoBased =
-                lowerTitle.contains("espresso") ||
-                lowerTitle.contains("ristretto") ||
-                lowerTitle.contains("lungo") ||
-                lowerTitle.contains("latte") ||
-                lowerTitle.contains("cappuccino") ||
-                lowerTitle.contains("flat white") ||
-                lowerDesc.contains("espresso");
-
-        if (isEspressoBased) {
-            advice.append("• Daha yoğun bir fincan için, aynı gramaj kahveyle akış süresini 3–5 saniye kısaltmayı deneyebilirsin.\n");
-            advice.append("• Daha yumuşak bir içim için ise akışı 3–5 saniye uzatabilir veya toplam içeceği sütle biraz daha tamamlayabilirsin.\n\n");
-        }
-
-        // Filter / V60 / Chemex?
-        boolean isFilter =
-                lowerTitle.contains("v60") ||
-                lowerTitle.contains("chemex") ||
-                lowerTitle.contains("kalita") ||
-                lowerDesc.contains("filtre") ||
-                lowerDesc.contains("filter");
-
-        if (isFilter) {
-            advice.append("• Filtre kahvede tadı dengelemek için en hızlı oynayabileceğin şey öğütüm kalınlığı ve su sıcaklığı.\n");
-            advice.append("  Biraz daha gövdeli istersen öğütümü hafif incelt, asidite fazlaysa suyu 1–2°C düşür.\n\n");
-        }
-
-        // Bardak boyutu
-        if (size != null && !size.isEmpty()) {
-            advice.append("Bardak boyutun: ").append(size).append(". ");
-            advice.append("Daha yoğun bir içim için aynı tarifi bir küçük bardakta, daha hafif içim için bir büyük bardakta deneyebilirsin.\n\n");
-        }
-
-        // Measure üzerinden basit oran yorumu
-        if (measure != null && measure.contains("g")) {
-            advice.append("Ölçülerinle oynayarak tadı ayarlamak istersen:\n");
-            advice.append("• Kahve gramajını +1–2 g artırmak gövdeyi ve yoğunluğu hissettirecek kadar değiştirir.\n");
-            advice.append("• Şekeri değil, demleme süresini ve oranı değiştirerek tadı yönetmeye çalış; bu seni barista seviyesine yaklaştırır.\n\n");
-        }
-
-        // Orijinal barista ipucunu göm
-        if (tip != null && !tip.isEmpty()) {
-            advice.append("Tarifin kendi barista ipucu:\n");
-            advice.append("“").append(tip).append("”\n\n");
-        }
-
-        // Genel kapanış
-        advice.append("Deneme yaparken her seferinde sadece tek bir parametreyi değiştir ");
-        advice.append("(süre, gramaj veya süt miktarı gibi). Böylece neyin fincanı nasıl etkilediğini çok daha hızlı öğrenirsin.");
-
-        return advice.toString();
     }
 
     /* ======================  LIFECYCLE  ====================== */
