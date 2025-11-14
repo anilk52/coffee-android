@@ -3,88 +3,80 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.CardView;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.ui.AiBaristaActivity;
+import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
 import com.example.coffee.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    // RecipeActivity için kategori anahtarı
-    public static final String EXTRA_CATEGORY = "extra_category";
+    public static final String EXTRA_CATEGORY = "category";
 
-    // Kategori kartları
-    private View cardEspresso;
-    private View cardFilter;
-    private View cardSpecial;
-    private View cardIced;
-    private View cardTurkish;
-    // Alkollü kartı için ID'yi bilmediğimiz için şimdilik çıkardım (cardAlcohol vs.)
+    private CardView cardEspresso;
+    private CardView cardFilter;
+    private CardView cardSpecial;
+    private CardView cardAlcohol;
+    private CardView cardIced;
+    private CardView cardTurkish;
 
-    // Üst ikonlar
-    // Favoriler ID'si de net olmadığı için şimdilik yok
-    private ImageView btnAiBarista;
-    private ImageView btnSettings;
+    private ImageButton btnFavorites;
+    private ImageButton btnSettings;
+    private ImageButton btnAI;   // Ana ekrandaki AI tuşu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kategori kartlarını bağla
+        // Kategori kartları
         cardEspresso = findViewById(R.id.cardEspresso);
         cardFilter   = findViewById(R.id.cardFilter);
         cardSpecial  = findViewById(R.id.cardSpecial);
+        cardAlcohol  = findViewById(R.id.cardAlcohol);
         cardIced     = findViewById(R.id.cardIced);
         cardTurkish  = findViewById(R.id.cardTurkish);
-        // cardAlcohol / cardAlcoholic gibi bir ID varsa, layout'u görünce ekleriz
 
-        // Üst ikonlar
-        btnAiBarista = findViewById(R.id.btnAiBarista);
+        // Üst butonlar
+        btnFavorites = findViewById(R.id.btnFavorites);
         btnSettings  = findViewById(R.id.btnSettings);
-        // btnFavorites = findViewById(R.id.btnFavorites); // ID hatalı olduğu için şimdilik kullanmıyoruz
+        btnAI        = findViewById(R.id.btnAI);   // XML’deki AI ikonun id'si
 
-        // Kategori tıklamaları
-        if (cardEspresso != null) {
-            cardEspresso.setOnClickListener(v -> openCategory("espresso"));
-        }
-        if (cardFilter != null) {
-            cardFilter.setOnClickListener(v -> openCategory("filter"));
-        }
-        if (cardSpecial != null) {
-            cardSpecial.setOnClickListener(v -> openCategory("special"));
-        }
-        if (cardIced != null) {
-            cardIced.setOnClickListener(v -> openCategory("iced"));
-        }
-        if (cardTurkish != null) {
-            cardTurkish.setOnClickListener(v -> openCategory("turkish"));
-        }
-        // Alkollü kategori: ID'yi bildiğimizde buraya ekleriz
+        // Kategori tıklamaları → RecipeActivity
+        cardEspresso.setOnClickListener(v -> openRecipeActivity("espresso"));
+        cardFilter.setOnClickListener(v -> openRecipeActivity("filter"));
+        cardSpecial.setOnClickListener(v -> openRecipeActivity("special"));
+        cardAlcohol.setOnClickListener(v -> openRecipeActivity("alcohol"));
+        cardIced.setOnClickListener(v -> openRecipeActivity("iced"));
+        cardTurkish.setOnClickListener(v -> openRecipeActivity("turkish"));
 
-        // AI Barista (genel ekran)
-        if (btnAiBarista != null) {
-            btnAiBarista.setOnClickListener(v -> {
-                Intent aiIntent = new Intent(MainActivity.this, AiBaristaActivity.class);
-                startActivity(aiIntent);
-            });
-        }
+        // Favoriler
+        btnFavorites.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+        });
 
         // Ayarlar
-        if (btnSettings != null) {
-            btnSettings.setOnClickListener(v -> {
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
-            });
-        }
+        btnSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
+
+        // 🔮 ANA EKRAN AI BUTONU → GENEL MİLO SOHBETİ
+        btnAI.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
+            // Burada tarif bilgisi göndermiyoruz → MİLO genel kahve modu
+            startActivity(intent);
+        });
     }
 
-    private void openCategory(String categoryKey) {
+    private void openRecipeActivity(String category) {
         Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY, categoryKey);
+        intent.putExtra(EXTRA_CATEGORY, category);
         startActivity(intent);
     }
 }
