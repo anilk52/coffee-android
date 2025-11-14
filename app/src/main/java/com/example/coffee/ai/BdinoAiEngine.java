@@ -1,36 +1,63 @@
 package com.example.coffee.ai;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 /**
  * BDINO Coffee için AI katmanı.
  *
  * Şu an:
- *  - buildPromptForModel: Gemma / Phi gibi LLM'lere verilecek PROMPT'u üretir.
- *  - generateAdvice: prompt + soru + tarif bilgisine göre kural tabanlı (fake AI) cevap üretir.
+ *  - Prompt üretir (LLM'e verilecek metin).
+ *  - Kural tabanlı (rule-based) "fake AI" cevap oluşturur.
  *
- * Sonraki aşamada (Stage 3):
- *  - generateAdvice içinde veya yeni bir metotta gerçek offline model (Gemma / Phi) çağrısı yapılacak.
- *  - AiBaristaActivity tarafını değiştirmeden burasını güncellemek yeterli olacak.
+ * Gelecekte (Gemma 2B vb.):
+ *  - isOfflineModelReady() true dönecek şekilde güncellenecek.
+ *  - generateWithModel(prompt) içinde gerçek offline LLM çağrılacak.
+ *
+ * AiBaristaActivity tarafını değiştirmeden sadece bu sınıf güncellenecek.
  */
 public class BdinoAiEngine {
 
+    // Gelecekte model durumu için kullanılacak context
     private static BdinoAiEngine instance;
+    private final Context appContext;
 
-    private BdinoAiEngine() {
+    // Şimdilik offline LLM devre dışı (ileride burayı model durumuna bağlayacağız)
+    private boolean offlineModelReady = false;
+
+    private BdinoAiEngine(Context context) {
+        this.appContext = context.getApplicationContext();
     }
 
-    public static BdinoAiEngine getInstance() {
+    public static BdinoAiEngine getInstance(Context context) {
         if (instance == null) {
-            instance = new BdinoAiEngine();
+            instance = new BdinoAiEngine(context);
         }
         return instance;
     }
 
     /**
-     * LLM için prompt oluşturur.
+     * İleride: Gemma model dosyasını yüklemek, path ayarlamak vs için kullanılabilir.
+     * Şimdilik placeholder.
      */
-    public String buildPromptForModel(
+    public void initOfflineModelIfNeeded() {
+        // TODO: Gemma 2B modelini buradan başlatacağız (nativeInit vs).
+        // Şimdilik hiçbir şey yapmıyoruz.
+        offlineModelReady = false;
+    }
+
+    /**
+     * Offline LLM hazır mı?
+     * Şimdilik her zaman false. Gemma entegre edilince bu logic değişecek.
+     */
+    public boolean isOfflineModelReady() {
+        return offlineModelReady;
+    }
+
+    /**
+     * LLM'e verilecek prompt'u üretir.
+     */
+    private String buildPromptForModel(
             String question,
             String coffeeName,
             String coffeeDescription,
@@ -78,21 +105,54 @@ public class BdinoAiEngine {
     }
 
     /**
-     * Stage 1/2: Kural tabanlı, "akıllıymış gibi" duran cevap.
-     *
-     * Stage 3'te:
-     *  - Burada promptForModel'i gerçek offline LLM'e gönderip cevabı alabiliriz.
+     * Gelecekte gerçek offline LLM'in çağrılacağı yer.
+     * Şimdilik sadece placeholder olarak bırakıyoruz.
+     */
+    private String generateWithModel(String promptForModel) {
+        // TODO: Gemma 2B / Phi-3 Mini entegrasyonu burada olacak.
+        // promptForModel -> native LLM -> cevap string
+        // Şimdilik kullanıcıya açıklayıcı bir demo mesajı dönelim:
+        return "Şu an BDINO'nun kural tabanlı barista modu aktif. " +
+               "Offline gerçek AI (Gemma 2B) entegrasyonu hazırlandığında, bu mesaj yerine " +
+               "model tarafından üretilen cevaplar gelecek.\n\n" +
+               "Şimdilik temel barista tavsiyelerini aşağıda paylaşıyorum:\n";
+    }
+
+    /**
+     * Dışarıdan çağrılan tek ana fonksiyon:
+     * - Gerekli prompt'u üretir.
+     * - Eğer offline LLM hazırsa modeli kullanır,
+     *   değilse kural tabanlı cevaba düşer.
      */
     public String generateAdvice(
             String question,
-            String promptForModel,  // Şimdilik kullanılmıyor ama Stage 3 için hazır.
             String coffeeName,
+            String coffeeDescription,
             String coffeeMeasure,
             String coffeeSize,
-            String coffeeTip
+            String coffeeTip,
+            String coffeeNote
     ) {
+        // 1) LLM için prompt oluştur
+        String promptForModel = buildPromptForModel(
+                question,
+                coffeeName,
+                coffeeDescription,
+                coffeeMeasure,
+                coffeeSize,
+                coffeeTip,
+                coffeeNote
+        );
+
         StringBuilder sb = new StringBuilder();
 
+        // 2) Eğer offline model hazırsa, önce model cevabını yaz (ileride gerçek olacak)
+        if (isOfflineModelReady()) {
+            String llmAnswer = generateWithModel(promptForModel);
+            sb.append(llmAnswer).append("\n");
+        }
+
+        // 3) Ardından veya model yoksa tamamen kural tabanlı cevap ekle
         if (!TextUtils.isEmpty(coffeeName)) {
             sb.append("Şu an ").append(coffeeName).append(" üzerine konuşuyoruz.\n\n");
         } else {
@@ -151,8 +211,9 @@ public class BdinoAiEngine {
         }
 
         // Eğer yukarıdakiler hiç tetiklenmediyse
-        if (sb.toString().trim().equals("") ||
-                (sb.toString().startsWith("Şu an ") && sb.toString().trim().split("\n").length <= 2)) {
+        String current = sb.toString().trim();
+        if (current.equals("") ||
+                (current.startsWith("Şu an ") && current.split("\n").length <= 2)) {
             sb.append("Genel bir barista tavsiyesi istersen:\n");
             sb.append("• Her denemede sadece TEK parametreyi değiştir (süre, öğütüm, gramaj veya süt miktarı).\n");
             sb.append("• Böylece fincandaki farkın nereden geldiğini çok daha net görürsün.\n\n");
@@ -171,9 +232,6 @@ public class BdinoAiEngine {
         }
 
         sb.append("\nKüçük dokunuşlarla kendi BDINO reçeteni oluşturabilirsin. ☕");
-
-        // promptForModel şu an kullanılmıyor ama ileride LLM çağrısında işimize yarayacak.
-        // Örn: native koda geçerken burayı kullanacağız.
 
         return sb.toString();
     }
