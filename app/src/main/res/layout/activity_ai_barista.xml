@@ -1,192 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aiBaristaRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#1C1C1C">
+    android:background="#111111"
+    tools:context=".ui.AiBaristaActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootContainer"
-        android:layout_width="match_parent"
+    <!-- Üst başlık -->
+    <TextView
+        android:id="@+id/txtScreenTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:text="AI Barista"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- ÜST BAŞLIK SATIRI -->
-        <TextView
-            android:id="@+id/txtTitleBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AI Barista"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <!-- Cevap kartı -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAnswer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toBottomOf="@id/txtScreenTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtAskLabel">
 
-        <!-- Kahve görseli + adı kartı -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardHero"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#2B2B2B"
-            app:layout_constraintTop_toBottomOf="@id/txtTitleBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:id="@+id/imgHero"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerInside"
-                    android:background="@android:color/transparent" />
-
-                <TextView
-                    android:id="@+id/txtCoffeeName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Kahve Adı"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtSubTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Kahve hakkında her şeyi sorabilirsin."
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- SORU BAŞLIĞI -->
-        <TextView
-            android:id="@+id/txtAskLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="AI Barista'ya sor:"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/cardHero"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- SORU KARTI -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardQuestion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#3A3A3A"
-            app:layout_constraintTop_toBottomOf="@id/txtAskLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <EditText
-                android:id="@+id/edtQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/darker_gray"
-                android:hint="Örn: Latte çok hafif oldu, nasıl daha yoğun yaparım?"
-                android:minLines="3"
-                android:gravity="top|start"
-                android:inputType="textMultiLine" />
-        </androidx.cardview.widget.CardView>
-
-        <!-- BUTON SATIRI -->
         <LinearLayout
-            android:id="@+id/layoutButtons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/cardQuestion"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <Button
-                android:id="@+id/btnSend"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="2"
-                android:text="🧠 Gönder"
-                android:textAllCaps="false" />
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="0dp" />
-
-            <Button
-                android:id="@+id/btnVoice"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:text="🎤"
-                android:textAllCaps="false" />
-        </LinearLayout>
-
-        <!-- CEVAP BAŞLIĞI -->
-        <TextView
-            android:id="@+id/txtAnswerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="🧩 Barista cevabı:"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/layoutButtons"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <!-- CEVAP KARTI -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardAnswer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:cardBackgroundColor="#3A3A3A"
-            app:layout_constraintTop_toBottomOf="@id/txtAnswerTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
+            <!-- Büyük başlık: Kahve adı / BDINO Coffee -->
             <TextView
-                android:id="@+id/txtAnswerBody"
-                android:layout_width="match_parent"
+                android:id="@+id/txtCoffeeName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:text="Buraya AI Barista cevabı gelecek." />
-        </androidx.cardview.widget.CardView>
+                android:text="BDINO Coffee"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <!-- Küçük başlık: MİLO etiketi -->
+            <TextView
+                android:id="@+id/txtAnswerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="MİLO – BDINO AI Barista"
+                android:textSize="12sp"
+                android:textColor="#CCCCCC" />
+
+            <!-- Cevap alanı (scrollable) -->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/txtAnswerBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="3dp"
+                    tools:text="MİLO hazır. Kahve hakkında her şeyi sorabilirsin." />
+            </ScrollView>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- “AI Barista'ya sor” etiketi -->
+    <TextView
+        android:id="@+id/txtAskLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI Barista'ya sor:"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/edtQuestion" />
+
+    <!-- Soru kutusu -->
+    <EditText
+        android:id="@+id/edtQuestion"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="#222222"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#888888"
+        android:hint="Örn: Latte çok hafif oldu, nasıl daha yoğun yaparım?"
+        android:inputType="textMultiLine"
+        android:gravity="top|start"
+        android:maxLines="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layoutButtons" />
+
+    <!-- Butonlar (Gönder + Mic) -->
+    <LinearLayout
+        android:id="@+id/layoutButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="🧠 Gönder"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:background="#5C3A2E" />
+
+        <View
+            android:layout_width="12dp"
+            android:layout_height="0dp" />
+
+        <!-- Mic butonu şimdilik pasif, ama görünüm kalsın -->
+        <Button
+            android:id="@+id/btnMic"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:text="🎙"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:background="#333333" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
