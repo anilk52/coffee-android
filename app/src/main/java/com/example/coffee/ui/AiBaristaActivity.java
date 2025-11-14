@@ -65,7 +65,11 @@ public class AiBaristaActivity extends AppCompatActivity {
             txtCoffeeName.setText("BDINO Coffee");
         }
 
-        // Gönder butonu → AI katmanını çağırır
+        // AI motorunu al
+        BdinoAiEngine ai = BdinoAiEngine.getInstance(getApplicationContext());
+        ai.initOfflineModelIfNeeded(); // Şimdilik no-op, ileride Gemma'yı burada yükleyeceğiz.
+
+        // Gönder butonu → AI cevabı üret
         btnSend.setOnClickListener(v -> {
             String question = edtQuestion.getText().toString().trim();
             if (question.isEmpty()) {
@@ -73,10 +77,7 @@ public class AiBaristaActivity extends AppCompatActivity {
                 return;
             }
 
-            BdinoAiEngine ai = BdinoAiEngine.getInstance();
-
-            // 1) LLM için prompt'u oluştur
-            String promptForModel = ai.buildPromptForModel(
+            String answer = ai.generateAdvice(
                     question,
                     coffeeName,
                     coffeeDescription,
@@ -84,16 +85,6 @@ public class AiBaristaActivity extends AppCompatActivity {
                     coffeeSize,
                     coffeeTip,
                     coffeeNote
-            );
-
-            // 2) Şimdilik kural tabanlı cevabı al
-            String answer = ai.generateAdvice(
-                    question,
-                    promptForModel,
-                    coffeeName,
-                    coffeeMeasure,
-                    coffeeSize,
-                    coffeeTip
             );
 
             txtAnswerTitle.setVisibility(TextView.VISIBLE);
