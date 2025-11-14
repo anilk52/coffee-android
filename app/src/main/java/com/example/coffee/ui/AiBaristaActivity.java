@@ -45,7 +45,7 @@ public class AiBaristaActivity extends AppCompatActivity {
         txtAnswerTitle = findViewById(R.id.txtAnswerTitle);
         txtAnswerBody  = findViewById(R.id.txtAnswerBody);
 
-        // Intent ile gelen tarif bilgileri (RecipeDetailActivity'den veya boş)
+        // Intent ile gelen tarif bilgileri
         Intent intent = getIntent();
         int imageResId = intent.getIntExtra("imageResId", 0);
         if (imageResId != 0) {
@@ -73,7 +73,11 @@ public class AiBaristaActivity extends AppCompatActivity {
                 return;
             }
 
-            String answer = generateOfflineAdvice(question);
+            // 🔹 Stage 2: LLM için kullanılacak PROMPT burada oluşuyor
+            String promptForModel = buildPromptForModel(question);
+
+            // Şimdilik rule-based cevap: Stage 3'te burada Gemma/Phi çağıracağız
+            String answer = generateOfflineAdvice(question, promptForModel);
 
             txtAnswerTitle.setVisibility(View.VISIBLE);
             txtAnswerBody.setVisibility(View.VISIBLE);
@@ -96,10 +100,53 @@ public class AiBaristaActivity extends AppCompatActivity {
     }
 
     /**
-     * Stage 1 için "akıllıymış gibi" duran kural tabanlı cevap.
-     * Stage 2'de burası Gemma / offline model çağrısına dönecek.
+     * 🔥 Burası GEMMA / Phi gibi model için asıl PROMPT'u inşa eden kısım.
+     * Stage 3'te bu string'i modele göndereceğiz.
      */
-    private String generateOfflineAdvice(String question) {
+    private String buildPromptForModel(String question) {
+        StringBuilder p = new StringBuilder();
+
+        p.append("Sen BDINO Coffee mobil uygulamasında çalışan uzman bir kahve baristası yapay zekâsın. ");
+        p.append("Kullanıcıya her zaman sakin, net ve öğretici bir dille cevap ver. ");
+        p.append("Özellikle espresso bazlı içecekler, filtre kahve, demleme süreleri, öğütüm kalınlığı ve süt köpürtme konusunda uzmansın.\n\n");
+
+        if (!TextUtils.isEmpty(coffeeName)) {
+            p.append("Kahve adı: ").append(coffeeName).append("\n");
+        }
+        if (!TextUtils.isEmpty(coffeeDescription)) {
+            p.append("Kısa açıklama: ").append(coffeeDescription).append("\n");
+        }
+        if (!TextUtils.isEmpty(coffeeMeasure)) {
+            p.append("Ölçü bilgisi: ").append(coffeeMeasure).append("\n");
+        }
+        if (!TextUtils.isEmpty(coffeeSize)) {
+            p.append("Bardak boyutu: ").append(coffeeSize).append("\n");
+        }
+        if (!TextUtils.isEmpty(coffeeTip)) {
+            p.append("Tarifin barista ipucu: ").append(coffeeTip).append("\n");
+        }
+        if (!TextUtils.isEmpty(coffeeNote)) {
+            p.append("Ek not: ").append(coffeeNote).append("\n");
+        }
+
+        p.append("\n");
+        p.append("Kullanıcının sorusu:\n");
+        p.append(question).append("\n\n");
+
+        p.append("Cevap verirken:\n");
+        p.append("- Gerekirse madde madde yaz.\n");
+        p.append("- Gereksiz teknik detaylarla boğma.\n");
+        p.append("- Tad profili, yoğunluk, ağızda kalan his gibi konularda da yorum yap.\n");
+        p.append("- Mümkünse her cevabı 3–6 satır arasında tut.\n");
+
+        return p.toString();
+    }
+
+    /**
+     * Stage 1/2 için "akıllıymış gibi" duran kural tabanlı cevap.
+     * Stage 3'te burası model cevabıyla değişecek.
+     */
+    private String generateOfflineAdvice(String question, String promptForModel) {
         StringBuilder sb = new StringBuilder();
 
         if (!TextUtils.isEmpty(coffeeName)) {
@@ -150,7 +197,8 @@ public class AiBaristaActivity extends AppCompatActivity {
         }
 
         // Süre / kaç saniye
-        if (qLower.contains("süre") || qLower.contains("kaç saniye") || qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
+        if (qLower.contains("süre") || qLower.contains("kaç saniye") ||
+                qLower.contains("kaç sn") || qLower.contains("kaç dk")) {
             sb.append("• Süre için genel başlangıç noktaları:\n");
             sb.append("  - Espresso: 25–35 saniye arası.\n");
             sb.append("  - Lungo: 35–45 saniye civarı.\n");
@@ -178,6 +226,9 @@ public class AiBaristaActivity extends AppCompatActivity {
         }
 
         sb.append("\nKüçük dokunuşlarla kendi BDINO reçeteni oluşturabilirsin. ☕");
+
+        // promptForModel şu an sadece Stage 3 için hazır, ister log’la ister sakla.
+        // Örn: Log.d("BDINO_PROMPT", promptForModel);
 
         return sb.toString();
     }
