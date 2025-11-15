@@ -24,7 +24,7 @@ public class SplashActivity extends Activity {
             "Kokuyu aldın mı? 😌",
             "Isı sabit, tat kusursuz.",
             "Hadi kahve zamanı!",
-            "BDINO ile daha lezzetli!"
+            "bdinoᴼ Coffee ile daha lezzetli!"
     };
 
     @Override
