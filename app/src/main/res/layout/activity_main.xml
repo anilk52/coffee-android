@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginStart="24dp"
-        android:text="Kategorini seç, tarifini aç, MiLO'ya sor."
+        android:text="Kategorini seç, tarifini aç, BrewAi’ye sor."
         android:textColor="@color/coffee_latte_brown"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/txtAppTitle"
