@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView cardLatteLab;
     private CardView cardIced;
     private CardView cardTurkish;
-    private CardView cardAlcohol;      // <-- XML ile uyumlu
+    private CardView cardAlcohol;
     private CardView cardFrappe;
     private CardView cardSignature;
     private CardView cardBrewGuide;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Coffee);   // kendi teman neyse
+        // Tema satırını kaldırdık; uygulama manifestteki varsayılan temayı kullanacak.
         setContentView(R.layout.activity_main);
 
         // Kartlar
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cardLatteLab  = findViewById(R.id.cardLatteLab);
         cardIced      = findViewById(R.id.cardIced);
         cardTurkish   = findViewById(R.id.cardTurkish);
-        cardAlcohol   = findViewById(R.id.cardAlcohol);   // <-- düzeltildi
+        cardAlcohol   = findViewById(R.id.cardAlcohol);
         cardFrappe    = findViewById(R.id.cardFrappe);
         cardSignature = findViewById(R.id.cardSignature);
         cardBrewGuide = findViewById(R.id.cardBrewGuide);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             openCategory("ICED");
         } else if (id == R.id.cardTurkish) {
             openCategory("TURKISH");
-        } else if (id == R.id.cardAlcohol) {         // <-- burada da düzeltildi
+        } else if (id == R.id.cardAlcohol) {
             openCategory("ALCOHOLIC");
         } else if (id == R.id.cardFrappe) {
             openCategory("FRAPPE");
