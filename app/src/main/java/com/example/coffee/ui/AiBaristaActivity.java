@@ -1,124 +1,62 @@
 package com.example.coffee.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
 import com.example.coffee.ai.BdinoAiEngine;
+import com.example.coffee.ai.BdinoAiEngine.BrewAiConversationState;
+import com.example.coffee.ai.BdinoAiEngine.BrewAiReply;
 
-/**
- * BDINO AI Barista – MiLO ile sohbet ekranı (offline)
- */
 public class AiBaristaActivity extends AppCompatActivity {
 
     private TextView txtHeader;
     private TextView txtConversation;
     private EditText edtMessage;
-    private Button btnSend;
+    private ImageButton btnSend;
 
-    // Tariften gelen bağlam (isteğe bağlı)
-    private String coffeeName;
-    private String description;
-    private String measure;
-    private String size;
-    private String tip;
-    private String note;
-
-    private BdinoAiEngine ai;
+    private BdinoAiEngine engine;
+    private BrewAiConversationState state = null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ai_barista);
 
-        txtHeader      = findViewById(R.id.txtAiHeader);
+        txtHeader       = findViewById(R.id.txtAiHeader);
         txtConversation = findViewById(R.id.txtAiConversation);
-        edtMessage     = findViewById(R.id.edtAiMessage);
-        btnSend        = findViewById(R.id.btnAiSend);
+        edtMessage      = findViewById(R.id.edtAiMessage);
+        btnSend         = findViewById(R.id.btnAiSend);
 
-        // AI motoru
-        ai = BdinoAiEngine.getInstance(getApplicationContext());
-        if (ai != null) {
-            ai.initOfflineModelIfNeeded();
-        }
+        // Başlık güvenceye alınsın
+        txtHeader.setText("BrewAi by bdinoᴼ");
 
-        // Intent ile tariften gelen bilgiler
-        Intent intent = getIntent();
-        if (intent != null) {
-            coffeeName  = intent.getStringExtra("title");
-            description = intent.getStringExtra("description");
-            measure     = intent.getStringExtra("measure");
-            size        = intent.getStringExtra("size");
-            tip         = intent.getStringExtra("tip");
-            note        = intent.getStringExtra("note");
-        }
+        engine = BdinoAiEngine.getInstance(getApplicationContext());
 
-        // Başlık
-        if (!TextUtils.isEmpty(coffeeName)) {
-            txtHeader.setText("MiLO – " + coffeeName + " hakkında konuşuyor");
-        } else {
-            txtHeader.setText("MiLO – BDINO AI Barista");
-        }
+        btnSend.setOnClickListener(v -> {
+            String msg = edtMessage.getText().toString();
+            if (TextUtils.isEmpty(msg.trim())) {
+                return;
+            }
 
-        // İlk karşılama mesajı
-        appendBot("Merhaba, ben MiLO. Kahve hakkında aklına ne geliyorsa sorabilirsin ☕");
+            BrewAiReply reply = engine.chatOnce(msg, state);
+            state = reply.newState;
 
-        btnSend.setOnClickListener(v -> onSendClicked());
-    }
+            // Konuşma geçmişini basitçe birleştirelim
+            StringBuilder sb = new StringBuilder();
+            if (state != null && state.getHistory() != null) {
+                for (String line : state.getHistory()) {
+                    sb.append(line).append("\n");
+                }
+            }
 
-    private void onSendClicked() {
-        String userText = edtMessage.getText().toString().trim();
-        if (userText.isEmpty()) return;
-
-        appendUser(userText);
-
-        if (ai != null) {
-            String reply = ai.generateReply(
-                    userText,
-                    coffeeName,
-                    description,
-                    measure,
-                    size,
-                    tip,
-                    note
-            );
-            appendBot(reply);
-        } else {
-            appendBot("Şu anda AI motoruna ulaşamıyorum, ama bu ekran offline çalışmalıydı. Lütfen daha sonra tekrar dene.");
-        }
-
-        edtMessage.setText("");
-    }
-
-    private void appendUser(String text) {
-        String current = txtConversation.getText().toString();
-        String appended = current + "\n\nSen: " + text;
-        txtConversation.setText(appended);
-        scrollToBottom();
-    }
-
-    private void appendBot(String text) {
-        String current = txtConversation.getText().toString();
-        String appended = current + "\n\nMiLO: " + text;
-        txtConversation.setText(appended);
-        scrollToBottom();
-    }
-
-    private void scrollToBottom() {
-        View parent = (View) txtConversation.getParent();
-        if (parent instanceof ScrollView) {
-            ((ScrollView) parent).post(() ->
-                    ((ScrollView) parent).fullScroll(View.FOCUS_DOWN)
-            );
-        }
+            txtConversation.setText(sb.toString().trim());
+            edtMessage.setText("");
+        });
     }
 }
