@@ -1,342 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+    android:background="@color/coffee_beige">
 
-    <!-- ÜST BAR: LOGO + SAĞDA FAVORİ / AI -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txtLogo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="BDINO Coffee"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <!-- Favoriler butonu -->
-        <ImageButton
-            android:id="@+id/btnFavorites"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="Favoriler"
-            android:padding="4dp"
-            android:src="@android:drawable/btn_star" />
-
-        <!-- AI Barista butonu -->
-        <ImageButton
-            android:id="@+id/btnAI"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="AI Barista"
-            android:padding="4dp"
-            android:src="@android:drawable/ic_dialog_info" />
-    </LinearLayout>
-
-    <!-- Küçük açıklama -->
+    <!-- Başlık -->
     <TextView
-        android:id="@+id/txtSubtitle"
-        android:layout_width="match_parent"
+        android:id="@+id/txtAppTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Kategorini seç, tarifi aç, MİLO’ya sor."
-        android:textColor="#DDDDDD"
-        android:textSize="13sp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="BDINO Coffee"
+        android:textColor="@color/coffee_deep_green"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnFavorites" />
 
-    <!-- KARTLAR İÇİN SCROLL ALANI -->
-    <ScrollView
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txtTagline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
+        android:text="Kategorini seç, tarifini aç, MiLO'ya sor."
+        android:textColor="@color/coffee_latte_brown"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/txtAppTitle"
+        app:layout_constraintTop_toBottomOf="@id/txtAppTitle"
+        app:layout_constraintEnd_toEndOf="@id/txtAppTitle" />
+
+    <!-- Üst ikonlar -->
+    <ImageButton
+        android:id="@+id/btnFavorites"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="72dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Favoriler"
+        android:padding="4dp"
+        android:src="@android:drawable/btn_star_big_off"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAI" />
+
+    <ImageButton
+        android:id="@+id/btnAI"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="AI Barista"
+        android:padding="4dp"
+        android:src="@android:drawable/ic_btn_speak_now"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSettings" />
+
+    <ImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Ayarlar"
+        android:padding="4dp"
+        android:src="@android:drawable/ic_menu_preferences"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Kategori kartları container -->
+    <LinearLayout
+        android:id="@+id/categoryContainer"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1">
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/txtTagline"
+        app:layout_constraintBottom_toTopOf="@+id/txtFooter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <GridLayout
-            android:id="@+id/gridCategories"
+        <!-- 1. satır -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="4"
             android:orientation="horizontal">
 
-            <!-- ORTAK KART STİLİ:
-                 - 2 sütunlu grid
-                 - Her kart: CardView + LinearLayout + emoji + başlık
-            -->
-
-            <!-- ESPRESSO -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardEspresso"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="☕"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatEspresso"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Espresso"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Espresso"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
-            <!-- FILTER -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardFilter"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginStart="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🫗"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatFilter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Filter"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Filtre"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
-            <!-- SPECIAL -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <!-- 2. satır -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardSpecial"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="✨"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatSpecial"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Special"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Special"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
-            <!-- ALCOHOL -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardAlcohol"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginStart="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🍸"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatAlcohol"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Alcoholic"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Alkollü"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
-            <!-- ICED -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <!-- 3. satır -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardIced"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🧊"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatIced"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Iced"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Iced"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
-            <!-- TURKISH -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardTurkish"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnWeight="1">
+                android:layout_height="96dp"
+                android:layout_marginStart="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/coffee_deep_green"
+                android:layout_weight="1">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🇹🇷"
-                        android:textSize="24sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatTurkish"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Turkish"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="Türk"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
 
-            <!-- YENİ: FRAPPÉ / BLENDED -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardFrappe"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp"
-                android:layout_columnSpan="2">
+    <!-- Alt imza -->
+    <TextView
+        android:id="@+id/txtFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Hazırlayan: Anıl & GPT-5 ☕"
+        android:textColor="@color/coffee_latte_brown"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical"
-                    android:background="#1E1E1E">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🥤"
-                        android:textSize="28sp"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/txtCatFrappe"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Frappé / Blended"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </GridLayout>
-    </ScrollView>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
