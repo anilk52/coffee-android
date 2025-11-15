@@ -6,116 +6,105 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.coffee.ui.AiBaristaActivity;
 import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
+import com.example.coffee.ui.SettingsActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String EXTRA_CATEGORY = "category";
+    public static final String EXTRA_CATEGORY = "extra_category";
 
-    // 9 kategori kartı
     private CardView cardEspresso;
     private CardView cardFilter;
     private CardView cardLatteLab;
     private CardView cardIced;
     private CardView cardTurkish;
-    private CardView cardAlcoholic;
+    private CardView cardAlcohol;      // <-- XML ile uyumlu
     private CardView cardFrappe;
     private CardView cardSignature;
     private CardView cardBrewGuide;
 
-    // Üst ikonlar
     private ImageButton btnFavorites;
     private ImageButton btnAI;
     private ImageButton btnSettings;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Coffee);   // kendi teman neyse
         setContentView(R.layout.activity_main);
 
-        // Kartları bağla
-        cardEspresso   = findViewById(R.id.cardEspresso);
-        cardFilter     = findViewById(R.id.cardFilter);
-        cardLatteLab   = findViewById(R.id.cardLatteLab);
-        cardIced       = findViewById(R.id.cardIced);
-        cardTurkish    = findViewById(R.id.cardTurkish);
-        cardAlcoholic  = findViewById(R.id.cardAlcoholic);
-        cardFrappe     = findViewById(R.id.cardFrappe);
-        cardSignature  = findViewById(R.id.cardSignature);
-        cardBrewGuide  = findViewById(R.id.cardBrewGuide);
+        // Kartlar
+        cardEspresso  = findViewById(R.id.cardEspresso);
+        cardFilter    = findViewById(R.id.cardFilter);
+        cardLatteLab  = findViewById(R.id.cardLatteLab);
+        cardIced      = findViewById(R.id.cardIced);
+        cardTurkish   = findViewById(R.id.cardTurkish);
+        cardAlcohol   = findViewById(R.id.cardAlcohol);   // <-- düzeltildi
+        cardFrappe    = findViewById(R.id.cardFrappe);
+        cardSignature = findViewById(R.id.cardSignature);
+        cardBrewGuide = findViewById(R.id.cardBrewGuide);
 
         // Üst ikonlar
         btnFavorites = findViewById(R.id.btnFavorites);
         btnAI        = findViewById(R.id.btnAI);
         btnSettings  = findViewById(R.id.btnSettings);
 
-        // Kategori tıklama listener'ı
-        View.OnClickListener categoryClickListener = v -> {
-            String category;
+        // Click listener bağla
+        cardEspresso.setOnClickListener(this);
+        cardFilter.setOnClickListener(this);
+        cardLatteLab.setOnClickListener(this);
+        cardIced.setOnClickListener(this);
+        cardTurkish.setOnClickListener(this);
+        cardAlcohol.setOnClickListener(this);
+        cardFrappe.setOnClickListener(this);
+        cardSignature.setOnClickListener(this);
+        cardBrewGuide.setOnClickListener(this);
 
-            int id = v.getId();
-            if (id == R.id.cardEspresso) {
-                category = "espresso";
-            } else if (id == R.id.cardFilter) {
-                category = "filter";
-            } else if (id == R.id.cardLatteLab) {
-                // Şimdilik eski "special" datasını kullanıyoruz,
-                // sonra Latte Lab içeriğini ayıracağız.
-                category = "special";
-            } else if (id == R.id.cardIced) {
-                category = "iced";
-            } else if (id == R.id.cardTurkish) {
-                category = "turkish";
-            } else if (id == R.id.cardAlcoholic) {
-                category = "alcoholic";
-            } else if (id == R.id.cardFrappe) {
-                category = "frappe";
-            } else if (id == R.id.cardSignature) {
-                category = "signature";
-            } else {
-                category = "brew_guide";
-            }
+        btnFavorites.setOnClickListener(this);
+        btnAI.setOnClickListener(this);
+        btnSettings.setOnClickListener(this);
+    }
 
-            Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
-            intent.putExtra(EXTRA_CATEGORY, category);
-            startActivity(intent);
-        };
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
 
-        // Listener'ları bağla
-        cardEspresso.setOnClickListener(categoryClickListener);
-        cardFilter.setOnClickListener(categoryClickListener);
-        cardLatteLab.setOnClickListener(categoryClickListener);
-        cardIced.setOnClickListener(categoryClickListener);
-        cardTurkish.setOnClickListener(categoryClickListener);
-        cardAlcoholic.setOnClickListener(categoryClickListener);
-        cardFrappe.setOnClickListener(categoryClickListener);
-        cardSignature.setOnClickListener(categoryClickListener);
-        cardBrewGuide.setOnClickListener(categoryClickListener);
+        if (id == R.id.cardEspresso) {
+            openCategory("ESPRESSO");
+        } else if (id == R.id.cardFilter) {
+            openCategory("FILTER");
+        } else if (id == R.id.cardLatteLab) {
+            openCategory("LATTE_LAB");
+        } else if (id == R.id.cardIced) {
+            openCategory("ICED");
+        } else if (id == R.id.cardTurkish) {
+            openCategory("TURKISH");
+        } else if (id == R.id.cardAlcohol) {         // <-- burada da düzeltildi
+            openCategory("ALCOHOLIC");
+        } else if (id == R.id.cardFrappe) {
+            openCategory("FRAPPE");
+        } else if (id == R.id.cardSignature) {
+            openCategory("SIGNATURE");
+        } else if (id == R.id.cardBrewGuide) {
+            openCategory("BREW_GUIDE");
+        } else if (id == R.id.btnFavorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+        } else if (id == R.id.btnAI) {
+            startActivity(new Intent(this, AiBaristaActivity.class));
+        } else if (id == R.id.btnSettings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
+    }
 
-        // Favoriler butonu
-        btnFavorites.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
-            startActivity(intent);
-        });
-
-        // AI Barista (MiLO)
-        btnAI.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
-            startActivity(intent);
-        });
-
-        // Ayarlar (şimdilik placeholder)
-        btnSettings.setOnClickListener(v ->
-                Toast.makeText(
-                        MainActivity.this,
-                        "Ayarlar yakında eklenecek.",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+    private void openCategory(String categoryKey) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra(EXTRA_CATEGORY, categoryKey);
+        startActivity(intent);
     }
 }
