@@ -315,7 +315,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Hazırlayan: Anıl & GPT-5 ☕"
+        android:text="Hazırlayan: Anıl K☕"
         android:textColor="@color/coffee_latte_brown"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
