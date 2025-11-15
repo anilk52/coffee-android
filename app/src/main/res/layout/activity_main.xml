@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:text="BDINO Coffee"
+        android:text="bdinoᴼ Coffee"
         android:textColor="@color/coffee_deep_green"
         android:textSize="26sp"
         android:textStyle="bold"
