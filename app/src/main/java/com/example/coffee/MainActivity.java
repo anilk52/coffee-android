@@ -17,23 +17,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_CATEGORY = "category";
 
-    private CardView cardEspresso;
-    private CardView cardFilter;
-    private CardView cardSpecial;
-    private CardView cardAlcohol;
-    private CardView cardIced;
-    private CardView cardTurkish;
+    private CardView cardEspresso, cardFilter, cardSpecial, cardAlcohol, cardIced, cardTurkish;
+    private CardView cardFrappe, cardSmoothie; // ➕ YENİ KARTLAR
 
-    private ImageButton btnFavorites;
-    private ImageButton btnAI;
-    private ImageButton btnSettings;
+    private ImageButton btnFavorites, btnAI, btnSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kartlar
+        // Kart bağlantıları
         cardEspresso = findViewById(R.id.cardEspresso);
         cardFilter   = findViewById(R.id.cardFilter);
         cardSpecial  = findViewById(R.id.cardSpecial);
@@ -41,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         cardIced     = findViewById(R.id.cardIced);
         cardTurkish  = findViewById(R.id.cardTurkish);
 
-        // Üst ikonlar
+        cardFrappe   = findViewById(R.id.cardFrappe);     // ➕
+        cardSmoothie = findViewById(R.id.cardSmoothie);   // ➕
+
+
         btnFavorites = findViewById(R.id.btnFavorites);
         btnAI        = findViewById(R.id.btnAI);
         btnSettings  = findViewById(R.id.btnSettings);
@@ -51,19 +48,14 @@ public class MainActivity extends AppCompatActivity {
             String category;
 
             int id = v.getId();
-            if (id == R.id.cardEspresso) {
-                category = "espresso";
-            } else if (id == R.id.cardFilter) {
-                category = "filter";
-            } else if (id == R.id.cardSpecial) {
-                category = "special";
-            } else if (id == R.id.cardAlcohol) {
-                category = "alcoholic";
-            } else if (id == R.id.cardIced) {
-                category = "iced";
-            } else {
-                category = "turkish";
-            }
+            if (id == R.id.cardEspresso)       category = "espresso";
+            else if (id == R.id.cardFilter)    category = "filter";
+            else if (id == R.id.cardSpecial)   category = "special";
+            else if (id == R.id.cardAlcohol)   category = "alcoholic";
+            else if (id == R.id.cardIced)      category = "iced";
+            else if (id == R.id.cardTurkish)   category = "turkish";
+            else if (id == R.id.cardFrappe)    category = "frappe";     // ➕
+            else                                category = "smoothie";   // ➕
 
             Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
             intent.putExtra(EXTRA_CATEGORY, category);
@@ -76,25 +68,17 @@ public class MainActivity extends AppCompatActivity {
         cardAlcohol.setOnClickListener(categoryClickListener);
         cardIced.setOnClickListener(categoryClickListener);
         cardTurkish.setOnClickListener(categoryClickListener);
+        cardFrappe.setOnClickListener(categoryClickListener);     // ➕
+        cardSmoothie.setOnClickListener(categoryClickListener);   // ➕
 
-        // Favoriler
-        btnFavorites.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
-            startActivity(intent);
-        });
+        // Üst ikonlar
+        btnFavorites.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, FavoritesActivity.class)));
 
-        // AI Barista
-        btnAI.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
-            startActivity(intent);
-        });
+        btnAI.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AiBaristaActivity.class)));
 
-        // Ayarlar (şimdilik placeholder)
         btnSettings.setOnClickListener(v ->
-                Toast.makeText(MainActivity.this,
-                        "Ayarlar yakında eklenecek.",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+                Toast.makeText(MainActivity.this, "Ayarlar yakında eklenecek.", Toast.LENGTH_SHORT).show());
     }
 }
