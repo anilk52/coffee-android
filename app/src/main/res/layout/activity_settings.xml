@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tarifleri okuyan, süreleri söyleyen BDINO asistan."
+                    android:text="Tarifleri okuyan, süreleri söyleyen bdinoᴼ asistan."
                     android:textSize="13sp"
                     android:textColor="#7A5A3A" />
             </LinearLayout>
