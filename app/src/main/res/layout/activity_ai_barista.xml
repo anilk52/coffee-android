@@ -1,161 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/aiBaristaRoot"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#111111"
-    tools:context=".ui.AiBaristaActivity">
+    android:padding="16dp">
 
-    <!-- Üst başlık -->
+    <!-- ÜST BAŞLIK -->
     <TextView
-        android:id="@+id/txtScreenTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtAiHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI Barista"
-        android:textSize="26sp"
+        android:text="MiLO – BDINO AI Barista"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:paddingStart="24dp"
-        android:paddingTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="8dp" />
 
-    <!-- Cevap kartı -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardAnswer"
-        android:layout_width="0dp"
+    <!-- SOHBET ALANI (KONUŞMA GEÇMİŞİ) -->
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/txtScreenTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txtAskLabel">
+        android:layout_weight="1"
+        android:background="#1E1E1E"
+        android:padding="12dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtAiConversation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="" />
+    </ScrollView>
 
-            <!-- Büyük başlık: Kahve adı / BDINO Coffee -->
-            <TextView
-                android:id="@+id/txtCoffeeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BDINO Coffee"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF" />
-
-            <!-- Küçük başlık: MİLO etiketi -->
-            <TextView
-                android:id="@+id/txtAnswerTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="MİLO – BDINO AI Barista"
-                android:textSize="12sp"
-                android:textColor="#CCCCCC" />
-
-            <!-- Cevap alanı (scrollable) -->
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="12dp">
-
-                <TextView
-                    android:id="@+id/txtAnswerBody"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="3dp"
-                    tools:text="MİLO hazır. Kahve hakkında her şeyi sorabilirsin." />
-            </ScrollView>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- “AI Barista'ya sor” etiketi -->
-    <TextView
-        android:id="@+id/txtAskLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AI Barista'ya sor:"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/edtQuestion" />
-
-    <!-- Soru kutusu -->
-    <EditText
-        android:id="@+id/edtQuestion"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="#222222"
-        android:padding="16dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#888888"
-        android:hint="Örn: Latte çok hafif oldu, nasıl daha yoğun yaparım?"
-        android:inputType="textMultiLine"
-        android:gravity="top|start"
-        android:maxLines="4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/layoutButtons" />
-
-    <!-- Butonlar (Gönder + Mic) -->
+    <!-- MESAJ GİRİŞİ + GÖNDER BUTONU -->
     <LinearLayout
-        android:id="@+id/layoutButtons"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginTop="8dp">
 
-        <Button
-            android:id="@+id/btnSend"
+        <EditText
+            android:id="@+id/edtAiMessage"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="🧠 Gönder"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:background="#5C3A2E" />
+            android:hint="MiLO’ya kahve sorunu yaz..."
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="4"
+            android:minLines="1"
+            android:background="#222222"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:padding="10dp" />
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="0dp" />
-
-        <!-- Mic butonu şimdilik pasif, ama görünüm kalsın -->
         <Button
-            android:id="@+id/btnMic"
-            android:layout_width="64dp"
-            android:layout_height="48dp"
-            android:text="🎙"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:background="#333333" />
+            android:id="@+id/btnAiSend"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Gönder"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="#4CAF50"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
