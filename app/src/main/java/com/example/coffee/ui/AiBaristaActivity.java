@@ -3,181 +3,122 @@ package com.example.coffee.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coffee.R;
 import com.example.coffee.ai.BdinoAiEngine;
-import com.example.coffee.ai.MiloConversationState;
-import com.example.coffee.ai.MiloReply;
 
+/**
+ * BDINO AI Barista – MiLO ile sohbet ekranı (offline)
+ */
 public class AiBaristaActivity extends AppCompatActivity {
 
-    private ImageView imgHero;
-    private TextView txtCoffeeName;
-    private EditText edtQuestion;
+    private TextView txtHeader;
+    private TextView txtConversation;
+    private EditText edtMessage;
     private Button btnSend;
-    private TextView txtAnswerTitle;
-    private TextView txtAnswerBody;
 
-    private String coffeeName = "";
-    private String coffeeDescription = "";
-    private String coffeeMeasure = "";
-    private String coffeeSize = "";
-    private String coffeeTip = "";
-    private String coffeeNote = "";
+    // Tariften gelen bağlam (isteğe bağlı)
+    private String coffeeName;
+    private String description;
+    private String measure;
+    private String size;
+    private String tip;
+    private String note;
 
-    private MiloConversationState conversationState;
     private BdinoAiEngine ai;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ai_barista);
 
-        imgHero        = findViewSafe(R.id.imgHero);
-        txtCoffeeName  = findViewSafe(R.id.txtCoffeeName);
-        edtQuestion    = findViewSafe(R.id.edtQuestion);
-        btnSend        = findViewSafe(R.id.btnSend);
-        txtAnswerTitle = findViewSafe(R.id.txtAnswerTitle);
-        txtAnswerBody  = findViewSafe(R.id.txtAnswerBody);
+        txtHeader      = findViewById(R.id.txtAiHeader);
+        txtConversation = findViewById(R.id.txtAiConversation);
+        edtMessage     = findViewById(R.id.edtAiMessage);
+        btnSend        = findViewById(R.id.btnAiSend);
 
-        // Intent ile gelen tarif bilgileri
-        Intent intent = getIntent();
-        int imageResId = intent.getIntExtra("imageResId", 0);
-        if (imageResId != 0 && imgHero != null) {
-            imgHero.setImageResource(imageResId);
-        }
-
-        coffeeName        = safeGetString(intent, "title");
-        coffeeDescription = safeGetString(intent, "description");
-        coffeeMeasure     = safeGetString(intent, "measure");
-        coffeeSize        = safeGetString(intent, "size");
-        coffeeTip         = safeGetString(intent, "tip");
-        coffeeNote        = safeGetString(intent, "note");
-
-        if (!TextUtils.isEmpty(coffeeName)) {
-            txtCoffeeName.setText(coffeeName);
-        } else {
-            txtCoffeeName.setText("BDINO Coffee");
-        }
-
-        txtAnswerTitle.setText("MİLO – BDINO AI Barista");
-        txtAnswerBody.setText("");
-
-        appendSystemMessage(
-                "MİLO hazır. Sorular sorabilirsin:\n" +
-                "• \"Bugün ne içsem?\"\n" +
-                "• \"Latte çok hafif oldu, nasıl daha yoğun yaparım?\"\n" +
-                "• \"Filtre kahvem neden acı?\""
-        );
-
-        // AI Motoru
+        // AI motoru
         ai = BdinoAiEngine.getInstance(getApplicationContext());
-        if (ai != null) ai.initOfflineModelIfNeeded();
-        conversationState = null;
-
-        // Gönder butonu
-        btnSend.setOnClickListener(v -> {
-            String userMessage = edtQuestion.getText().toString().trim();
-            if (userMessage.isEmpty()) {
-                edtQuestion.setError("MİLO'ya bir şey yaz 😊");
-                return;
-            }
-
-            appendUserMessage(userMessage);
-            edtQuestion.setText("");
-
-            String miloText = null;
-            MiloReply reply = null;
-
-            try {
-                if (ai != null) {
-                    reply = ai.generateTurn(
-                            userMessage,
-                            conversationState,
-                            coffeeName,
-                            coffeeDescription,
-                            coffeeMeasure,
-                            coffeeSize,
-                            coffeeTip,
-                            coffeeNote
-                    );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (reply != null) {
-                conversationState = reply.getState();
-                miloText = reply.getAnswer();
-            }
-
-            if (TextUtils.isEmpty(miloText)) {
-                miloText = "Mesajını aldım: \"" + userMessage +
-                        "\"\nŞu an deneme modundayım ama kahveyle ilgili yardımcı olmaya hazırım. ☕";
-            }
-
-            appendMiloMessage(miloText);
-
-            if (reply != null && !reply.isExpectsReply()) {
-                appendSystemMessage("Yeni soru sorabilirsin.");
-            }
-        });
-    }
-
-    private <T> T findViewSafe(int id) {
-        try {
-            return (T) findViewById(id);
-        } catch (Exception e) {
-            return null;
+        if (ai != null) {
+            ai.initOfflineModelIfNeeded();
         }
+
+        // Intent ile tariften gelen bilgiler
+        Intent intent = getIntent();
+        if (intent != null) {
+            coffeeName  = intent.getStringExtra("title");
+            description = intent.getStringExtra("description");
+            measure     = intent.getStringExtra("measure");
+            size        = intent.getStringExtra("size");
+            tip         = intent.getStringExtra("tip");
+            note        = intent.getStringExtra("note");
+        }
+
+        // Başlık
+        if (!TextUtils.isEmpty(coffeeName)) {
+            txtHeader.setText("MiLO – " + coffeeName + " hakkında konuşuyor");
+        } else {
+            txtHeader.setText("MiLO – BDINO AI Barista");
+        }
+
+        // İlk karşılama mesajı
+        appendBot("Merhaba, ben MiLO. Kahve hakkında aklına ne geliyorsa sorabilirsin ☕");
+
+        btnSend.setOnClickListener(v -> onSendClicked());
     }
 
-    private String safeGetString(Intent intent, String key) {
-        if (intent == null) return "";
-        String s = intent.getStringExtra(key);
-        return s != null ? s : "";
+    private void onSendClicked() {
+        String userText = edtMessage.getText().toString().trim();
+        if (userText.isEmpty()) return;
+
+        appendUser(userText);
+
+        if (ai != null) {
+            String reply = ai.generateReply(
+                    userText,
+                    coffeeName,
+                    description,
+                    measure,
+                    size,
+                    tip,
+                    note
+            );
+            appendBot(reply);
+        } else {
+            appendBot("Şu anda AI motoruna ulaşamıyorum, ama bu ekran offline çalışmalıydı. Lütfen daha sonra tekrar dene.");
+        }
+
+        edtMessage.setText("");
     }
 
-    private void appendUserMessage(String text) {
-        String current = txtAnswerBody.getText().toString();
-        txtAnswerBody.setText(
-                (current.isEmpty() ? "" : current + "\n\n") +
-                "Sen: " + text
-        );
+    private void appendUser(String text) {
+        String current = txtConversation.getText().toString();
+        String appended = current + "\n\nSen: " + text;
+        txtConversation.setText(appended);
         scrollToBottom();
     }
 
-    private void appendMiloMessage(String text) {
-        String current = txtAnswerBody.getText().toString();
-        txtAnswerBody.setText(
-                (current.isEmpty() ? "" : current + "\n\n") +
-                "MİLO: " + text
-        );
-        scrollToBottom();
-    }
-
-    private void appendSystemMessage(String text) {
-        String current = txtAnswerBody.getText().toString();
-        txtAnswerBody.setText(
-                (current.isEmpty() ? "" : current + "\n\n") +
-                "• " + text
-        );
+    private void appendBot(String text) {
+        String current = txtConversation.getText().toString();
+        String appended = current + "\n\nMiLO: " + text;
+        txtConversation.setText(appended);
         scrollToBottom();
     }
 
     private void scrollToBottom() {
-        txtAnswerBody.post(() -> {
-            if (txtAnswerBody.getLayout() == null) return;
-            int scrollAmount = txtAnswerBody.getLayout()
-                    .getLineTop(txtAnswerBody.getLineCount()) - txtAnswerBody.getHeight();
-            txtAnswerBody.scrollTo(0, Math.max(scrollAmount, 0));
-        });
+        View parent = (View) txtConversation.getParent();
+        if (parent instanceof ScrollView) {
+            ((ScrollView) parent).post(() ->
+                    ((ScrollView) parent).fullScroll(View.FOCUS_DOWN)
+            );
+        }
     }
 }
