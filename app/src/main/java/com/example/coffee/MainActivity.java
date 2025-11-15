@@ -3,8 +3,9 @@ package com.example.coffee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -22,88 +23,78 @@ public class MainActivity extends AppCompatActivity {
     private CardView cardAlcohol;
     private CardView cardIced;
     private CardView cardTurkish;
-    private CardView cardFrappe; // yeni kategori kartı
 
-    private View btnFavorites;
-    private View btnAI;
+    private ImageButton btnFavorites;
+    private ImageButton btnAI;
+    private ImageButton btnSettings;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kategori kartları
-        cardEspresso = findViewSafe(R.id.cardEspresso);
-        cardFilter   = findViewSafe(R.id.cardFilter);
-        cardSpecial  = findViewSafe(R.id.cardSpecial);
-        cardAlcohol  = findViewSafe(R.id.cardAlcohol);
-        cardIced     = findViewSafe(R.id.cardIced);
-        cardTurkish  = findViewSafe(R.id.cardTurkish);
-        cardFrappe   = findViewSafe(R.id.cardFrappe); // Frappé / Blended
+        // Kartlar
+        cardEspresso = findViewById(R.id.cardEspresso);
+        cardFilter   = findViewById(R.id.cardFilter);
+        cardSpecial  = findViewById(R.id.cardSpecial);
+        cardAlcohol  = findViewById(R.id.cardAlcohol);
+        cardIced     = findViewById(R.id.cardIced);
+        cardTurkish  = findViewById(R.id.cardTurkish);
 
-        // Üst ikonlar / butonlar
-        btnFavorites = findViewSafe(R.id.btnFavorites);
-        btnAI        = findViewSafe(R.id.btnAI);
+        // Üst ikonlar
+        btnFavorites = findViewById(R.id.btnFavorites);
+        btnAI        = findViewById(R.id.btnAI);
+        btnSettings  = findViewById(R.id.btnSettings);
 
         // Kategori tıklamaları
-        if (cardEspresso != null) {
-            cardEspresso.setOnClickListener(v -> openCategory("espresso"));
-        }
-        if (cardFilter != null) {
-            cardFilter.setOnClickListener(v -> openCategory("filter"));
-        }
-        if (cardSpecial != null) {
-            cardSpecial.setOnClickListener(v -> openCategory("special"));
-        }
-        if (cardAlcohol != null) {
-            cardAlcohol.setOnClickListener(v -> openCategory("alcohol"));
-        }
-        if (cardIced != null) {
-            cardIced.setOnClickListener(v -> openCategory("iced"));
-        }
-        if (cardTurkish != null) {
-            cardTurkish.setOnClickListener(v -> openCategory("turkish"));
-        }
-        if (cardFrappe != null) {
-            // Yeni kategori: Frappé / Blended
-            cardFrappe.setOnClickListener(v -> openCategory("frappe"));
-        }
+        View.OnClickListener categoryClickListener = v -> {
+            String category;
+
+            int id = v.getId();
+            if (id == R.id.cardEspresso) {
+                category = "espresso";
+            } else if (id == R.id.cardFilter) {
+                category = "filter";
+            } else if (id == R.id.cardSpecial) {
+                category = "special";
+            } else if (id == R.id.cardAlcohol) {
+                category = "alcoholic";
+            } else if (id == R.id.cardIced) {
+                category = "iced";
+            } else {
+                category = "turkish";
+            }
+
+            Intent intent = new Intent(MainActivity.this, RecipeActivity.class);
+            intent.putExtra(EXTRA_CATEGORY, category);
+            startActivity(intent);
+        };
+
+        cardEspresso.setOnClickListener(categoryClickListener);
+        cardFilter.setOnClickListener(categoryClickListener);
+        cardSpecial.setOnClickListener(categoryClickListener);
+        cardAlcohol.setOnClickListener(categoryClickListener);
+        cardIced.setOnClickListener(categoryClickListener);
+        cardTurkish.setOnClickListener(categoryClickListener);
 
         // Favoriler
-        if (btnFavorites != null) {
-            btnFavorites.setOnClickListener(v -> openFavorites());
-        }
+        btnFavorites.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+        });
 
-        // Ana ekrandan genel AI Barista
-        if (btnAI != null) {
-            btnAI.setOnClickListener(v -> openAiBaristaGeneral());
-        }
-    }
+        // AI Barista
+        btnAI.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AiBaristaActivity.class);
+            startActivity(intent);
+        });
 
-    private void openCategory(String categoryKey) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY, categoryKey);
-        startActivity(intent);
-    }
-
-    private void openFavorites() {
-        Intent intent = new Intent(this, FavoritesActivity.class);
-        startActivity(intent);
-    }
-
-    private void openAiBaristaGeneral() {
-        // Genel sohbet için tarif bilgisi göndermiyoruz; AiBaristaActivity
-        // Intent extras boş gelirse “BDINO Coffee” genel modunda açılacak.
-        Intent intent = new Intent(this, AiBaristaActivity.class);
-        startActivity(intent);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T extends View> T findViewSafe(int id) {
-        try {
-            return (T) findViewById(id);
-        } catch (Exception e) {
-            return null;
-        }
+        // Ayarlar (şimdilik placeholder)
+        btnSettings.setOnClickListener(v ->
+                Toast.makeText(MainActivity.this,
+                        "Ayarlar yakında eklenecek.",
+                        Toast.LENGTH_SHORT
+                ).show()
+        );
     }
 }
