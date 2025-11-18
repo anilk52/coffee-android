@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F5E9DA">
 
-    <!-- ÜST BAR – SADECE 3 İKON ----------------------------------------- -->
-    <!-- Sol: Favoriler, Orta: BrewAi, Sağ: Ayarlar -->
+    <!-- Üst bar: sol favori, orta BrewAi, sağ ayarlar -->
 
     <ImageButton
         android:id="@+id/btnFavorites"
@@ -48,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- MARKA BAŞLIK + SLOGAN ------------------------------------------- -->
+    <!-- Başlık + slogan -->
 
     <TextView
         android:id="@+id/txtTitleMain"
@@ -75,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/txtTitleMain"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ORTA LOGO -------------------------------------------------------- -->
+    <!-- Orta logo -->
 
     <ImageView
         android:id="@+id/imgMainLogo"
@@ -89,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- KATEGORİ KARTLARI (3 x 3) --------------------------------------- -->
+    <!-- 3x3 kategori grid -->
 
     <LinearLayout
         android:id="@+id/gridContainer"
@@ -106,7 +105,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- SATIR 1: Espresso – Filter – Latte Lab -->
+        <!-- Satır 1: Espresso – Filter – Latte Lab -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -210,7 +210,8 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- SATIR 2: Iced – Turkish – Alcoholic -->
+        <!-- Satır 2: Iced – Turkish – Alcoholic -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -314,7 +315,8 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- SATIR 3: Frappe – Signature – Brew Guide -->
+        <!-- Satır 3: Frappe – Signature – Brew Guide -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
