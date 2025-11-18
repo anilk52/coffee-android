@@ -1,68 +1,76 @@
 package com.example.coffee.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.SearchView;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.R;
-import com.example.coffee.ui.RecipeAdapter;
-import com.example.coffee.util.FavoriteStore;
-import com.example.coffee.data.RecipesData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * Favori kahveleri listeleyen ekran.
+ * Şimdilik basit: Intent ile gelen favori listesi varsa onu gösterir,
+ * yoksa boş mesajı gösterir.
+ */
 public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView recyclerFavorites;
+    private TextView txtEmptyMessage;
+
     private RecipeAdapter adapter;
-    private final List<Recipe> favoriteList = new ArrayList<>();
+    private List<Recipe> favoriteList = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe); // Aynı layout
+        setContentView(R.layout.activity_favorites);
 
-        recyclerFavorites = findViewById(R.id.recyclerRecipes);
-        SearchView searchView = findViewById(R.id.searchView);
+        recyclerFavorites = findViewById(R.id.recyclerFavorites);
+        txtEmptyMessage   = findViewById(R.id.txtEmptyMessage); // XML’de varsa kullanılır, yoksa null olur sorun değil
 
-        // Favoriler ekranında aramayı şimdilik gizleyebiliriz
-        if (searchView != null) {
-            searchView.setVisibility(View.GONE);
-        }
-
-        loadFavorites();
-
-        adapter = new RecipeAdapter(this, favoriteList);
         recyclerFavorites.setLayoutManager(new LinearLayoutManager(this));
-        recyclerFavorites.setAdapter(adapter);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Ekrana geri dönüldüğünde, favoriler değişmiş olabilir
-        loadFavorites();
-        if (adapter != null) {
-            adapter.updateList(new ArrayList<>(favoriteList));
-        }
-    }
-
-    private void loadFavorites() {
-        favoriteList.clear();
-        Set<String> favNames = FavoriteStore.getFavorites(this);
-        if (favNames.isEmpty()) return;
-
-        for (Recipe r : RecipesData.getAll()) {
-            if (favNames.contains(r.getName())) {
-                favoriteList.add(r);
+        // Eğer başka bir ekrandan "favorites" listesi gönderilmişse al
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("favorites")) {
+            try {
+                ArrayList<Recipe> passed =
+                        (ArrayList<Recipe>) intent.getSerializableExtra("favorites");
+                if (passed != null) {
+                    favoriteList.clear();
+                    favoriteList.addAll(passed);
+                }
+            } catch (Exception ignored) {
+                // Bir sıkıntı olursa listeyi boş bırakırız
             }
+        }
+
+        // Adapter’i bağla
+        adapter = new RecipeAdapter(this, favoriteList);
+        recyclerFavorites.setAdapter(adapter);
+
+        // Boşsa mesaj göster, doluysa gizle
+        updateEmptyState();
+    }
+
+    private void updateEmptyState() {
+        if (txtEmptyMessage == null) return;
+
+        if (favoriteList == null || favoriteList.isEmpty()) {
+            txtEmptyMessage.setVisibility(View.VISIBLE);
+            txtEmptyMessage.setText("Henüz favorilere eklediğin bir kahve yok.\n" +
+                    "Tarif detayından kalp ikonuna dokunarak favori ekleyebilirsin.");
+        } else {
+            txtEmptyMessage.setVisibility(View.GONE);
         }
     }
 }
