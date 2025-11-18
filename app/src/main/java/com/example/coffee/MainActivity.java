@@ -9,101 +9,111 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.coffee.ui.AiBaristaActivity;
-import com.example.coffee.ui.FavoritesActivity;
 import com.example.coffee.ui.RecipeActivity;
+import com.example.coffee.ui.AiBaristaActivity;
 import com.example.coffee.ui.SettingsActivity;
+import com.example.coffee.ui.FavoritesActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_CATEGORY = "extra_category";
+
+    // Kategori anahtarları (RecipeRepository ile aynı olmalı)
+    public static final String CAT_ESPRESSO   = "espresso";
+    public static final String CAT_FILTER     = "filter";
+    public static final String CAT_LATTE_LAB  = "latte_lab";
+    public static final String CAT_ICED       = "iced";
+    public static final String CAT_TURKISH    = "turkish";
+    public static final String CAT_ALCOHOLIC  = "alcoholic";
+    public static final String CAT_FRAPPE     = "frappe";
+    public static final String CAT_SIGNATURE  = "signature";
+    public static final String CAT_BREW_GUIDE = "brew_guide";
 
     private CardView cardEspresso;
     private CardView cardFilter;
     private CardView cardLatteLab;
     private CardView cardIced;
     private CardView cardTurkish;
-    private CardView cardAlcohol;
+    private CardView cardAlcoholic;
     private CardView cardFrappe;
     private CardView cardSignature;
     private CardView cardBrewGuide;
 
     private ImageButton btnFavorites;
-    private ImageButton btnAI;
+    private ImageButton btnBrewAi;
     private ImageButton btnSettings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Tema satırını kaldırdık; uygulama manifestteki varsayılan temayı kullanacak.
         setContentView(R.layout.activity_main);
 
-        // Kartlar
-        cardEspresso  = findViewById(R.id.cardEspresso);
-        cardFilter    = findViewById(R.id.cardFilter);
-        cardLatteLab  = findViewById(R.id.cardLatteLab);
-        cardIced      = findViewById(R.id.cardIced);
-        cardTurkish   = findViewById(R.id.cardTurkish);
-        cardAlcohol   = findViewById(R.id.cardAlcohol);
-        cardFrappe    = findViewById(R.id.cardFrappe);
-        cardSignature = findViewById(R.id.cardSignature);
-        cardBrewGuide = findViewById(R.id.cardBrewGuide);
-
-        // Üst ikonlar
+        // ÜST BAR BUTONLARI
         btnFavorites = findViewById(R.id.btnFavorites);
-        btnAI        = findViewById(R.id.btnAI);
+        btnBrewAi    = findViewById(R.id.btnBrewAi);
         btnSettings  = findViewById(R.id.btnSettings);
 
-        // Click listener bağla
-        cardEspresso.setOnClickListener(this);
-        cardFilter.setOnClickListener(this);
-        cardLatteLab.setOnClickListener(this);
-        cardIced.setOnClickListener(this);
-        cardTurkish.setOnClickListener(this);
-        cardAlcohol.setOnClickListener(this);
-        cardFrappe.setOnClickListener(this);
-        cardSignature.setOnClickListener(this);
-        cardBrewGuide.setOnClickListener(this);
+        btnFavorites.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, FavoritesActivity.class)));
 
-        btnFavorites.setOnClickListener(this);
-        btnAI.setOnClickListener(this);
-        btnSettings.setOnClickListener(this);
-    }
+        btnBrewAi.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AiBaristaActivity.class)));
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
+        btnSettings.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
 
-        if (id == R.id.cardEspresso) {
-            openCategory("ESPRESSO");
-        } else if (id == R.id.cardFilter) {
-            openCategory("FILTER");
-        } else if (id == R.id.cardLatteLab) {
-            openCategory("LATTE_LAB");
-        } else if (id == R.id.cardIced) {
-            openCategory("ICED");
-        } else if (id == R.id.cardTurkish) {
-            openCategory("TURKISH");
-        } else if (id == R.id.cardAlcohol) {
-            openCategory("ALCOHOLIC");
-        } else if (id == R.id.cardFrappe) {
-            openCategory("FRAPPE");
-        } else if (id == R.id.cardSignature) {
-            openCategory("SIGNATURE");
-        } else if (id == R.id.cardBrewGuide) {
-            openCategory("BREW_GUIDE");
-        } else if (id == R.id.btnFavorites) {
-            startActivity(new Intent(this, FavoritesActivity.class));
-        } else if (id == R.id.btnAI) {
-            startActivity(new Intent(this, AiBaristaActivity.class));
-        } else if (id == R.id.btnSettings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-        }
+        // KARTLAR
+        cardEspresso   = findViewById(R.id.cardEspresso);
+        cardFilter     = findViewById(R.id.cardFilter);
+        cardLatteLab   = findViewById(R.id.cardLatteLab);
+        cardIced       = findViewById(R.id.cardIced);
+        cardTurkish    = findViewById(R.id.cardTurkish);
+        cardAlcoholic  = findViewById(R.id.cardAlcoholic);
+        cardFrappe     = findViewById(R.id.cardFrappe);
+        cardSignature  = findViewById(R.id.cardSignature);
+        cardBrewGuide  = findViewById(R.id.cardBrewGuide);
+
+        View.OnClickListener cardClickListener = v -> {
+            String catKey = null;
+            int id = v.getId();
+
+            if (id == R.id.cardEspresso) {
+                catKey = CAT_ESPRESSO;
+            } else if (id == R.id.cardFilter) {
+                catKey = CAT_FILTER;
+            } else if (id == R.id.cardLatteLab) {
+                catKey = CAT_LATTE_LAB;
+            } else if (id == R.id.cardIced) {
+                catKey = CAT_ICED;
+            } else if (id == R.id.cardTurkish) {
+                catKey = CAT_TURKISH;
+            } else if (id == R.id.cardAlcoholic) {
+                catKey = CAT_ALCOHOLIC;
+            } else if (id == R.id.cardFrappe) {
+                catKey = CAT_FRAPPE;
+            } else if (id == R.id.cardSignature) {
+                catKey = CAT_SIGNATURE;
+            } else if (id == R.id.cardBrewGuide) {
+                catKey = CAT_BREW_GUIDE;
+            }
+
+            if (catKey != null) openCategory(catKey);
+        };
+
+        cardEspresso.setOnClickListener(cardClickListener);
+        cardFilter.setOnClickListener(cardClickListener);
+        cardLatteLab.setOnClickListener(cardClickListener);
+        cardIced.setOnClickListener(cardClickListener);
+        cardTurkish.setOnClickListener(cardClickListener);
+        cardAlcoholic.setOnClickListener(cardClickListener);
+        cardFrappe.setOnClickListener(cardClickListener);
+        cardSignature.setOnClickListener(cardClickListener);
+        cardBrewGuide.setOnClickListener(cardClickListener);
     }
 
     private void openCategory(String categoryKey) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra(EXTRA_CATEGORY, categoryKey);
-        startActivity(intent);
+        Intent i = new Intent(MainActivity.this, RecipeActivity.class);
+        i.putExtra(EXTRA_CATEGORY, categoryKey);
+        startActivity(i);
     }
 }
