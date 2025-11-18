@@ -1,6 +1,5 @@
 package com.example.coffee.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,7 +22,7 @@ import java.util.List;
  * MainActivity'den gelen kategori koduna göre (espresso, filter, latte_lab vb.)
  * RecipesData içinden doğru listeyi çeker.
  */
-public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeClickListener {
+public class RecipeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerRecipes;
     private TextView txtCategoryTitle;
@@ -36,10 +35,10 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // XML dosya adın hangisiyse onu kullan:
-        // Eğer dosyan "activity_recipe.xml" ise:
+        // XML dosyanın ismi neyse onu kullan:
+        // activity_recipe.xml ise:
         setContentView(R.layout.activity_recipe);
-        // Eğer hâlâ "activity_recipes.xml" kullanıyorsan yukarıyı değiştireceksin:
+        // Eğer senin dosyan "activity_recipes.xml" ise yukarıyı şu yap:
         // setContentView(R.layout.activity_recipes);
 
         recyclerRecipes     = findViewById(R.id.recyclerRecipes);
@@ -109,17 +108,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         // Asıl önemli kısım: yeni veri katmanı
         recipeList = RecipesData.getByCategory(category);
 
-        adapter = new RecipeAdapter(recipeList, this);
+        // DİKKAT: Burada sırayı düzelttik: (Context, List<Recipe>)
+        adapter = new RecipeAdapter(this, recipeList);
         recyclerRecipes.setAdapter(adapter);
-    }
-
-    /**
-     * Bir tarif kartına tıklandığında detay ekranına geç.
-     */
-    @Override
-    public void onRecipeClick(Recipe recipe) {
-        Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra("recipe", recipe);
-        startActivity(intent);
     }
 }
