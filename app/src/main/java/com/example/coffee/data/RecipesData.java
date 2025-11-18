@@ -9,7 +9,9 @@ import java.util.List;
 
 public class RecipesData {
 
-    // Tüm tarifler (41 dünya kahvesi + 5 Türk kahvesi = 46)
+    // Tüm tarifler
+    // Kategoriler:
+    // espresso, filter, signature, alcoholic, iced, turkish, latte_lab, frappe, brew_guide
     private static final List<Recipe> RECIPES = Arrays.asList(
 
             // region ESPRESSO
@@ -285,7 +287,7 @@ public class RecipesData {
                     "V60, konik formu ve tek uçlu çıkış deliğiyle suyun akış hızını kontrol etmene izin verir. "
                             + "Doğru öğütümle çok temiz, aromatik ve dengeli fincanlar elde edebilirsin.",
                     "15 g kahve • 240 ml su • 1:16 oran • 2,5–3 dk",
-                    "KBloom döküşü sonrası suyu 2–3 döküşte ekle, toplam demleme süresini 3 dakikayı geçirme.",
+                    "Bloom döküşü sonrası suyu 2–3 döküşte ekle, toplam demleme süresini 3 dakikayı geçirme.",
                     "Çekirdeğin tadını ‘en net’ hissetmek istediğinde başvuracağın temel pour-over yöntemidir.",
                     "filter",
                     "M – 240 ml"
@@ -358,7 +360,7 @@ public class RecipesData {
 
             // endregion
 
-            // region SPECIAL (ALKOLSÜZ ÖZEL İÇECEKLER)
+            // region SIGNATURE (eski SPECIAL tarifler + imza içecekler)
 
             new Recipe(
                     R.drawable.cup_honey_latte,
@@ -369,7 +371,7 @@ public class RecipesData {
                     "1–2 shot espresso • 200 ml süt • 1–2 tatlı kaşığı bal",
                     "Balı, süt eklemeden önce sıcak espressoyla karıştırıp tamamen çözündür.",
                     "Rafine şeker yerine doğal bir tatlandırıcıyla hazırlanmış, konforlu bir içecektir.",
-                    "special",
+                    "signature",
                     "L – 300 ml"
             ),
 
@@ -382,7 +384,7 @@ public class RecipesData {
                     "1–2 shot espresso • 200 ml süt • 20–30 ml fıstık şurubu veya ezmesi",
                     "Gerçek fıstık ezmesi kullanıyorsan topak kalmaması için sıcak espressoyla iyice karıştır.",
                     "Tatlıya yakın ama hâlâ kahve karakterini taşıyan, imza içecek havasında bir tarif.",
-                    "special",
+                    "signature",
                     "L – 300 ml"
             ),
 
@@ -395,7 +397,7 @@ public class RecipesData {
                     "1 shot espresso • 200 ml süt • 15–20 ml gül şurubu",
                     "Gül şurubunu fazla kaçırma; kahve aroması geride kalmasın.",
                     "Özellikle akşam saatlerinde sakinleştirici, yumuşak bir kahve alternatifi gibi hissedilir.",
-                    "special",
+                    "signature",
                     "L – 300 ml"
             ),
 
@@ -407,9 +409,22 @@ public class RecipesData {
                             + "Üzeri kremayla servis edildiğinde tam bir tatlıya dönüşür.",
                     "1–2 shot espresso • 200 ml süt • 20–30 ml karamel sos • Üzeri krema opsiyonel",
                     "Karamel sosu ve espressoyu önce karıştır; sütü sonra ekle ki tat eşit dağılabilsin.",
-                    "Tatlı sevenler için kahve+t atlı karışımı, tam anlamıyla ‘ikisi bir arada’ çözüm.",
-                    "special",
+                    "Tatlı sevenler için kahve+tatlı karışımı, tam anlamıyla ‘ikisi bir arada’ çözüm.",
+                    "signature",
                     "L – 300 ml"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_iced_breve,
+                    "Brown Sugar Shaken Espresso",
+                    "Esmer şekerle çalkalanmış yoğun soğuk espresso.",
+                    "Brown sugar shaken espresso, esmer şeker, buz ve espressoyu shaker’da çalkalayarak "
+                            + "yoğun köpüklü, hafif karamelleşmiş tatlı bir içecek oluşturur.",
+                    "2 shot espresso • 10–15 g esmer şeker • Buz • 60–90 ml süt veya süt alternatifi",
+                    "Esmer şekeri sıcak espresso ile karıştırıp tamamen çöz, sonra buzla birlikte güçlüce çalkala.",
+                    "Sütü en sona ekleyerek altta yoğun kahve, üstte süt katmanı oluşturabilirsin.",
+                    "signature",
+                    "M – 300 ml"
             ),
 
             // endregion
@@ -565,7 +580,7 @@ public class RecipesData {
 
             // endregion
 
-            // region TURKISH (5 TARİF, AYNI BARDAK)
+            // region TURKISH
 
             new Recipe(
                     R.drawable.cup_t_70ml,
@@ -635,6 +650,122 @@ public class RecipesData {
                     "Türk kahvesi ritüeline küçük ama karakterli bir dokunuş eklemenin en pratik yolu.",
                     "turkish",
                     "S – 70 ml"
+            ),
+
+            // endregion
+
+            // region LATTE LAB
+
+            new Recipe(
+                    R.drawable.cup_latte_300ml,
+                    "Latte Lab Base",
+                    "Kendi imza latteni yaratmak için nötr baz.",
+                    "Latte Lab Base, sade ama dengeli bir latte tabanıdır. "
+                            + "Üzerine farklı şuruplar, soslar ve süt alternatifleri deneyerek kendi imza latteni oluşturman için tasarlandı.",
+                    "1–2 shot espresso • 200–220 ml süt • İnce mikroköpük",
+                    "Önce bu baz reçeteyi tuttur; sonra sadece tek bir değişkeni (şurup, süt türü, öğütüm) değiştirerek ilerle.",
+                    "Not: Fikir basit; küçük değişikliklerle onlarca farklı tarif üretebilirsin.",
+                    "latte_lab",
+                    "L – 300 ml"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_latte_300ml,
+                    "Vanilla Experiment",
+                    "Latte Lab için vanilyalı deneme seti.",
+                    "Vanilla Experiment, Latte Lab bazına hafif bir vanilya dokunuşu ekler. "
+                            + "Tatlılık çok yüksek değildir; amaç, kahvenin tadını tamamen örtmeden aroma katmaktır.",
+                    "1–2 shot espresso • 200 ml süt • 10–15 ml vanilya şurubu",
+                    "Vanilyayı önce espressoyla karıştır, sonra sütü ekle ki aroma fincana eşit dağılabilsin.",
+                    "Deneme için önce 10 ml ile başla; damak tadına göre bir sonraki fincanda 5 ml artır veya azalt.",
+                    "latte_lab",
+                    "L – 300 ml"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_latte_300ml,
+                    "Hazelnut Experiment",
+                    "Fındık aromalı Latte Lab denemesi.",
+                    "Hazelnut Experiment, klasik latte bazını fındık aromasıyla buluşturur. "
+                            + "Özellikle çikolata notaları yüksek çekirdeklerle kullanıldığında tatlı–fındıksı bir profil verir.",
+                    "1–2 shot espresso • 200 ml süt • 10–15 ml fındık şurubu",
+                    "Fındık aroması baskın olduğu için küçük dozlarla başla; damak tadına göre yavaş yavaş artır.",
+                    "Çikolatalı tatlıların yanında eşlikçi bir kahve olarak servis ettiğinde mükemmel uyum yakalarsın.",
+                    "latte_lab",
+                    "L – 300 ml"
+            ),
+
+            // endregion
+
+            // region FRAPPE
+
+            new Recipe(
+                    R.drawable.cup_frenchpress,
+                    "Classic Frappe",
+                    "Instant kahveyle hazırlanan klasik buzlu köpüklü içecek.",
+                    "Classic frappe, instant kahve, su ve buz ile hazırlanan, süt ekleyerek yumuşatabileceğin serinletici bir içecektir. "
+                            + "Klasik Yunan frappe stilinin ev versiyonu gibi düşünebilirsin.",
+                    "2 çay kaşığı instant kahve • 90 ml soğuk su • Buz • 30–50 ml süt",
+                    "Kahve ve suyu köpük olana kadar çalkala; köpük fincanın üstünde kalacak kadar yoğun olsun.",
+                    "Tatlılık için şeker veya şurubu shaker’a kahveyle birlikte ekleyip çözündür.",
+                    "frappe",
+                    "L – 350 ml"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_iced_mocha,
+                    "Mocha Frappe",
+                    "Çikolatalı, blenderda hazırlanan yoğun frappe.",
+                    "Mocha frappe, kahve, süt, buz ve çikolata sosunun blenderda birleşmesiyle milkshake benzeri yoğun bir içecek oluşturur. "
+                            + "Tatlılık ve çikolata tadı ön plandadır.",
+                    "1 shot espresso veya 2 çay kaşığı instant kahve • 150 ml süt • 2–3 küp buz • 15–20 g kakao veya çikolata sos",
+                    "Blender’ı çok uzun çalıştırma; buz tamamen erirse içecek sulu kalır, kısa ama güçlü karıştır.",
+                    "Üzerine krem şanti ve ekstra çikolata sos ekleyerek tam bir kafe tatlısına dönüştürebilirsin.",
+                    "frappe",
+                    "L – 350 ml"
+            ),
+
+            // endregion
+
+            // region BREW GUIDE
+
+            new Recipe(
+                    R.drawable.cup_chemex,
+                    "Öğütüm Rehberi",
+                    "Her demleme yöntemi için ideal öğütüm seviyeleri.",
+                    "Her demleme ekipmanı farklı öğütüm kalınlığı ister. "
+                            + "Yanlış öğütüm, en iyi çekirdeği bile sıradan bir fincana dönüştürebilir.",
+                    "Türk kahvesi: Çok ince • Espresso: İnce • V60/Kalita: Orta-ince • Chemex: Orta • French press: Kalın",
+                    "El değirmeni kullanıyorsan, her klik değişiminde tadı not al; birkaç denemede ideal ayarını bulursun.",
+                    "Kahveyi değiştirirken sadece tek parametre (öğütüm veya oran) oynarsan, neyin değiştiğini daha net görürsün.",
+                    "brew_guide",
+                    "-"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_v60,
+                    "Oran Rehberi",
+                    "Kahve–su oranı için pratik başlangıç noktaları.",
+                    "Doğru oran, kahveden alacağın tat profilini büyük ölçüde belirler. "
+                            + "Çok su: sulu ve zayıf, çok kahve: ağır ve baskın bir fincan oluşturur.",
+                    "V60: 1:15–17 • French press: 1:12–14 • Espresso: ~1:2 • Cold brew: 1:5–1:8 konsantre",
+                    "Gram ölçer kullanmak, her defasında aynı tadı yakalamak için en hızlı yoldur.",
+                    "Yoğun seviyorsan 1:14, hafif seviyorsan 1:16–17 denemeleriyle kendi ideal noktanı bul.",
+                    "brew_guide",
+                    "-"
+            ),
+
+            new Recipe(
+                    R.drawable.cup_kalitajave,
+                    "Sıcaklık & Bloom",
+                    "Su sıcaklığı ve ön demleme (bloom) ipuçları.",
+                    "Kahve için suyu kaynatıp direkt kullanmak, bazen yanık ve sert tatlar oluşturabilir. "
+                            + "Bloom, taze kahvedeki CO₂ gazının kaçmasına izin vererek daha dengeli demleme sağlar.",
+                    "Ideal su sıcaklığı: 92–96°C • Bloom süresi: 30–45 sn • Bloom su miktarı: toplam suyun ~%10–15’i",
+                    "Kaynayan suyu 30–40 saniye bekletmek genelde 94–95°C bandına getirir.",
+                    "Özellikle taze kavrumlarda bloom aşamasını atlama; kabarcıklar azaldıkça asidite daha dengeli olur.",
+                    "brew_guide",
+                    "-"
             )
 
             // endregion
@@ -649,7 +780,7 @@ public class RecipesData {
 
     /**
      * Kategoriye göre filtreler. categoryKey null/boş ise tüm tarifleri döndürür.
-     * Kategoriler: espresso, filter, special, alcoholic, iced, turkish
+     * Kategoriler: espresso, filter, latte_lab, alcoholic, iced, turkish, frappe, signature, brew_guide
      */
     public static List<Recipe> getByCategory(String categoryKey) {
         List<Recipe> out = new ArrayList<>();
@@ -669,7 +800,6 @@ public class RecipesData {
 
     /**
      * Detay ekranında okunabilir kategori adı göstermek için.
-     * Kullanılmıyorsa da zararı yok.
      */
     public static String categoryLabel(String key) {
         if (key == null) return "";
@@ -678,14 +808,20 @@ public class RecipesData {
                 return "Espresso Bazlı Kahveler";
             case "filter":
                 return "Filtre ve Demleme Yöntemleri";
-            case "special":
-                return "Özel Tarifler";
+            case "latte_lab":
+                return "Latte Lab Denemeleri";
             case "alcoholic":
                 return "Alkollü Kahveler";
             case "iced":
                 return "Soğuk Kahveler";
             case "turkish":
                 return "Türk Kahveleri";
+            case "frappe":
+                return "Frappe ve Blended İçecekler";
+            case "signature":
+                return "bdino° Signature Tarifler";
+            case "brew_guide":
+                return "Demleme Rehberleri";
             default:
                 return key;
         }
