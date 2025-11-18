@@ -756,7 +756,7 @@ public class RecipesData {
             ),
 
             new Recipe(
-                    R.drawable.cup_kalitajave,
+                    R.drawable.cup_kalitawave,
                     "Sıcaklık & Bloom",
                     "Su sıcaklığı ve ön demleme (bloom) ipuçları.",
                     "Kahve için suyu kaynatıp direkt kullanmak, bazen yanık ve sert tatlar oluşturabilir. "
