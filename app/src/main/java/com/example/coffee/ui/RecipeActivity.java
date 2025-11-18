@@ -1,98 +1,150 @@
 package com.example.coffee.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.SearchView;
+import android.view.View;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coffee.MainActivity;
 import com.example.coffee.R;
-import com.example.coffee.ui.RecipeAdapter;
-import com.example.coffee.data.RecipesData;
+import com.example.coffee.data.RecipeData;
 import com.example.coffee.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends AppCompatActivity {
+/**
+ * Kategoriye göre tarif listesini gösteren ekran.
+ * MainActivity'den gelen kategori koduna göre (espresso, filter, latte_lab vb.)
+ * RecipeData içinden doğru listeyi çeker.
+ */
+public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeClickListener {
 
     private RecyclerView recyclerRecipes;
-    private SearchView searchView;
-    private RecipeAdapter adapter;
+    private TextView txtCategoryTitle;
+    private TextView txtCategorySubtitle;
 
-    private List<Recipe> allRecipes = new ArrayList<>();
-    private List<Recipe> shownRecipes = new ArrayList<>();
+    private RecipeAdapter adapter;
+    private List<Recipe> recipeList = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
+        setContentView(R.layout.activity_recipes);
 
-        recyclerRecipes = findViewById(R.id.recyclerRecipes);
-        searchView      = findViewById(R.id.searchView);
+        recyclerRecipes     = findViewById(R.id.recyclerRecipes);
+        txtCategoryTitle    = findViewById(R.id.txtCategoryTitle);
+        txtCategorySubtitle = findViewById(R.id.txtCategorySubtitle);
 
-        // Ana menüden gelen kategori
-        String category = getIntent().getStringExtra(MainActivity.EXTRA_CATEGORY);
-
-        // Tüm tarifleri al
-        List<Recipe> fromData = RecipesData.getAll();
-        allRecipes.clear();
-        shownRecipes.clear();
-
-        if (category != null && !category.trim().isEmpty()) {
-            String key = category.trim().toLowerCase();
-            for (Recipe r : fromData) {
-                String cat = r.getCategory() != null ? r.getCategory().toLowerCase() : "";
-                if (cat.equals(key)) {
-                    allRecipes.add(r);
-                }
-            }
-        } else {
-            allRecipes.addAll(fromData);
-        }
-
-        shownRecipes.addAll(allRecipes);
-
-        adapter = new RecipeAdapter(this, shownRecipes);
         recyclerRecipes.setLayoutManager(new LinearLayoutManager(this));
-        recyclerRecipes.setAdapter(adapter);
 
-        // Arama
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    filterList(newText);
-                    return true;
-                }
-            });
+        // MainActivity'den gelen kategori kodu
+        String category = getIntent().getStringExtra(MainActivity.EXTRA_CATEGORY);
+        if (category == null) {
+            category = "espresso"; // güvenlik için varsayılan
         }
+
+        // Başlık + tarif listesini kategoriden üret
+        setupCategoryUi(category);
     }
 
-    private void filterList(String text) {
-        if (text == null) text = "";
-        String q = text.toLowerCase().trim();
+    /**
+     * Kategoriye göre başlığı ayarlar ve ilgili tarif listesini yükler.
+     */
+    private void setupCategoryUi(String category) {
+        String title;
+        String subtitle;
 
-        if (q.isEmpty()) {
-            adapter.updateList(new ArrayList<>(allRecipes));
-            return;
+        switch (category) {
+            case "espresso":
+                title = "Espresso";
+                subtitle = "Espresso shot ve espresso bazlı klasik tarifler.";
+                recipeList = RecipeData.getEspressoRecipes();
+                break;
+
+            case "filter":
+                title = "Filter";
+                subtitle = "V60, Chemex, French Press ve diğer pour-over tarifleri.";
+                recipeList = RecipeData.getFilterRecipes();
+                break;
+
+            case "latte_lab":
+                title = "Latte Lab";
+                subtitle = "Latte tabanlı yaratıcı tarifler ve şurup kombinasyonları.";
+                recipeList = RecipeData.getLatteLabRecipes();
+                break;
+
+            case "iced":
+                title = "Iced";
+                subtitle = "Soğuk kahveler, cold brew ve buzlu tarifler.";
+                recipeList = RecipeData.getIcedRecipes();
+                break;
+
+            case "turkish":
+                title = "Turkish";
+                subtitle = "Türk kahvesi ve cezve varyasyonları.";
+                recipeList = RecipeData.getTurkishRecipes();
+                break;
+
+            case "alcoholic":
+                title = "Alcoholic";
+                subtitle = "Likör ve alkolle hazırlanan kahve kokteylleri.";
+                recipeList = RecipeData.getAlcoholicRecipes();
+                break;
+
+            case "frappe":
+                title = "Frappe";
+                subtitle = "Blender veya shaker ile hazırlanan buzlu karışımlar.";
+                recipeList = RecipeData.getFrappeRecipes();
+                break;
+
+            case "signature":
+                title = "Signature";
+                subtitle = "bdino° Coffee imza tarifleri.";
+                recipeList = RecipeData.getSignatureRecipes();
+                break;
+
+            case "brew_guide":
+                title = "Brew Guide";
+                subtitle = "Öğütüm, oran ve sıcaklık için rehber notlar.";
+                recipeList = RecipeData.getBrewGuideRecipes();
+                break;
+
+            default:
+                // Bilinmeyen kategori gelirse espresso'ya düş
+                title = "Espresso";
+                subtitle = "Espresso shot ve espresso bazlı klasik tarifler.";
+                recipeList = RecipeData.getEspressoRecipes();
+                break;
         }
 
-        List<Recipe> filtered = new ArrayList<>();
-        for (Recipe r : allRecipes) {
-            String name = r.getName() != null ? r.getName().toLowerCase() : "";
-            String desc = r.getShortDesc() != null ? r.getShortDesc().toLowerCase() : "";
-            if (name.contains(q) || desc.contains(q)) {
-                filtered.add(r);
-            }
+        if (txtCategoryTitle != null) {
+            txtCategoryTitle.setText(title);
         }
-        adapter.updateList(filtered);
+        if (txtCategorySubtitle != null) {
+            txtCategorySubtitle.setText(subtitle);
+        }
+
+        // Adapter’i bağla
+        adapter = new RecipeAdapter(recipeList, this);
+        recyclerRecipes.setAdapter(adapter);
+    }
+
+    /**
+     * Bir tarif kartına tıklandığında detay ekranına geç.
+     * RecipeAdapter.OnRecipeClickListener
+     */
+    @Override
+    public void onRecipeClick(Recipe recipe) {
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        // Projede daha önce nasıl yaptıysak aynı şekilde:
+        // Çoğunlukla "recipe" Serializable/Parcelable olarak gönderiyorduk.
+        intent.putExtra("recipe", recipe);
+        startActivity(intent);
     }
 }
